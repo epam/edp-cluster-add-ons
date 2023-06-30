@@ -1,0 +1,33 @@
+{{- if and (.Values.keycloak) (.Values.keycloak.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/keycloak
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      values: |
+        keycloakx:
+        {{- toYaml .Values.keycloak | nindent 10 }}
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: security
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ .Values.keycloak.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

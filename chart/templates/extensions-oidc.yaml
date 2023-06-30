@@ -1,0 +1,33 @@
+{{- if and (.Values.extensionsOIDC) (.Values.extensionsOIDC.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: extensions-oidc
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/extensions-oidc
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      values: |
+        extensionsOIDC:
+        {{- toYaml .Values.extensionsOIDC | nindent 10 }}
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: security
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ .Values.extensionsOIDC.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

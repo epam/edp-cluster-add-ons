@@ -1,0 +1,46 @@
+ingress-nginx:
+  controller:
+    podAnnotations:
+      fluentbit.io/parser: k8s-nginx-ingress
+    addHeaders:
+      X-Content-Type-Options: nosniff
+      X-Frame-Options: SAMEORIGIN
+      Strict-Transport-Security: max-age=63072000; includeSubDomains
+    resources:
+      limits:
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "128M"
+    config:
+      ssl-redirect: 'true'
+      client-header-buffer-size: '64k'
+      http2-max-field-size: '64k'
+      http2-max-header-size: '64k'
+      large-client-header-buffers: '4 64k'
+      upstream-keepalive-timeout: '120'
+      keep-alive: '10'
+      use-forwarded-headers: 'true'
+      proxy-real-ip-cidr: '192.168.0.0/20'
+      proxy-buffer-size: '8k'
+
+    # To watch Ingress objects without the ingressClassName field set parameter value to true.
+    # https://kubernetes.github.io/ingress-nginx/#i-have-only-one-ingress-controller-in-my-cluster-what-should-i-do
+    watchIngressWithoutClass: true
+
+    service:
+      type: NodePort
+      nodePorts:
+        http: 32080
+        https: 32443
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  metrics:
+    enabled: true
+  defaultBackend:
+    enabled: true
+  serviceAccount:
+    create: true
+    name: nginx-ingress-service-account

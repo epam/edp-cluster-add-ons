@@ -1,0 +1,82 @@
+# keep sorted order
+argocd:
+  createNamespace: false
+  enable: false
+
+certmanager:
+  createNamespace: true
+  enable: true
+
+defectdojo:
+  createNamespace: true
+  enable: true
+
+dependencyTrack:
+  createNamespace: true
+  enable: true
+
+edp:
+  createNamespace: false
+  enable: false
+
+extensionsOIDC:
+  createNamespace: true
+  enable: true
+
+externalSecrets:
+  createNamespace: true
+  enable: true
+
+# fluent-bit can be installed as a single component
+fluentbit:
+  createNamespace: false
+  enable: false
+
+harbor:
+  createNamespace: true
+  enable: true
+
+ingressNginx:
+  createNamespace: true
+  enable: true
+
+keycloak:
+  createNamespace: true
+  enable: true
+
+keycloakPostgresql:
+  createNamespace: false
+  enable: false
+
+minioOperator:
+  createNamespace: true
+  enable: true
+
+# opensearch includes opensearch, opensearch-dashboards, fluent-bit
+opensearch:
+  createNamespace: true
+  enable: true
+
+# Postgres Operator
+postgresOperator:
+  createNamespace: true
+  enable: true
+
+prometheusOperator:
+  createNamespace: true
+  enable: true
+
+redisOperator:
+  createNamespace: true
+  enable: true
+
+storageClass:
+  enable: true
+
+tekton:
+  createNamespace: false
+  enable: false
+
+vault:
+  createNamespace: true
+  enable: true

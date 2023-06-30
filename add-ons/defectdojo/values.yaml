@@ -1,0 +1,35 @@
+defectdojo:
+  tag: 2.17.0
+  fullnameOverride: defectdojo
+  host: defectdojo.example.com
+  site_url: https://defectdojo.example.com
+  alternativeHosts:
+    - defectdojo-django.defectdojo
+
+  initializer:
+    # should be false after initial installation was performed
+    run: true
+  django:
+    ingress:
+      enabled: true # change to 'false' for OpenShift
+      activateTLS: false
+    uwsgi:
+      livenessProbe:
+        # Enable liveness checks on uwsgi container. Those values are use on nginx readiness checks as well.
+        # default value is 120, so in our case 20 is just fine
+        initialDelaySeconds: 20
+    mediaPersistentVolume:
+      persistentVolumeClaim:
+        storageClassName: ebs-sc
+        size: 2Gi
+
+  postgresql:
+    primary:
+      persistence:
+        storageClass: "ebs-sc"
+        size: 2Gi
+
+  rabbitmq:
+    persistence:
+      storageClass: "ebs-sc"
+      size: 2Gi

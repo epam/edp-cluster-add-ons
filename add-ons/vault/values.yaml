@@ -1,0 +1,26 @@
+vault:
+  fullnameOverride: vault
+
+  server:
+    standalone:
+      enabled: false
+    ha:
+      enabled: true
+      replicas: 3
+      raft:
+        enabled: true
+
+    dataStorage:
+      enabled: true
+      size: 1Gi
+      storageClass: gp3
+
+    ingress:
+      enabled: true
+      hosts:
+        - host: vault.example.com
+          paths:
+            - /
+
+  ui:
+    enabled: true

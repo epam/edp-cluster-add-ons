@@ -1,0 +1,39 @@
+apiVersion: v2
+description: EDP Cluster Addons that extend the Kubernetes Cluster Functionality
+home: https://epam.github.io/edp-install/
+name: edp-cluster-add-ons
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+icon: https://epam.github.io/edp-install/assets/logo.png
+keywords:
+  - edp
+  - epam
+  - addons
+  - blueprint
+  - pipelines
+  - jira
+  - ci
+  - cd
+  - docker
+  - image
+  - promote
+  - git
+  - gerrit
+  - github
+  - gitlab
+maintainers:
+  - name: epmd-edp
+    email: SupportEPMD-EDP@epam.com
+    url: https://solutionshub.epam.com/solution/epam-delivery-platform
+  - name: sergk
+    url: https://github.com/SergK
+sources:
+  - https://github.com/epam/edp-cluster-add-ons
+annotations:
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/links: |
+    - name: EDP Documentation
+      url: https://epam.github.io/edp-install/
+    - name: EPAM SolutionHub
+      url: https://solutionshub.epam.com/solution/epam-delivery-platform

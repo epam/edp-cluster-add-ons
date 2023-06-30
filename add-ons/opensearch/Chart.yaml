@@ -1,0 +1,28 @@
+apiVersion: v2
+name: opensearch
+description: A Helm chart for OpenSearch Stack
+
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+type: application
+
+# The chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 0.1.0
+
+# Version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: "v1.0.0"
+
+dependencies:
+- name: opensearch
+  version: 2.12.2
+  repository: https://opensearch-project.github.io/helm-charts/
+
+- name: opensearch-dashboards
+  version: 2.10.0
+  repository: https://opensearch-project.github.io/helm-charts/
+
+- name: fluent-bit
+  version: 0.30.2
+  repository: https://fluent.github.io/helm-charts

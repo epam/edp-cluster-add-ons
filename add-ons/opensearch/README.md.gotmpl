@@ -1,0 +1,29 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+## OpenSearch Configuration
+
+Ensure that after applying helm charts you have to run in opensearch pod the following command:
+
+```bash
+cd /usr/share/opensearch/plugins/opensearch-security/tools/
+./securityadmin.sh -cd ../../../config/opensearch-security/ -icl -nhnv \
+ -rev \
+ -cacert /usr/share/opensearch/config/admin-certs/ca.crt \
+ -cert /usr/share/opensearch/config/admin-certs/tls.crt \
+ -key /usr/share/opensearch/config/admin-certs/tls.key
+```
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

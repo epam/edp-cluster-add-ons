@@ -1,0 +1,26 @@
+# need to create secret into aws parametr store
+# update key
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: argocd-vcs
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+  - secretKey: sshPrivateKey
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: argocd-vcs.sshPrivateKey
+      decodingStrategy: Base64
+  - secretKey: url
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: argocd-vcs.url
+  target:
+    template:
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: repo-creds

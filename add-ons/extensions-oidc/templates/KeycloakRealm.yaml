@@ -1,0 +1,9 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealm
+metadata:
+  name: main
+spec:
+  realmName: shared
+  keycloakOwner: keycloak
+  ssoRealmEnabled: true
+  ssoRealmName: openshift

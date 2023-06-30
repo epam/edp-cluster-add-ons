@@ -1,0 +1,18 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: defectdojo-postgresql-specific
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+  - secretKey: postgresql-password
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo-postgresql-specific.postgresql-password
+  - secretKey: postgresql-postgres-password
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo-postgresql-specific.postgresql-postgres-password

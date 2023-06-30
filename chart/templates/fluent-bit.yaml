@@ -1,0 +1,33 @@
+{{- if and (.Values.fluentbit) (.Values.fluentbit.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluent-bit
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/fluent-bit
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      values: |
+        fluent-bit:
+        {{- toYaml .Values.fluentbit | nindent 10 }}
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ .Values.fluentbit.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

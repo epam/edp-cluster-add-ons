@@ -1,0 +1,26 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: defectdojo
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+  - secretKey: DD_ADMIN_PASSWORD
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo.DD_ADMIN_PASSWORD
+  - secretKey: DD_SECRET_KEY
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo.DD_SECRET_KEY
+  - secretKey: DD_CREDENTIAL_AES_256_KEY
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo.DD_CREDENTIAL_AES_256_KEY
+  - secretKey: METRICS_HTTP_AUTH_PASSWORD
+    remoteRef:
+      key: /edp/deploy-secrets
+      property: defectdojo.METRICS_HTTP_AUTH_PASSWORD

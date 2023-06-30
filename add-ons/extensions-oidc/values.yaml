@@ -1,0 +1,2 @@
+extensionsOIDC:
+  keycloakUrl: "https://keycloak.example.com"

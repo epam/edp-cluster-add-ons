@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-for-opensearch
+spec:
+  duration: 8760h0m0s # 365d
+  renewBefore: 360h0m0s # 15d
+  commonName: opensearch.cluster.local
+  dnsNames:
+  - opensearch.cluster.local
+  - dashboard.opensearch.cluster.local
+  secretName: tls-for-opensearch-key-pair
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  issuerRef:
+    name: issuer-from-ca
+    kind: Issuer
+    group: cert-manager.io

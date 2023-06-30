@@ -1,0 +1,65 @@
+dependency-track:
+  fullnameOverride: deptrack
+  nameOverride: deptrack
+
+  frontend:
+    replicaCount: 1
+    image:
+      # we override the default image tag here, since the helm chart is a little behind
+      tag: 4.8.1
+    env:
+      - name: API_BASE_URL
+        value: "https://deptrack.example.com"
+      - name: OIDC_ISSUER
+        value: "https://keycloak.example.com/auth/realms/shared"
+      - name: OIDC_CLIENT_ID
+        value: "deptrack"
+      - name: OIDC_SCOPE
+        value: "openid profile email"
+      - name: OIDC_LOGIN_BUTTON_TEXT
+        value: "Login with Keycloak"
+      - name: OIDC_FLOW
+        value: "code"
+
+  apiserver:
+    image:
+      # we override the default image tag here, since the helm chart is a little behind
+      tag: 4.8.2
+    persistentVolume:
+      size: 15Gi
+    env:
+      env:
+      - name: ALPINE_OIDC_ENABLED
+        value: "true"
+      - name: ALPINE_OIDC_CLIENT_ID
+        value: "deptrack"
+      - name: ALPINE_OIDC_ISSUER
+        value: "https://keycloak.example.com/auth/realms/shared"
+      - name: ALPINE_OIDC_USERNAME_CLAIM
+        value: "preferred_username"
+      - name: ALPINE_OIDC_USER_PROVISIONING
+        value: "true"
+      - name: ALPINE_OIDC_TEAMS_CLAIM
+        value: "roles"
+      - name: ALPINE_OIDC_TEAM_SYNCHRONIZATION
+        value: "true"
+
+      resources:
+      # https://docs.dependencytrack.org/getting-started/deploy-docker/
+        requests:
+          cpu: 1
+          memory: 4608Mi
+        limits:
+          cpu: 2
+          memory: 12Gi
+
+  ingress:
+    enabled: true
+    tls:
+      enabled: false
+      secretName: ""
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      # allow large bom.xml uploads:
+      nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    host: deptrack.example.com

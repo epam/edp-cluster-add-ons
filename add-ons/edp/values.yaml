@@ -1,0 +1,73 @@
+edp-install:
+  global:
+    edpName: edp
+    dnsWildCard: example.com
+    webConsole:
+      url: https://XXXXXXXXXXXXXXXXXXXXXX.gr7.eu-central-1.eks.amazonaws.com
+    platform: kubernetes
+    kioskEnabled: false
+    admins: [john@example.com,mike@example.com]
+    developers: [john@example.com,mike@example.com]
+    gitProvider: gitlab
+    keycloakUrl: https://keycloak.example.com
+
+  awsRegion: eu-central-1
+
+  argocd:
+    enabled: true
+    url: "https://argocd-edp.example.com"
+
+  dockerRegistry:
+    url: 012345678910.dkr.ecr.eu-central-1.amazonaws.com
+
+  kaniko:
+    roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko
+
+  externalSecrets:
+    enabled: true
+    secretProvider:
+      aws:
+        role: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+    manageEDPInstallSecrets: true
+    manageEDPInstallSecretsName: /edp/deploy-secrets
+
+  gerrit-operator:
+    enabled: false
+
+  edp-headlamp:
+    config:
+      oidc:
+        enabled: true
+        clientID: "shared"
+
+  edp-tekton:
+    gitlab:
+      host: gitlab.example.com
+    kaniko:
+      roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko
+    buildTool:
+      go:
+        cache:
+          persistentVolume:
+            size: 5Gi
+            # -- Specifies storageClass type. If not specified, a default storageClass for go-cache volume is used
+            storageClass: ebs-sc
+      npm:
+        cache:
+          persistentVolume:
+            size: 5Gi
+            # -- Specifies storageClass type. If not specified, a default storageClass for npm-cache volume is used
+            storageClass: ebs-sc
+
+  nexus-operator:
+    nexus:
+      storage:
+        class: ebs-sc
+
+  sonar-operator:
+    sonar:
+      storage:
+        data:
+          class: ebs-sc
+        database:
+          class: ebs-sc

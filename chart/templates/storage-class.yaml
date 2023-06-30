@@ -1,0 +1,22 @@
+{{- if and (.Values.storageClass) (.Values.storageClass.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+  name: storage-class
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+  syncPolicy:
+    automated:
+      prune: true
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/storage-class
+    targetRevision: {{ .Values.targetRevision }}
+{{- end -}}

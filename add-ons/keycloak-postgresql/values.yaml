@@ -1,0 +1,23 @@
+postgresql:
+  nameOverride: postgresql
+  fullnameOverride: postgresql
+  # PostgreSQL read only replica parameters
+  readReplicas:
+    # Number of PostgreSQL read only replicas
+    replicaCount: 1
+
+  image:
+    tag: 15.3.0-debian-11-r0
+
+  global:
+    postgresql:
+      auth:
+        username: admin
+        existingSecret: keycloak-postgresql
+        database: keycloak
+
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "ebs-sc"
+      size: 3Gi

@@ -1,0 +1,33 @@
+{{- if and (.Values.defectdojo) (.Values.defectdojo.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: defectdojo
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/defectdojo
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      values: |
+        defectdojo:
+        {{- toYaml .Values.defectdojo | nindent 10 }}
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: defectdojo
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ .Values.defectdojo.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

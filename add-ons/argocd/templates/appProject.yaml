@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: edp
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: CD pipelines for edp
+  roles:
+    - name: developer
+      description: Users for edp tenant
+      policies:
+        - p, proj:edp:developer, applications, create, edp/*, allow
+        - p, proj:edp:developer, applications, delete, edp/*, allow
+        - p, proj:edp:developer, applications, get, edp/*, allow
+        - p, proj:edp:developer, applications, override, edp/*, allow
+        - p, proj:edp:developer, applications, sync, edp/*, allow
+        - p, proj:edp:developer, applications, update, edp/*, allow
+        - p, proj:edp:developer, repositories, create, edp/*, allow
+        - p, proj:edp:developer, repositories, delete, edp/*, allow
+        - p, proj:edp:developer, repositories, update, edp/*, allow
+        - p, proj:edp:developer, repositories, get, edp/*, allow
+      groups:
+        # Keycloak Group name
+        - ArgoCD-edp-users
+  destinations:
+    # ensure we can deploy to ns with tenant prefix
+    - namespace: 'edp-*'
+    # allow to deploy to specific server (local in our case)
+      server: https://kubernetes.default.svc
+  # Deny all cluster-scoped resources from being created, except for Namespace
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+  # we are ok to create any resources inside namespace
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # enable access only for specific git server. The example below 'edp' - it is namespace where EDP deployed
+  sourceRepos:
+    # path to code store
+    # (FIXME): Make sure that this is the correct path
+    - ssh://git@github.com/*
+  # enable capability to deploy objects from namespaces
+  sourceNamespaces:
+    - edp
