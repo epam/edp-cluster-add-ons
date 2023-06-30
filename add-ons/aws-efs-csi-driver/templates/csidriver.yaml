@@ -1,0 +1,10 @@
+# This file exists in helm chart, but it's not applied by helm with ArgoCD
+# https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/charts/aws-efs-csi-driver/templates/csidriver.yaml
+# so let's add this resource manually
+# Keep in mind that we use version storage.k8s.io/v1
+apiVersion: storage.k8s.io/v1
+kind: CSIDriver
+metadata:
+  name: efs.csi.aws.com
+spec:
+  attachRequired: false

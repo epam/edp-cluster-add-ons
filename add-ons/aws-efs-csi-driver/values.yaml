@@ -1,0 +1,38 @@
+aws-efs-csi-driver:
+  nameOverride: "aws-efs-csi-driver"
+  fullnameOverride: "aws-efs-csi-driver"
+  controller:
+    logLevel: 2
+    tags:
+      Name: "aws-efs-csi-driver-controller"
+      SysName: "ORG"
+      SysOwner: "YOUR-PROJECT"
+      Environment: "dev"
+      CostCenter: "2023"
+      BusinessUnit: "EDP"
+      Department: "DEP1"
+    serviceAccount:
+      create: true
+      name: efs-csi-controller-sa
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_EFS_CSI_Driver
+  node:
+    logLevel: 2
+    serviceAccount:
+      # we are re-using the same service account as the controller
+      create: false
+      name: efs-csi-controller-sa
+
+  storageClasses:
+    - name: efs-sc
+      mountOptions:
+      - iam
+      parameters:
+        provisioningMode: efs-ap
+        fileSystemId: fs-xxxxxxxxxxxxxx
+        directoryPerms: "750"
+        gidRangeStart: "100"
+        gidRangeEnd: "2000"
+        basePath: "/dynamic_provisioning"
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate

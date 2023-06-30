@@ -3,6 +3,10 @@ argocd:
   createNamespace: false
   enable: false
 
+# we install it in kube-system namespace so we don't need to create it
+awsEfsCsiDriver:
+  enable: true
+
 certmanager:
   createNamespace: true
   enable: true
@@ -40,6 +44,10 @@ ingressNginx:
   createNamespace: true
   enable: true
 
+jaegerOperator:
+  enable: true
+  createNamespace: true
+
 keycloak:
   createNamespace: true
   enable: true
@@ -56,6 +64,10 @@ minioOperator:
 opensearch:
   createNamespace: true
   enable: true
+
+opentelemetryOperator:
+  enable: true
+  createNamespace: true
 
 # Postgres Operator
 postgresOperator:
@@ -74,8 +86,8 @@ storageClass:
   enable: true
 
 tekton:
-  createNamespace: false
-  enable: false
+  createNamespace: true
+  enable: true
 
 vault:
   createNamespace: true

@@ -1,0 +1,31 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: general
+spec:
+  apacheHttpd:
+    configPath: /usr/local/apache2/conf
+    version: '2.4'
+  dotnet:
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://general-collector.opentelemetry-operator:4318
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:0.7.0
+  exporter:
+    endpoint: http://general-collector.opentelemetry-operator:4317
+  java:
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:1.26.0
+  nodejs:
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.39.1
+  propagators:
+    - tracecontext
+    - baggage
+    - b3
+  python:
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://general-collector.opentelemetry-operator:4318
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.39b0
+  sampler:
+    argument: '1'
+    type: parentbased_traceidratio

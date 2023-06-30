@@ -23,6 +23,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 |-----|------|---------|-------------|
 | argocd.createNamespace | bool | `false` |  |
 | argocd.enable | bool | `false` |  |
+| awsEfsCsiDriver.enable | bool | `true` |  |
 | certmanager.createNamespace | bool | `true` |  |
 | certmanager.enable | bool | `true` |  |
 | defectdojo.createNamespace | bool | `true` |  |
@@ -41,6 +42,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | harbor.enable | bool | `true` |  |
 | ingressNginx.createNamespace | bool | `true` |  |
 | ingressNginx.enable | bool | `true` |  |
+| jaegerOperator.createNamespace | bool | `true` |  |
+| jaegerOperator.enable | bool | `true` |  |
 | keycloak.createNamespace | bool | `true` |  |
 | keycloak.enable | bool | `true` |  |
 | keycloakPostgresql.createNamespace | bool | `false` |  |
@@ -49,6 +52,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | minioOperator.enable | bool | `true` |  |
 | opensearch.createNamespace | bool | `true` |  |
 | opensearch.enable | bool | `true` |  |
+| opentelemetryOperator.createNamespace | bool | `true` |  |
+| opentelemetryOperator.enable | bool | `true` |  |
 | postgresOperator.createNamespace | bool | `true` |  |
 | postgresOperator.enable | bool | `true` |  |
 | prometheusOperator.createNamespace | bool | `true` |  |
