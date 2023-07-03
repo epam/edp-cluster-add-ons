@@ -1,17 +1,24 @@
 # keep sorted order
+# -- ArgoCD Deployment
 argocd:
+  # -- whether to create the namespace or not
   createNamespace: false
   enable: false
 
 # we install it in kube-system namespace so we don't need to create it
+# -- AWS EFS CSI Driver
 awsEfsCsiDriver:
   enable: true
 
+# -- Cert Manager
 certmanager:
+  # -- whether to create the namespace or not
   createNamespace: true
   enable: true
 
+# -- DefectDojo
 defectdojo:
+  # -- whether to create the namespace or not
   createNamespace: true
   enable: true
 
@@ -20,8 +27,8 @@ dependencyTrack:
   enable: true
 
 edp:
-  createNamespace: false
-  enable: false
+  createNamespace: true
+  enable: true
 
 extensionsOIDC:
   createNamespace: true

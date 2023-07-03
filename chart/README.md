@@ -21,13 +21,13 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| argocd.createNamespace | bool | `false` |  |
-| argocd.enable | bool | `false` |  |
-| awsEfsCsiDriver.enable | bool | `true` |  |
-| certmanager.createNamespace | bool | `true` |  |
-| certmanager.enable | bool | `true` |  |
-| defectdojo.createNamespace | bool | `true` |  |
-| defectdojo.enable | bool | `true` |  |
+| argocd | object | `{"createNamespace":false,"enable":false}` | ArgoCD Deployment |
+| argocd.createNamespace | bool | `false` | whether to create the namespace or not |
+| awsEfsCsiDriver | object | `{"enable":true}` | AWS EFS CSI Driver |
+| certmanager | object | `{"createNamespace":true,"enable":true}` | Cert Manager |
+| certmanager.createNamespace | bool | `true` | whether to create the namespace or not |
+| defectdojo | object | `{"createNamespace":true,"enable":true}` | DefectDojo |
+| defectdojo.createNamespace | bool | `true` | whether to create the namespace or not |
 | dependencyTrack.createNamespace | bool | `true` |  |
 | dependencyTrack.enable | bool | `true` |  |
 | edp.createNamespace | bool | `false` |  |
@@ -61,8 +61,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | redisOperator.createNamespace | bool | `true` |  |
 | redisOperator.enable | bool | `true` |  |
 | storageClass.enable | bool | `true` |  |
-| tekton.createNamespace | bool | `false` |  |
-| tekton.enable | bool | `false` |  |
+| tekton.createNamespace | bool | `true` |  |
+| tekton.enable | bool | `true` |  |
 | vault.createNamespace | bool | `true` |  |
 | vault.enable | bool | `true` |  |
 
