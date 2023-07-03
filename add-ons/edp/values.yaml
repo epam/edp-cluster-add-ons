@@ -45,19 +45,6 @@ edp-install:
       host: gitlab.example.com
     kaniko:
       roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko
-    buildTool:
-      go:
-        cache:
-          persistentVolume:
-            size: 5Gi
-            # -- Specifies storageClass type. If not specified, a default storageClass for go-cache volume is used
-            storageClass: ebs-sc
-      npm:
-        cache:
-          persistentVolume:
-            size: 5Gi
-            # -- Specifies storageClass type. If not specified, a default storageClass for npm-cache volume is used
-            storageClass: ebs-sc
 
   nexus-operator:
     nexus:
