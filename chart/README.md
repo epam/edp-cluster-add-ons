@@ -30,8 +30,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | defectdojo.createNamespace | bool | `true` | whether to create the namespace or not |
 | dependencyTrack.createNamespace | bool | `true` |  |
 | dependencyTrack.enable | bool | `true` |  |
-| edp.createNamespace | bool | `false` |  |
-| edp.enable | bool | `false` |  |
+| edp.createNamespace | bool | `true` |  |
+| edp.enable | bool | `true` |  |
 | extensionsOIDC.createNamespace | bool | `true` |  |
 | extensionsOIDC.enable | bool | `true` |  |
 | externalSecrets.createNamespace | bool | `true` |  |
@@ -40,6 +40,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | fluentbit.enable | bool | `false` |  |
 | harbor.createNamespace | bool | `true` |  |
 | harbor.enable | bool | `true` |  |
+| harborHA.createNamespace | bool | `true` |  |
+| harborHA.enable | bool | `true` |  |
 | ingressNginx.createNamespace | bool | `true` |  |
 | ingressNginx.enable | bool | `true` |  |
 | jaegerOperator.createNamespace | bool | `true` |  |

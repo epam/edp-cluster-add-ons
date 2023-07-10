@@ -47,6 +47,11 @@ harbor:
   createNamespace: true
   enable: true
 
+# Harbor with High Availability
+harborHA:
+  createNamespace: true
+  enable: true
+
 ingressNginx:
   createNamespace: true
   enable: true

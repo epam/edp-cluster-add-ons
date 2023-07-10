@@ -22,10 +22,6 @@ A Helm chart for EDP Install
 | edp-install.dockerRegistry.url | string | `"012345678910.dkr.ecr.eu-central-1.amazonaws.com"` |  |
 | edp-install.edp-headlamp.config.oidc.clientID | string | `"shared"` |  |
 | edp-install.edp-headlamp.config.oidc.enabled | bool | `true` |  |
-| edp-install.edp-tekton.buildTool.go.cache.persistentVolume.size | string | `"5Gi"` |  |
-| edp-install.edp-tekton.buildTool.go.cache.persistentVolume.storageClass | string | `"ebs-sc"` | Specifies storageClass type. If not specified, a default storageClass for go-cache volume is used |
-| edp-install.edp-tekton.buildTool.npm.cache.persistentVolume.size | string | `"5Gi"` |  |
-| edp-install.edp-tekton.buildTool.npm.cache.persistentVolume.storageClass | string | `"ebs-sc"` | Specifies storageClass type. If not specified, a default storageClass for npm-cache volume is used |
 | edp-install.edp-tekton.gitlab.host | string | `"gitlab.example.com"` |  |
 | edp-install.edp-tekton.kaniko.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko"` |  |
 | edp-install.externalSecrets.enabled | bool | `true` |  |
