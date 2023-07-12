@@ -1,0 +1,16 @@
+nexus-repository-manager:
+  ingress:
+    enabled: true
+    hostRepo: nexus.example.com
+
+  nexus:
+    resources:
+      limits:
+        memory: 6Gi
+      requests:
+        cpu: 100m
+        memory: 2Gi
+
+  persistence:
+    enabled: true
+    storageSize: 30Gi

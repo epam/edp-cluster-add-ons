@@ -52,6 +52,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | keycloakPostgresql.enable | bool | `false` |  |
 | minioOperator.createNamespace | bool | `true` |  |
 | minioOperator.enable | bool | `true` |  |
+| nexus.createNamespace | bool | `true` |  |
+| nexus.enable | bool | `true` |  |
 | opensearch.createNamespace | bool | `true` |  |
 | opensearch.enable | bool | `true` |  |
 | opentelemetryOperator.createNamespace | bool | `true` |  |

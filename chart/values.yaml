@@ -72,6 +72,10 @@ minioOperator:
   createNamespace: true
   enable: true
 
+nexus:
+  createNamespace: true
+  enable: true
+
 # opensearch includes opensearch, opensearch-dashboards, fluent-bit
 opensearch:
   createNamespace: true
