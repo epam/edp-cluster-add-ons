@@ -62,6 +62,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | prometheusOperator.enable | bool | `true` |  |
 | redisOperator.createNamespace | bool | `true` |  |
 | redisOperator.enable | bool | `true` |  |
+| sonarqube.createNamespace | bool | `true` |  |
+| sonarqube.enable | bool | `true` |  |
 | storageClass.enable | bool | `true` |  |
 | tekton.createNamespace | bool | `true` |  |
 | tekton.enable | bool | `true` |  |

@@ -94,6 +94,10 @@ redisOperator:
   createNamespace: true
   enable: true
 
+sonarqube:
+  createNamespace: true
+  enable: true
+
 storageClass:
   enable: true
 
