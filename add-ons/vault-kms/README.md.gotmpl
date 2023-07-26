@@ -1,0 +1,86 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+## Quick Start
+
+1. Get Vault root token from the `vault-root-token` kubernetes secret:
+
+    ```bash
+    VAULT_ROOT_TOKEN=$(kubectl get secret vault-root-token -o jsonpath='{.data.VAULT_ROOT_TOKEN}' -n vault | base64 --decode)
+    ```
+
+2. Create secret record in Vault with root token got on the previous step:
+
+    ```bash
+    curl \
+    -H "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"data":{"abc":"123"}}' \
+    $VAULT_ADDR/v1/edp-project/data/example
+    ```
+
+3. Get `roleId` from the `vault-approle-secret` kubernetes secret:
+
+    ```bash
+    VAULT_APPROLE_ROLE_ID=$(kubectl get secret vault-approle-secret -o jsonpath='{.data.role-id}' -n vault | base64 --decode)
+    ```
+
+4. Create Custom Resource `kind: SecretStore` with role-id got on the previous step:
+
+    ```yaml
+    apiVersion: external-secrets.io/v1beta1
+    kind: SecretStore
+    metadata:
+      name: vault-backend
+    spec:
+      provider:
+        vault:
+          server: "http://vault.vault.svc.cluster.local:8200"
+          version: "v2"
+          auth:
+            appRole:
+              path: "approle"
+              roleId: "$VAULT_APPROLE_ROLE_ID" # `roleId` value from `vault-approle-secret` secret
+              secretRef:
+                name: "vault-approle-secret"
+                key: "secret-id"
+    ```
+
+5. Create Custom Resource `kind: ExternalSecret` with SecretStore name created on the previous step:
+
+    ```yaml
+    apiVersion: external-secrets.io/v1beta1
+    kind: ExternalSecret
+    metadata:
+      name: vault-external-secret
+    spec:
+      refreshInterval: "15s"
+      secretStoreRef:
+        name: vault-backend # the name of `kind: SecretStore`
+        kind: SecretStore
+      data:
+        - secretKey: example
+          remoteRef:
+            key: edp-project/data/example
+            property: abc
+    ```
+6. To check if the integration is successful, run the command below, the output should be "123":
+
+    ```bash
+    kubectl get secret vault-external-secret -o jsonpath='{.data.example}' | base64 --decode
+    ```
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-tenant-init
+spec:
+  template:
+    metadata:
+      name: vault-tenant-init
+    spec:
+      initContainers:
+        - name: vault-ready-8200
+          image: curlimages/curl:8.2.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - '-c'
+            - while ! nc -w 1 vault 8200 </dev/null; do echo waiting for vault ready; sleep 10; done;
+      containers:
+        - name: vault-tenant-init
+          image: dwdraju/alpine-curl-jq
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c", "/cfg/script/script-init.sh"]
+          volumeMounts:
+          - name: script
+            mountPath: "/cfg/script/"
+          - name: init-config
+            mountPath: "/cfg/init-config/"
+      volumes:
+      - name: script
+        configMap:
+          name: script-init
+          defaultMode: 0755
+      - name: init-config
+        configMap:
+          name: init-config
+      restartPolicy: Never
+      serviceAccountName: job-sa

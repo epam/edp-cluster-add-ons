@@ -73,4 +73,6 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | tekton.enable | bool | `true` |  |
 | vault.createNamespace | bool | `true` |  |
 | vault.enable | bool | `true` |  |
+| vaultKMS.createNamespace | bool | `true` |  |
+| vaultKMS.enable | bool | `false` |  |
 

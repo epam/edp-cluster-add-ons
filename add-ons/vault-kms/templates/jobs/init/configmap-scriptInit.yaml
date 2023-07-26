@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-init
+data:
+  script-init.sh: |-
+    #!/bin/sh
+
+    vault_url=http://vault:8200
+    clusterApiUrl={{ .Values.job.clusterApiUrl }}
+    namespace={{ .Release.Namespace }}
+
+    #vault init
+    curl --request PUT --data @/cfg/init-config/init-config.json $vault_url/v1/sys/init >> /var/tmp/init.json
+
+    token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/..data/token)
+    vault_root_token=$(cat /var/tmp/init.json | jq .root_token -r)
+    vault_root_token_b=$(echo -n $vault_root_token | base64)
+    recovery_keys0=$(cat /var/tmp/init.json | jq .recovery_keys[0] -r)
+    recovery_keys_b0=$(echo $recovery_keys0 | base64 | tr -d '\n')
+    recovery_keys1=$(cat /var/tmp/init.json | jq .recovery_keys[1] -r)
+    recovery_keys_b1=$(echo $recovery_keys1 | base64 | tr -d '\n')
+    recovery_keys2=$(cat /var/tmp/init.json | jq .recovery_keys[2] -r)
+    recovery_keys_b2=$(echo $recovery_keys2 | base64 | tr -d '\n')
+    recovery_keys_base640=$(cat /var/tmp/init.json | jq .recovery_keys_base64[0] -r)
+    recovery_keys_base64_b0=$(echo -n $recovery_keys_base640 | base64)
+    recovery_keys_base641=$(cat /var/tmp/init.json | jq .recovery_keys_base64[1] -r)
+    recovery_keys_base64_b1=$(echo -n $recovery_keys_base641 | base64)
+    recovery_keys_base642=$(cat /var/tmp/init.json | jq .recovery_keys_base64[2] -r)
+    recovery_keys_base64_b2=$(echo -n $recovery_keys_base642 | base64)
+
+    cat /var/tmp/init.json
+
+    #create secret with VAULT_ROOT_TOKEN
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-root-token"}, "data":{"VAULT_ROOT_TOKEN": "'"$vault_root_token_b"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    #create secret with recovery_keys
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-0"}, "data":{"RECOVERY_KEY_0": "'"$recovery_keys_b0"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-1"}, "data":{"RECOVERY_KEY_1": "'"$recovery_keys_b1"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-2"}, "data":{"RECOVERY_KEY_2": "'"$recovery_keys_b2"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    #create secret with recovery_keys_base64
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-base64-0"}, "data":{"RECOVERY_KEY_BASE_64_0": "'"$recovery_keys_base64_b0"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-base64-1"}, "data":{"RECOVERY_KEY_BASE_64_1": "'"$recovery_keys_base64_b1"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-recovery-key-base64-2"}, "data":{"RECOVERY_KEY_BASE_64_2": "'"$recovery_keys_base64_b2"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets

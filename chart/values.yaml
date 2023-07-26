@@ -117,3 +117,7 @@ tekton:
 vault:
   createNamespace: true
   enable: true
+
+vaultKMS:
+  createNamespace: true
+  enable: false

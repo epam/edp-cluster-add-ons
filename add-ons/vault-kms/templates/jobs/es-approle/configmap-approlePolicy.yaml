@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edp-project-approle-policy
+data:
+  edp-project-approle-policy.json: >-
+    {
+      "policy": "path \"edp-project/*\" {\n capabilities = [ \"read\", \"list\" ]\n}"}"
+    }

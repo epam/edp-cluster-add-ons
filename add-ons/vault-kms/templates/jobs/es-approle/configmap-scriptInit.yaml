@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-external-secret-integration
+data:
+  script-init.sh: |-
+    #!/bin/sh
+
+    vault_url=http://vault-active:8200
+    clusterApiUrl={{ .Values.job.clusterApiUrl }}
+    namespace={{ .Release.Namespace }}
+
+    # Create edp-project-approle-policy
+    curl \
+       --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+       --request PUT \
+       --data @/cfg/keys-policy/edp-project-approle-policy.json \
+       $vault_url/v1/sys/policy/edp-project-approle
+
+    # Enable the AppRole auth method
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --request POST \
+        --data '{"type": "approle"}' \
+        $vault_url/v1/sys/auth/approle
+
+    # Create an AppRole with desired set of policies
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --request POST \
+        --data '{"policies": "edp-project-approle"}' \
+        $vault_url/v1/auth/approle/role/edp-project-approle
+
+    # Fetch the identifier of the role
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        $vault_url/v1/auth/approle/role/edp-project-approle/role-id \
+        >> /var/tmp/role-id.json
+
+    # Create a new secret identifier under the role
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --request POST \
+        --data '{"policies": "dev-policy,test-policy"}' \
+        $vault_url/v1/auth/approle/role/edp-project-approle/secret-id \
+        >> /var/tmp/secret-id.json
+
+    token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/..data/token)
+    role_id=$(cat /var/tmp/role-id.json | jq .data.role_id -r)
+    role_id_base64=$(echo -n $role_id | base64)
+
+    secret_id=$(cat /var/tmp/secret-id.json | jq .data.secret_id -r)
+    secret_id_base64=$(echo -n $secret_id | base64)
+
+    #create secret with role-id and secret-id
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-approle-secret"}, "data":{"role-id": "'"$role_id_base64"'", "secret-id": "'"$secret_id_base64"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets

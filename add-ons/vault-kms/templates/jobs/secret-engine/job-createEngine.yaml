@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-create-engine
+spec:
+  template:
+    metadata:
+      name: vault-create-engine
+    spec:
+      initContainers:
+        - name: vault-ready-8200
+          image: dwdraju/alpine-curl-jq
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - '-c'
+            - |
+              while true; do
+                response=$(curl -s http://vault-active:8200/v1/sys/health)
+                if [ "$(echo $response | jq -r ".initialized")" = "true" ] && [ "$(echo $response | jq -r ".sealed")" = "false" ]; then
+                  echo "$response" | jq; break
+                fi
+                sleep 5
+              done
+      containers:
+        - name: vault-create-engine
+          image: dwdraju/alpine-curl-jq
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: VAULT_ROOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault-root-token
+                  key: VAULT_ROOT_TOKEN
+          command: ["/bin/sh", "-c", "/cfg/script/script-init.sh"]
+          volumeMounts:
+          - name: script
+            mountPath: "/cfg/script/"
+          - name: secret-engine
+            mountPath: "/cfg/secret-engine/"
+      volumes:
+      - name: script
+        configMap:
+          name: script-create-engine
+          defaultMode: 0755
+      - name: secret-engine
+        configMap:
+          name: secret-engine
+      restartPolicy: Never
+      serviceAccountName: job-sa
