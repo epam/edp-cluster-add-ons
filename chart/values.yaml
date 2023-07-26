@@ -121,3 +121,7 @@ vault:
 vaultKMS:
   createNamespace: true
   enable: false
+
+vaultOKD:
+  createNamespace: true
+  enable: true

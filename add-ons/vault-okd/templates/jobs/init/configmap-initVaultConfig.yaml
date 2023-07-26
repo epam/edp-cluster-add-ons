@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-config
+data:
+  init-config.json: >-
+      {
+        "stored_shares": 5,
+        "secret_shares": 3,
+        "secret_threshold": 3
+      }

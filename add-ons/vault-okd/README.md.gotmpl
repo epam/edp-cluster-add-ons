@@ -1,0 +1,43 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+## Vault configuration
+
+Ensure you have `jq` installed:
+
+Create Role:
+
+Create `reader.hcl` file
+
+```bash
+path "/secret/*" {
+    capabilities = ["read", "list"]
+}
+```
+
+```bash
+cat reader.hcl | vault policy write reader -
+```
+
+```bash
+vault write auth/oidc/role/reader \
+bound_audiences="vault" \
+allowed_redirect_uris="https://vault.example.com/oidc/oidc/callback" \
+allowed_redirect_uris="https://vault.example.com/ui/vault/auth/oidc/oidc/callback" \
+user_claim="sub" \
+policies=reader
+```
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

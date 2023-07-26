@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-create-engine
+data:
+  script-init.sh: |-
+    #!/bin/sh
+
+    vault_url=http://vault-active:8200
+
+    #enable secret engine for edp-project
+    curl \
+       --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+       --request POST \
+       --data @/cfg/secret-engine/secret-engine.json \
+       $vault_url/v1/sys/mounts/edp-project

@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vault-auto-unseal
+spec:
+  schedule: "0 10 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: vault-auto-unseal
+              image: dwdraju/alpine-curl-jq
+              imagePullPolicy: IfNotPresent
+              command: ["/bin/sh", "-c", "/cfg/script/auto-unseal.sh"]
+              volumeMounts:
+              - name: script
+                mountPath: "/cfg/script/"
+              - name: vault-unseal-key
+                readOnly: true
+                mountPath: "/var/tmp/keys"
+              - name: vault-root-token
+                readOnly: true
+                mountPath: "/var/tmp/token"
+          volumes:
+          - name: script
+            configMap:
+              name: auto-unseal
+              defaultMode: 0755
+          - name: vault-unseal-key
+            secret:
+              secretName: vault-key
+          - name: vault-root-token
+            secret:
+              secretName: vault-root-token
+          restartPolicy: Never
+          serviceAccountName: job-sa

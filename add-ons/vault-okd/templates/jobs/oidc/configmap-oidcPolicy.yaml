@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oidc-role-policy
+data:
+  oidc-role-policy.json: >-
+    {
+      "policy": "path \"edp-project/*\" {\n capabilities = [ \"read\", \"list\" ]\n}"}"
+    }

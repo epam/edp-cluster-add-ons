@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auto-unseal
+data:
+  auto-unseal.sh: |-
+    #!/bin/bash
+
+    echo "Check seal status"
+
+    TOKEN=$(cat /var/tmp/token/VAULT_ROOT_TOKEN)
+
+    KEY0=$(cat /var/tmp/keys/KEY_0)
+    KEY1=$(cat /var/tmp/keys/KEY_1)
+    KEY2=$(cat /var/tmp/keys/KEY_2)
+
+    pods=("0" "1" "2")
+
+    while [ ${#pods[@]} -gt 0 ]; do
+
+
+      # -- Check vault seal status, if sael - unseal it
+      for pod in ${pods[@]}; do
+        # After unseal first node - another node need time to synk status
+        # sleep 5
+        # -- For each pod, check status
+        vault_status=$(curl -s http://vault-$pod.vault-internal:8200/v1/sys/health | jq '.sealed' -r)
+
+        # -- Print status
+        echo "Vault-$pod seal status - $vault_status"
+
+        # -- If pod seal - run key to unseal it
+
+        if [[ $vault_status == 'true' ]]; then
+          for key in {0..2}; do
+            eval "current_key=\$KEY${key}"
+
+            echo "Add key-$key to pod vault-$pod"
+
+            curl -s \
+              -H "X-Vault-Token: $TOKEN" \
+              --request POST \
+              --data '{"key":"'"$current_key"'"}' \
+              http://vault-$pod.vault-internal:8200/v1/sys/unseal
+          done
+          else
+            unset pods[$pod]
+        fi
+      done
+    done
+
+    echo "Unseal done"

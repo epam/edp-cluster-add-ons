@@ -1,0 +1,54 @@
+vault:
+  fullnameOverride: vault
+  global:
+    openshift: true
+  server:
+    standalone:
+      enabled: false
+    ha:
+      enabled: true
+      replicas: 3
+      raft:
+        enabled: true
+        setNodeId: true
+        config: |
+          ui = true
+          listener "tcp" {
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+            tls_disable = 1
+          }
+
+          storage "raft" {
+            path = "/vault/data"
+              retry_join {
+              leader_api_addr = "http://vault-0.vault-internal:8200"
+            }
+            retry_join {
+              leader_api_addr = "http://vault-1.vault-internal:8200"
+            }
+            retry_join {
+              leader_api_addr = "http://vault-2.vault-internal:8200"
+            }
+          }
+
+          service_registration "kubernetes" {}
+
+    dataStorage:
+      enabled: true
+      size: 1Gi
+
+    route:
+      enabled: true
+      activeService: true
+      host: vault.example.com
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+
+  ui:
+    enabled: true
+
+job:
+  clusterApiUrl: "https://api.example.com:6443"
+  keycloakUrl: "https://keycloak.example.com/auth/realms/shared"

@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-oidc-integration
+data:
+  script-init.sh: |-
+    #!/bin/sh
+
+    vault_url=http://vault-active:8200
+    keycloak_url={{ .Values.job.keycloakUrl }}
+    oidc_client_secret=${OIDC_CLIENT_SECRET}
+
+    # Create edp-project-reader
+    curl \
+       --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+       --request PUT \
+       --data @/cfg/keys-policy/oidc-role-policy.json \
+       $vault_url/v1/sys/policy/edp-project-reader
+
+    # Patch oidc auth method
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --request POST \
+        --data '{
+          "type": "oidc",
+          "description": "Keycloak"
+        }' \
+        $vault_url/v1/sys/auth/oidc
+
+    # Configure oidc auth method
+    curl \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --request POST \
+        --data '{
+          "oidc_client_id": "vault",
+          "oidc_client_secret": "'"$oidc_client_secret"'",
+          "default_role": "edp-project-reader",
+          "oidc_discovery_url": "'"$keycloak_url"'"
+        }' \
+        $vault_url/v1/auth/oidc/config
+
+    # Create role edp-project-reader
+    curl --request POST \
+        --header "X-Vault-Token: $VAULT_ROOT_TOKEN" \
+        --data '{
+          "role_name": "edp-project-reader",
+          "token_policies": ["default", "edp-project-reader"],
+          "user_claim": "sub",
+          "role_type": "oidc",
+          "bound_audiences": ["vault"],
+          "allowed_redirect_uris": [
+            "https://{{ .Values.vault.server.route.host }}/oidc/oidc/callback",
+            "https://{{ .Values.vault.server.route.host }}/ui/vault/auth/oidc/oidc/callback"
+          ]
+        }' \
+        $vault_url/v1/auth/oidc/role/edp-project-reader

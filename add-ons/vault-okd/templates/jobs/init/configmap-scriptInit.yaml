@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-init
+data:
+  script-init.sh: |-
+    #!/bin/sh
+
+    vault_url=http://vault:8200
+    clusterApiUrl={{ .Values.job.clusterApiUrl }}
+    namespace={{ .Release.Namespace }}
+
+    #vault init
+    curl --request PUT --data @/cfg/init-config/init-config.json $vault_url/v1/sys/init >> /var/tmp/init.json
+
+    token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/..data/token)
+    vault_root_token=$(cat /var/tmp/init.json | jq .root_token -r)
+    vault_root_token_b=$(echo -n $vault_root_token | base64)
+    keys0=$(cat /var/tmp/init.json | jq '.keys[0]' -r)
+    keys_b0=$(echo $keys0 | base64 | tr -d '\n')
+    keys1=$(cat /var/tmp/init.json | jq '.keys[1]' -r)
+    keys_b1=$(echo $keys1 | base64 | tr -d '\n')
+    keys2=$(cat /var/tmp/init.json | jq '.keys[2]' -r)
+    keys_b2=$(echo $keys2 | base64 | tr -d '\n')
+    keys_base640=$(cat /var/tmp/init.json | jq '.keys_base64[0]' -r)
+    keys_base64_b0=$(echo -n $keys_base640 | base64)
+    keys_base641=$(cat /var/tmp/init.json | jq '.keys_base64[1]' -r)
+    keys_base64_b1=$(echo -n $keys_base641 | base64)
+    keys_base642=$(cat /var/tmp/init.json | jq '.keys_base64[2]' -r)
+    keys_base64_b2=$(echo -n $keys_base642 | base64)
+
+    cat /var/tmp/init.json
+
+    #create secret with VAULT_ROOT_TOKEN
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-root-token"}, "data":{"VAULT_ROOT_TOKEN": "'"$vault_root_token_b"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+    #create secret with keys
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-key"}, "data":{"KEY_0": "'"$keys_b0"'", "KEY_1": "'"$keys_b1"'", "KEY_2": "'"$keys_b2"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
+
+
+    #create secret with keys_base64
+    curl -k \
+    -X POST \
+    -d '{"kind": "Secret", "apiVersion": "v1", "metadata": {"name": "vault-key-base64"}, "data":{"KEY_BASE_64_0": "'"$keys_base64_b0"'", "KEY_BASE_64_1": "'"$keys_base64_b1"'", "KEY_BASE_64_2": "'"$keys_base64_b2"'"}, "type": "Opaque"}' \
+    -H "Authorization: Bearer ${token}" \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    ${clusterApiUrl}/api/v1/namespaces/${namespace}/secrets
