@@ -1,0 +1,18 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: minio-admin-ui
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+  - secretKey: root-user
+    remoteRef:
+      key: /edp/system
+      property: minio.ROOT_USER
+  - secretKey: root-password
+    remoteRef:
+      key: /edp/system
+      property: minio.ROOT_PASSWORD

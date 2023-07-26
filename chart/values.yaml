@@ -52,6 +52,11 @@ harborHA:
   createNamespace: true
   enable: true
 
+# Harbor with HA, OKD Cluster
+harborHAOKD:
+  createNamespace: true
+  enable: false
+
 ingressNginx:
   createNamespace: true
   enable: true

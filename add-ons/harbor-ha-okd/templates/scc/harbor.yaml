@@ -1,0 +1,27 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: harbor
+  annotations:
+    "helm.sh/hook": "pre-install"
+fsGroup:
+  ranges:
+    - max: 10000
+      min: 10000
+  type: MustRunAs
+runAsUser:
+  type: MustRunAs
+  uid: 10000
+seLinuxContext:
+  type: MustRunAs
+users:
+  - system:serviceaccount:harbor:default
+allowHostDirVolumePlugin: false
+allowHostIPC: true
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false
+allowedCapabilities: []
+allowedFlexVolumes: []
+readOnlyRootFilesystem: false

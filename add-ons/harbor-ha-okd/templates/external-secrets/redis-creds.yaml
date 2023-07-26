@@ -1,0 +1,14 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: redis-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+    - secretKey: REDIS_PASSWORD
+      remoteRef:
+        key: /edp/system
+        property: redis.REDIS_PASSWORD

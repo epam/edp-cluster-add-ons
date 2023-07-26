@@ -1,0 +1,18 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: harbor-s3
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  data:
+  - secretKey: REGISTRY_STORAGE_S3_ACCESSKEY
+    remoteRef:
+      key: /edp/system
+      property: s3-user.ACCESSKEY
+  - secretKey: REGISTRY_STORAGE_S3_SECRETKEY
+    remoteRef:
+      key: /edp/system
+      property: s3-user.SECRETKEY

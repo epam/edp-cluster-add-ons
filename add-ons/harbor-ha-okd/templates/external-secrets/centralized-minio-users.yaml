@@ -1,0 +1,29 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: centralized-minio-users
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  target:
+    template:
+      engineVersion: v2
+      data:
+        username1: |
+          username={{ printf "{{ .REGISTRY_STORAGE_S3_ACCESSKEY }}" }}
+          password={{ printf "{{ .REGISTRY_STORAGE_S3_SECRETKEY }}" }}
+          disabled=false
+          policies=harbor
+          setPolicies=false
+
+  data:
+    - secretKey: REGISTRY_STORAGE_S3_ACCESSKEY
+      remoteRef:
+        key: /edp/system
+        property: s3-user.ACCESSKEY
+    - secretKey: REGISTRY_STORAGE_S3_SECRETKEY
+      remoteRef:
+        key: /edp/system
+        property: s3-user.SECRETKEY
