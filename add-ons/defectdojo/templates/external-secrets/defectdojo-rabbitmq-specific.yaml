@@ -8,11 +8,11 @@ spec:
     kind: SecretStore
     name: aws-parameterstore
   data:
-  - secretKey: rabbitmq-password
-    remoteRef:
-      key: /edp/deploy-secrets
-      property: defectdojo-rabbitmq-specific.rabbitmq-password
-  - secretKey: rabbitmq-erlang-cookie
-    remoteRef:
-      key: /edp/deploy-secrets
-      property: defectdojo-rabbitmq-specific.rabbitmq-erlang-cookie
+    - secretKey: rabbitmq-password
+      remoteRef:
+        key: /edp/system
+        property: defectdojo.rabbitmq-password
+    - secretKey: rabbitmq-erlang-cookie
+      remoteRef:
+        key: /edp/system
+        property: defectdojo.rabbitmq-erlang-cookie

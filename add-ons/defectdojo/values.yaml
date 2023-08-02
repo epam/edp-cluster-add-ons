@@ -1,5 +1,5 @@
 defectdojo:
-  tag: 2.17.0
+  tag: 2.24.4
   fullnameOverride: defectdojo
   host: defectdojo.example.com
   site_url: https://defectdojo.example.com
@@ -7,7 +7,6 @@ defectdojo:
     - defectdojo-django.defectdojo
 
   initializer:
-    # should be false after initial installation was performed
     run: true
   django:
     ingress:
@@ -20,16 +19,34 @@ defectdojo:
         initialDelaySeconds: 20
     mediaPersistentVolume:
       persistentVolumeClaim:
-        storageClassName: ebs-sc
         size: 2Gi
 
   postgresql:
-    primary:
-      persistence:
-        storageClass: "ebs-sc"
-        size: 2Gi
+    # Crunch PostgresCluster is used as the External Postgresql database
+    enabled: false
+    postgresServer: "defectdojo-primary.defectdojo.svc"
+    auth:
+      existingSecret: defectdojo-pguser-defectdojo
+      secretKeys:
+        adminPasswordKey: password
+        userPasswordKey: password
 
   rabbitmq:
     persistence:
-      storageClass: "ebs-sc"
       size: 2Gi
+
+  # SSO Enablement. for additional options, please consult https://defectdojo.github.io/django-DefectDojo/integrations/social-authentication/#keycloak
+  # Keycloak integration also requires DD_SOCIAL_AUTH_KEYCLOAK_SECRET to be defined, we recommend to create secret with name `defectdojo-extrasecrets`
+  # and define key: DD_SOCIAL_AUTH_KEYCLOAK_SECRET with value from your Keycloak ClientId Secret
+  # the below options are public and ok to be defined in extraConfigs
+  extraConfigs:
+    DD_SESSION_COOKIE_SECURE: 'True'
+    DD_CSRF_COOKIE_SECURE: 'True'
+    DD_SECURE_SSL_REDIRECT: 'False'
+    DD_SOCIAL_AUTH_KEYCLOAK_OAUTH2_ENABLED: 'True'
+    DD_SOCIAL_AUTH_KEYCLOAK_KEY: 'defectdojo'
+    # Keycloak realm public key received from: <realm_name> -> realm settings -> keys -> RS256 -> Public key
+    DD_SOCIAL_AUTH_KEYCLOAK_PUBLIC_KEY: '<RS256_KEY>'
+    DD_SOCIAL_AUTH_KEYCLOAK_SECRET: "defectdojo-extrasecrets"
+    DD_SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL: 'https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth'
+    DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL: 'https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token'
