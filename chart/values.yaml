@@ -103,7 +103,11 @@ redis-operator:
   createNamespace: true
   enable: true
 
-sonarqube:
+sonar:
+  createNamespace: true
+  enable: true
+
+sonar-operator:
   createNamespace: true
   enable: true
 

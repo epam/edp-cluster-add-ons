@@ -1,8 +1,8 @@
-{{- if and (.Values.sonarqube) (.Values.sonarqube.enable) -}}
+{{- if and (index .Values "sonar-operator") (index .Values "sonar-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sonarqube
+  name: sonar-operator
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,20 +10,20 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: add-ons/sonarqube
+    path: add-ons/sonar-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       values: |
-        sonarqube:
-        {{- toYaml .Values.sonarqube | nindent 10 }}
+        sonar-operator:
+        {{- toYaml (index .Values "sonar-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
-    namespace: sonarqube
+    namespace: sonar
   syncPolicy:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.sonarqube.createNamespace }}
+      - CreateNamespace={{ (index .Values "sonar-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

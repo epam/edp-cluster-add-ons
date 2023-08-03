@@ -16,9 +16,9 @@ spec:
             storage: 1Gi
 
   users:
-    - name: sonarqube
+    - name: sonar
       databases:
-        - sonarqube
+        - sonar
       options: "SUPERUSER"
       password:
         type: AlphaNumeric
