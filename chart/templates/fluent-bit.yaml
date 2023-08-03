@@ -1,4 +1,4 @@
-{{- if and (.Values.fluentbit) (.Values.fluentbit.enable) -}}
+{{- if and (index .Values "fluent-bit") (index .Values "fluent-bit" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         fluent-bit:
-        {{- toYaml .Values.fluentbit | nindent 10 }}
+        {{- toYaml (index .Values "fluent-bit") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: logging
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.fluentbit.createNamespace }}
+      - CreateNamespace={{ (index .Values "fluent-bit" "createNamespace") }}
     retry:
       limit: 1
       backoff:

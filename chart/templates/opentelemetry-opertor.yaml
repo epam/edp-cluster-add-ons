@@ -1,4 +1,4 @@
-{{- if and (.Values.opentelemetryOperator) (.Values.opentelemetryOperator.enable) -}}
+{{- if and (index .Values "opentelemetry-operator") (index .Values "opentelemetry-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         opentelemetry-operator:
-        {{- toYaml .Values.opentelemetryOperator | nindent 10 }}
+        {{- toYaml (index .Values "opentelemetry-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: opentelemetry-operator
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.opentelemetryOperator.createNamespace }}
+      - CreateNamespace={{ (index .Values "opentelemetry-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

@@ -1,4 +1,4 @@
-{{- if and (.Values.prometheusOperator) (.Values.prometheusOperator.enable) -}}
+{{- if and (index .Values "prometheus-operator") (index .Values "prometheus-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         kube-prometheus-stack:
-        {{- toYaml .Values.prometheusOperator | nindent 10 }}
+        {{- toYaml (index .Values "prometheus-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: monitoring
@@ -24,7 +24,7 @@ spec:
       prune: true
     syncOptions:
       - ServerSideApply=true
-      - CreateNamespace={{ .Values.prometheusOperator.createNamespace }}
+      - CreateNamespace={{ (index .Values "prometheus-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

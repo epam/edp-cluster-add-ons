@@ -1,4 +1,4 @@
-{{- if and (.Values.vaultKMS) (.Values.vaultKMS.enable) -}}
+{{- if and (index .Values "vault-kms") (index .Values "vault-kms" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         vault:
-        {{- toYaml .Values.vaultKMS | nindent 10 }}
+        {{- toYaml (index .Values "vault-kms") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: vault
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.vaultKMS.createNamespace }}
+      - CreateNamespace={{ (index .Values "vault-kms" "createNamespace") }}
     retry:
       limit: 1
       backoff:

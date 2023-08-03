@@ -1,8 +1,8 @@
-{{- if and (.Values.argocd) (.Values.argocd.enable) -}}
+{{- if and (index .Values "argo-cd") (index .Values "argo-cd" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: argo-cd
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         argo-cd:
-        {{- toYaml .Values.argocd | nindent 10 }}
+        {{- toYaml (index .Values "argo-cd") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: edp
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.argocd.createNamespace }}
+      - CreateNamespace={{ (index .Values "argo-cd" "createNamespace") }}
     retry:
       limit: 1
       backoff:

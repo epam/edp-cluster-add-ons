@@ -1,4 +1,4 @@
-{{- if and (.Values.harborHAOKD) (.Values.harborHAOKD.enable) -}}
+{{- if and (index .Values "harbor-ha-okd") (index .Values "harbor-ha-okd" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         harbor:
-        {{- toYaml .Values.harborHAOKD | nindent 10 }}
+        {{- toYaml (index .Values "harbor-ha-okd") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: harbor
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.harborHAOKD.createNamespace }}
+      - CreateNamespace={{ (index .Values "harbor-ha-okd" "createNamespace") }}
     retry:
       limit: 1
       backoff:

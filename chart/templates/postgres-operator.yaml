@@ -1,4 +1,4 @@
-{{- if and (.Values.postgresOperator) (.Values.postgresOperator.enable) -}}
+{{- if and (index .Values "postgres-operator") (index .Values "postgres-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         postgres-operator:
-        {{- toYaml .Values.postgresOperator | nindent 10 }}
+        {{- toYaml (index .Values "postgres-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: postgres-operator
@@ -24,7 +24,7 @@ spec:
       prune: true
     syncOptions:
       - ServerSideApply=true
-      - CreateNamespace={{ .Values.postgresOperator.createNamespace }}
+      - CreateNamespace={{ (index .Values "postgres-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

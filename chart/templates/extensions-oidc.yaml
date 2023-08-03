@@ -1,4 +1,4 @@
-{{- if and (.Values.extensionsOIDC) (.Values.extensionsOIDC.enable) -}}
+{{- if and (index .Values "extensions-oidc") (index .Values "argo-cd" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         extensionsOIDC:
-        {{- toYaml .Values.extensionsOIDC | nindent 10 }}
+        {{- toYaml (index .Values "extensions-oidc") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: security
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.extensionsOIDC.createNamespace }}
+      - CreateNamespace={{ (index .Values "extensions-oidc" "createNamespace") }}
     retry:
       limit: 1
       backoff:

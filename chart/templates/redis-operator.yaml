@@ -1,4 +1,4 @@
-{{- if and (.Values.redisOperator) (.Values.redisOperator.enable) -}}
+{{- if and (index .Values "redis-operator") (index .Values "redis-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         redis-operator:
-        {{- toYaml .Values.redisOperator | nindent 10 }}
+        {{- toYaml (index .Values "redis-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: redis-operator
@@ -24,7 +24,7 @@ spec:
       prune: true
     syncOptions:
       - ServerSideApply=true
-      - CreateNamespace={{ .Values.redisOperator.createNamespace }}
+      - CreateNamespace={{ (index .Values "redis-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

@@ -1,4 +1,4 @@
-{{- if and (.Values.keycloakPostgresql) (.Values.keycloakPostgresql.enable) -}}
+{{- if and (index .Values "keycloak-postgresql") (index .Values "keycloak-postgresql" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -17,7 +17,7 @@ spec:
     helm:
       values: |
         postgresql:
-        {{- toYaml .Values.keycloakPostgresql | nindent 10 }}
+        {{- toYaml (index .Values "keycloak-postgresql") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: security
@@ -25,7 +25,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.keycloakPostgresql.createNamespace }}
+      - CreateNamespace={{ (index .Values "keycloak-postgresql" "createNamespace") }}
     retry:
       limit: 1
       backoff:

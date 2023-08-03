@@ -1,13 +1,13 @@
 # keep sorted order
 # -- ArgoCD Deployment
-argocd:
+argo-cd:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false
 
 # we install it in kube-system namespace so we don't need to create it
 # -- AWS EFS CSI Driver
-awsEfsCsiDriver:
+aws-efs-csi-driver:
   enable: true
 
 # -- Cert Manager
@@ -22,7 +22,7 @@ defectdojo:
   createNamespace: true
   enable: true
 
-dependencyTrack:
+dependency-track:
   createNamespace: true
   enable: true
 
@@ -30,16 +30,16 @@ edp:
   createNamespace: true
   enable: true
 
-extensionsOIDC:
+extensions-oidc:
   createNamespace: true
   enable: true
 
-externalSecrets:
+external-secrets:
   createNamespace: true
   enable: true
 
 # fluent-bit can be installed as a single component
-fluentbit:
+fluent-bit:
   createNamespace: false
   enable: false
 
@@ -48,20 +48,20 @@ harbor:
   enable: true
 
 # Harbor with High Availability
-harborHA:
+harbor-ha:
   createNamespace: true
   enable: true
 
 # Harbor with HA, OKD Cluster
-harborHAOKD:
+harbor-ha-okd:
   createNamespace: true
   enable: false
 
-ingressNginx:
+ingress-nginx:
   createNamespace: true
   enable: true
 
-jaegerOperator:
+jaeger-operator:
   enable: true
   createNamespace: true
 
@@ -69,11 +69,11 @@ keycloak:
   createNamespace: true
   enable: true
 
-keycloakPostgresql:
+keycloak-postgresql:
   createNamespace: false
   enable: false
 
-minioOperator:
+minio-operator:
   createNamespace: true
   enable: true
 
@@ -86,20 +86,20 @@ opensearch:
   createNamespace: true
   enable: true
 
-opentelemetryOperator:
+opentelemetry-operator:
   enable: true
   createNamespace: true
 
 # Postgres Operator
-postgresOperator:
+postgres-operator:
   createNamespace: true
   enable: true
 
-prometheusOperator:
+prometheus-operator:
   createNamespace: true
   enable: true
 
-redisOperator:
+redis-operator:
   createNamespace: true
   enable: true
 
@@ -107,7 +107,7 @@ sonarqube:
   createNamespace: true
   enable: true
 
-storageClass:
+storage-class:
   enable: true
 
 tekton:
@@ -118,10 +118,10 @@ vault:
   createNamespace: true
   enable: true
 
-vaultKMS:
+vault-kms:
   createNamespace: true
   enable: false
 
-vaultOKD:
+vault-okd:
   createNamespace: true
   enable: true

@@ -1,4 +1,4 @@
-{{- if and (.Values.vaultOKD) (.Values.vaultOKD.enable) -}}
+{{- if and (index .Values "vault-okd") (index .Values "vault-okd" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         vault:
-        {{- toYaml .Values.vaultOKD | nindent 10 }}
+        {{- toYaml (index .Values "vault-okd") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: vault
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.vaultOKD.createNamespace }}
+      - CreateNamespace={{ (index .Values "vault-okd" "createNamespace") }}
     retry:
       limit: 1
       backoff:

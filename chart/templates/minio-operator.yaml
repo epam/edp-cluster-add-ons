@@ -1,4 +1,4 @@
-{{- if and (.Values.minioOperator) (.Values.minioOperator.enable) -}}
+{{- if and (index .Values "minio-operator") (index .Values "minio-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         minio-operator:
-        {{- toYaml .Values.minioOperator | nindent 10 }}
+        {{- toYaml (index .Values "minio-operator") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: minio-operator
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.minioOperator.createNamespace }}
+      - CreateNamespace={{ (index .Values "minio-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:

@@ -1,4 +1,4 @@
-{{- if and (.Values.ingressNginx) (.Values.ingressNginx.enable) -}}
+{{- if and (index .Values "ingress-nginx") (index .Values "ingress-nginx" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         ingress-nginx:
-        {{- toYaml .Values.ingressNginx | nindent 10 }}
+        {{- toYaml (index .Values "ingress-nginx") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: ingress-nginx
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ .Values.ingressNginx.createNamespace }}
+      - CreateNamespace={{ (index .Values "ingress-nginx" "createNamespace") }}
     retry:
       limit: 1
       backoff:

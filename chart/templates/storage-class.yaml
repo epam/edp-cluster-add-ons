@@ -1,4 +1,4 @@
-{{- if and (.Values.storageClass) (.Values.storageClass.enable) -}}
+{{- if and (index .Values "storage-class") (index .Values "storage-class" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
