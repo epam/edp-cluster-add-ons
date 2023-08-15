@@ -1,6 +1,6 @@
 # nexus
 
-![Version: 56.0.0](https://img.shields.io/badge/Version-56.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.56.0](https://img.shields.io/badge/AppVersion-3.56.0-informational?style=flat-square)
+![Version: 58.1.0](https://img.shields.io/badge/Version-58.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.58.1](https://img.shields.io/badge/AppVersion-3.58.1-informational?style=flat-square)
 
 A Helm chart for Nexus
 
@@ -9,7 +9,7 @@ A Helm chart for Nexus
 | Repository | Name | Version |
 |------------|------|---------|
 | https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
-| https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 56.0.0 |
+| https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 58.1.0 |
 
 ## Values
 
@@ -24,7 +24,7 @@ A Helm chart for Nexus
 | nexus-repository-manager.deployment.initContainers[0].volumeMounts[0].mountPath | string | `"/nexus-data"` |  |
 | nexus-repository-manager.deployment.initContainers[0].volumeMounts[0].name | string | `"nexus-data"` |  |
 | nexus-repository-manager.fullnameOverride | string | `"nexus"` |  |
-| nexus-repository-manager.image.tag | string | `"3.56.0"` |  |
+| nexus-repository-manager.image.tag | string | `"3.58.1"` |  |
 | nexus-repository-manager.ingress.enabled | bool | `false` |  |
 | nexus-repository-manager.ingress.hostRepo | string | `"nexus.example.com"` |  |
 | nexus-repository-manager.nameOverride | string | `"nexus"` |  |
