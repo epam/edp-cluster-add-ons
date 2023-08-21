@@ -12,7 +12,7 @@ version: 1.0.31
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "1.0.31"
+appVersion: "8.9.10"
 
 dependencies:
 - name: sonarqube-lts
