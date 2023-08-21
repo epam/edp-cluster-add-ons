@@ -1,0 +1,27 @@
+nexus-operator:
+  global:
+    # -- namespace or a project name (in case of OpenShift)
+    edpName: "nexus"
+    # -- platform type that can be "kubernetes" or "openshift"
+    platform: "kubernetes"
+    # -- Administrators of your tenant
+    admins:
+    # -- a cluster DNS wildcard name
+    dnsWildCard:
+    # -- Keycloak Endpoint which is used for SSO integration. Format https://keycloak.example.com
+    keycloakUrl: "keycloak.example.com"
+
+  nexusCR:
+    # -- Specifies whether Nexus CR should be created
+    create: true
+
+  nexus:
+    # -- Flag to enable/disable Nexus deploy
+    deploy: false
+
+  # Proxy configuration section
+  oauth2_proxy:
+    # -- Install oauth2-proxy as a part of nexus deployment. Default: true
+    enabled: false
+  image:
+    tag: 2.17.0-SNAPSHOT.6

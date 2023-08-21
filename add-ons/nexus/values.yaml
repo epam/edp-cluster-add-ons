@@ -1,6 +1,6 @@
 nexus-repository-manager:
   image:
-    tag: 3.58.1
+    tag: 3.59.0
   nameOverride: "nexus"
   fullnameOverride: "nexus"
 
