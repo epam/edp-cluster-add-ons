@@ -1,4 +1,4 @@
-{{- if and (index .Values "extensions-oidc") (index .Values "argo-cd" "enable") -}}
+{{- if and (index .Values "extensions-oidc") (index .Values "extensions-oidc" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
