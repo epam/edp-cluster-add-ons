@@ -41,7 +41,7 @@ metadata:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-chains
 data:
-  artifacts.taskrun.format: tekton
+  artifacts.taskrun.format: in-toto
   artifacts.taskrun.storage: tekton
   artifacts.taskrun.signer: x509
   artifacts.oci.storage: oci
