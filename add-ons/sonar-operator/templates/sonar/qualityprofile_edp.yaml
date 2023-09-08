@@ -1,0 +1,1089 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: SonarQualityProfile
+metadata:
+  name: edp-way
+spec:
+  sonarRef:
+    name: sonar
+  name: edp-way
+  language: java
+  default: true
+  rules:
+    checkstyle:com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck:
+      severity: 'MAJOR'
+    checkstyle:com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck:
+      severity: 'MAJOR'
+    checkstyle:com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck:
+      severity: 'INFO'
+    checkstyle:com.puppycrawl.tools.checkstyle.checks.whitespace.GenericWhitespaceCheck:
+      severity: 'MINOR'
+    findbugs:AM_CREATES_EMPTY_JAR_FILE_ENTRY:
+      severity: 'MAJOR'
+    findbugs:AM_CREATES_EMPTY_ZIP_FILE_ENTRY:
+      severity: 'MAJOR'
+    findbugs:AT_OPERATION_SEQUENCE_ON_CONCURRENT_ABSTRACTION:
+      severity: 'MAJOR'
+    findbugs:BAC_BAD_APPLET_CONSTRUCTOR:
+      severity: 'INFO'
+    findbugs:BC_BAD_CAST_TO_ABSTRACT_COLLECTION:
+      severity: 'MAJOR'
+    findbugs:BC_BAD_CAST_TO_CONCRETE_COLLECTION:
+      severity: 'CRITICAL'
+    findbugs:BC_IMPOSSIBLE_CAST:
+      severity: 'BLOCKER'
+    findbugs:BC_IMPOSSIBLE_DOWNCAST:
+      severity: 'BLOCKER'
+    findbugs:BC_IMPOSSIBLE_DOWNCAST_OF_TOARRAY:
+      severity: 'BLOCKER'
+    findbugs:BC_UNCONFIRMED_CAST:
+      severity: 'CRITICAL'
+    findbugs:BC_UNCONFIRMED_CAST_OF_RETURN_VALUE:
+      severity: 'CRITICAL'
+    findbugs:BIT_ADD_OF_SIGNED_BYTE:
+      severity: 'CRITICAL'
+    findbugs:BIT_IOR_OF_SIGNED_BYTE:
+      severity: 'CRITICAL'
+    findbugs:BOA_BADLY_OVERRIDDEN_ADAPTER:
+      severity: 'CRITICAL'
+    findbugs:CNT_ROUGH_CONSTANT_VALUE:
+      severity: 'MAJOR'
+    findbugs:CO_ABSTRACT_SELF:
+      severity: 'MAJOR'
+    findbugs:CO_SELF_NO_OBJECT:
+      severity: 'MAJOR'
+    findbugs:DC_DOUBLECHECK:
+      severity: 'MAJOR'
+    findbugs:DC_PARTIALLY_CONSTRUCTED:
+      severity: 'MAJOR'
+    findbugs:DLS_DEAD_LOCAL_STORE_OF_NULL:
+      severity: 'CRITICAL'
+    findbugs:DLS_DEAD_LOCAL_STORE_SHADOWS_FIELD:
+      severity: 'MAJOR'
+    findbugs:DLS_DEAD_STORE_OF_CLASS_LITERAL:
+      severity: 'CRITICAL'
+    findbugs:DMI_ARGUMENTS_WRONG_ORDER:
+      severity: 'MINOR'
+    findbugs:DMI_DOH:
+      severity: 'MAJOR'
+    findbugs:DMI_EMPTY_DB_PASSWORD:
+      severity: 'CRITICAL'
+    findbugs:DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS:
+      severity: 'MAJOR'
+    findbugs:DMI_FUTILE_ATTEMPT_TO_CHANGE_MAXPOOL_SIZE_OF_SCHEDULED_THREAD_POOL_EXECUTOR:
+      severity: 'MINOR'
+    findbugs:DMI_HARDCODED_ABSOLUTE_FILENAME:
+      severity: 'CRITICAL'
+    findbugs:DMI_RANDOM_USED_ONLY_ONCE:
+      severity: 'CRITICAL'
+    findbugs:DMI_UNSUPPORTED_METHOD:
+      severity: 'MAJOR'
+    findbugs:DMI_USELESS_SUBSTRING:
+      severity: 'CRITICAL'
+    findbugs:DM_BOOLEAN_CTOR:
+      severity: 'MAJOR'
+    findbugs:DM_CONVERT_CASE:
+      severity: 'INFO'
+    findbugs:DM_FP_NUMBER_CTOR:
+      severity: 'MAJOR'
+    findbugs:DM_INVALID_MIN_MAX:
+      severity: 'MAJOR'
+    findbugs:DM_NEXTINT_VIA_NEXTDOUBLE:
+      severity: 'MAJOR'
+    findbugs:DM_NUMBER_CTOR:
+      severity: 'CRITICAL'
+    findbugs:DM_STRING_CTOR:
+      severity: 'MAJOR'
+    findbugs:DM_STRING_VOID_CTOR:
+      severity: 'MAJOR'
+    findbugs:DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED:
+      severity: 'MAJOR'
+    findbugs:DP_DO_INSIDE_DO_PRIVILEGED:
+      severity: 'MAJOR'
+    findbugs:EQ_ALWAYS_FALSE:
+      severity: 'BLOCKER'
+    findbugs:EQ_ALWAYS_TRUE:
+      severity: 'BLOCKER'
+    findbugs:EQ_UNUSUAL:
+      severity: 'MINOR'
+    findbugs:FB_MISSING_EXPECTED_WARNING:
+      severity: 'INFO'
+    findbugs:FB_UNEXPECTED_WARNING:
+      severity: 'INFO'
+    findbugs:HE_INHERITS_EQUALS_USE_HASHCODE:
+      severity: 'CRITICAL'
+    findbugs:HE_SIGNATURE_DECLARES_HASHING_OF_UNHASHABLE_CLASS:
+      severity: 'CRITICAL'
+    findbugs:HE_USE_OF_UNHASHABLE_CLASS:
+      severity: 'CRITICAL'
+    findbugs:HRS_REQUEST_PARAMETER_TO_COOKIE:
+      severity: 'MAJOR'
+    findbugs:HRS_REQUEST_PARAMETER_TO_HTTP_HEADER:
+      severity: 'MAJOR'
+    findbugs:HSC_HUGE_SHARED_STRING_CONSTANT:
+      severity: 'CRITICAL'
+    findbugs:ICAST_QUESTIONABLE_UNSIGNED_RIGHT_SHIFT:
+      severity: 'CRITICAL'
+    findbugs:IC_INIT_CIRCULARITY:
+      severity: 'CRITICAL'
+    findbugs:IC_SUPERCLASS_USES_SUBCLASS_DURING_INITIALIZATION:
+      severity: 'MAJOR'
+    findbugs:IIO_INEFFICIENT_INDEX_OF:
+      severity: 'MAJOR'
+    findbugs:IIO_INEFFICIENT_LAST_INDEX_OF:
+      severity: 'MAJOR'
+    findbugs:IL_INFINITE_LOOP:
+      severity: 'CRITICAL'
+    findbugs:IL_INFINITE_RECURSIVE_LOOP:
+      severity: 'CRITICAL'
+    findbugs:IMA_INEFFICIENT_MEMBER_ACCESS:
+      severity: 'INFO'
+    findbugs:IM_AVERAGE_COMPUTATION_COULD_OVERFLOW:
+      severity: 'CRITICAL'
+    findbugs:INT_BAD_COMPARISON_WITH_INT_VALUE:
+      severity: 'MAJOR'
+    findbugs:INT_BAD_COMPARISON_WITH_NONNEGATIVE_VALUE:
+      severity: 'CRITICAL'
+    findbugs:INT_BAD_COMPARISON_WITH_SIGNED_BYTE:
+      severity: 'CRITICAL'
+    findbugs:INT_VACUOUS_COMPARISON:
+      severity: 'CRITICAL'
+    findbugs:IO_APPENDING_TO_OBJECT_OUTPUT_STREAM:
+      severity: 'CRITICAL'
+    findbugs:IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN:
+      severity: 'CRITICAL'
+    findbugs:IS2_INCONSISTENT_SYNC:
+      severity: 'CRITICAL'
+    findbugs:IS_FIELD_NOT_GUARDED:
+      severity: 'CRITICAL'
+    findbugs:IS_INCONSISTENT_SYNC:
+      severity: 'MAJOR'
+    findbugs:ITA_INEFFICIENT_TO_ARRAY:
+      severity: 'CRITICAL'
+    findbugs:JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS:
+      severity: 'MINOR'
+    findbugs:ME_ENUM_FIELD_SETTER:
+      severity: 'CRITICAL'
+    findbugs:ME_MUTABLE_ENUM_FIELD:
+      severity: 'CRITICAL'
+    findbugs:MF_METHOD_MASKS_FIELD:
+      severity: 'MAJOR'
+    findbugs:NM_CONFUSING:
+      severity: 'MAJOR'
+    findbugs:NM_LCASE_TOSTRING:
+      severity: 'MAJOR'
+    findbugs:NM_VERY_CONFUSING:
+      severity: 'MAJOR'
+    findbugs:NM_VERY_CONFUSING_INTENTIONAL:
+      severity: 'MAJOR'
+    findbugs:NM_WRONG_PACKAGE:
+      severity: 'MAJOR'
+    findbugs:NM_WRONG_PACKAGE_INTENTIONAL:
+      severity: 'MAJOR'
+    findbugs:NN_NAKED_NOTIFY:
+      severity: 'CRITICAL'
+    findbugs:NP_GUARANTEED_DEREF:
+      severity: 'BLOCKER'
+    findbugs:NP_METHOD_PARAMETER_TIGHTENS_ANNOTATION:
+      severity: 'MAJOR'
+    findbugs:NP_METHOD_RETURN_RELAXING_ANNOTATION:
+      severity: 'MAJOR'
+    findbugs:NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR:
+      severity: 'CRITICAL'
+    findbugs:NP_NONNULL_PARAM_VIOLATION:
+      severity: 'CRITICAL'
+    findbugs:NP_NONNULL_RETURN_VIOLATION:
+      severity: 'CRITICAL'
+    findbugs:NP_NULL_PARAM_DEREF:
+      severity: 'CRITICAL'
+    findbugs:NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS:
+      severity: 'CRITICAL'
+    findbugs:NP_NULL_PARAM_DEREF_NONVIRTUAL:
+      severity: 'CRITICAL'
+    findbugs:NP_OPTIONAL_RETURN_NULL:
+      severity: 'MAJOR'
+    findbugs:NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE:
+      severity: 'CRITICAL'
+    findbugs:NP_STORE_INTO_NONNULL_FIELD:
+      severity: 'CRITICAL'
+    findbugs:PS_PUBLIC_SEMAPHORES:
+      severity: 'CRITICAL'
+    findbugs:PT_ABSOLUTE_PATH_TRAVERSAL:
+      severity: 'MAJOR'
+    findbugs:PT_RELATIVE_PATH_TRAVERSAL:
+      severity: 'MAJOR'
+    findbugs:PZ_DONT_REUSE_ENTRY_OBJECTS_IN_ITERATORS:
+      severity: 'MAJOR'
+    findbugs:RANGE_ARRAY_INDEX:
+      severity: 'BLOCKER'
+    findbugs:RANGE_ARRAY_LENGTH:
+      severity: 'CRITICAL'
+    findbugs:RANGE_ARRAY_OFFSET:
+      severity: 'CRITICAL'
+    findbugs:RANGE_STRING_INDEX:
+      severity: 'CRITICAL'
+    findbugs:RCN_REDUNDANT_COMPARISON_OF_NULL_AND_NONNULL_VALUE:
+      severity: 'CRITICAL'
+    findbugs:RCN_REDUNDANT_COMPARISON_TWO_NULL_VALUES:
+      severity: 'CRITICAL'
+    findbugs:RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE:
+      severity: 'CRITICAL'
+    findbugs:RCN_REDUNDANT_NULLCHECK_OF_NULL_VALUE:
+      severity: 'CRITICAL'
+    findbugs:RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE:
+      severity: 'BLOCKER'
+    findbugs:REC_CATCH_EXCEPTION:
+      severity: 'MAJOR'
+    findbugs:RE_BAD_SYNTAX_FOR_REGULAR_EXPRESSION:
+      severity: 'CRITICAL'
+    findbugs:RE_CANT_USE_FILE_SEPARATOR_AS_REGULAR_EXPRESSION:
+      severity: 'CRITICAL'
+    findbugs:RE_POSSIBLE_UNINTENDED_PATTERN:
+      severity: 'CRITICAL'
+    findbugs:RI_REDUNDANT_INTERFACES:
+      severity: 'MAJOR'
+    findbugs:RS_READOBJECT_SYNC:
+      severity: 'CRITICAL'
+    findbugs:RV_01_TO_INT:
+      severity: 'MAJOR'
+    findbugs:RV_RETURN_VALUE_IGNORED_BAD_PRACTICE:
+      severity: 'MAJOR'
+    findbugs:SE_BAD_FIELD_STORE:
+      severity: 'CRITICAL'
+    findbugs:SE_NO_SUITABLE_CONSTRUCTOR_FOR_EXTERNALIZATION:
+      severity: 'MAJOR'
+    findbugs:SE_PRIVATE_READ_RESOLVE_NOT_INHERITED:
+      severity: 'MAJOR'
+    findbugs:SE_TRANSIENT_FIELD_NOT_RESTORED:
+      severity: 'MAJOR'
+    findbugs:SF_DEAD_STORE_DUE_TO_SWITCH_FALLTHROUGH:
+      severity: 'CRITICAL'
+    findbugs:SF_DEAD_STORE_DUE_TO_SWITCH_FALLTHROUGH_TO_THROW:
+      severity: 'CRITICAL'
+    findbugs:SI_INSTANCE_BEFORE_FINALS_ASSIGNED:
+      severity: 'CRITICAL'
+    findbugs:SP_SPIN_ON_FIELD:
+      severity: 'MAJOR'
+    findbugs:SW_SWING_METHODS_INVOKED_IN_SWING_THREAD:
+      severity: 'MAJOR'
+    findbugs:TLW_TWO_LOCK_WAIT:
+      severity: 'MAJOR'
+    findbugs:TQ_ALWAYS_VALUE_USED_WHERE_NEVER_REQUIRED:
+      severity: 'CRITICAL'
+    findbugs:TQ_COMPARING_VALUES_WITH_INCOMPATIBLE_TYPE_QUALIFIERS:
+      severity: 'MAJOR'
+    findbugs:TQ_EXPLICIT_UNKNOWN_SOURCE_VALUE_REACHES_ALWAYS_SINK:
+      severity: 'CRITICAL'
+    findbugs:TQ_EXPLICIT_UNKNOWN_SOURCE_VALUE_REACHES_NEVER_SINK:
+      severity: 'CRITICAL'
+    findbugs:TQ_MAYBE_SOURCE_VALUE_REACHES_ALWAYS_SINK:
+      severity: 'CRITICAL'
+    findbugs:TQ_MAYBE_SOURCE_VALUE_REACHES_NEVER_SINK:
+      severity: 'CRITICAL'
+    findbugs:TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED:
+      severity: 'CRITICAL'
+    findbugs:TQ_UNKNOWN_VALUE_USED_WHERE_ALWAYS_STRICTLY_REQUIRED:
+      severity: 'MAJOR'
+    findbugs:UC_USELESS_OBJECT:
+      severity: 'MAJOR'
+    findbugs:UC_USELESS_OBJECT_STACK:
+      severity: 'MAJOR'
+    findbugs:UC_USELESS_VOID_METHOD:
+      severity: 'MAJOR'
+    findbugs:UG_SYNC_SET_UNSYNC_GET:
+      severity: 'MAJOR'
+    findbugs:UI_INHERITANCE_UNSAFE_GETRESOURCE:
+      severity: 'MAJOR'
+    findbugs:UMAC_UNCALLABLE_METHOD_OF_ANONYMOUS_CLASS:
+      severity: 'CRITICAL'
+    findbugs:URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD:
+      severity: 'INFO'
+    findbugs:UR_UNINIT_READ:
+      severity: 'MAJOR'
+    findbugs:UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR:
+      severity: 'MAJOR'
+    findbugs:USM_USELESS_ABSTRACT_METHOD:
+      severity: 'INFO'
+    findbugs:UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD:
+      severity: 'INFO'
+    findbugs:UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR:
+      severity: 'MINOR'
+    findbugs:UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD:
+      severity: 'MINOR'
+    findbugs:VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG:
+      severity: 'CRITICAL'
+    findbugs:VO_VOLATILE_INCREMENT:
+      severity: 'CRITICAL'
+    findbugs:VO_VOLATILE_REFERENCE_TO_ARRAY:
+      severity: 'MAJOR'
+    findbugs:WL_USING_GETCLASS_RATHER_THAN_CLASS_LITERAL:
+      severity: 'MAJOR'
+    findbugs:WS_WRITEOBJECT_SYNC:
+      severity: 'CRITICAL'
+    findbugs:XFB_XML_FACTORY_BYPASS:
+      severity: 'CRITICAL'
+    findbugs:XSS_REQUEST_PARAMETER_TO_SEND_ERROR:
+      severity: 'CRITICAL'
+    findbugs:XSS_REQUEST_PARAMETER_TO_SERVLET_WRITER:
+      severity: 'CRITICAL'
+    java:S1120:
+      severity: 'MINOR'
+      params: 'indentationLevel="4"'
+    java:NoSonar:
+      severity: 'MINOR'
+    java:S1113:
+      severity: 'CRITICAL'
+    java:S1119:
+      severity: 'MAJOR'
+    java:S100:
+      severity: 'MINOR'
+      params: 'format="^[a-z][a-zA-Z0-9]*$"'
+    java:S101:
+      severity: 'MINOR'
+      params: 'format="^[a-z][a-zA-Z0-9]*$"'
+    java:S103:
+      severity: 'MINOR'
+      params: 'maximumLineLength="120"'
+    java:S104:
+      severity: 'MAJOR'
+      params: 'Max="1000"'
+    java:S105:
+      severity: 'MINOR'
+    java:S108:
+      severity: 'MAJOR'
+    java:S1126:
+      severity: 'MINOR'
+    java:S1111:
+      severity: 'CRITICAL'
+    java:S127:
+      severity: 'MAJOR'
+    java:S115:
+      severity: 'MINOR'
+      params: 'format="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"'
+    java:S116:
+      severity: 'MINOR'
+      params: 'format="^[a-z][a-zA-Z0-9]*$"'
+    java:S117:
+      severity: 'MINOR'
+      params: 'format="^[a-z][a-zA-Z0-9]*$"'
+    java:S119:
+      severity: 'MINOR'
+      params: 'format="^[A-Z]$"'
+    java:S120:
+      severity: 'MINOR'
+      params: 'format="^[a-z]+(\.[a-z][a-z0-9]*)*$"'
+    java:S121:
+      severity: 'MAJOR'
+    java:S122:
+      severity: 'MINOR'
+    java:S125:
+      severity: 'MAJOR'
+    java:S106:
+      severity: 'MAJOR'
+    java:S1065:
+      severity: 'MAJOR'
+    java:S1066:
+      severity: 'MAJOR'
+    java:S1068:
+      severity: 'MAJOR'
+    java:S112:
+      severity: 'MINOR'
+    java:S109:
+      severity: 'INFO'
+      params: 'Authorized numbers="-1,0,1,2"'
+    java:S110:
+      severity: 'MAJOR'
+      params: 'max="5"'
+    java:S114:
+      severity: 'MINOR'
+      params: 'format="^[A-Z][a-zA-Z0-9]*$"'
+    java:S1110:
+      severity: 'MAJOR'
+    java:S1116:
+      severity: 'MINOR'
+    java:S1117:
+      severity: 'MAJOR'
+    java:S2309:
+      severity: 'MINOR'
+    java:S1123:
+      severity: 'MAJOR'
+    java:S1104:
+      severity: 'MAJOR'
+    java:S1105:
+      severity: 'MINOR'
+    java:S1107:
+      severity: 'MINOR'
+    java:S1109:
+      severity: 'MINOR'
+    java:S1541:
+      severity: 'MAJOR'
+      params: 'Threshold="9"'
+    java:S1114:
+      severity: 'BLOCKER'
+    java:S1144:
+      severity: 'MAJOR'
+    java:S1118:
+      severity: 'MAJOR'
+    java:S1121:
+      severity: 'MAJOR'
+    java:S1125:
+      severity: 'MINOR'
+    java:S1126:
+      severity: 'MINOR'
+    java:S1132:
+      severity: 'MAJOR'
+    java:S1133:
+      severity: 'INFO'
+    java:S1134:
+      severity: 'MAJOR'
+    java:S1135:
+      severity: 'INFO'
+    java:S1141:
+      severity: 'MAJOR'
+    java:S1143:
+      severity: 'BLOCKER'
+    java:S1147:
+      severity: 'CRITICAL'
+    java:S4507:
+      severity: 'CRITICAL'
+    java:S1149:
+      severity: 'MAJOR'
+    java:S1150:
+      severity: 'MAJOR'
+    java:S1151:
+      severity: 'MAJOR'
+      params: 'max="5"'
+    java:S1153:
+      severity: 'MINOR'
+    java:S1155:
+      severity: 'MAJOR'
+    java:S1157:
+      severity: 'MAJOR'
+    java:S1158:
+      severity: 'MAJOR'
+    java:S1160:
+      severity: 'MAJOR'
+    java:S1161:
+      severity: 'MAJOR'
+    java:S1163:
+      severity: 'MAJOR'
+    java:S1165:
+      severity: 'MAJOR'
+    java:S1166:
+      severity: 'CRITICAL'
+      params: 'exceptions="java.lang.InterruptedException, java.lang.NumberFormatException, java.lang.NoSuchMethodException, java.text.ParseException, java.net.MalformedURLException, java.time.format.DateTimeParseException"'
+    java:S1168:
+      severity: 'MAJOR'
+    java:S1170:
+      severity: 'MINOR'
+    java:S1171:
+      severity: 'MAJOR'
+    java:S1172:
+      severity: 'MAJOR'
+    java:S1174:
+      severity: 'MAJOR'
+    java:S1175:
+      severity: 'MAJOR'
+    java:S1181:
+      severity: 'BLOCKER'
+    java:S1182:
+      severity: 'MAJOR'
+    java:S1185:
+      severity: 'MINOR'
+    java:S1186:
+      severity: 'MAJOR'
+    java:S1188:
+      severity: 'MAJOR'
+      params: 'Max="20"'
+    java:S1190:
+      severity: 'MAJOR'
+    java:S1191:
+      severity: 'MAJOR'
+    java:S1192:
+      severity: 'MINOR'
+      params: 'threshold="2"'
+    java:S1193:
+      severity: 'MAJOR'
+    java:S1194:
+      severity: 'MAJOR'
+    java:S1195:
+      severity: 'MINOR'
+    java:S1197:
+      severity: 'MINOR'
+    java:S1199:
+      severity: 'MAJOR'
+    java:S1201:
+      severity: 'CRITICAL'
+    java:S1206:
+      severity: 'BLOCKER'
+    java:S1210:
+      severity: 'CRITICAL'
+    java:S1213:
+      severity: 'MINOR'
+    java:S1214:
+      severity: 'MINOR'
+    java:S1215:
+      severity: 'CRITICAL'
+    java:S1217:
+      severity: 'CRITICAL'
+    java:S1219:
+      severity: 'CRITICAL'
+    java:S1220:
+      severity: 'MINOR'
+    java:S1221:
+      severity: 'CRITICAL'
+    java:S1223:
+      severity: 'MAJOR'
+    java:S1226:
+      severity: 'MAJOR'
+    java:S1244:
+      severity: 'CRITICAL'
+    java:S1264:
+      severity: 'MINOR'
+    java:S128:
+      severity: 'CRITICAL'
+    java:S131:
+      severity: 'MAJOR'
+    java:S1301:
+      severity: 'MINOR'
+    java:S1310:
+      severity: 'MINOR'
+    java:S1312:
+      severity: 'MINOR'
+      params: 'format="LOG(?:GER)?"'
+    java:S1313:
+      severity: 'MAJOR'
+    java:S1314:
+      severity: 'MAJOR'
+    java:S1315:
+      severity: 'MINOR'
+    java:S1317:
+      severity: 'MAJOR'
+    java:S1319:
+      severity: 'MAJOR'
+    java:S1130:
+      severity: 'MINOR'
+    java:S134:
+      severity: 'MAJOR'
+      params: 'max="3"'
+    java:S135:
+      severity: 'MAJOR'
+    java:S138:
+      severity: 'MAJOR'
+      params: 'max="100"'
+    java:S1444:
+      severity: 'CRITICAL'
+    java:S1452:
+      severity: 'MAJOR'
+    java:S1479:
+      severity: 'MAJOR'
+      params: 'maximum="30"'
+    java:S1481:
+      severity: 'MAJOR'
+    java:S1488:
+      severity: 'MINOR'
+    java:S1596:
+      severity: 'MAJOR'
+    java:S1598:
+      severity: 'MAJOR'
+    java:S1602:
+      severity: 'MAJOR'
+    java:S1604:
+      severity: 'MAJOR'
+    java:S1607:
+      severity: 'MINOR'
+    java:S1610:
+      severity: 'MAJOR'
+    java:S1611:
+      severity: 'MINOR'
+    java:S1612:
+      severity: 'MINOR'
+    java:S1640:
+      severity: 'MINOR'
+    java:S1643:
+      severity: 'MAJOR'
+    java:S1656:
+      severity: 'CRITICAL'
+    java:S1659:
+      severity: 'MINOR'
+    java:S1695:
+      severity: 'MAJOR'
+    java:S1696:
+      severity: 'MAJOR'
+    java:S1698:
+      severity: 'CRITICAL'
+    java:S1699:
+      severity: 'MAJOR'
+    java:S1700:
+      severity: 'MAJOR'
+    java:S1710:
+      severity: 'MAJOR'
+    java:S1711:
+      severity: 'MAJOR'
+    java:S1764:
+      severity: 'CRITICAL'
+    java:S1844:
+      severity: 'BLOCKER'
+    java:S1845:
+      severity: 'MAJOR'
+    java:S1849:
+      severity: 'BLOCKER'
+    java:S1854:
+      severity: 'MAJOR'
+    java:S1858:
+      severity: 'MAJOR'
+    java:S1860:
+      severity: 'BLOCKER'
+    java:S1862:
+      severity: 'CRITICAL'
+    java:S1872:
+      severity: 'CRITICAL'
+    java:S1905:
+      severity: 'MINOR'
+    java:S1939:
+      severity: 'MINOR'
+    java:S1941:
+      severity: 'MAJOR'
+    java:S1943:
+      severity: 'MAJOR'
+    java:S1948:
+      severity: 'CRITICAL'
+    java:S1994:
+      severity: 'CRITICAL'
+    java:S1996:
+      severity: 'MAJOR'
+    java:S2055:
+      severity: 'CRITICAL'
+    java:S2059:
+      severity: 'MAJOR'
+    java:S2060:
+      severity: 'MAJOR'
+    java:S2061:
+      severity: 'CRITICAL'
+    java:S2063:
+      severity: 'MINOR'
+    java:S2065:
+      severity: 'MINOR'
+    java:S2066:
+      severity: 'CRITICAL'
+    java:S2068:
+      severity: 'CRITICAL'
+    java:S2077:
+      severity: 'CRITICAL'
+    java:S2092:
+      severity: 'CRITICAL'
+    java:S2093:
+      severity: 'MAJOR'
+    java:S2094:
+      severity: 'MAJOR'
+    java:S2097:
+      severity: 'BLOCKER'
+    java:S2109:
+      severity: 'BLOCKER'
+    java:S2110:
+      severity: 'CRITICAL'
+    java:S2111:
+      severity: 'CRITICAL'
+    java:S2114:
+      severity: 'CRITICAL'
+    java:S2116:
+      severity: 'CRITICAL'
+    java:S2118:
+      severity: 'CRITICAL'
+    java:S2122:
+      severity: 'BLOCKER'
+    java:S2123:
+      severity: 'CRITICAL'
+    java:S2127:
+      severity: 'BLOCKER'
+    java:S2130:
+      severity: 'MAJOR'
+    java:S2133:
+      severity: 'MAJOR'
+    java:S2134:
+      severity: 'MAJOR'
+    java:S2141:
+      severity: 'MAJOR'
+    java:S2142:
+      severity: 'CRITICAL'
+    java:S2147:
+      severity: 'MAJOR'
+    java:S2153:
+      severity: 'MAJOR'
+    java:S2154:
+      severity: 'CRITICAL'
+    java:S2156:
+      severity: 'MAJOR'
+    java:S2157:
+      severity: 'CRITICAL'
+    java:S2159:
+      severity: 'CRITICAL'
+    java:S2160:
+      severity: 'MAJOR'
+    java:S2162:
+      severity: 'CRITICAL'
+    java:S2164:
+      severity: 'CRITICAL'
+    java:S2165:
+      severity: 'MAJOR'
+    java:S2166:
+      severity: 'MAJOR'
+    java:S2167:
+      severity: 'CRITICAL'
+    java:S2168:
+      severity: 'MAJOR'
+    java:S2175:
+      severity: 'CRITICAL'
+    java:S2176:
+      severity: 'MAJOR'
+    java:S2177:
+      severity: 'MAJOR'
+    java:S2178:
+      severity: 'CRITICAL'
+    java:S2183:
+      severity: 'CRITICAL'
+    java:S2184:
+      severity: 'MAJOR'
+    java:S2185:
+      severity: 'MAJOR'
+    java:S2187:
+      severity: 'MAJOR'
+    java:S2189:
+      severity: 'BLOCKER'
+    java:S2200:
+      severity: 'MAJOR'
+    java:S2201:
+      severity: 'CRITICAL'
+    java:S2204:
+      severity: 'BLOCKER'
+    java:S2208:
+      severity: 'MAJOR'
+    java:S2209:
+      severity: 'MAJOR'
+    java:S2221:
+      severity: 'MINOR'
+    java:S2222:
+      severity: 'CRITICAL'
+    java:S2225:
+      severity: 'CRITICAL'
+    java:S2226:
+      severity: 'CRITICAL'
+    java:S2230:
+      severity: 'CRITICAL'
+    java:S2232:
+      severity: 'CRITICAL'
+    java:S2235:
+      severity: 'CRITICAL'
+    java:S2236:
+      severity: 'BLOCKER'
+    java:S2250:
+      severity: 'CRITICAL'
+    java:S2251:
+      severity: 'BLOCKER'
+    java:S2252:
+      severity: 'CRITICAL'
+    java:S2254:
+      severity: 'CRITICAL'
+    java:S2259:
+      severity: 'BLOCKER'
+    java:S2272:
+      severity: 'MAJOR'
+    java:S2273:
+      severity: 'CRITICAL'
+    java:S2274:
+      severity: 'CRITICAL'
+    java:S2275:
+      severity: 'CRITICAL'
+    java:S2276:
+      severity: 'CRITICAL'
+    java:S5542:
+      severity: 'CRITICAL'
+    java:S2293:
+      severity: 'MAJOR'
+    java:S2301:
+      severity: 'MAJOR'
+    java:S2308:
+      severity: 'MAJOR'
+    java:S2326:
+      severity: 'MAJOR'
+    java:S2333:
+      severity: 'MINOR'
+    java:S2386:
+      severity: 'CRITICAL'
+    java:S2387:
+      severity: 'MAJOR'
+    java:S2388:
+      severity: 'MAJOR'
+    java:S2437:
+      severity: 'MAJOR'
+    java:S2438:
+      severity: 'CRITICAL'
+    java:S2440:
+      severity: 'MAJOR'
+    java:S2441:
+      severity: 'CRITICAL'
+    java:S2442:
+      severity: 'BLOCKER'
+    java:S2444:
+      severity: 'CRITICAL'
+    java:S2445:
+      severity: 'BLOCKER'
+    java:S2446:
+      severity: 'CRITICAL'
+    java:S2447:
+      severity: 'CRITICAL'
+    java:S2583:
+      severity: 'BLOCKER'
+    java:S2589:
+      severity: 'MAJOR'
+    java:S2637:
+      severity: 'CRITICAL'
+    java:S2638:
+      severity: 'MAJOR'
+    java:S2639:
+      severity: 'CRITICAL'
+    java:S2260:
+      severity: 'MAJOR'
+    java:S2674:
+      severity: 'BLOCKER'
+    java:S2675:
+      severity: 'MAJOR'
+    java:S2676:
+      severity: 'CRITICAL'
+    java:S2677:
+      severity: 'BLOCKER'
+    java:S2681:
+      severity: 'CRITICAL'
+    java:S2692:
+      severity: 'CRITICAL'
+    java:S2693:
+      severity: 'MAJOR'
+    java:S2694:
+      severity: 'MAJOR'
+    java:S2695:
+      severity: 'BLOCKER'
+    java:S2696:
+      severity: 'CRITICAL'
+    java:S2701:
+      severity: 'MAJOR'
+    java:S2718:
+      severity: 'MAJOR'
+    java:S2737:
+      severity: 'MAJOR'
+    java:S2757:
+      severity: 'MAJOR'
+    java:S2786:
+      severity: 'MAJOR'
+    java:S2789:
+      severity: 'MAJOR'
+    java:S2864:
+      severity: 'MAJOR'
+    java:S2885:
+      severity: 'CRITICAL'
+    java:S2886:
+      severity: 'MAJOR'
+    java:S2925:
+      severity: 'MAJOR'
+    java:S2970:
+      severity: 'CRITICAL'
+    java:S2974:
+      severity: 'INFO'
+    java:S2975:
+      severity: 'MAJOR'
+    java:S5445:
+      severity: 'MAJOR'
+    java:S3020:
+      severity: 'MAJOR'
+    java:S3034:
+      severity: 'CRITICAL'
+    java:S3046:
+      severity: 'BLOCKER'
+    java:S3066:
+      severity: 'CRITICAL'
+    java:S3067:
+      severity: 'MAJOR'
+    java:S3306:
+      severity: 'MAJOR'
+    java:S3346:
+      severity: 'MAJOR'
+    java:S3398:
+      severity: 'MAJOR'
+    java:S3400:
+      severity: 'MINOR'
+    java:S3436:
+      severity: 'MAJOR'
+    java:S3437:
+      severity: 'MINOR'
+    java:S3518:
+      severity: 'CRITICAL'
+    java:S3553:
+      severity: 'MAJOR'
+    java:S3599:
+      severity: 'MINOR'
+    java:S3631:
+      severity: 'MINOR'
+    java:S3655:
+      severity: 'MAJOR'
+    java:S3750:
+      severity: 'MAJOR'
+    java:S3776:
+      severity: 'CRITICAL'
+      params: 'Threshold="15"'
+    java:S3923:
+      severity: 'MAJOR'
+    java:S3958:
+      severity: 'CRITICAL'
+    java:S3959:
+      severity: 'MAJOR'
+    java:S3984:
+      severity: 'MAJOR'
+    java:S3986:
+      severity: 'MAJOR'
+    java:S818:
+      severity: 'MINOR'
+      params: 'checkOnlyLong="false"'
+    java:S864:
+      severity: 'INFO'
+    java:S881:
+      severity: 'MAJOR'
+    java:S888:
+      severity: 'CRITICAL'
+    findsecbugs:ANDROID_BROADCAST:
+      severity: 'INFO'
+    findsecbugs:ANDROID_EXTERNAL_FILE_ACCESS:
+      severity: 'MAJOR'
+    findsecbugs:ANDROID_GEOLOCATION:
+      severity: 'INFO'
+    findsecbugs:ANDROID_WEB_VIEW_JAVASCRIPT:
+      severity: 'INFO'
+    findsecbugs:ANDROID_WEB_VIEW_JAVASCRIPT_INTERFACE:
+      severity: 'INFO'
+    findsecbugs:ANDROID_WORLD_WRITABLE:
+      severity: 'MAJOR'
+    findsecbugs:BAD_HEXA_CONVERSION:
+      severity: 'MAJOR'
+    findsecbugs:BLOWFISH_KEY_SIZE:
+      severity: 'MAJOR'
+    findsecbugs:CIPHER_INTEGRITY:
+      severity: 'MAJOR'
+    findsecbugs:COMMAND_INJECTION:
+      severity: 'CRITICAL'
+    findsecbugs:COOKIE_USAGE:
+      severity: 'INFO'
+    findsecbugs:CUSTOM_MESSAGE_DIGEST:
+      severity: 'MAJOR'
+    findsecbugs:DES_USAGE:
+      severity: 'MAJOR'
+    findsecbugs:ECB_MODE:
+      severity: 'MAJOR'
+    findsecbugs:ESAPI_ENCRYPTOR:
+      severity: 'INFO'
+    findsecbugs:FILE_UPLOAD_FILENAME:
+      severity: 'INFO'
+    findsecbugs:HARD_CODE_KEY:
+      severity: 'INFO'
+    findsecbugs:HARD_CODE_PASSWORD:
+      severity: 'MAJOR'
+    findsecbugs:HAZELCAST_SYMMETRIC_ENCRYPTION:
+      severity: 'MAJOR'
+    findsecbugs:JAXRS_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:JAXWS_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:LDAP_INJECTION:
+      severity: 'CRITICAL'
+    findsecbugs:NULL_CIPHER:
+      severity: 'MAJOR'
+    findsecbugs:PADDING_ORACLE:
+      severity: 'MAJOR'
+    findsecbugs:PATH_TRAVERSAL_IN:
+      severity: 'MAJOR'
+    findsecbugs:PATH_TRAVERSAL_OUT:
+      severity: 'MAJOR'
+    findsecbugs:PREDICTABLE_RANDOM:
+      severity: 'MAJOR'
+    findsecbugs:REDOS:
+      severity: 'MAJOR'
+    findsecbugs:RSA_KEY_SIZE:
+      severity: 'MAJOR'
+    findsecbugs:RSA_NO_PADDING:
+      severity: 'MAJOR'
+    findsecbugs:SCRIPT_ENGINE_INJECTION:
+      severity: 'CRITICAL'
+    findsecbugs:SERVLET_CONTENT_TYPE:
+      severity: 'INFO'
+    findsecbugs:SERVLET_HEADER:
+      severity: 'INFO'
+    findsecbugs:SERVLET_HEADER_REFERER:
+      severity: 'INFO'
+    findsecbugs:SERVLET_HEADER_USER_AGENT:
+      severity: 'INFO'
+    findsecbugs:SERVLET_PARAMETER:
+      severity: 'INFO'
+    findsecbugs:SERVLET_QUERY_STRING:
+      severity: 'INFO'
+    findsecbugs:SERVLET_SERVER_NAME:
+      severity: 'INFO'
+    findsecbugs:SERVLET_SESSION_ID:
+      severity: 'INFO'
+    findsecbugs:SPEL_INJECTION:
+      severity: 'CRITICAL'
+    findsecbugs:SPRING_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:SQL_INJECTION_HIBERNATE:
+      severity: 'CRITICAL'
+    findsecbugs:SQL_INJECTION_JDO:
+      severity: 'CRITICAL'
+    findsecbugs:SQL_INJECTION_JPA:
+      severity: 'CRITICAL'
+    findsecbugs:STATIC_IV:
+      severity: 'MAJOR'
+    findsecbugs:STRUTS1_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:STRUTS2_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:STRUTS_FORM_VALIDATION:
+      severity: 'INFO'
+    findsecbugs:TAPESTRY_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:UNENCRYPTED_SOCKET:
+      severity: 'MAJOR'
+    findsecbugs:UNVALIDATED_REDIRECT:
+      severity: 'MAJOR'
+    findsecbugs:WEAK_FILENAMEUTILS:
+      severity: 'INFO'
+    findsecbugs:WEAK_TRUST_MANAGER:
+      severity: 'MAJOR'
+    findsecbugs:WICKET_ENDPOINT:
+      severity: 'INFO'
+    findsecbugs:XML_DECODER:
+      severity: 'CRITICAL'
+    findsecbugs:XPATH_INJECTION:
+      severity: 'CRITICAL'
+    findsecbugs:XSS_REQUEST_WRAPPER:
+      severity: 'MAJOR'
+    findsecbugs:XSS_SERVLET:
+      severity: 'CRITICAL'
+    findsecbugs:XXE_DOCUMENT:
+      severity: 'CRITICAL'
+    findsecbugs:XXE_SAXPARSER:
+      severity: 'CRITICAL'
+    findsecbugs:XXE_XMLREADER:
+      severity: 'CRITICAL'
+    java:S1989:
+      severity: 'CRITICAL'
+    java:S4790:
+      severity: 'CRITICAL'
+    java:S5344:
+      severity: 'CRITICAL'
+    java:S2096:
+      severity: 'CRITICAL'
+    java:S2151:
+      severity: 'BLOCKER'
+    java:S2245:
+      severity: 'CRITICAL'
+    java:S2257:
+      severity: 'BLOCKER'
+    java:S5547:
+      severity: 'BLOCKER'
+    java:S2384:
+      severity: 'CRITICAL'

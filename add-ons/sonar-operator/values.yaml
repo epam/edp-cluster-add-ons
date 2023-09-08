@@ -1,28 +1,34 @@
-sonar-operator:
-  global:
-    # -- namespace or a project name (in case of OpenShift)
-    edpName: "sonar"
-    # -- platform type that can be "kubernetes" or "openshift"
-    platform: "kubernetes"
-    # -- a cluster DNS wildcard name
-    dnsWildCard:
-    openshift:
-      # -- Wich type of kind will be deployed to Openshift (values: deployments/deploymentConfigs)
-      deploymentType: "deployments"
+# -- component name
+name: sonar-operator
+annotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+image:
+  # -- EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator)
+  repository: epamedp/sonar-operator
+  # if not defined then .Chart.AppVersion is used
+  # -- EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags)
+  tag: 3.1.0
+imagePullPolicy: "IfNotPresent"
 
-  # -- component name
-  name: sonar-operator
-  image:
-    # -- EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator)
-    repository: epamedp/sonar-operator
-    # if not defined then .Chart.AppVersion is used
-    # -- EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags)
-    tag: 2.14.1
+resources:
+  limits:
+    memory: 192Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
 
-  sonar:
-    # -- Flag to enable/disable Sonar deploy
-    deploy: false
+# -- Additional volumes to be added to the pod
+extraVolumes: []
+#  - name: custom-ca
+#    secret:
+#      defaultMode: 420
+#      secretName: custom-ca
 
-keycloak:
-  url: "keycloak.example.com"
-  realm: "<keycloak-realm>"
+# -- Additional volumeMounts to be added to the container
+extraVolumeMounts: []
+#  - name: custom-ca
+#    mountPath: /etc/ssl/certs/CA.crt
+#    readOnly: true
+#    subPath: CA.crt

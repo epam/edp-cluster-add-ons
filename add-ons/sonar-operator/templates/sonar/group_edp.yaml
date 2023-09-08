@@ -1,0 +1,9 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: SonarGroup
+metadata:
+  name: non-interactive-users
+spec:
+  name: "non-interactive-users"
+  description: "Developers"
+  sonarRef:
+    name: sonar

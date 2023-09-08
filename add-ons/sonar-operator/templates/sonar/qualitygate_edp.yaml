@@ -1,0 +1,28 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: SonarQualityGate
+metadata:
+  name: edp-way
+spec:
+  sonarRef:
+    name: sonar
+  name: EDP way
+  default: true
+  conditions:
+    new_coverage:
+      op: LT
+      error: "80"
+    new_duplicated_lines_density:
+      op: GT
+      error: "3"
+    blocker_violations:
+      op: GT
+      error: "0"
+    critical_violations:
+      op: GT
+      error: "0"
+    test_errors:
+      op: GT
+      error: "0"
+    test_failures:
+      op: GT
+      error: "0"

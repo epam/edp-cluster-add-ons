@@ -1,0 +1,22 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: SonarPermissionTemplate
+metadata:
+  name: edp-default
+spec:
+  name: edp-default
+  description: "EDP permission templates"
+  projectKeyPattern: ".+"
+  default: true
+  groupsPermissions:
+    non-interactive-users:
+    - user
+    sonar-developers:
+    - user
+    - securityhotspotadmin
+    - issueadmin
+    - codeviewer
+    sonar-administrators:
+    - admin
+    - user
+  sonarRef:
+    name: sonar
