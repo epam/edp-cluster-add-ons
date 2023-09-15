@@ -17,4 +17,4 @@ appVersion: "3.1.0"
 dependencies:
 - name: sonar-operator
   version: 3.1.0
-  repository: https://epam.github.io/edp-helm-charts/snapshot
+  repository: https://epam.github.io/edp-helm-charts/stable

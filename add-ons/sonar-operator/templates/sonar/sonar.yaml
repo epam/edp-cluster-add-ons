@@ -3,19 +3,23 @@ kind: Sonar
 metadata:
   name: sonar
 spec:
-  url: https://sonar.example.com/
-  secret: sonar-admin
+  url: {{ .Values.sonarUrl }}
+  secret: {{.Values.sonarSecret}}
   defaultPermissionTemplate: edp-default
   settings:
     - key: sonar.dbcleaner.hoursBeforeKeepingOnlyOneSnapshotByDay
       value: "20"
     - key: sonar.auth.oidc.enabled
-      value: "true"
+      value: "{{ .Values.keycloak.enable }}"
+{{- if .Values.keycloak.enable }}
     - key: sonar.auth.oidc.issuerUri
-      value: "https://keycloak.example.com/auth/realms/<realm>"
+      value: "{{ .Values.keycloak.keycloakUrl }}/auth/realms/{{ .Values.keycloak.keycloakRealm }}"
     - key: sonar.auth.oidc.clientId.secured
       value: "sonar"
-    - key: sonar.comre.serverBaseURL
-      value: "https://sonar.example.com"
+    - key: sonar.core.serverBaseURL
+      value: {{ .Values.sonarUrl }}
     - key: sonar.auth.oidc.groupsSync.claimName
       value: "roles"
+    - key: sonar.auth.oidc.groupsSync
+      value: true
+{{- end }}

@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 8.0.1
+version: 8.0.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "9.9.1"
+appVersion: "9.9.2"
 
 dependencies:
 - name: sonarqube
-  version: 8.0.1
+  version: 8.0.2
   repository: https://SonarSource.github.io/helm-chart-sonarqube

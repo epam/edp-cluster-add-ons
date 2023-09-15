@@ -1,6 +1,6 @@
 # sonarqube
 
-![Version: 1.0.31](https://img.shields.io/badge/Version-1.0.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.9.10](https://img.shields.io/badge/AppVersion-8.9.10-informational?style=flat-square)
+![Version: 8.0.2](https://img.shields.io/badge/Version-8.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 9.9.2](https://img.shields.io/badge/AppVersion-9.9.2-informational?style=flat-square)
 
 A Helm chart for Sonarqube
 
@@ -8,36 +8,33 @@ A Helm chart for Sonarqube
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://SonarSource.github.io/helm-chart-sonarqube | sonarqube-lts | 1.0.31 |
+| https://SonarSource.github.io/helm-chart-sonarqube | sonarqube | 8.0.2 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| sonarqube-lts.deploymentType | string | `"Deployment"` |  |
-| sonarqube-lts.env[0].name | string | `"SONAR_TELEMETRY_ENABLE"` |  |
-| sonarqube-lts.env[0].value | string | `"false"` |  |
-| sonarqube-lts.fullnameOverride | string | `"sonar"` |  |
-| sonarqube-lts.ingress.enabled | bool | `true` |  |
-| sonarqube-lts.ingress.hosts[0].name | string | `"sonar.example.com"` |  |
-| sonarqube-lts.jdbcUrlOverride | string | `"jdbc:postgresql://postgresql-primary.sonar.svc:5432/sonar?socketTimeout=1500"` |  |
-| sonarqube-lts.nameOverride | string | `"sonar"` |  |
-| sonarqube-lts.plugins.install[0] | string | `"https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar"` |  |
-| sonarqube-lts.plugins.install[1] | string | `"https://github.com/checkstyle/sonar-checkstyle/releases/download/9.3/checkstyle-sonar-plugin-9.3.jar"` |  |
-| sonarqube-lts.plugins.install[2] | string | `"https://github.com/spotbugs/sonar-findbugs/releases/download/4.2.2/sonar-findbugs-plugin-4.2.2.jar"` |  |
-| sonarqube-lts.plugins.install[3] | string | `"https://github.com/jborgers/sonar-pmd/releases/download/3.4.0/sonar-pmd-plugin-3.4.0.jar"` |  |
-| sonarqube-lts.plugins.install[4] | string | `"https://github.com/sbaudoin/sonar-ansible/releases/download/v2.5.1/sonar-ansible-plugin-2.5.1.jar"` |  |
-| sonarqube-lts.plugins.install[5] | string | `"https://github.com/sbaudoin/sonar-yaml/releases/download/v1.7.0/sonar-yaml-plugin-1.7.0.jar"` |  |
-| sonarqube-lts.plugins.install[6] | string | `"https://github.com/Inform-Software/sonar-groovy/releases/download/1.8/sonar-groovy-plugin-1.8.jar"` |  |
-| sonarqube-lts.postgresql.enabled | bool | `false` |  |
-| sonarqube-lts.postgresql.existingSecret | string | `"postgresql-pguser-sonar"` |  |
-| sonarqube-lts.postgresql.existingSecretPasswordKey | string | `"password"` |  |
-| sonarqube-lts.postgresql.postgresqlDatabase | string | `"sonarDB"` |  |
-| sonarqube-lts.postgresql.postgresqlPassword | string | `"sonarPass"` |  |
-| sonarqube-lts.postgresql.postgresqlUsername | string | `"sonar"` |  |
-| sonarqube-lts.prometheusExporter.enabled | bool | `false` |  |
-| sonarqube-lts.resources.limits.cpu | string | `"700m"` |  |
-| sonarqube-lts.resources.limits.memory | string | `"3Gi"` |  |
-| sonarqube-lts.resources.requests.cpu | string | `"100m"` |  |
-| sonarqube-lts.resources.requests.memory | string | `"1.5Gi"` |  |
-
+| sonarqube.deploymentType | string | `"Deployment"` |  |
+| sonarqube.env[0].name | string | `"SONAR_TELEMETRY_ENABLE"` |  |
+| sonarqube.env[0].value | string | `"false"` |  |
+| sonarqube.fullnameOverride | string | `"sonar"` |  |
+| sonarqube.ingress.enabled | bool | `true` |  |
+| sonarqube.ingress.hosts[0].name | string | `"sonar.example.com"` |  |
+| sonarqube.nameOverride | string | `"sonar"` |  |
+| sonarqube.plugins.install[0] | string | `"https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar"` |  |
+| sonarqube.plugins.install[1] | string | `"https://github.com/checkstyle/sonar-checkstyle/releases/download/10.12.1/checkstyle-sonar-plugin-10.12.1.jar"` |  |
+| sonarqube.plugins.install[2] | string | `"https://github.com/spotbugs/sonar-findbugs/releases/download/4.2.3/sonar-findbugs-plugin-4.2.3.jar"` |  |
+| sonarqube.plugins.install[3] | string | `"https://github.com/jborgers/sonar-pmd/releases/download/3.4.0/sonar-pmd-plugin-3.4.0.jar"` |  |
+| sonarqube.plugins.install[4] | string | `"https://github.com/sbaudoin/sonar-ansible/releases/download/v2.5.1/sonar-ansible-plugin-2.5.1.jar"` |  |
+| sonarqube.plugins.install[5] | string | `"https://github.com/sbaudoin/sonar-yaml/releases/download/v1.7.0/sonar-yaml-plugin-1.7.0.jar"` |  |
+| sonarqube.plugins.install[6] | string | `"https://github.com/Inform-Software/sonar-groovy/releases/download/1.8/sonar-groovy-plugin-1.8.jar"` |  |
+| sonarqube.postgresql.enabled | bool | `false` |  |
+| sonarqube.prometheusExporter.enabled | bool | `false` |  |
+| sonarqube.resources.limits.cpu | string | `"700m"` |  |
+| sonarqube.resources.limits.memory | string | `"3Gi"` |  |
+| sonarqube.resources.requests.cpu | string | `"100m"` |  |
+| sonarqube.jdbcOverwrite.enable | bool | `true` |  |
+| sonarqube.jdbcOverwrite.jdbcUrl | string | `"jdbc:postgresql://postgresql-primary.sonar.svc:5432/sonar?socketTimeout=1500"` |  |
+| sonarqube.jdbcOverwrite.jdbcUsername | string | `"sonar"` |  |
+| sonarqube.jdbcOverwrite.jdbcSecretName | string | `"postgresql-pguser-sonar"` |  |
+| sonarqube.jdbcOverwrite.jdbcSecretPasswordKey | string | `"password"` |  |

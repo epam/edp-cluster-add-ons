@@ -32,3 +32,13 @@ extraVolumeMounts: []
 #    mountPath: /etc/ssl/certs/CA.crt
 #    readOnly: true
 #    subPath: CA.crt
+
+# -- URL and secret name which use sonar operator for configuring sonar
+sonarUrl: "https://sonar.example.com"
+sonarSecret: "sonar-admin"
+
+# -- Integration with keycloak
+keycloak:
+  enable: true
+  keycloakUrl: "https://keycloak.example.com"
+  keycloakRealm: "example"

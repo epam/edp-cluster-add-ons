@@ -5,7 +5,7 @@ sonarqube:
   ingress:
     enabled: true
     hosts:
-      - name: sonar.example.com
+    - name: sonar.example.com
 
   resources:
     limits:
@@ -25,26 +25,18 @@ sonarqube:
       - "https://github.com/sbaudoin/sonar-yaml/releases/download/v1.7.0/sonar-yaml-plugin-1.7.0.jar"
       - "https://github.com/Inform-Software/sonar-groovy/releases/download/1.8/sonar-groovy-plugin-1.8.jar"
   env:
-    - name: SONAR_TELEMETRY_ENABLE
-      value: "false"
+  - name: SONAR_TELEMETRY_ENABLE
+    value: "false"
 
   prometheusExporter:
     enabled: false
 
   postgresql:
     enabled: false
-    postgresqlUsername: "sonar"
-    postgresqlPassword: "sonarPass"
-    postgresqlDatabase: "sonarDB"
-    existingSecret: postgresql-pguser-sonar
-    existingSecretPasswordKey: "password"
 
   jdbcOverwrite:
-    enabled: true
-    jdbcUrl: "jdbc:postgresql://postgresql-primary.sonar.svc:5432/sonar?socketTimeout=1500"
+    enable: true
+    jdbcUrl: "jdbc:postgresql://postgresql-primary.sonar:5432/sonar?socketTimeout=1500"
     jdbcUsername: "sonar"
     jdbcSecretName: postgresql-pguser-sonar
     jdbcSecretPasswordKey: "password"
-  extraConfig:
-    sercrets:
-    - postgresql-pguser-sonar
