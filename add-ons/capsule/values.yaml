@@ -1,0 +1,13 @@
+capsule :
+  manager:
+    resources:
+# Max memory limit needed for the pod initialization process
+      limits:
+        memory: 256Mi
+
+# This parameter is responsible for ensuring that the pod can cope with
+# any existing taint on a node, without taking into account the taint's
+# specific properties, such as its key, value or impact. As a consequence,
+# it allows the pod to be allocated to any node, regardless of any associated taints.
+  tolerations:
+    - operator: Exists

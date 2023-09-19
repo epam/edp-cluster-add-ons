@@ -1,0 +1,20 @@
+apiVersion: v2
+name: capsule
+description: A Helm chart for capsule
+
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+type: application
+
+# The chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 0.4.6
+
+# Version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: "0.3.3"
+
+dependencies:
+- name: capsule
+  version: 0.4.6
+  repository: https://clastix.github.io/charts

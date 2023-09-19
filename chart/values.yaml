@@ -10,6 +10,12 @@ argo-cd:
 aws-efs-csi-driver:
   enable: false
 
+# -- Capsule
+capsule:
+  # -- whether to create the namespace or not
+  createNamespace: false
+  enable: false
+
 # -- Cert Manager
 certmanager:
   # -- whether to create the namespace or not
