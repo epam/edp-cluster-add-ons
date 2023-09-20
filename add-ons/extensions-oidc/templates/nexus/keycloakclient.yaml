@@ -9,5 +9,7 @@ spec:
     - groups
     - edp
   secret: keycloak-client-nexus-secret
-  targetRealm: sandbox
+  realmRef:
+    kind: KeycloakRealm
+    name: main
   webUrl: https://nexus.example.com

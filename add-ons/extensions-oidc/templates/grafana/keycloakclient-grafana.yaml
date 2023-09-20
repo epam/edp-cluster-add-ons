@@ -11,7 +11,9 @@ spec:
     - profile
     - email
     - roles
-  targetRealm: "shared"
+  realmRef:
+    kind: KeycloakRealm
+    name: shared
   webUrl: "https://grafana.example.com"
   protocolMappers:
     - name: roles

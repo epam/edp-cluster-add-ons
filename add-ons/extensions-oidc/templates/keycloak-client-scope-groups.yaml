@@ -16,4 +16,6 @@ spec:
       name: groups
       protocol: openid-connect
       protocolMapper: oidc-group-membership-mapper
-  realm: main
+  realmRef:
+    kind: KeycloakRealm
+    name: main

@@ -19,4 +19,6 @@ spec:
       name: oauth2-proxy-audience
       protocol: openid-connect
       protocolMapper: oidc-audience-mapper
-  realm: main
+  realmRef:
+    kind: KeycloakRealm
+    name: main

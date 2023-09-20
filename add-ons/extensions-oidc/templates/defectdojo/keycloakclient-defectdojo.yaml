@@ -5,7 +5,9 @@ metadata:
 spec:
   advancedProtocolMappers: true
   clientId: defectdojo
-  targetRealm: "shared"
+  realmRef:
+    kind: KeycloakRealm
+    name: shared
   attributes:
     request.object.signature.alg: "RS256"
     user.info.response.signature.alg: "RS256"
