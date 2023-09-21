@@ -21,5 +21,5 @@ spec:
     - key: sonar.auth.oidc.groupsSync.claimName
       value: "roles"
     - key: sonar.auth.oidc.groupsSync
-      value: true
+      value: "true"
 {{- end }}
