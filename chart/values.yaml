@@ -8,35 +8,35 @@ argo-cd:
 # we install it in kube-system namespace so we don't need to create it
 # -- AWS EFS CSI Driver
 aws-efs-csi-driver:
-  enable: true
+  enable: false
 
 # -- Cert Manager
 certmanager:
   # -- whether to create the namespace or not
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 # -- DefectDojo
 defectdojo:
   # -- whether to create the namespace or not
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 dependency-track:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 edp:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 extensions-oidc:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 external-secrets:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 # fluent-bit can be installed as a single component
 fluent-bit:
@@ -44,88 +44,88 @@ fluent-bit:
   enable: false
 
 harbor:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 # Harbor with High Availability
 harbor-ha:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 # Harbor with HA, OKD Cluster
 harbor-ha-okd:
-  createNamespace: true
+  createNamespace: false
   enable: false
 
 ingress-nginx:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 jaeger-operator:
-  enable: true
-  createNamespace: true
+  enable: false
+  createNamespace: false
 
 keycloak:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 keycloak-postgresql:
   createNamespace: false
   enable: false
 
 minio-operator:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 nexus:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 # opensearch includes opensearch, opensearch-dashboards, fluent-bit
 opensearch:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 opentelemetry-operator:
-  enable: true
-  createNamespace: true
+  enable: false
+  createNamespace: false
 
 # Postgres Operator
 postgres-operator:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 prometheus-operator:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 redis-operator:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 sonar:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 sonar-operator:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 storage-class:
-  enable: true
+  enable: false
 
 tekton:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 vault:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 vault-kms:
-  createNamespace: true
+  createNamespace: false
   enable: false
 
 vault-okd:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false

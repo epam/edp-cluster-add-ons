@@ -23,60 +23,60 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 |-----|------|---------|-------------|
 | argo-cd | object | `{"createNamespace":false,"enable":false}` | ArgoCD Deployment |
 | argo-cd.createNamespace | bool | `false` | whether to create the namespace or not |
-| aws-efs-csi-driver | object | `{"enable":true}` | AWS EFS CSI Driver |
-| certmanager | object | `{"createNamespace":true,"enable":true}` | Cert Manager |
-| certmanager.createNamespace | bool | `true` | whether to create the namespace or not |
-| defectdojo | object | `{"createNamespace":true,"enable":true}` | DefectDojo |
-| defectdojo.createNamespace | bool | `true` | whether to create the namespace or not |
-| dependency-track.createNamespace | bool | `true` |  |
-| dependency-track.enable | bool | `true` |  |
-| edp.createNamespace | bool | `true` |  |
-| edp.enable | bool | `true` |  |
-| extensions-oidc.createNamespace | bool | `true` |  |
-| extensions-oidc.enable | bool | `true` |  |
-| external-secrets.createNamespace | bool | `true` |  |
-| external-secrets.enable | bool | `true` |  |
+| aws-efs-csi-driver | object | `{"enable":false}` | AWS EFS CSI Driver |
+| certmanager | object | `{"createNamespace":false,"enable":false}` | Cert Manager |
+| certmanager.createNamespace | bool | `false` | whether to create the namespace or not |
+| defectdojo | object | `{"createNamespace":false,"enable":false}` | DefectDojo |
+| defectdojo.createNamespace | bool | `false` | whether to create the namespace or not |
+| dependency-track.createNamespace | bool | `false` |  |
+| dependency-track.enable | bool | `false` |  |
+| edp.createNamespace | bool | `false` |  |
+| edp.enable | bool | `false` |  |
+| extensions-oidc.createNamespace | bool | `false` |  |
+| extensions-oidc.enable | bool | `false` |  |
+| external-secrets.createNamespace | bool | `false` |  |
+| external-secrets.enable | bool | `false` |  |
 | fluent-bit.createNamespace | bool | `false` |  |
 | fluent-bit.enable | bool | `false` |  |
-| harbor-ha-okd.createNamespace | bool | `true` |  |
+| harbor-ha-okd.createNamespace | bool | `false` |  |
 | harbor-ha-okd.enable | bool | `false` |  |
-| harbor-ha.createNamespace | bool | `true` |  |
-| harbor-ha.enable | bool | `true` |  |
-| harbor.createNamespace | bool | `true` |  |
-| harbor.enable | bool | `true` |  |
-| ingress-nginx.createNamespace | bool | `true` |  |
-| ingress-nginx.enable | bool | `true` |  |
-| jaeger-operator.createNamespace | bool | `true` |  |
-| jaeger-operator.enable | bool | `true` |  |
+| harbor-ha.createNamespace | bool | `false` |  |
+| harbor-ha.enable | bool | `false` |  |
+| harbor.createNamespace | bool | `false` |  |
+| harbor.enable | bool | `false` |  |
+| ingress-nginx.createNamespace | bool | `false` |  |
+| ingress-nginx.enable | bool | `false` |  |
+| jaeger-operator.createNamespace | bool | `false` |  |
+| jaeger-operator.enable | bool | `false` |  |
 | keycloak-postgresql.createNamespace | bool | `false` |  |
 | keycloak-postgresql.enable | bool | `false` |  |
-| keycloak.createNamespace | bool | `true` |  |
-| keycloak.enable | bool | `true` |  |
-| minio-operator.createNamespace | bool | `true` |  |
-| minio-operator.enable | bool | `true` |  |
-| nexus.createNamespace | bool | `true` |  |
-| nexus.enable | bool | `true` |  |
-| opensearch.createNamespace | bool | `true` |  |
-| opensearch.enable | bool | `true` |  |
-| opentelemetry-operator.createNamespace | bool | `true` |  |
-| opentelemetry-operator.enable | bool | `true` |  |
-| postgres-operator.createNamespace | bool | `true` |  |
-| postgres-operator.enable | bool | `true` |  |
-| prometheus-operator.createNamespace | bool | `true` |  |
-| prometheus-operator.enable | bool | `true` |  |
-| redis-operator.createNamespace | bool | `true` |  |
-| redis-operator.enable | bool | `true` |  |
-| sonar-operator.createNamespace | bool | `true` |  |
-| sonar-operator.enable | bool | `true` |  |
-| sonar.createNamespace | bool | `true` |  |
-| sonar.enable | bool | `true` |  |
-| storage-class.enable | bool | `true` |  |
-| tekton.createNamespace | bool | `true` |  |
-| tekton.enable | bool | `true` |  |
-| vault-kms.createNamespace | bool | `true` |  |
+| keycloak.createNamespace | bool | `false` |  |
+| keycloak.enable | bool | `false` |  |
+| minio-operator.createNamespace | bool | `false` |  |
+| minio-operator.enable | bool | `false` |  |
+| nexus.createNamespace | bool | `false` |  |
+| nexus.enable | bool | `false` |  |
+| opensearch.createNamespace | bool | `false` |  |
+| opensearch.enable | bool | `false` |  |
+| opentelemetry-operator.createNamespace | bool | `false` |  |
+| opentelemetry-operator.enable | bool | `false` |  |
+| postgres-operator.createNamespace | bool | `false` |  |
+| postgres-operator.enable | bool | `false` |  |
+| prometheus-operator.createNamespace | bool | `false` |  |
+| prometheus-operator.enable | bool | `false` |  |
+| redis-operator.createNamespace | bool | `false` |  |
+| redis-operator.enable | bool | `false` |  |
+| sonar-operator.createNamespace | bool | `false` |  |
+| sonar-operator.enable | bool | `false` |  |
+| sonar.createNamespace | bool | `false` |  |
+| sonar.enable | bool | `false` |  |
+| storage-class.enable | bool | `false` |  |
+| tekton.createNamespace | bool | `false` |  |
+| tekton.enable | bool | `false` |  |
+| vault-kms.createNamespace | bool | `false` |  |
 | vault-kms.enable | bool | `false` |  |
-| vault-okd.createNamespace | bool | `true` |  |
-| vault-okd.enable | bool | `true` |  |
-| vault.createNamespace | bool | `true` |  |
-| vault.enable | bool | `true` |  |
+| vault-okd.createNamespace | bool | `false` |  |
+| vault-okd.enable | bool | `false` |  |
+| vault.createNamespace | bool | `false` |  |
+| vault.enable | bool | `false` |  |
 
