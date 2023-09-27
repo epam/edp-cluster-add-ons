@@ -44,14 +44,14 @@ dependency-track:
       - name: ALPINE_OIDC_TEAM_SYNCHRONIZATION
         value: "true"
 
-      resources:
-      # https://docs.dependencytrack.org/getting-started/deploy-docker/
-        requests:
-          cpu: 1
-          memory: 4608Mi
-        limits:
-          cpu: 2
-          memory: 12Gi
+    resources:
+    # https://docs.dependencytrack.org/getting-started/deploy-docker/
+      requests:
+        cpu: 1
+        memory: 4608Mi
+      limits:
+        cpu: 2
+        memory: 12Gi
 
   ingress:
     enabled: true
