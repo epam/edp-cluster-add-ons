@@ -1,0 +1,39 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmIdentityProvider
+metadata:
+  name: shared-idp
+spec:
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  alias: master
+  displayName: "master"
+  authenticateByDefault: false
+  enabled: true
+  firstBrokerLoginFlowAlias: "first broker login"
+  providerId: "keycloak-oidc"
+  config:
+    acceptsPromptNoneForwardFromClient: "false"
+    allowedClockSkew: "0"
+    authorizationUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}/protocol/openid-connect/auth"
+    backchannelSupported: "false"
+    clientAuthMethod: "client_secret_post"
+    clientId: "shared"
+    clientSecret: {{ .Values.extensionsOIDC.mainRealmSecret }}
+    defaultScope: ""
+    disableUserInfo: "false"
+    forwardParameters: ""
+    guiOrder: ""
+    hideOnLoginPage: "false"
+    issuer: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}"
+    jwksUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}/protocol/openid-connect/certs"
+    loginHint: "false"
+    logoutUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}/protocol/openid-connect/logout"
+    passMaxAge: "false"
+    pkceEnabled: "false"
+    prompt: ""
+    syncMode: "IMPORT"
+    tokenUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}/protocol/openid-connect/token"
+    uiLocales: "false"
+    userInfoUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ .Values.extensionsOIDC.mainRealm }}/protocol/openid-connect/userinfo"
+    validateSignature: "false"

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nexus-ci
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 900m
+spec:
+  rules:
+    - host: nexus-ci.example.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nexus
+                port:
+                  number: 8081

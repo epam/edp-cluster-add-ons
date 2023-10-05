@@ -52,3 +52,6 @@ vault:
 job:
   clusterApiUrl: "https://api.example.com:6443"
   keycloakUrl: "https://keycloak.example.com/auth/realms/shared"
+
+oidc:
+  enabled: false

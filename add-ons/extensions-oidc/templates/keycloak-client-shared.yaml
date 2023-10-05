@@ -1,0 +1,15 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: shared-openshift
+spec:
+  attributes:
+    post.logout.redirect.uris: +
+  clientId: shared
+  clientRoles:
+    - administrator
+    - developer
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  secret: keycloak-client-shared-openshift-secret

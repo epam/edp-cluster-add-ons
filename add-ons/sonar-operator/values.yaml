@@ -35,10 +35,10 @@ extraVolumeMounts: []
 
 # -- URL and secret name which use sonar operator for configuring sonar
 sonarUrl: "https://sonar.example.com"
-sonarSecret: "sonar-admin"
+sonarSecret: "sonar-admin-password"
 
 # -- Integration with keycloak
-keycloak:
-  enable: true
+oidc:
+  enabled: false
   keycloakUrl: "https://keycloak.example.com"
-  keycloakRealm: "example"
+  keycloakRealm: "shared"

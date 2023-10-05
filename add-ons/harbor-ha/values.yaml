@@ -139,3 +139,6 @@ harbor:
       # existingSecret: "harbor-redis"
       # Copy here the password value from the "redis-creds" secret
       password: "SomeSecret"
+
+oidc:
+  enabled: false

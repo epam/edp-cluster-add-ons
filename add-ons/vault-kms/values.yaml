@@ -39,7 +39,7 @@ vault:
           seal "awskms" {
             region     = "eu-central-1"
             kms_key_id = "KMS_KEY_ID"
-            role_arn   = "arn:aws:iam::012345678910:role/AWSIRSA_Shared_Vault"
+            role_arn = "arn:aws:iam::012345678910:role/AWSIRSA_Shared_Vault"
             web_identity_token_file = "/var/run/secrets/eks.amazonaws.com/serviceaccount/token"
           }
 
@@ -63,6 +63,8 @@ vault:
 
 job:
   clusterApiUrl: "https://cluster-api.com"
-  keycloakUrl: https://keycloak.example.com/auth/realms/shared
+  keycloakUrl: "https://keycloak.example.com/auth/realms/shared"
   vaultUrl: "vault.example.com"
 
+oidc:
+  enabled: false

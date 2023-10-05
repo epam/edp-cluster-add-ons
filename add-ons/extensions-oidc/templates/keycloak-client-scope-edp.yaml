@@ -20,5 +20,5 @@ spec:
       protocol: openid-connect
       protocolMapper: oidc-audience-mapper
   realmRef:
-    kind: KeycloakRealm
+    kind: ClusterKeycloakRealm
     name: main

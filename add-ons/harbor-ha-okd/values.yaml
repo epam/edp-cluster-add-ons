@@ -144,3 +144,6 @@ harbor:
       # existingSecret: "harbor-redis"
       # Take the value from "add-ons/harbor-ha-okd/templates/external-secrets/redis-creds.yaml" secret
       password: SomeSecret
+
+oidc:
+  enabled: false

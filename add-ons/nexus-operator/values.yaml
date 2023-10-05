@@ -25,3 +25,5 @@ nexus-operator:
     enabled: false
   image:
     tag: 2.17.0-SNAPSHOT.6
+
+nexusUrl: https://nexus.example.com

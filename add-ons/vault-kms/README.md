@@ -85,13 +85,14 @@ A Helm chart for Vault
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | job.clusterApiUrl | string | `"https://cluster-api.com"` |  |
-| job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/shared"` |  |
+| job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/sandbox"` |  |
 | job.vaultUrl | string | `"vault.example.com"` |  |
+| oidc.enabled | bool | `true` |  |
 | vault.fullnameOverride | string | `"vault"` |  |
 | vault.server.dataStorage.enabled | bool | `true` |  |
 | vault.server.dataStorage.size | string | `"1Gi"` |  |
 | vault.server.ha.enabled | bool | `true` |  |
-| vault.server.ha.raft.config | string | `"ui = true\nlistener \"tcp\" {\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  tls_disable = 1\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n    retry_join {\n    leader_api_addr = \"http://vault-0.vault-internal:8200\"\n  }\n  retry_join {\n    leader_api_addr = \"http://vault-1.vault-internal:8200\"\n  }\n  retry_join {\n    leader_api_addr = \"http://vault-2.vault-internal:8200\"\n  }\n}\n\nservice_registration \"kubernetes\" {}\n\nseal \"awskms\" {\n  region     = \"eu-central-1\"\n  kms_key_id = \"KMS_KEY_ID\"\n  role_arn   = \"arn:aws:iam::012345678910:role/AWSIRSA_Shared_Vault\"\n  web_identity_token_file = \"/var/run/secrets/eks.amazonaws.com/serviceaccount/token\"\n}\n"` |  |
+| vault.server.ha.raft.config | string | `"ui = true\nlistener \"tcp\" {\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  tls_disable = 1\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n    retry_join {\n    leader_api_addr = \"http://vault-0.vault-internal:8200\"\n  }\n  retry_join {\n    leader_api_addr = \"http://vault-1.vault-internal:8200\"\n  }\n  retry_join {\n    leader_api_addr = \"http://vault-2.vault-internal:8200\"\n  }\n}\n\nservice_registration \"kubernetes\" {}\n\nseal \"awskms\" {\n  region     = \"eu-central-1\"\n  kms_key_id = \"KMS_KEY_ID\"\n  role_arn = \"arn:aws:iam::012345678910:role/AWSIRSA_Shared_Vault\"\n  web_identity_token_file = \"/var/run/secrets/eks.amazonaws.com/serviceaccount/token\"\n}\n"` |  |
 | vault.server.ha.raft.enabled | bool | `true` |  |
 | vault.server.ha.raft.setNodeId | bool | `true` |  |
 | vault.server.ha.replicas | int | `3` |  |

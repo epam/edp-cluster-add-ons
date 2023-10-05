@@ -1,9 +1,0 @@
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealmRoleBatch
-metadata:
-  name: "sonar-administrators"
-spec:
-  realm: main
-  roles:
-    - name: sonar-administrators
-      description: "default developer role"

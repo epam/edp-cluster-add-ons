@@ -79,3 +79,6 @@ harbor:
   database:
     internal:
       password: "somesecret"
+
+oidc:
+  enabled: false

@@ -1,2 +1,7 @@
 extensionsOIDC:
   keycloakUrl: "https://keycloak.example.com"
+  mainRealm: "openshift"
+  mainRealmSecret: ""
+
+keycloak-operator:
+  clusterReconciliationEnabled: true
