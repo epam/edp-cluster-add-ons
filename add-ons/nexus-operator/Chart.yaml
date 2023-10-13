@@ -17,4 +17,4 @@ appVersion: "2.17.0"
 dependencies:
 - name: nexus-operator
   version: 2.17.0
-  repository: https://epam.github.io/edp-helm-charts/snapshot
+  repository: https://epam.github.io/edp-helm-charts/stable
