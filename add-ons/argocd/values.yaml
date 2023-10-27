@@ -1,47 +1,28 @@
 argo-cd:
-  redis-ha:
-    enabled: false
+  enabled: true
 
-  controller:
-    enableStatefulSet: true
+  redis-ha:
+    enabled: true
+  redis:
+    enabled: false
 
   server:
     replicas: 1
-    extraArgs:
-      - "--insecure"
     env:
       - name: ARGOCD_API_SERVER_REPLICAS
         value: '1'
+
     ingress:
       enabled: true
       hosts:
         # after domain creation update
-        - "argocd-edp.example.com"
-    config:
-      # required when SSO is enabled
-      url: "https://argocd-edp.example.com"
-      application.instanceLabelKey: argocd.argoproj.io/instance-edp
-      oidc.config: |
-        name: Keycloak
-        issuer: https://keycloak.example.com/auth/realms/edp-main
-        clientID: argocd
-        clientSecret: $keycloak-client-argocd-secret:clientSecret
-        requestedScopes:
-          - openid
-          - profile
-          - email
-          - groups
-    rbacConfig:
-      # users may be still be able to login,
-      # but will see no apps, projects, etc...
-      policy.default: ''
-      scopes: '[groups]'
-      policy.csv: |
-        # default global admins
-        g, ArgoCDAdmins, role:admin
+        - "argocd-dev.example.com"
 
-  repoServer:
-    replicas: 1
+    route:
+    # -- Enable an OpenShift Route for the Argo CD server
+      enabled: false
+      # -- Hostname of OpenShift Route
+      hostname: ""
 
   # we use Keycloak so no DEX is required
   dex:
@@ -52,6 +33,34 @@ argo-cd:
     enabled: false
 
   configs:
+    secret:
+      # -- Create the argocd-secret
+      createSecret: true
+    cm:
+      # required when SSO is enabled
+      url: "https://argocd-dev.example.com"
+      application.instanceLabelKey: argocd.argoproj.io/instance-edp
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.example.com/auth/realms/shared
+        clientID: argocd-tenant
+        clientSecret: $keycloak-client-argocd-secret:clientSecret
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+    params:
+      server.insecure: true
+      application.namespaces: >-
+        edp
+    rbac:
+      scopes: "[groups]"
+      policy.csv: |
+        # default global admins
+        g, ArgoCDAdmins, role:admin
+        # Default global developers
+        g, ArgoCDDevelopers, role:readonly
     ssh:
       knownHosts: |
           bitbucket.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIazEu89wgQZ4bqs3d63QSMzYVa0MuJ2e2gKTKqu+UUO
@@ -65,3 +74,10 @@ argo-cd:
           gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
           ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
           vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+
+  openshift:
+    # -- enables using arbitrary uid for argo repo server
+    enabled: false
+
+oidc:
+  enabled: false
