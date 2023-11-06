@@ -85,9 +85,9 @@ A Helm chart for Vault
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | job.clusterApiUrl | string | `"https://cluster-api.com"` |  |
-| job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/sandbox"` |  |
+| job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/shared"` |  |
 | job.vaultUrl | string | `"vault.example.com"` |  |
-| oidc.enabled | bool | `true` |  |
+| oidc.enabled | bool | `false` |  |
 | vault.fullnameOverride | string | `"vault"` |  |
 | vault.server.dataStorage.enabled | bool | `true` |  |
 | vault.server.dataStorage.size | string | `"1Gi"` |  |

@@ -1,4 +1,4 @@
-{{ if .Values.nexus-operator.oauth2_proxy.enabled }}
+{{ if index .Values "oauth2-proxy" "enabled" }}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
@@ -13,5 +13,5 @@ spec:
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  webUrl: {{ .Values.nexusUrl }}
+  webUrl: https://{{ (first (index .Values "oauth2-proxy" "ingress" "hosts")) }}
 {{ end }}

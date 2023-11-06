@@ -22,5 +22,4 @@ A Helm chart for EDP Nexus Operator
 | nexus-operator.nexus.deploy | bool | `false` | Flag to enable/disable Nexus deploy |
 | nexus-operator.nexusCR.create | bool | `true` | Specifies whether Nexus CR should be created |
 | nexus-operator.oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of nexus deployment. Default: true |
-| nexusUrl | string | `"https://nexus.example.com"` |  |
 

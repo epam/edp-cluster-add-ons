@@ -1,6 +1,6 @@
 # harbor-ha
 
-![Version: 1.12.2](https://img.shields.io/badge/Version-1.12.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.2](https://img.shields.io/badge/AppVersion-2.8.2-informational?style=flat-square)
+![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
 
 A Helm chart for Harbor with HA
 
@@ -10,7 +10,7 @@ A Helm chart for Harbor with HA
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | minio | 12.6.5 |
 | https://charts.bitnami.com/bitnami | redis | 17.11.6 |
-| https://helm.goharbor.io | harbor | 1.12.2 |
+| https://helm.goharbor.io | harbor | 1.13.0 |
 
 ## Values
 
@@ -70,6 +70,7 @@ A Helm chart for Harbor with HA
 | minio.provisioning.policies[0].statements[0].resources[0] | string | `"arn:aws:s3:::harbor"` |  |
 | minio.provisioning.policies[0].statements[0].resources[1] | string | `"arn:aws:s3:::harbor/*"` |  |
 | minio.provisioning.usersExistingSecrets[0] | string | `"centralized-minio-users"` |  |
+| oidc.enabled | bool | `false` |  |
 | redis.auth.existingSecret | string | `"redis-creds"` |  |
 | redis.auth.existingSecretPasswordKey | string | `"REDIS_PASSWORD"` |  |
 | redis.auth.sentinel | bool | `false` |  |

@@ -43,4 +43,5 @@ A Helm chart for Harbor
 | harbor.registry.credentials.username | string | `"harbor_registry_user"` |  |
 | harbor.registry.secret | string | `"SomeSecret"` |  |
 | harbor.updateStrategy.type | string | `"Recreate"` |  |
+| oidc.enabled | bool | `false` |  |
 

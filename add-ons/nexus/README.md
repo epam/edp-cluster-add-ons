@@ -25,8 +25,9 @@ A Helm chart for Nexus
 | nexus-repository-manager.deployment.initContainers[0].volumeMounts[0].name | string | `"nexus-data"` |  |
 | nexus-repository-manager.fullnameOverride | string | `"nexus"` |  |
 | nexus-repository-manager.image.tag | string | `"3.59.0"` |  |
-| nexus-repository-manager.ingress.enabled | bool | `false` |  |
-| nexus-repository-manager.ingress.hostRepo | string | `"nexus.example.com"` |  |
+| nexus-repository-manager.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"900m"` |  |
+| nexus-repository-manager.ingress.enabled | bool | `true` |  |
+| nexus-repository-manager.ingress.hostRepo | string | `"nexus-ci.example.com"` |  |
 | nexus-repository-manager.nameOverride | string | `"nexus"` |  |
 | nexus-repository-manager.nexus.env[0].name | string | `"NEXUS_SECURITY_RANDOMPASSWORD"` |  |
 | nexus-repository-manager.nexus.env[0].value | string | `"false"` |  |

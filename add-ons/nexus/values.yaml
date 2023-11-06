@@ -8,8 +8,11 @@ nexus-repository-manager:
     name: nexus-repo
 
   ingress:
-    enabled: false
-    hostRepo: nexus.example.com
+    # We use native nexus ingress for CI workload which is not covered with oauth2-proxy
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "900m"
+    hostRepo: nexus-ci.example.com
 
   deployment:
     initContainers:

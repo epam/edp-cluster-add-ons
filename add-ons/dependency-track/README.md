@@ -28,12 +28,12 @@ A Helm chart for Dependecy Track
 | dependency-track.apiserver.env.env[5].value | string | `"roles"` |  |
 | dependency-track.apiserver.env.env[6].name | string | `"ALPINE_OIDC_TEAM_SYNCHRONIZATION"` |  |
 | dependency-track.apiserver.env.env[6].value | string | `"true"` |  |
-| dependency-track.apiserver.env.resources.limits.cpu | int | `2` |  |
-| dependency-track.apiserver.env.resources.limits.memory | string | `"12Gi"` |  |
-| dependency-track.apiserver.env.resources.requests.cpu | int | `1` |  |
-| dependency-track.apiserver.env.resources.requests.memory | string | `"4608Mi"` |  |
 | dependency-track.apiserver.image.tag | string | `"4.8.2"` |  |
 | dependency-track.apiserver.persistentVolume.size | string | `"15Gi"` |  |
+| dependency-track.apiserver.resources.limits.cpu | int | `2` |  |
+| dependency-track.apiserver.resources.limits.memory | string | `"12Gi"` |  |
+| dependency-track.apiserver.resources.requests.cpu | int | `1` |  |
+| dependency-track.apiserver.resources.requests.memory | string | `"4608Mi"` |  |
 | dependency-track.frontend.env[0].name | string | `"API_BASE_URL"` |  |
 | dependency-track.frontend.env[0].value | string | `"https://deptrack.example.com"` |  |
 | dependency-track.frontend.env[1].name | string | `"OIDC_ISSUER"` |  |

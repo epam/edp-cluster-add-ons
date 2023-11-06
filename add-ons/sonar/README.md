@@ -20,6 +20,11 @@ A Helm chart for Sonarqube
 | sonarqube.fullnameOverride | string | `"sonar"` |  |
 | sonarqube.ingress.enabled | bool | `true` |  |
 | sonarqube.ingress.hosts[0].name | string | `"sonar.example.com"` |  |
+| sonarqube.jdbcOverwrite.enable | bool | `true` |  |
+| sonarqube.jdbcOverwrite.jdbcSecretName | string | `"postgresql-pguser-sonar"` |  |
+| sonarqube.jdbcOverwrite.jdbcSecretPasswordKey | string | `"password"` |  |
+| sonarqube.jdbcOverwrite.jdbcUrl | string | `"jdbc:postgresql://postgresql-primary.sonar:5432/sonar?socketTimeout=1500"` |  |
+| sonarqube.jdbcOverwrite.jdbcUsername | string | `"sonar"` |  |
 | sonarqube.nameOverride | string | `"sonar"` |  |
 | sonarqube.plugins.install[0] | string | `"https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar"` |  |
 | sonarqube.plugins.install[1] | string | `"https://github.com/checkstyle/sonar-checkstyle/releases/download/10.12.1/checkstyle-sonar-plugin-10.12.1.jar"` |  |
@@ -33,8 +38,5 @@ A Helm chart for Sonarqube
 | sonarqube.resources.limits.cpu | string | `"700m"` |  |
 | sonarqube.resources.limits.memory | string | `"3Gi"` |  |
 | sonarqube.resources.requests.cpu | string | `"100m"` |  |
-| sonarqube.jdbcOverwrite.enable | bool | `true` |  |
-| sonarqube.jdbcOverwrite.jdbcUrl | string | `"jdbc:postgresql://postgresql-primary.sonar.svc:5432/sonar?socketTimeout=1500"` |  |
-| sonarqube.jdbcOverwrite.jdbcUsername | string | `"sonar"` |  |
-| sonarqube.jdbcOverwrite.jdbcSecretName | string | `"postgresql-pguser-sonar"` |  |
-| sonarqube.jdbcOverwrite.jdbcSecretPasswordKey | string | `"password"` |  |
+| sonarqube.resources.requests.memory | string | `"1.5Gi"` |  |
+

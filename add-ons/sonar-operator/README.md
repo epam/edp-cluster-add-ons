@@ -21,13 +21,13 @@ A Helm chart for EDP Sonar Operator
 | image.repository | string | `"epamedp/sonar-operator"` | EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator) |
 | image.tag | string | `"3.1.0"` | EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags) |
 | imagePullPolicy | string | `"IfNotPresent"` |  |
-| keycloak | object | `{"enable":true,"keycloakRealm":"example","keycloakUrl":"https://keycloak.example.com"}` | Integration with keycloak |
 | name | string | `"sonar-operator"` | component name |
 | nodeSelector | object | `{}` |  |
+| oidc | object | `{"enabled":false,"keycloakRealm":"shared","keycloakUrl":"https://keycloak.example.com"}` | Integration with keycloak |
 | resources.limits.memory | string | `"192Mi"` |  |
 | resources.requests.cpu | string | `"50m"` |  |
 | resources.requests.memory | string | `"64Mi"` |  |
-| sonarSecret | string | `"sonar-admin"` |  |
+| sonarSecret | string | `"sonar-admin-password"` |  |
 | sonarUrl | string | `"https://sonar.example.com"` | URL and secret name which use sonar operator for configuring sonar |
 | tolerations | list | `[]` |  |
 

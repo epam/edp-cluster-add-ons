@@ -43,6 +43,7 @@ policies=reader
 |-----|------|---------|-------------|
 | job.clusterApiUrl | string | `"https://api.example.com:6443"` |  |
 | job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/shared"` |  |
+| oidc.enabled | bool | `false` |  |
 | vault.fullnameOverride | string | `"vault"` |  |
 | vault.global.openshift | bool | `true` |  |
 | vault.server.dataStorage.enabled | bool | `true` |  |

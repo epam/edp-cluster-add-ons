@@ -23,5 +23,3 @@ nexus-operator:
   oauth2_proxy:
     # -- Install oauth2-proxy as a part of nexus deployment. Default: true
     enabled: false
-
-nexusUrl: https://nexus.example.com
