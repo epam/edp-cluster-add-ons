@@ -12,11 +12,15 @@
 - Add jaeger-operator, opentelementry-operator and aws-efs-csi-driver ([#1](https://github.com/epam/edp-cluster-add-ons/issues/1))
 
 ### Bug Fixes
+- Use Nexus Ingress object for the CI workload ([#28](https://github.com/epam/edp-cluster-add-ons/issues/28))
 - Fix dependency-track resources configuration in values.yaml ([#20](https://github.com/epam/edp-cluster-add-ons/issues/20))
 - Update conditional check for enabling extensions-oidc ([#11](https://github.com/epam/edp-cluster-add-ons/issues/11))
 - Fix changelog generator ([#1](https://github.com/epam/edp-cluster-add-ons/issues/1))
 
 ### Routine
+- Remove downloaded chart from repository ([#28](https://github.com/epam/edp-cluster-add-ons/issues/28))
+- Update tekton stack ([#26](https://github.com/epam/edp-cluster-add-ons/issues/26))
+- Update changelog ([#26](https://github.com/epam/edp-cluster-add-ons/issues/26))
 - Update tekton-chains version ([#26](https://github.com/epam/edp-cluster-add-ons/issues/26))
 - Update argo cd template to LTS ([#25](https://github.com/epam/edp-cluster-add-ons/issues/25))
 - Upgrade pull request template ([#24](https://github.com/epam/edp-cluster-add-ons/issues/24))
