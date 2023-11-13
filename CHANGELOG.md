@@ -2,6 +2,7 @@
 ## [Unreleased]
 
 ### Features
+- Enable CORS for SonarQube Ingress ([#29](https://github.com/epam/edp-cluster-add-ons/issues/29))
 - Add capsule ([#16](https://github.com/epam/edp-cluster-add-ons/issues/16))
 - Install tekton supply chains as a part of tekton ecosystem ([#14](https://github.com/epam/edp-cluster-add-ons/issues/14))
 - Add script for create projects and retention policy ([#9](https://github.com/epam/edp-cluster-add-ons/issues/9))
