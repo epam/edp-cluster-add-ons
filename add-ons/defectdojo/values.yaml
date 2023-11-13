@@ -50,3 +50,6 @@ defectdojo:
     DD_SOCIAL_AUTH_KEYCLOAK_SECRET: "defectdojo-extrasecrets"
     DD_SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL: 'https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth'
     DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL: 'https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token'
+
+oidc:
+  enabled: false

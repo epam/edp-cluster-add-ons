@@ -39,4 +39,5 @@ A Helm chart for DefectDojo Install
 | defectdojo.rabbitmq.persistence.size | string | `"2Gi"` |  |
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
 | defectdojo.tag | string | `"2.24.4"` |  |
+| oidc.enabled | bool | `false` |  |
 

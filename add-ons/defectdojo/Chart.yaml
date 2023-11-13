@@ -7,6 +7,6 @@ appVersion: 2.24.4
 
 
 dependencies:
-  - name: defectdojo
-    version: 1.6.78
-    repository: https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts
+- name: defectdojo
+  version: 1.6.78
+  repository: https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts

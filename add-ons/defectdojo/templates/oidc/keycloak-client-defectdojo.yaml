@@ -6,6 +6,7 @@ metadata:
 spec:
   advancedProtocolMappers: true
   clientId: defectdojo
+  secret: keycloak-client-defectdojo-secret
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
