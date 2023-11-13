@@ -3,4 +3,4 @@ kind: ServiceAccount
 metadata:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
-  name: externalsecrets-aws
+  name: externalsecrets-aws-oidc
