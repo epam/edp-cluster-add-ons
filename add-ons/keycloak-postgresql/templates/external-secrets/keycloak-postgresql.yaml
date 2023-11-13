@@ -6,9 +6,13 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: aws-parameterstore
+    name: aws-parameterstore-kk-postgress
   data:
   - secretKey: password
     remoteRef:
-      key: /edp/deploy-secrets
+      key: /edp/system2
+      property: keycloak-postgresql.password
+  - secretKey: postgres-password
+    remoteRef:
+      key: /edp/system2
       property: keycloak-postgresql.password
