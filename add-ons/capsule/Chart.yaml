@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.4.6
+version: 0.5.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "0.3.3"
+appVersion: "0.4.1"
 
 dependencies:
 - name: capsule
-  version: 0.4.6
-  repository: https://clastix.github.io/charts
+  version: 0.5.2
+  repository: https://projectcapsule.github.io/charts
