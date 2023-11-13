@@ -10,7 +10,7 @@ spec:
     - key: sonar.dbcleaner.hoursBeforeKeepingOnlyOneSnapshotByDay
       value: "20"
     - key: sonar.auth.oidc.enabled
-      value: "{{ .Values.oidc.enable }}"
+      value: "{{ .Values.oidc.enabled }}"
 {{- if .Values.oidc.enabled }}
     - key: sonar.auth.oidc.issuerUri
       value: "{{ .Values.oidc.keycloakUrl }}/auth/realms/{{ .Values.oidc.keycloakRealm }}"
