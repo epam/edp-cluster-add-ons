@@ -46,6 +46,7 @@ nexus-repository-manager:
     storageSize: 30Gi
 
 oauth2-proxy:
+  enabled: false
   config:
     configFile: |-
       allowed_roles = ["administrator", "developer"]

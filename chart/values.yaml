@@ -87,6 +87,13 @@ nexus:
   createNamespace: false
   enable: false
 
+# -- Nexus-operator is not deployed without edp-component-operator CRDs
+# -- To deploy the CRD, apply the following command:
+# -- kubectl apply -f https://raw.githubusercontent.com/epam/edp-component-operator/v0.13.0/deploy-templates/crds/v1.edp.epam.com_edpcomponents.yaml
+nexus-operator:
+  createNamespace: false
+  enable: false
+
 # opensearch includes opensearch, opensearch-dashboards, fluent-bit
 opensearch:
   createNamespace: false
