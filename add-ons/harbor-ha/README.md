@@ -16,9 +16,10 @@ A Helm chart for Harbor with HA
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| harbor.core.configureUserSettings | string | `"{\n  \"auth_mode\": \"oidc_auth\",\n  \"oidc_name\": \"keycloak\",\n  \"oidc_endpoint\": \"https://keycloak.example.com/auth/realms/shared\",\n  \"oidc_client_id\": \"harbor\",\n  \"oidc_client_secret\": \"YOURSECRET\",\n  \"oidc_groups_claim\": \"roles\",\n  \"oidc_admin_group\": \"administrator\",\n  \"oidc_scope\": \"openid,email,profile,roles\",\n  \"oidc_auto_onboard\": \"true\",\n  \"oidc_user_claim\": \"preferred_username\"\n}\n"` |  |
 | harbor.core.replicas | int | `2` |  |
-| harbor.core.xsrfKey | string | `"somekey"` |  |
+| harbor.core.resources.requests.cpu | float | `0.05` |  |
+| harbor.core.resources.requests.memory | string | `"150Mi"` |  |
+| harbor.core.xsrfKey | string | `"Au28zg8c0hrnn07M1aK2aHpLeFHv7QgE"` |  |
 | harbor.database.external.existingSecret | string | `"postgresql-pguser-harbor"` |  |
 | harbor.database.external.host | string | `"postgresql-primary.harbor.svc"` |  |
 | harbor.database.external.port | string | `"5432"` |  |
@@ -34,7 +35,11 @@ A Helm chart for Harbor with HA
 | harbor.ipFamily.ipv6.enabled | bool | `false` |  |
 | harbor.jobservice.jobLoggers[0] | string | `"database"` |  |
 | harbor.jobservice.replicas | int | `2` |  |
+| harbor.jobservice.resources.requests.cpu | float | `0.01` |  |
+| harbor.jobservice.resources.requests.memory | string | `"50Mi"` |  |
 | harbor.jobservice.secret | string | `"SomeSecret"` |  |
+| harbor.metrics.enabled | bool | `true` |  |
+| harbor.metrics.serviceMonitor.enabled | bool | `true` |  |
 | harbor.notary.enabled | bool | `false` |  |
 | harbor.persistence.enabled | bool | `true` |  |
 | harbor.persistence.imageChartStorage.disableredirect | bool | `true` |  |
@@ -52,6 +57,8 @@ A Helm chart for Harbor with HA
 | harbor.redis.type | string | `"external"` |  |
 | harbor.registry.credentials.existingSecret | string | `"harbor"` |  |
 | harbor.registry.credentials.username | string | `"harbor_registry_user"` |  |
+| harbor.registry.registry.resources.requests.cpu | float | `0.1` |  |
+| harbor.registry.registry.resources.requests.memory | string | `"300Mi"` |  |
 | harbor.registry.replicas | int | `2` |  |
 | harbor.registry.secret | string | `"SomeSecret"` |  |
 | harbor.updateStrategy.type | string | `"Recreate"` |  |
@@ -61,7 +68,7 @@ A Helm chart for Harbor with HA
 | minio.ingress.enabled | bool | `true` |  |
 | minio.ingress.hostname | string | `"minio-harbor.example.com"` |  |
 | minio.mode | string | `"distributed"` |  |
-| minio.persistence.size | string | `"10Gi"` |  |
+| minio.persistence.size | string | `"15Gi"` |  |
 | minio.provisioning.buckets[0].name | string | `"harbor"` |  |
 | minio.provisioning.enabled | bool | `true` |  |
 | minio.provisioning.policies[0].name | string | `"harbor"` |  |
@@ -70,6 +77,9 @@ A Helm chart for Harbor with HA
 | minio.provisioning.policies[0].statements[0].resources[0] | string | `"arn:aws:s3:::harbor"` |  |
 | minio.provisioning.policies[0].statements[0].resources[1] | string | `"arn:aws:s3:::harbor/*"` |  |
 | minio.provisioning.usersExistingSecrets[0] | string | `"centralized-minio-users"` |  |
+| minio.resources.limits.memory | string | `"5000Mi"` |  |
+| minio.resources.requests.cpu | string | `"200m"` |  |
+| minio.resources.requests.memory | string | `"250Mi"` |  |
 | oidc.enabled | bool | `false` |  |
 | redis.auth.existingSecret | string | `"redis-creds"` |  |
 | redis.auth.existingSecretPasswordKey | string | `"REDIS_PASSWORD"` |  |
@@ -77,5 +87,7 @@ A Helm chart for Harbor with HA
 | redis.fullnameOverride | string | `"redis"` |  |
 | redis.master.persistence.size | string | `"1Gi"` |  |
 | redis.replica.persistence.size | string | `"1Gi"` |  |
+| redis.replica.resources.limits.memory | string | `"512Mi"` |  |
+| redis.replica.resources.requests.cpu | string | `"50m"` |  |
+| redis.replica.resources.requests.memory | string | `"100Mi"` |  |
 | redis.sentinel.enabled | bool | `true` |  |
-

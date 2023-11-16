@@ -8,6 +8,7 @@ spec:
   clientId: harbor
   directAccess: true
   public: false
+  secret: keycloak-client-harbor-secret
   defaultClientScopes:
     - profile
     - email

@@ -10,6 +10,12 @@ redis:
   replica:
     persistence:
       size: 1Gi
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        memory: 512Mi
   sentinel:
     enabled: true
 
@@ -39,6 +45,12 @@ minio:
             actions:
               - "s3:*"
             effect: "Allow"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 250Mi
+    limits:
+      memory: 5000Mi
 
 harbor:
   # we use harbor secret to consolidate all the secrets
@@ -48,6 +60,10 @@ harbor:
 
   core:
     replicas: 2
+    resources:
+      requests:
+        cpu: 0.05
+        memory: 150Mi
     xsrfKey: "somekey"
     # (FIXME) This is not yet merged and still not released
     configureUserSettings: |
@@ -69,6 +85,10 @@ harbor:
     secret: SomeSecret
     jobLoggers:
       - database
+    resources:
+      requests:
+        cpu: 0.01
+        memory: 50Mi
 
   registry:
     replicas: 2
@@ -82,6 +102,11 @@ harbor:
       # is harbor_registry_user and the encryption type is bcrypt.
       # For example: `htpasswd -bBc passwordfile harbor_registry_user harbor_registry_password`. The username must be harbor_registry_user!
       existingSecret: harbor
+    registry:
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 300Mi
 
   fullnameOverride: harbor
   externalURL: https://registry.example.com
@@ -139,6 +164,11 @@ harbor:
       # existingSecret: "harbor-redis"
       # Copy here the password value from the "redis-creds" secret
       password: "SomeSecret"
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 
 oidc:
   enabled: false
