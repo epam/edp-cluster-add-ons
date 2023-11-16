@@ -1,27 +1,22 @@
 edp-install:
   global:
-    edpName: edp
     dnsWildCard: example.com
-    webConsole:
-      url: https://XXXXXXXXXXXXXXXXXXXXXX.gr7.eu-central-1.eks.amazonaws.com
     platform: kubernetes
-    kioskEnabled: false
-    admins: [john@example.com,mike@example.com]
-    developers: [john@example.com,mike@example.com]
-    gitProvider: gitlab
-    keycloakUrl: https://keycloak.example.com
+    gitProvider: github
+    dockerRegistry:
+      url: "registry.example.com"
+      type: "harbor"
+      space: "edp"
 
-  awsRegion: eu-central-1
-
-  argocd:
+  sso:
     enabled: true
-    url: "https://argocd-edp.example.com"
-
-  dockerRegistry:
-    url: 012345678910.dkr.ecr.eu-central-1.amazonaws.com
-
-  kaniko:
-    roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko
+    keycloakUrl: https://keycloak.example.com
+    admins:
+      - john@example.com
+      - mike@example.com
+    developers:
+      - john@example.com
+      - mike@example.com
 
   externalSecrets:
     enabled: true
@@ -31,30 +26,13 @@ edp-install:
     manageEDPInstallSecrets: true
     manageEDPInstallSecretsName: /edp/deploy-secrets
 
-  gerrit-operator:
-    enabled: false
-
   edp-headlamp:
     config:
       oidc:
         enabled: true
+        keycloakUrl: "https://keycloak.example.com"
         clientID: "shared"
 
   edp-tekton:
-    gitlab:
-      host: gitlab.example.com
-    kaniko:
-      roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_Kaniko
-
-  nexus-operator:
-    nexus:
-      storage:
-        class: ebs-sc
-
-  sonar-operator:
-    sonar:
-      storage:
-        data:
-          class: ebs-sc
-        database:
-          class: ebs-sc
+    github:
+      host: github.com

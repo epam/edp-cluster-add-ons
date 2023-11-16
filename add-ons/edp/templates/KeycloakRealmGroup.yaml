@@ -1,7 +1,0 @@
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealmGroup
-metadata:
-  name: argocd-edp-users
-spec:
-  name: ArgoCD-edp-users
-  realm: main
