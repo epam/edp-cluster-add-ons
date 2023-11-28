@@ -16,10 +16,11 @@ A Helm chart for Harbor with HA
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| harbor.core.configureUserSettings | string | `"{\n  \"auth_mode\": \"oidc_auth\",\n  \"oidc_name\": \"keycloak\",\n  \"oidc_endpoint\": \"https://keycloak.example.com/auth/realms/shared\",\n  \"oidc_client_id\": \"harbor\",\n  \"oidc_client_secret\": \"YOURSECRET\",\n  \"oidc_groups_claim\": \"roles\",\n  \"oidc_admin_group\": \"administrator\",\n  \"oidc_scope\": \"openid,email,profile,roles\",\n  \"oidc_auto_onboard\": \"true\",\n  \"oidc_user_claim\": \"preferred_username\"\n}\n"` |  |
 | harbor.core.replicas | int | `2` |  |
 | harbor.core.resources.requests.cpu | float | `0.05` |  |
 | harbor.core.resources.requests.memory | string | `"150Mi"` |  |
-| harbor.core.xsrfKey | string | `"Au28zg8c0hrnn07M1aK2aHpLeFHv7QgE"` |  |
+| harbor.core.xsrfKey | string | `"somekey"` |  |
 | harbor.database.external.existingSecret | string | `"postgresql-pguser-harbor"` |  |
 | harbor.database.external.host | string | `"postgresql-primary.harbor.svc"` |  |
 | harbor.database.external.port | string | `"5432"` |  |
@@ -68,7 +69,7 @@ A Helm chart for Harbor with HA
 | minio.ingress.enabled | bool | `true` |  |
 | minio.ingress.hostname | string | `"minio-harbor.example.com"` |  |
 | minio.mode | string | `"distributed"` |  |
-| minio.persistence.size | string | `"15Gi"` |  |
+| minio.persistence.size | string | `"10Gi"` |  |
 | minio.provisioning.buckets[0].name | string | `"harbor"` |  |
 | minio.provisioning.enabled | bool | `true` |  |
 | minio.provisioning.policies[0].name | string | `"harbor"` |  |
@@ -91,3 +92,4 @@ A Helm chart for Harbor with HA
 | redis.replica.resources.requests.cpu | string | `"50m"` |  |
 | redis.replica.resources.requests.memory | string | `"100Mi"` |  |
 | redis.sentinel.enabled | bool | `true` |  |
+

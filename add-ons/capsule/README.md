@@ -14,6 +14,11 @@ A Helm chart for capsule
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| capsule.manager.resources.limits.memory | string | `"256Mi"` |  |
+| capsule.manager.options.capsuleUserGroups[0] | string | `"capsule.clastix.io"` |  |
+| capsule.manager.options.capsuleUserGroups[1] | string | `"system:serviceaccounts:edp"` |  |
+| capsule.manager.resources.limits.cpu | string | `"500m"` |  |
+| capsule.manager.resources.limits.memory | string | `"512Mi"` |  |
+| capsule.manager.resources.requests.cpu | string | `"200m"` |  |
+| capsule.manager.resources.requests.memory | string | `"128Mi"` |  |
 | capsule.tolerations[0].operator | string | `"Exists"` |  |
 

@@ -16,6 +16,10 @@ capsule:
   createNamespace: false
   enable: false
 
+# -- Capsule Tenant
+capsule-tenant:
+  enable: false
+
 # -- Cert Manager
 certmanager:
   # -- whether to create the namespace or not

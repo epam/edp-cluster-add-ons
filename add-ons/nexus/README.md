@@ -45,3 +45,4 @@ A Helm chart for Nexus
 | oauth2-proxy.enabled | bool | `false` |  |
 | oauth2-proxy.ingress.enabled | bool | `true` |  |
 | oauth2-proxy.ingress.hosts[0] | string | `"nexus.example.com"` |  |
+

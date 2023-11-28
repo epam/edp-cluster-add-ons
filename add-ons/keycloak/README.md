@@ -20,12 +20,12 @@ A Helm chart for Keycloak
 | keycloakx.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `300` |  |
 | keycloakx.autoscaling.enabled | bool | `true` |  |
 | keycloakx.autoscaling.labels | object | `{}` |  |
-| keycloakx.autoscaling.maxReplicas | int | `5` |  |
+| keycloakx.autoscaling.maxReplicas | int | `3` |  |
 | keycloakx.autoscaling.metrics[0].resource.name | string | `"cpu"` |  |
 | keycloakx.autoscaling.metrics[0].resource.target.averageUtilization | int | `80` |  |
 | keycloakx.autoscaling.metrics[0].resource.target.type | string | `"Utilization"` |  |
 | keycloakx.autoscaling.metrics[0].type | string | `"Resource"` |  |
-| keycloakx.autoscaling.minReplicas | int | `3` |  |
+| keycloakx.autoscaling.minReplicas | int | `1` |  |
 | keycloakx.command[0] | string | `"/opt/keycloak/bin/kc.sh"` |  |
 | keycloakx.command[10] | string | `"--import-realm"` |  |
 | keycloakx.command[1] | string | `"--verbose"` |  |
@@ -39,9 +39,9 @@ A Helm chart for Keycloak
 | keycloakx.command[9] | string | `"--spi-events-listener-jboss-logging-error-level=warn"` |  |
 | keycloakx.database.database | string | `"keycloak"` |  |
 | keycloakx.database.existingSecret | string | `"keycloak-postgresql"` |  |
-| keycloakx.database.hostname | string | `"db-host"` |  |
+| keycloakx.database.hostname | string | `"postgresql"` |  |
 | keycloakx.database.port | int | `5432` |  |
-| keycloakx.database.username | string | `"user_name"` |  |
+| keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |
 | keycloakx.dbchecker.enabled | bool | `true` |  |
 | keycloakx.extraEnv | string | `"- name: KC_PROXY\n  value: \"passthrough\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |

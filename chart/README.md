@@ -25,6 +25,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | argo-cd.createNamespace | bool | `false` | whether to create the namespace or not |
 | aws-efs-csi-driver | object | `{"enable":false}` | AWS EFS CSI Driver |
 | capsule | object | `{"createNamespace":false,"enable":false}` | Capsule |
+| capsule-tenant | object | `{"enable":false}` | Capsule Tenant |
 | capsule.createNamespace | bool | `false` | whether to create the namespace or not |
 | certmanager | object | `{"createNamespace":false,"enable":false}` | Cert Manager |
 | certmanager.createNamespace | bool | `false` | whether to create the namespace or not |
@@ -82,3 +83,4 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | vault-okd.enable | bool | `false` |  |
 | vault.createNamespace | bool | `false` |  |
 | vault.enable | bool | `false` |  |
+

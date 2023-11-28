@@ -19,7 +19,7 @@ A Helm chart for EDP Install
 | edp-install.edp-headlamp.config.oidc.clientID | string | `"shared"` |  |
 | edp-install.edp-headlamp.config.oidc.enabled | bool | `true` |  |
 | edp-install.edp-headlamp.config.oidc.keycloakUrl | string | `"https://keycloak.example.com"` |  |
-| edp-install.edp-tekton.gitlab.host | string | `"github.com"` |  |
+| edp-install.edp-tekton.github.host | string | `"github.com"` |  |
 | edp-install.externalSecrets.enabled | bool | `true` |  |
 | edp-install.externalSecrets.manageEDPInstallSecrets | bool | `true` |  |
 | edp-install.externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` |  |
@@ -28,7 +28,6 @@ A Helm chart for EDP Install
 | edp-install.global.dockerRegistry.space | string | `"edp"` |  |
 | edp-install.global.dockerRegistry.type | string | `"harbor"` |  |
 | edp-install.global.dockerRegistry.url | string | `"registry.example.com"` |  |
-| edp-install.global.edpName | string | `"edp"` |  |
 | edp-install.global.gitProvider | string | `"github"` |  |
 | edp-install.global.platform | string | `"kubernetes"` |  |
 | edp-install.sso.admins[0] | string | `"john@example.com"` |  |
@@ -37,3 +36,4 @@ A Helm chart for EDP Install
 | edp-install.sso.developers[1] | string | `"mike@example.com"` |  |
 | edp-install.sso.enabled | bool | `true` |  |
 | edp-install.sso.keycloakUrl | string | `"https://keycloak.example.com"` |  |
+
