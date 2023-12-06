@@ -8,19 +8,19 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.1.0
+version: 2.16.1
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "v1.0.0"
+appVersion: "2.11.0"
 
 dependencies:
 - name: opensearch
-  version: 2.12.2
+  version: 2.16.1
   repository: https://opensearch-project.github.io/helm-charts/
 
 - name: opensearch-dashboards
-  version: 2.10.0
+  version: 2.14.0
   repository: https://opensearch-project.github.io/helm-charts/
 
 - name: fluent-bit

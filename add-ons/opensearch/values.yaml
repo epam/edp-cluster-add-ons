@@ -1,6 +1,12 @@
+oidc:
+  enabled: true
+  dashboardUrl: https://opensearch-dashboards.example.com
+
 opensearch:
   nameOverride: "opensearch"
   fullnameOverride: "opensearch"
+
+  singleNode: true
 
   resources:
     requests:

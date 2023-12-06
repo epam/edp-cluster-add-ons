@@ -8,15 +8,15 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 59.0.0
+version: 61.0.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "3.59.0"
+appVersion: "3.61.0"
 
 dependencies:
 - name: nexus-repository-manager
-  version: 59.0.0
+  version: 61.0.2
   repository: https://sonatype.github.io/helm3-charts/
 - name: oauth2-proxy
   version: 6.16.1
