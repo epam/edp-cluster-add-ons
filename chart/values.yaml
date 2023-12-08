@@ -131,6 +131,10 @@ sonar-operator:
 storage-class:
   enable: false
 
+tekton-cache:
+  createNamespace: true
+  enable: true
+
 tekton:
   createNamespace: false
   enable: false

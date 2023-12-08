@@ -1,0 +1,34 @@
+{{- if and (index .Values "tekton-cache") (index .Values "tekton-cache" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tekton-cache
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/tekton-cache
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: tekton-cache
+      values: |
+        tekton-cache:
+        {{- toYaml (index .Values "tekton-cache") | nindent 10 }}
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: tekton-cache
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ (index .Values "tekton-cache" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}
