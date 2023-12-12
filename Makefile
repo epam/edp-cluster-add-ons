@@ -40,3 +40,11 @@ GOBIN=$(PROJECT_DIR)/bin go install $(2) ;\
 rm -rf $$TMP_DIR ;\
 }
 endef
+
+.PHONY: update-readme
+update-readme: .venv
+	.venv/bin/python ./hack/update_readme.py
+
+.venv:
+	virtualenv -p python3 .venv; \
+	.venv/bin/pip install -r ./hack/requirements.txt
