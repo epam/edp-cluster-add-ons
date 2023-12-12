@@ -1,6 +1,6 @@
 # cert-manager
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.12.1](https://img.shields.io/badge/AppVersion-v1.12.1-informational?style=flat-square)
+![Version: 1.12.6](https://img.shields.io/badge/Version-1.12.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.12.6](https://img.shields.io/badge/AppVersion-v1.12.6-informational?style=flat-square)
 
 A Helm chart for Cert Manager
 
@@ -8,7 +8,7 @@ A Helm chart for Cert Manager
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.jetstack.io | cert-manager | v1.12.1 |
+| https://charts.jetstack.io | cert-manager | v1.12.6 |
 
 ## Values
 

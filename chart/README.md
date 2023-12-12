@@ -75,6 +75,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | sonar.createNamespace | bool | `false` |  |
 | sonar.enable | bool | `false` |  |
 | storage-class.enable | bool | `false` |  |
+| tekton-cache.createNamespace | bool | `true` |  |
+| tekton-cache.enable | bool | `true` |  |
 | tekton.createNamespace | bool | `false` |  |
 | tekton.enable | bool | `false` |  |
 | vault-kms.createNamespace | bool | `false` |  |

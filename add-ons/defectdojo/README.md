@@ -1,6 +1,6 @@
 # defectdojo
 
-![Version: 1.6.78](https://img.shields.io/badge/Version-1.6.78-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.24.4](https://img.shields.io/badge/AppVersion-2.24.4-informational?style=flat-square)
+![Version: 1.6.96](https://img.shields.io/badge/Version-1.6.96-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.28.2](https://img.shields.io/badge/AppVersion-2.28.2-informational?style=flat-square)
 
 A Helm chart for DefectDojo Install
 
@@ -8,7 +8,7 @@ A Helm chart for DefectDojo Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.78 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.96 |
 
 ## Values
 
@@ -38,6 +38,6 @@ A Helm chart for DefectDojo Install
 | defectdojo.postgresql.postgresServer | string | `"defectdojo-primary.defectdojo.svc"` |  |
 | defectdojo.rabbitmq.persistence.size | string | `"2Gi"` |  |
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
-| defectdojo.tag | string | `"2.24.4"` |  |
+| defectdojo.tag | string | `"2.28.2"` |  |
 | oidc.enabled | bool | `false` |  |
 

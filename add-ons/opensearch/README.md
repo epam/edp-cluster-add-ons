@@ -1,6 +1,6 @@
 # opensearch
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 2.16.1](https://img.shields.io/badge/Version-2.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 A Helm chart for OpenSearch Stack
 
@@ -24,8 +24,8 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
 | Repository | Name | Version |
 |------------|------|---------|
 | https://fluent.github.io/helm-charts | fluent-bit | 0.30.2 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.12.2 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.10.0 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.16.1 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.14.0 |
 
 ## Values
 
@@ -42,6 +42,8 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
 | fluent-bit.env[1].valueFrom.secretKeyRef.key | string | `"password"` |  |
 | fluent-bit.env[1].valueFrom.secretKeyRef.name | string | `"fluentbit-creds"` |  |
 | fluent-bit.testFramework.enabled | bool | `false` |  |
+| oidc.dashboardUrl | string | `"https://opensearch-dashboards.example.com"` |  |
+| oidc.enabled | bool | `true` |  |
 | opensearch-dashboards.config."opensearch_dashboards.yml".opensearch.password | string | `"${OPENSEARCH_PASSWORD}"` |  |
 | opensearch-dashboards.config."opensearch_dashboards.yml".opensearch.requestHeadersAllowlist[0] | string | `"Authorization"` |  |
 | opensearch-dashboards.config."opensearch_dashboards.yml".opensearch.requestHeadersAllowlist[1] | string | `"security_tenant"` |  |
@@ -118,3 +120,4 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
 | opensearch.securityConfig.rolesMappingSecret | string | `nil` |  |
 | opensearch.securityConfig.rolesSecret | string | `nil` |  |
 | opensearch.securityConfig.tenantsSecret | string | `nil` |  |
+| opensearch.singleNode | bool | `true` |  |

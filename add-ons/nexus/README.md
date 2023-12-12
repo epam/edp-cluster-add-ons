@@ -1,6 +1,6 @@
 # nexus
 
-![Version: 59.0.0](https://img.shields.io/badge/Version-59.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.59.0](https://img.shields.io/badge/AppVersion-3.59.0-informational?style=flat-square)
+![Version: 61.0.2](https://img.shields.io/badge/Version-61.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.61.0](https://img.shields.io/badge/AppVersion-3.61.0-informational?style=flat-square)
 
 A Helm chart for Nexus
 
@@ -9,7 +9,7 @@ A Helm chart for Nexus
 | Repository | Name | Version |
 |------------|------|---------|
 | https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
-| https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 59.0.0 |
+| https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 61.0.2 |
 
 ## Values
 
