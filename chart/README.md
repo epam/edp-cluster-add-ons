@@ -70,6 +70,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | prometheus-operator.enable | bool | `false` |  |
 | redis-operator.createNamespace | bool | `false` |  |
 | redis-operator.enable | bool | `false` |  |
+| report-portal.createNamespace | bool | `true` |  |
+| report-portal.enable | bool | `true` |  |
 | sonar-operator.createNamespace | bool | `false` |  |
 | sonar-operator.enable | bool | `false` |  |
 | sonar.createNamespace | bool | `false` |  |

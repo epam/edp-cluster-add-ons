@@ -112,6 +112,10 @@ postgres-operator:
   createNamespace: false
   enable: false
 
+report-portal:
+  createNamespace: true
+  enable: true
+
 prometheus-operator:
   createNamespace: false
   enable: false

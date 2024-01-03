@@ -71,6 +71,7 @@ make update-readme
 | opensearch             | 2.16.1    | 2.11.0       | False             | False    |
 | opentelemetry-operator | 0.1.0     | 0.30.1       | False             | False    |
 | postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
+| report-portal          | 5.10.0    | 23.2         | True              | True     |
 | prometheus-operator    | 0.1.0     | 46.4.1       | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | False             | False    |
 | sonar                  | 8.0.2     | 9.9.2        | False             | False    |

@@ -1,0 +1,29 @@
+apiVersion: v2
+name: report-portal
+description: A Helm chart for report-portal
+
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+type: application
+
+# The chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 5.10.0
+
+# Version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: "23.2"
+
+dependencies:
+  - name: reportportal
+    version: 5.10.0
+    repository: https://reportportal.io/kubernetes
+  - name: rabbitmq
+    version: 10.3.9
+    repository: https://charts.bitnami.com/bitnami
+  - name: minio
+    version: 11.10.3
+    repository: https://charts.bitnami.com/bitnami
+  - name: opensearch
+    version: 2.17.0
+    repository: https://opensearch-project.github.io/helm-charts/

@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-and-patch-secrets-job
+spec:
+  template:
+    spec:
+      serviceAccountName: job-access-secrets-sa
+      initContainers:
+      - name: wait-for-check-secrets-job
+        image: bitnami/kubectl:latest
+        command:
+        - bash
+        - -c
+        - |
+          set -euo pipefail
+          secret1_found=false
+          secret2_found=false
+          secret3_found=false
+
+          while [ "$secret1_found" = false -o "$secret2_found" = false -o "$secret3_found" = false ]; do
+            if [ "$secret1_found" = false ] && kubectl get secret reportportal-postgresql-creds --namespace report-portal; then
+              echo "Secret reportportal-postgresql-creds exists"
+              secret1_found=true
+            fi
+
+            if [ "$secret2_found" = false ] && kubectl get secret postgresql-pguser-postgres --namespace report-portal; then
+              echo "Secret postgresql-pguser-postgres exists"
+              secret2_found=true
+            fi
+
+            if [ "$secret3_found" = false ] && kubectl get secret postgresql-pguser-rpuser --namespace report-portal; then
+              echo "Secret postgresql-pguser-rpuser exists"
+              secret3_found=true
+            fi
+
+            if [ "$secret1_found" = false -o "$secret2_found" = false -o "$secret3_found" = false ]; then
+              echo "Retry in 30 seconds..."
+              sleep 30
+            fi
+          done
+      containers:
+      - name: copy-and-patch-secrets
+        image: bitnami/kubectl:latest
+        command:
+        - bash
+        - -c
+        - |
+          set -euo pipefail
+
+          # Get the secrets
+          reportportal_postgresql_password=$(kubectl get secret reportportal-postgresql-creds --namespace report-portal -o=jsonpath='{.data.postgresql-password}' | base64 --decode)
+          reportportal_postgresql_postgres_password=$(kubectl get secret reportportal-postgresql-creds --namespace report-portal -o=jsonpath='{.data.postgresql-postgres-password}' | base64 --decode)
+
+          # Patch the secrets
+          kubectl patch secret postgresql-pguser-rpuser --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_password" | base64)\"}}"
+          kubectl patch secret postgresql-pguser-postgres --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_postgres_password" | base64)\"}}"
+
+          echo "Secrets copied and patched successfully."
+      restartPolicy: Never
+  backoffLimit: 3

@@ -1,0 +1,84 @@
+reportportal:
+  serviceindex:
+    resources:
+      requests:
+        cpu: 50m
+  uat:
+    resources:
+      requests:
+        cpu: 50m
+  serviceui:
+    resources:
+      requests:
+        cpu: 50m
+  serviceapi:
+    resources:
+      requests:
+        cpu: 50m
+  serviceanalyzer:
+    resources:
+      requests:
+        cpu: 50m
+  serviceanalyzertrain:
+    resources:
+      requests:
+        cpu: 50m
+
+  rabbitmq:
+    SecretName: "reportportal-rabbitmq-creds"
+    endpoint:
+      address: report-portal-rabbitmq.report-portal.svc.cluster.local
+      user: user
+      apiuser: user
+
+  postgresql:
+    SecretName: "reportportal-postgresql-creds"
+    endpoint:
+      address: postgresql-primary.report-portal.svc.cluster.local
+
+  elasticsearch:
+    endpoint: opensearch-cluster-master.report-portal.svc.cluster.local:9200
+
+  storage:
+    type: minio
+    secretName: "reportportal-minio-creds"
+    accesskeyName: "root-user"
+    secretkeyName: "root-password"
+    endpoint: http://report-portal-minio.report-portal.svc.cluster.local:9000
+    endpointshort: report-portal-minio.report-portal.svc.cluster.local:9000
+
+  ingress:
+    # IF YOU HAVE SOME DOMAIN NAME SET INGRESS.USEDOMAINNAME to true and redefine url
+    usedomainname: true
+    hosts:
+      - report-portal.example.com
+
+minio:
+  auth:
+    existingSecret: reportportal-minio-creds
+  persistence:
+    size: 1Gi
+
+rabbitmq:
+  auth:
+    existingPasswordSecret: reportportal-rabbitmq-creds
+    existingErlangSecret: reportportal-rabbitmq-creds
+  persistence:
+    size: 1Gi
+
+opensearch:
+  singleNode: true
+  startupProbe:
+    initialDelaySeconds: 45
+  extraEnvs:
+    - name: DISABLE_INSTALL_DEMO_CONFIG
+      value: "true"
+    - name: DISABLE_SECURITY_PLUGIN
+      value: "true"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "2Gi"
+
+  persistence:
+    size: 3Gi
