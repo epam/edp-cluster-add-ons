@@ -22,7 +22,7 @@ metadata:
     app.kubernetes.io/component: interceptors
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-triggers
-    triggers.tekton.dev/release: "v0.25.2"
+    triggers.tekton.dev/release: "v0.25.3"
 # The data is populated at install time.
 
 ---
@@ -49,10 +49,10 @@ metadata:
     app.kubernetes.io/name: core-interceptors
     app.kubernetes.io/component: interceptors
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v0.25.2"
+    app.kubernetes.io/version: "v0.25.3"
     app.kubernetes.io/part-of: tekton-triggers
     # tekton.dev/release value replaced with inputs.params.versionTag in triggers/tekton/publish.yaml
-    triggers.tekton.dev/release: "v0.25.2"
+    triggers.tekton.dev/release: "v0.25.3"
 spec:
   replicas: 1
   selector:
@@ -67,17 +67,17 @@ spec:
         app.kubernetes.io/name: core-interceptors
         app.kubernetes.io/component: interceptors
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v0.25.2"
+        app.kubernetes.io/version: "v0.25.3"
         app.kubernetes.io/part-of: tekton-triggers
         app: tekton-triggers-core-interceptors
-        triggers.tekton.dev/release: "v0.25.2"
+        triggers.tekton.dev/release: "v0.25.3"
         # version value replaced with inputs.params.versionTag in triggers/tekton/publish.yaml
-        version: "v0.25.2"
+        version: "v0.25.3"
     spec:
       serviceAccountName: tekton-triggers-core-interceptors
       containers:
         - name: tekton-triggers-core-interceptors
-          image: "gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/interceptors:v0.25.2@sha256:d8c865431fbc9e4a1719e3d7fb64d7ef12bfe993da34840504d604218f306404"
+          image: "gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/interceptors:v0.25.3@sha256:777e1489bc37e8f06956319331e353a21d53f8d645dec7b1eb986a42fd94316b"
           ports:
             - containerPort: 8443
           args: ["-logtostderr", "-stderrthreshold", "INFO"]
@@ -124,11 +124,11 @@ metadata:
     app.kubernetes.io/name: tekton-triggers-core-interceptors
     app.kubernetes.io/component: interceptors
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v0.25.2"
+    app.kubernetes.io/version: "v0.25.3"
     app.kubernetes.io/part-of: tekton-triggers
-    triggers.tekton.dev/release: "v0.25.2"
+    triggers.tekton.dev/release: "v0.25.3"
     app: tekton-triggers-core-interceptors
-    version: "v0.25.2"
+    version: "v0.25.3"
   name: tekton-triggers-core-interceptors
   namespace: tekton-pipelines
 spec:
