@@ -2,6 +2,8 @@
 ## [Unreleased]
 
 ### Features
+- Make it possible to deploy cache as shared component ([#74](https://github.com/epam/edp-cluster-add-ons/issues/74))
+- Add Capsule templates to deploy EDP with Capsule isolation ([#31](https://github.com/epam/edp-cluster-add-ons/issues/31))
 - Enable CORS for SonarQube Ingress ([#29](https://github.com/epam/edp-cluster-add-ons/issues/29))
 - Add capsule ([#16](https://github.com/epam/edp-cluster-add-ons/issues/16))
 - Install tekton supply chains as a part of tekton ecosystem ([#14](https://github.com/epam/edp-cluster-add-ons/issues/14))
@@ -13,12 +15,27 @@
 - Add jaeger-operator, opentelementry-operator and aws-efs-csi-driver ([#1](https://github.com/epam/edp-cluster-add-ons/issues/1))
 
 ### Bug Fixes
+- Update nexus templates ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
 - Use Nexus Ingress object for the CI workload ([#28](https://github.com/epam/edp-cluster-add-ons/issues/28))
 - Fix dependency-track resources configuration in values.yaml ([#20](https://github.com/epam/edp-cluster-add-ons/issues/20))
 - Update conditional check for enabling extensions-oidc ([#11](https://github.com/epam/edp-cluster-add-ons/issues/11))
 - Fix changelog generator ([#1](https://github.com/epam/edp-cluster-add-ons/issues/1))
 
 ### Routine
+- Add reportportal ([#33](https://github.com/epam/edp-cluster-add-ons/issues/33))
+- Add-ons table now contains versions ([#32](https://github.com/epam/edp-cluster-add-ons/issues/32))
+- Update README.md with addons ([#32](https://github.com/epam/edp-cluster-add-ons/issues/32))
+- Update helm-docs ([#32](https://github.com/epam/edp-cluster-add-ons/issues/32))
+- Update addons repo version ([#32](https://github.com/epam/edp-cluster-add-ons/issues/32))
+- Update Harbor template ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Bump edp version ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Add sonar ci-user ES component ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Align DefectDojo add-ons ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Align Sonar add-ons ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Align keycloak add-ons ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Align oidc add-ons ([#27](https://github.com/epam/edp-cluster-add-ons/issues/27))
+- Update capsule to the latest stable version ([#30](https://github.com/epam/edp-cluster-add-ons/issues/30))
+- Update helm docs for sonarqube ([#29](https://github.com/epam/edp-cluster-add-ons/issues/29))
 - Remove downloaded chart from repository ([#28](https://github.com/epam/edp-cluster-add-ons/issues/28))
 - Update tekton stack ([#26](https://github.com/epam/edp-cluster-add-ons/issues/26))
 - Update changelog ([#26](https://github.com/epam/edp-cluster-add-ons/issues/26))
