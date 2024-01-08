@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: add-ons/argocd
+    path: add-ons/argo-cd
     targetRevision: {{ .Values.targetRevision }}
     helm:
       values: |

@@ -27,8 +27,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | capsule | object | `{"createNamespace":false,"enable":false}` | Capsule |
 | capsule-tenant | object | `{"enable":false}` | Capsule Tenant |
 | capsule.createNamespace | bool | `false` | whether to create the namespace or not |
-| certmanager | object | `{"createNamespace":false,"enable":false}` | Cert Manager |
-| certmanager.createNamespace | bool | `false` | whether to create the namespace or not |
+| cert-manager | object | `{"createNamespace":false,"enable":false}` | Cert Manager |
+| cert-manager.createNamespace | bool | `false` | whether to create the namespace or not |
 | defectdojo | object | `{"createNamespace":false,"enable":false}` | DefectDojo |
 | defectdojo.createNamespace | bool | `false` | whether to create the namespace or not |
 | dependency-track.createNamespace | bool | `false` |  |

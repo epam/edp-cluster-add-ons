@@ -21,7 +21,7 @@ capsule-tenant:
   enable: false
 
 # -- Cert Manager
-certmanager:
+cert-manager:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false

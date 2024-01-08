@@ -17,7 +17,7 @@ spec:
     helm:
       values: |
         cert-manager:
-        {{- toYaml .Values.certmanager | nindent 10 }}
+        {{- toYaml (index .Values "cert-manager") | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: cert-manager
