@@ -13,11 +13,13 @@ spec:
   - secretKey: sshPrivateKey
     remoteRef:
       key: /edp/deploy-secrets
+      metadataPolicy: None
       property: argocd-vcs.sshPrivateKey
       decodingStrategy: Base64
   - secretKey: url
     remoteRef:
       key: /edp/deploy-secrets
+      metadataPolicy: None
       property: argocd-vcs.url
   target:
     template:
