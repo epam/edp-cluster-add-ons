@@ -10,5 +10,8 @@ spec:
   data:
     - secretKey: REDIS_PASSWORD
       remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
         key: /edp/harbor-ha
+        metadataPolicy: None
         property: redis.REDIS_PASSWORD

@@ -13,22 +13,26 @@ spec:
       conversionStrategy: Default
       decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: harbor.HARBOR_ADMIN_PASSWORD
   - secretKey: secretKey
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: harbor.secretKey
   - secretKey: REGISTRY_HTPASSWD
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: harbor.REGISTRY_HTPASSWD
   - secretKey: REGISTRY_PASSWD
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: harbor.REGISTRY_PASSWD

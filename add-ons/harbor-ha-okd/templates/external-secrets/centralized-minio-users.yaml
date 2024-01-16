@@ -21,9 +21,15 @@ spec:
   data:
     - secretKey: REGISTRY_STORAGE_S3_ACCESSKEY
       remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
         key: /edp/system
+        metadataPolicy: None
         property: s3-user.ACCESSKEY
     - secretKey: REGISTRY_STORAGE_S3_SECRETKEY
       remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
         key: /edp/system
+        metadataPolicy: None
         property: s3-user.SECRETKEY

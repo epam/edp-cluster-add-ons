@@ -10,9 +10,15 @@ spec:
   data:
   - secretKey: root-user
     remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: minio.ROOT_USER
   - secretKey: root-password
     remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: /edp/harbor-ha
+      metadataPolicy: None
       property: minio.ROOT_PASSWORD
