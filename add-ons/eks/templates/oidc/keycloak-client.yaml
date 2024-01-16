@@ -11,7 +11,6 @@ spec:
   advancedProtocolMappers: true
   clientId: eks
   directAccess: true
-  public: false
   defaultClientScopes:
     - groups
   targetRealm: eks

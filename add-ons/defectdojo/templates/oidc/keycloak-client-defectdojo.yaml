@@ -21,6 +21,5 @@ spec:
         included.client.audience: "defectdojo"
         id.token.claim: 'false'
         access.token.claim: 'true'
-  public: false
   webUrl: https://{{ .Values.defectdojo.site_url }}
 {{ end }}

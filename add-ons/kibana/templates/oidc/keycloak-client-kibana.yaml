@@ -7,7 +7,6 @@ spec:
   advancedProtocolMappers: true
   clientId: kibana
   directAccess: true
-  public: false
   secret: keycloak-client-kibana-secret
   defaultClientScopes:
     - profile

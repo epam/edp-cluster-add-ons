@@ -7,7 +7,6 @@ spec:
   advancedProtocolMappers: true
   clientId: vault
   directAccess: true
-  public: false
   defaultClientScopes:
     - profile
     - email

@@ -7,7 +7,6 @@ spec:
   advancedProtocolMappers: true
   clientId: harbor
   directAccess: true
-  public: false
   defaultClientScopes:
     - profile
     - email

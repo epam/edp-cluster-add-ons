@@ -7,7 +7,6 @@ spec:
   advancedProtocolMappers: true
   clientId: grafana
   directAccess: true
-  public: false
   secret: keycloak-client-grafana-secret
   defaultClientScopes:
     - profile
