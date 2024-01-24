@@ -3,32 +3,12 @@ keycloakx:
   fullnameOverride: keycloakx
   replicas: 1
 
-  # Deploy the latest version
-  image:
-    tag: "20.0.3"
-
-  # start: create OpenShift realm which is required by EDP
-  extraInitContainers: |
-    - name: realm-provider
-      image: busybox
-      imagePullPolicy: IfNotPresent
-      command:
-        - sh
-      args:
-        - -c
-        - |
-          echo '{"realm": "openshift","enabled": true}' > /opt/keycloak/data/import/openshift.json
-      volumeMounts:
-        - name: realm
-          mountPath: /opt/keycloak/data/import
-
-  extraVolumeMounts: |
-    - name: realm
-      mountPath: /opt/keycloak/data/import
-
-  extraVolumes: |
-    - name: realm
-      emptyDir: {}
+  # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
+  health:
+    enabled: false
+  # The following parameter is unrecommended to expose. Exposed metrics lead to an unnecessary attack vector.
+  metrics:
+    enabled: false
 
   command:
     - "/opt/keycloak/bin/kc.sh"
@@ -43,9 +23,14 @@ keycloakx:
     - "--spi-events-listener-jboss-logging-error-level=warn"
     - "--import-realm"
 
+  # Additional environment variables for Keycloak.
+  # Environment variables "KC_HOSTNAME ADMIN_URL" and "KC_HOSTNAME URL" for working in "passthrough" mode,
+  # if they are not defined there will be an eternal loading of "LOGIN ADMIN UI"
   extraEnv: |
-    - name: KC_PROXY
-      value: "passthrough"
+    - name: KC_HOSTNAME_URL
+      value: "https://keycloak.example.com/auth"
+    - name: KC_HOSTNAME_ADMIN_URL
+      value: "https://keycloak.example.com/auth"
     - name: KEYCLOAK_ADMIN
       valueFrom:
         secretKeyRef:
@@ -69,11 +54,18 @@ keycloakx:
     annotations:
       kubernetes.io/ingress.class: nginx
       ingress.kubernetes.io/affinity: cookie
+    # The following parameter is unrecommended to expose. Admin paths lead to an unnecessary attack vector.
+    console:
+      enabled: false
     rules:
       - host: keycloak.example.com
         paths:
           - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
             pathType: Prefix
+
+  proxy:
+    enabled: true
+    mode: "passthrough"
 
   # This block should be uncommented if you set Keycloak to OpenShift and change the host field
   # route:

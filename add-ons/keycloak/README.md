@@ -1,6 +1,6 @@
 # keycloak
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 22.0.4](https://img.shields.io/badge/AppVersion-22.0.4-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
@@ -8,7 +8,7 @@ A Helm chart for Keycloak
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://codecentric.github.io/helm-charts | keycloakx | 2.2.1 |
+| https://codecentric.github.io/helm-charts | keycloakx | 2.3.0 |
 
 ## Values
 
@@ -44,19 +44,21 @@ A Helm chart for Keycloak
 | keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |
 | keycloakx.dbchecker.enabled | bool | `true` |  |
-| keycloakx.extraEnv | string | `"- name: KC_PROXY\n  value: \"passthrough\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
-| keycloakx.extraInitContainers | string | `"- name: realm-provider\n  image: busybox\n  imagePullPolicy: IfNotPresent\n  command:\n    - sh\n  args:\n    - -c\n    - |\n      echo '{\"realm\": \"openshift\",\"enabled\": true}' > /opt/keycloak/data/import/openshift.json\n  volumeMounts:\n    - name: realm\n      mountPath: /opt/keycloak/data/import\n"` |  |
-| keycloakx.extraVolumeMounts | string | `"- name: realm\n  mountPath: /opt/keycloak/data/import\n"` |  |
-| keycloakx.extraVolumes | string | `"- name: realm\n  emptyDir: {}\n"` |  |
+| keycloakx.extraEnv | string | `"- name: KC_HOSTNAME_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KC_HOSTNAME_ADMIN_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
+| keycloakx.extraEnvFrom | string | `"- secretRef:\n    name: 'keycloak-admin-creds'\n"` |  |
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
-| keycloakx.image.tag | string | `"20.0.3"` |  |
+| keycloakx.health.enabled | bool | `false` |  |
 | keycloakx.ingress.annotations."ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | keycloakx.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
+| keycloakx.ingress.console.enabled | bool | `false` |  |
 | keycloakx.ingress.enabled | bool | `true` |  |
 | keycloakx.ingress.rules[0].host | string | `"keycloak.example.com"` |  |
 | keycloakx.ingress.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/"` |  |
 | keycloakx.ingress.rules[0].paths[0].pathType | string | `"Prefix"` |  |
+| keycloakx.metrics.enabled | bool | `false` |  |
 | keycloakx.nameOverride | string | `"keycloakx"` |  |
+| keycloakx.proxy.enabled | bool | `true` |  |
+| keycloakx.proxy.mode | string | `"passthrough"` |  |
 | keycloakx.replicas | int | `1` |  |
 | keycloakx.resources.limits.memory | string | `"2048Mi"` |  |
 | keycloakx.resources.requests.cpu | string | `"50m"` |  |
