@@ -1,21 +1,40 @@
 # extensions-oidc
 
-![Version: 1.18.1](https://img.shields.io/badge/Version-1.18.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.1](https://img.shields.io/badge/AppVersion-1.18.1-informational?style=flat-square)
+![Version: 1.20.0](https://img.shields.io/badge/Version-1.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.20.0](https://img.shields.io/badge/AppVersion-1.20.0-informational?style=flat-square)
 
 A Helm chart for extensions-oidc
+
+```
++-------------------------+   +-----------------+
+|     sharedService       |   |      broker     |
+|         Realm           |   |      Realm      |
+|  +------------------+   |   | +-------------+ |
+|  |    idpBroker     |   |   | |sharedService| |
+|  | identityProvider +---+---+->    Client   | |
+|  +------------------+   |   | +-------------+ |
+| +----------+ +--------+ |   +-----------------+
+| | sonarqube| | nexus  | |
+| |  Client  | | Client | |
+| +----------+ +--------+ |
++-------------------------+
+```
+
+broker - contains a list of users and basic settings, you can install or use a pre-created Realm, for that set the 'create' parameter to 'false' and ununcomment 'existingBroker' provide the name of the existing realm.
+
+sharedService - contains clients, application integrations, and identity providers for connect to `broker` realm.
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | keycloak-operator | 1.18.1 |
+| https://epam.github.io/edp-helm-charts/stable | keycloak-operator | 1.20.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| extensionsOIDC.broker.create | bool | `true` |  |
+| extensionsOIDC.broker.name | string | `"broker"` |  |
 | extensionsOIDC.keycloakUrl | string | `"https://keycloak.example.com"` |  |
-| extensionsOIDC.mainRealm | string | `"openshift"` |  |
-| extensionsOIDC.mainRealmSecret | string | `""` |  |
+| extensionsOIDC.sharedService | string | `"shared"` |  |
 | keycloak-operator.clusterReconciliationEnabled | bool | `true` |  |
-

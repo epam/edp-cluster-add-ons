@@ -4,4 +4,4 @@ metadata:
   name: main
 spec:
   clusterKeycloakRef: keycloak
-  realmName: shared
+  realmName: {{ .Values.extensionsOIDC.sharedService }}

@@ -2,10 +2,10 @@ apiVersion: v2
 description: A Helm chart for extensions-oidc
 name: extensions-oidc
 type: application
-version: 1.18.1
-appVersion: 1.18.1
+version: 1.20.0
+appVersion: 1.20.0
 
 dependencies:
 - name: keycloak-operator
-  version: 1.18.1
+  version: 1.20.0
   repository: https://epam.github.io/edp-helm-charts/stable

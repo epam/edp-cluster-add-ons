@@ -15,6 +15,6 @@ spec:
         - name: sonar-developers
     - name: administrator
       composite: true
+      description: "default administrator role"
       composites:
         - name: sonar-administrators
-      description: "default administrator role"

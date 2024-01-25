@@ -55,7 +55,7 @@ make update-readme
 | defectdojo             | 1.6.96    | 2.28.2       | False             | False    |
 | dependency-track       | 1.5.5     | v1.12.1      | False             | False    |
 | edp                    | 3.7.5     | 3.7.5        | False             | False    |
-| extensions-oidc        | 1.18.1    | 1.18.1       | False             | False    |
+| extensions-oidc        | 1.20.0    | 1.20.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
 | fluent-bit             | 0.1.0     | 2.1.4        | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | False             | False    |
