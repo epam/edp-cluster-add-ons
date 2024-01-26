@@ -1,24 +1,48 @@
 edp-install:
+## edp-install configuration
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.7/deploy-templates/values.yaml and in each of subchart 
   global:
+    # -- a cluster DNS wildcard name
     dnsWildCard: example.com
+    # -- platform type that can be "kubernetes" or "openshift"
     platform: kubernetes
+    # -- Can be gerrit, github or gitlab. By default: github
     gitProvider: github
-    dockerRegistry:
-      url: "registry.example.com"
-      type: "harbor"
-      space: "edp"
+    # Below is an example of endpoint values for each registry type:
+    # type:      | url
+    # =============================
+    # ecr        | <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com
+    # harbor     | <registry.example.com>
+    # dockerhub  | 'docker.io'
+    # openshift  | <image-registry.openshift-image-registry.svc:5000>
+    
+    # For example to integrate platform with dockerhub and publish image under 'my_user' account:
+    # dockerRegistry:
+    #   type: "dockerhub"
+    #   url: "docker.io"
+    #   space: "my_user"
 
+  # -- AWS Region, e.g. "eu-central-1". Mandatory if dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
+  # awsRegion:
+
+  # -- Enable SSO for EDP oauth2-proxy. Default: false
   sso:
     enabled: true
+    # -- Keycloak URL
     keycloakUrl: https://keycloak.example.com
+    # -- Administrators of EDP tenant
     admins:
       - john@example.com
       - mike@example.com
+    # -- Developers of EDP tenant
     developers:
       - john@example.com
       - mike@example.com
 
+  # Configure External Secrets Operator to provision secrets for Platform and/or EDP
+  # https://external-secrets.io/latest/provider-aws-secrets-manager/
   externalSecrets:
+    # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
     enabled: true
     secretProvider:
       aws:
@@ -28,11 +52,57 @@ edp-install:
 
   edp-headlamp:
     config:
+      # -- base url path at which headlamp should run
+      baseURL: ""
       oidc:
+        # Enable OIDC integration. Default: false
         enabled: true
+        # -- Keycloak URL
         keycloakUrl: "https://keycloak.example.com"
+        # -- OIDC client ID
         clientID: "shared"
+        # -- OIDC client secret name
+        clientSecretName: "keycloak-client-headlamp-secret"
+        # -- OIDC client secret key
+        clientSecretKey: "clientSecret"
+        # -- OIDC issuer realm
+        issuerRealm: ""
+        # -- OIDC scopes to be used
+        scopes: ""
 
   edp-tekton:
+    tekton-cache:
+      enabled: true
+      # Tekton cache endpoint for pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-tekton-cache.yaml
+      # url: http://tekton-cache:8080
+    dashboard:
+      # -- Deploy Tekton Dashboard as a part of pipeline library when true. Default: true
+      # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
+      # -- To enable proxy protect use openshift_proxy or oauth2_proxy sections.
+      # -- More details:
+      # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
+      enabled: true
+      # -- Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false.
+      readOnly: false
+      ingress:
+        # -- Deploy EDP Dashboard ingress as a part of pipeline library when true. Default: true
+        enabled: true
+        # -- Annotations for Ingress resource
+        annotations: {}
+          # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
+          # nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
+          # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+
     github:
       host: github.com
+    # gitlab:
+    #   # -- The GitLab host, adjust this if you run a GitLab enterprise. Default: gitlab.com
+    #   host: gitlab.com
+
+  # Proxy configuration section
+  oauth2_proxy:
+    # oauth2-proxy requires keycloak to be configured properly before deployment
+    # you can set enable: true, when your platform is deployed and keycloak is
+    # configured. Use 'sso' section.
+    # -- Install oauth2-proxy as a part of EDP deployment. Default: false
+    enabled: true
