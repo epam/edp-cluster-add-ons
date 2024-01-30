@@ -77,7 +77,7 @@ make update-readme
 | sonar                  | 8.0.2     | 9.9.2        | False             | False    |
 | sonar-operator         | 3.1.0     | 3.1.0        | False             | False    |
 | storage-class          | N/A       | N/A          | N/A               | False    |
-| tekton-cache           | 0.3.1     | 0.3.1        | True              | True     |
+| tekton-cache           | 0.3.2     | 0.3.2        | True              | True     |
 | tekton                 | N/A       | N/A          | False             | False    |
 | vault                  | 0.24.1    | 1.13.1       | False             | False    |
 | vault-kms              | 0.25.0    | 1.14.0       | False             | False    |
