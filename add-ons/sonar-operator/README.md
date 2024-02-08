@@ -14,20 +14,20 @@ A Helm chart for EDP Sonar Operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| annotations | object | `{}` |  |
-| extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the container |
-| extraVolumes | list | `[]` | Additional volumes to be added to the pod |
-| image.repository | string | `"epamedp/sonar-operator"` | EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator) |
-| image.tag | string | `"3.1.0"` | EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags) |
-| imagePullPolicy | string | `"IfNotPresent"` |  |
-| name | string | `"sonar-operator"` | component name |
-| nodeSelector | object | `{}` |  |
 | oidc | object | `{"enabled":false,"keycloakRealm":"shared","keycloakUrl":"https://keycloak.example.com"}` | Integration with keycloak |
-| resources.limits.memory | string | `"192Mi"` |  |
-| resources.requests.cpu | string | `"50m"` |  |
-| resources.requests.memory | string | `"64Mi"` |  |
+| sonar-operator.affinity | object | `{}` |  |
+| sonar-operator.annotations | object | `{}` |  |
+| sonar-operator.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the container |
+| sonar-operator.extraVolumes | list | `[]` | Additional volumes to be added to the pod |
+| sonar-operator.image.repository | string | `"epamedp/sonar-operator"` | EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator) |
+| sonar-operator.image.tag | string | `"3.1.0"` | EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags) |
+| sonar-operator.imagePullPolicy | string | `"IfNotPresent"` |  |
+| sonar-operator.name | string | `"sonar-operator"` | component name |
+| sonar-operator.nodeSelector | object | `{}` |  |
+| sonar-operator.resources.limits.memory | string | `"192Mi"` |  |
+| sonar-operator.resources.requests.cpu | string | `"50m"` |  |
+| sonar-operator.resources.requests.memory | string | `"64Mi"` |  |
+| sonar-operator.tolerations | list | `[]` |  |
 | sonarSecret | string | `"sonar-admin-password"` |  |
 | sonarUrl | string | `"https://sonar.example.com"` | URL and secret name which use sonar operator for configuring sonar |
-| tolerations | list | `[]` |  |
 
