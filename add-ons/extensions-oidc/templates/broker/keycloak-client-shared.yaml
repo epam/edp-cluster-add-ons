@@ -13,5 +13,5 @@ spec:
   realmRef:
     kind: KeycloakRealm
     name: {{ .Values.extensionsOIDC.broker.name }}
-  secret: keycloak-client-broker-secret
+  secret: keycloak-client-shared-secret
 {{- end -}}

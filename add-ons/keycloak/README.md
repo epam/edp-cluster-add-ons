@@ -45,7 +45,6 @@ A Helm chart for Keycloak
 | keycloakx.database.vendor | string | `"postgres"` |  |
 | keycloakx.dbchecker.enabled | bool | `true` |  |
 | keycloakx.extraEnv | string | `"- name: KC_HOSTNAME_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KC_HOSTNAME_ADMIN_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
-| keycloakx.extraEnvFrom | string | `"- secretRef:\n    name: 'keycloak-admin-creds'\n"` |  |
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
 | keycloakx.health.enabled | bool | `false` |  |
 | keycloakx.ingress.annotations."ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
