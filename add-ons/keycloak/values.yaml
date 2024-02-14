@@ -90,12 +90,32 @@ keycloakx:
     enabled: true
 
   database:
+  # This section configure connection to the external database
+  #
+  # By default, keycloakx Helm Chart uses Postgres database from PGO.
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/keycloak/templates/postgres-cluster.yaml
+  # More detail how install PostgreSQL Operator you can find:
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/postgres-operator
+
+  # Optional, can use onboarding PostgreSQL database by Helm chart.
+  # To use this approach disables creating a database by Postgres operator, flag - Values.pgo.enabled=false
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/keycloak-postgresql
+
+  # PGO example (preconfigured by default)
     vendor: postgres
-    existingSecret: keycloak-postgresql
-    hostname: postgresql
+    existingSecret: postgresql-pguser-admin
+    hostname: postgresql-primary.security.svc
     port: 5432
     username: admin
     database: keycloak
+
+  # Postgres database Helm chart example
+    # vendor: postgres
+    # existingSecret: keycloak-postgresql
+    # hostname: postgresql
+    # port: 5432
+    # username: admin
+    # database: keycloak
 
   autoscaling:
     # If `true`, an autoscaling/v2 HorizontalPodAutoscaler resource is created (requires Kubernetes 1.23 or above)
@@ -124,3 +144,11 @@ keycloakx:
           - type: Pods
             value: 1
             periodSeconds: 300
+
+# The section below allows to deploy a new PostgresCluster with the below details:
+# Endpoint (Kubernetes service): postgresql-primary.security.svc
+# User Secret (Kubernetes Secret): postgresql-pguser-admin
+# Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/postgres-operator
+pgo:
+  # -- Enables creating a new database with Postgres operator.
+  enabled: true

@@ -38,8 +38,8 @@ A Helm chart for Keycloak
 | keycloakx.command[8] | string | `"--spi-events-listener-jboss-logging-success-level=info"` |  |
 | keycloakx.command[9] | string | `"--spi-events-listener-jboss-logging-error-level=warn"` |  |
 | keycloakx.database.database | string | `"keycloak"` |  |
-| keycloakx.database.existingSecret | string | `"keycloak-postgresql"` |  |
-| keycloakx.database.hostname | string | `"postgresql"` |  |
+| keycloakx.database.existingSecret | string | `"postgresql-pguser-admin"` |  |
+| keycloakx.database.hostname | string | `"postgresql-primary.security.svc"` |  |
 | keycloakx.database.port | int | `5432` |  |
 | keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |
@@ -62,4 +62,5 @@ A Helm chart for Keycloak
 | keycloakx.resources.limits.memory | string | `"2048Mi"` |  |
 | keycloakx.resources.requests.cpu | string | `"50m"` |  |
 | keycloakx.resources.requests.memory | string | `"512Mi"` |  |
+| pgo.enabled | bool | `true` | Enables creating a new database with Postgres operator. |
 
