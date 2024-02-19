@@ -21,3 +21,14 @@ extensionsOIDC:
 # keycloak-operator objects throughout the cluster.
 keycloak-operator:
   clusterReconciliationEnabled: true
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `gcpsm`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore-oidc"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
+  secretName: "/edp/system"
