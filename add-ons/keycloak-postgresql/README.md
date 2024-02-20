@@ -14,6 +14,10 @@ A Helm chart for Keycloak Postgresql
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.enabled | bool | `true` | Install components of the ESO. |
+| eso.secretName | string | `"/edp/system2"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretStoreName | string | `"aws-parameterstore-kk-postgress"` | Defines Secret Store name. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | postgresql.fullnameOverride | string | `"postgresql"` |  |
 | postgresql.global.postgresql.auth.database | string | `"keycloak"` |  |
 | postgresql.global.postgresql.auth.existingSecret | string | `"keycloak-postgresql"` |  |
