@@ -15,7 +15,7 @@ A Helm chart for Fluent Bit
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/system"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretName | string | `"/edp/eks/addons/fluent-bit"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | fluent-bit.config.customParsers | string | `"[PARSER]\n    Name docker_no_time\n    Format json\n    Time_Keep Off\n    Time_Key time\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\n\n[PARSER]\n    Name        java_multiline\n    Format      regex\n    Regex       /^(?<time>\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}) (?<level>[^\\s]+)(?<message>.*)/\n    Time_Key    time\n    Time_Format %Y-%m-%d %H:%M:%S\n\n[PARSER]\n    # https://rubular.com/r/IhIbCAIs7ImOkc\n    Name        k8s-nginx-ingress\n    Format      regex\n    Regex       ^(?<host>[^ ]*) - (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^\\\"]*?)(?: +\\S*)?)?\" (?<code>[^ ]*) (?<size>[^ ]*) \"(?<referer>[^\\\"]*)\" \"(?<agent>[^\\\"]*)\" (?<request_length>[^ ]*) (?<request_time>[^ ]*) \\[(?<proxy_upstream_name>[^ ]*)\\] (\\[(?<proxy_alternative_upstream_name>[^ ]*)\\] )?(?<upstream_addr>[^ ]*) (?<upstream_response_length>[^ ]*) (?<upstream_response_time>[^ ]*) (?<upstream_status>[^ ]*) (?<reg_id>[^ ]*).*$\n    Time_Key    time\n    Time_Format %d/%b/%Y:%H:%M:%S %z\n"` |  |

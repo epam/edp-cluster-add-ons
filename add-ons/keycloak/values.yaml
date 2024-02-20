@@ -162,4 +162,4 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore-keycloak"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
-  secretName: "/edp/system2"
+  secretName: "/edp/eks/addons/keycloak"

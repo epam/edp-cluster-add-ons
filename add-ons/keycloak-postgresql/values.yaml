@@ -31,4 +31,4 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore-kk-postgress"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
-  secretName: "/edp/system2"
+  secretName: "/edp/eks/addons/postgresql"

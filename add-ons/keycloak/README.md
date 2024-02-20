@@ -15,7 +15,7 @@ A Helm chart for Keycloak
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/system2"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretName | string | `"/edp/eks/addons/keycloak"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
 | eso.secretStoreName | string | `"aws-parameterstore-keycloak"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | keycloakx.autoscaling.behavior.scaleDown.policies[0].periodSeconds | int | `300` |  |

@@ -94,4 +94,4 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
-  secretName: "/edp/deploy-secrets"
+  secretName: "/edp/eks/addons/argocd"

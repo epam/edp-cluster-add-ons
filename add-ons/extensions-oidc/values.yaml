@@ -31,4 +31,4 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore-oidc"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
-  secretName: "/edp/system"
+  secretName: "/edp/eks/addons/extensionsOIDC"

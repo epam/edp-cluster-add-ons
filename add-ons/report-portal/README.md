@@ -18,7 +18,7 @@ A Helm chart for report-portal
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/system"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretName | string | `"/edp/eks/addons/reportportal"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | minio.auth.existingSecret | string | `"reportportal-minio-creds"` |  |

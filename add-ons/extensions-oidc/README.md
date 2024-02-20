@@ -34,7 +34,7 @@ sharedService - contains clients, application integrations, and identity provide
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/system"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretName | string | `"/edp/eks/addons/extensionsOIDC"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
 | eso.secretStoreName | string | `"aws-parameterstore-oidc"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | extensionsOIDC.broker.create | bool | `true` |  |

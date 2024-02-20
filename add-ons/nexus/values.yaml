@@ -83,4 +83,4 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
-  secretName: "/edp/system"
+  secretName: "/edp/eks/addons/nexus"
