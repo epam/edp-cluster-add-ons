@@ -147,3 +147,14 @@ harbor:
 
 oidc:
   enabled: false
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `gcpsm`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
+  secretName: "/edp/system"
