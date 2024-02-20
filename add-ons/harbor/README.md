@@ -14,6 +14,10 @@ A Helm chart for Harbor
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.enabled | bool | `true` | Install components of the ESO. |
+| eso.secretName | string | `"/edp/system"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
 | harbor.core.configureUserSettings | string | `"{\n  \"auth_mode\": \"oidc_auth\",\n  \"oidc_name\": \"keycloak\",\n  \"oidc_endpoint\": \"https://keycloak.example.com/auth/realms/shared\",\n  \"oidc_client_id\": \"harbor\",\n  \"oidc_client_secret\": \"YOURSECRET\",\n  \"oidc_groups_claim\": \"roles\",\n  \"oidc_admin_group\": \"administrator\",\n  \"oidc_scope\": \"openid,email,profile,roles\",\n  \"oidc_auto_onboard\": \"true\",\n  \"oidc_user_claim\": \"preferred_username\"\n}\n"` |  |
 | harbor.core.xsrfKey | string | `"somekey"` |  |
 | harbor.database.internal.password | string | `"somesecret"` |  |
