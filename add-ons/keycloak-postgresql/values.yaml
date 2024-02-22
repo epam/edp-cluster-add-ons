@@ -26,9 +26,16 @@ postgresql:
 eso:
   # -- Install components of the ESO.
   enabled: true
-  # -- Defines provider type. One of `aws` or `gcpsm`.
+  # -- Defines provider type. One of `aws` or `generic`.
   type: "aws"
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore-kk-postgress"
-  # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
   secretName: "/edp/eks/addons/postgresql"
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

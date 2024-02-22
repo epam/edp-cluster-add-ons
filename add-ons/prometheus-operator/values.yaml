@@ -117,9 +117,16 @@ kube-prometheus-stack:
 eso:
   # -- Install components of the ESO.
   enabled: true
-  # -- Defines provider type. One of `aws` or `gcpsm`.
+  # -- Defines provider type. One of `aws` or `generic`.
   type: "aws"
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore"
-  # -- Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager.
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
   secretName: "/edp/system"
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

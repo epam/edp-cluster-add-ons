@@ -34,9 +34,10 @@ sharedService - contains clients, application integrations, and identity provide
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/eks/addons/extensionsOIDC"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
+| eso.secretName | string | `"/edp/eks/addons/extensionsOIDC"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore-oidc"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | extensionsOIDC.broker.create | bool | `true` |  |
 | extensionsOIDC.broker.name | string | `"broker"` |  |
 | extensionsOIDC.keycloakUrl | string | `"https://keycloak.example.com"` |  |

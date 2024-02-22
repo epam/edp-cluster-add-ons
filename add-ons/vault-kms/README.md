@@ -85,9 +85,10 @@ A Helm chart for Vault
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/eks/addons/vault"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
+| eso.secretName | string | `"/edp/eks/addons/vault"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | job.clusterApiUrl | string | `"https://cluster-api.com"` |  |
 | job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/shared"` |  |
 | job.vaultUrl | string | `"vault.example.com"` |  |

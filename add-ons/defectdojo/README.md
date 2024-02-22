@@ -40,8 +40,9 @@ A Helm chart for DefectDojo Install
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
 | defectdojo.tag | string | `"2.28.2"` |  |
 | eso.enabled | bool | `true` | Install components of the ESO. |
-| eso.secretName | string | `"/edp/eks/addons/defectdojo"` | Value name in AWS ParameterStore, AWS SecretsManager or GCP Secret Manager. |
+| eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
+| eso.secretName | string | `"/edp/eks/addons/defectdojo"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm`. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | oidc.enabled | bool | `false` |  |
 
