@@ -25,6 +25,11 @@ nexus-repository-manager:
           mountPath: /nexus-data
 
   nexus:
+    docker:
+      enabled: true
+      registries:
+        - host: nexus-ci-container.example.com
+          port: 5000
     env:
       - name: NEXUS_SECURITY_RANDOMPASSWORD
         value: "false"

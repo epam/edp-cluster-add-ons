@@ -34,6 +34,9 @@ A Helm chart for Nexus
 | nexus-repository-manager.ingress.enabled | bool | `true` |  |
 | nexus-repository-manager.ingress.hostRepo | string | `"nexus-ci.example.com"` |  |
 | nexus-repository-manager.nameOverride | string | `"nexus"` |  |
+| nexus-repository-manager.nexus.docker.enabled | bool | `true` |  |
+| nexus-repository-manager.nexus.docker.registries[0].host | string | `"nexus-ci-container.example.com"` |  |
+| nexus-repository-manager.nexus.docker.registries[0].port | int | `5000` |  |
 | nexus-repository-manager.nexus.env[0].name | string | `"NEXUS_SECURITY_RANDOMPASSWORD"` |  |
 | nexus-repository-manager.nexus.env[0].value | string | `"false"` |  |
 | nexus-repository-manager.nexus.properties.data."jetty.request.header.size" | int | `100000` |  |
