@@ -1,0 +1,16 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-dotnet-hosted
+spec:
+  nexusRef:
+    name: nexus
+  nuget:
+    hosted:
+      name: edp-dotnet-hosted
+      storage:
+        blobStoreName: "edp-dotnet"
+        strictContentTypeValidation: true
+      online: true
+      component:
+        proprietaryComponents: true

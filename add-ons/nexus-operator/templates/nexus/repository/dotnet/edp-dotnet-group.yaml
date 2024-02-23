@@ -1,0 +1,20 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-dotnet-group
+spec:
+  nexusRef:
+    name: nexus
+  nuget:
+    group:
+      name: edp-dotnet-group
+      group:
+        memberNames:
+          - edp-dotnet-proxy
+          - edp-dotnet-releases
+          - edp-dotnet-snapshots
+          - edp-dotnet-hosted
+      online: true
+      storage:
+        blobStoreName: "edp-dotnet"
+        strictContentTypeValidation: true

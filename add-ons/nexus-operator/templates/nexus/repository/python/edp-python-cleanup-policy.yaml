@@ -1,0 +1,12 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusCleanupPolicy
+metadata:
+  name: python-nexus-cleanup-policy
+spec:
+  nexusRef:
+    name: nexus
+  name: python-nexus-cleanup-policy
+  format: "pypi"
+  description: "Cleanup policy for python"
+  criteria:
+    lastBlobUpdated: 30

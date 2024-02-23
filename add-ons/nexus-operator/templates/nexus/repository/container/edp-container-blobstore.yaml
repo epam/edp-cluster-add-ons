@@ -1,0 +1,10 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: edp-container
+spec:
+  name: edp-container
+  file:
+    path: edp-container
+  nexusRef:
+    name: nexus

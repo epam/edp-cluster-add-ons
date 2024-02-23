@@ -1,0 +1,7 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: Nexus
+metadata:
+  name: nexus
+spec:
+  url: http://nexus.nexus:8081
+  secret: nexus-admin-password

@@ -1,0 +1,17 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-npm-snapshots
+spec:
+  nexusRef:
+    name: nexus
+  npm:
+    hosted:
+      name: edp-npm-snapshots
+      storage:
+        blobStoreName: "edp-npm"
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      online: true
+      component:
+        proprietaryComponents: true

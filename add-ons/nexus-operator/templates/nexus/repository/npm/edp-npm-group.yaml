@@ -1,0 +1,20 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-npm-group
+spec:
+  nexusRef:
+    name: nexus
+  npm:
+    group:
+      name: edp-npm-group
+      group:
+        memberNames:
+          - edp-npm-proxy
+          - edp-npm-releases
+          - edp-npm-snapshots
+          - edp-npm-hosted
+      online: true
+      storage:
+        blobStoreName: "edp-npm"
+        strictContentTypeValidation: true

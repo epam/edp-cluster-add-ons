@@ -1,0 +1,17 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-dotnet-snapshots
+spec:
+  nexusRef:
+    name: nexus
+  nuget:
+    hosted:
+      name: edp-dotnet-snapshots
+      storage:
+        blobStoreName: "edp-dotnet"
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      online: true
+      component:
+        proprietaryComponents: true

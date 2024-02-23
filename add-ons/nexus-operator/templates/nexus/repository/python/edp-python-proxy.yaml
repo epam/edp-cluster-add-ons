@@ -1,0 +1,32 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-python-proxy
+spec:
+  nexusRef:
+    name: nexus
+  pypi:
+    proxy:
+      name: edp-python-proxy
+      proxy:
+        remoteUrl: https://pypi.org
+        contentMaxAge: 1440
+        metadataMaxAge: 1440
+      online: true
+      routingRule: "routing-rule"
+      cleanup:
+        policyNames:
+          - "cleanup-policy"
+      httpClient:
+        autoBlock: true
+        blocked: false
+        connection:
+          timeout: 1440
+          retries: 10
+          userAgentSuffix: "user-agent-suffix"
+      negativeCache:
+        enabled: true
+        timeToLive: 1440
+      storage:
+        blobStoreName: "edp-python"
+        strictContentTypeValidation: true

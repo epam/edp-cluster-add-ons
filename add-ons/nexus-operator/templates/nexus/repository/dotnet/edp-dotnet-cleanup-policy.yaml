@@ -1,0 +1,12 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusCleanupPolicy
+metadata:
+  name: dotnet-nexus-cleanup-policy
+spec:
+  nexusRef:
+    name: nexus
+  name: dotnet-nexus-cleanup-policy
+  format: "nuget"
+  description: "Cleanup policy for dotnet"
+  criteria:
+    lastBlobUpdated: 30

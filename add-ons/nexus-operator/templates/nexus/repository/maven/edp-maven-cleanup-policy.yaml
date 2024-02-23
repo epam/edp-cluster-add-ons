@@ -1,0 +1,12 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusCleanupPolicy
+metadata:
+  name: maven-nexus-cleanup-policy
+spec:
+  nexusRef:
+    name: nexus
+  name: maven-nexus-cleanup-policy
+  format: "maven2"
+  description: "Cleanup policy for maven"
+  criteria:
+    lastBlobUpdated: 30

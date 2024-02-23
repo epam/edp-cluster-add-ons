@@ -1,0 +1,16 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-npm-hosted
+spec:
+  nexusRef:
+    name: nexus
+  npm:
+    hosted:
+      name: edp-npm-hosted
+      storage:
+        blobStoreName: "edp-npm"
+        strictContentTypeValidation: true
+      online: true
+      component:
+        proprietaryComponents: true

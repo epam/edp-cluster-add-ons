@@ -1,0 +1,21 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-maven-snapshots
+spec:
+  nexusRef:
+    name: nexus
+  maven:
+    hosted:
+      name: edp-maven-snapshots
+      maven:
+        versionPolicy: SNAPSHOT
+        layoutPolicy: STRICT
+        contentDisposition: INLINE
+      storage:
+        blobStoreName: "edp-maven"
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      online: true
+      component:
+        proprietaryComponents: true

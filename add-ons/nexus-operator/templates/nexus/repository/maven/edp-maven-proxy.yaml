@@ -1,0 +1,36 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-maven-proxy
+spec:
+  nexusRef:
+    name: nexus
+  maven:
+    proxy:
+      maven:
+        versionPolicy: MIXED
+        layoutPolicy: STRICT
+        contentDisposition: INLINE
+      name: edp-maven-proxy
+      proxy:
+        remoteUrl: https://repo1.maven.org/maven2/
+        contentMaxAge: 1440
+        metadataMaxAge: 1440
+      online: true
+      routingRule: "routing-rule"
+      cleanup:
+        policyNames:
+          - "maven-nexus-cleanup-policy"
+      httpClient:
+        autoBlock: true
+        blocked: false
+        connection:
+          timeout: 1440
+          retries: 10
+          userAgentSuffix: "user-agent-suffix"
+      negativeCache:
+        enabled: true
+        timeToLive: 1440
+      storage:
+        blobStoreName: "edp-maven"
+        strictContentTypeValidation: true

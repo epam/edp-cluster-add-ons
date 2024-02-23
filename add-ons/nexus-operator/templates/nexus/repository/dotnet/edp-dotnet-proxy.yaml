@@ -1,0 +1,32 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-dotnet-proxy
+spec:
+  nexusRef:
+    name: nexus
+  nuget:
+    proxy:
+      name: edp-dotnet-proxy
+      proxy:
+        remoteUrl: https://api.nuget.org/v3/index.json
+        contentMaxAge: 1440
+        metadataMaxAge: 1440
+      online: true
+      routingRule: "routing-rule"
+      cleanup:
+        policyNames:
+          - "dotnet-nexus-cleanup-policy"
+      httpClient:
+        autoBlock: true
+        blocked: false
+        connection:
+          timeout: 1440
+          retries: 10
+          userAgentSuffix: "user-agent-suffix"
+      negativeCache:
+        enabled: true
+        timeToLive: 1440
+      storage:
+        blobStoreName: "edp-dotnet"
+        strictContentTypeValidation: true

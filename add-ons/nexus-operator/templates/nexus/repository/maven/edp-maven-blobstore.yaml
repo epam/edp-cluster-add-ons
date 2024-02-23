@@ -1,0 +1,10 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: edp-maven
+spec:
+  name: edp-maven
+  file:
+    path: edp-maven
+  nexusRef:
+    name: nexus

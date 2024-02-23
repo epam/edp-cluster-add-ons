@@ -1,25 +1,17 @@
-nexus-operator:
-  global:
-    # -- namespace or a project name (in case of OpenShift)
-    edpName: "nexus"
-    # -- platform type that can be "kubernetes" or "openshift"
-    platform: "kubernetes"
-    # -- Administrators of your tenant
-    admins:
-    # -- a cluster DNS wildcard name
-    dnsWildCard:
-    # -- Keycloak Endpoint which is used for SSO integration. Format https://keycloak.example.com
-    keycloakUrl: "keycloak.example.com"
-
-  nexusCR:
-    # -- Specifies whether Nexus CR should be created
-    create: true
-
-  nexus:
-    # -- Flag to enable/disable Nexus deploy
-    deploy: false
-
-  # Proxy configuration section
-  oauth2_proxy:
-    # -- Install oauth2-proxy as a part of nexus deployment. Default: true
-    enabled: false
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/edp/eks/addons/nexus-operator"
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

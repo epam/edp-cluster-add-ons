@@ -1,0 +1,10 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: edp-python
+spec:
+  name: edp-python
+  file:
+    path: edp-python
+  nexusRef:
+    name: nexus

@@ -1,0 +1,15 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusUser
+metadata:
+  name: ci-user
+spec:
+  id: ci.user
+  firstName: ci.user
+  lastName: CI
+  email: ci.user@edp.com
+  secret: $nexus-ci-user:password
+  roles:
+    - edp-admin
+  nexusRef:
+    name: nexus
+    kind: Nexus

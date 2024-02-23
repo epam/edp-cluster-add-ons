@@ -1,0 +1,15 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRole
+metadata:
+  name: edp-viewer
+spec:
+  id: edp-viewer
+  nexusRef:
+    name: nexus
+    kind: Nexus
+  name: edp-viewer
+  description: Read access rights to all repos
+  privileges:
+    - nx-repository-view-*-*-browse
+    - nx-repository-view-*-*-read
+    - nx-search-read

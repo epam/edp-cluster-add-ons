@@ -1,0 +1,12 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusCleanupPolicy
+metadata:
+  name: npm-nexus-cleanup-policy
+spec:
+  nexusRef:
+    name: nexus
+  name: npm-nexus-cleanup-policy
+  format: "npm"
+  description: "Cleanup policy for npm"
+  criteria:
+    lastBlobUpdated: 30

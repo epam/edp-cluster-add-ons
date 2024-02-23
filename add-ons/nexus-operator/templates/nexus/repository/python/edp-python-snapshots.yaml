@@ -1,0 +1,17 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-python-snapshots
+spec:
+  nexusRef:
+    name: nexus
+  pypi:
+    hosted:
+      name: edp-python-snapshots
+      storage:
+        blobStoreName: "edp-python"
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      online: true
+      component:
+        proprietaryComponents: true

@@ -1,0 +1,21 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRole
+metadata:
+  name: edp-admin
+spec:
+  id: edp-admin
+  nexusRef:
+    name: nexus
+    kind: Nexus
+  name: edp-admin
+  description: Read and write access to all repos and scripts
+  privileges:
+    - nx-apikey-all
+    - nx-repository-view-*-*-add
+    - nx-repository-view-*-*-browse
+    - nx-repository-view-*-*-edit
+    - nx-repository-view-*-*-read
+    - nx-script-*-add
+    - nx-script-*-delete
+    - nx-script-*-run
+    - nx-search-read
