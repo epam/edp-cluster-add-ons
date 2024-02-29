@@ -113,8 +113,8 @@ postgres-operator:
   enable: false
 
 report-portal:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 prometheus-operator:
   createNamespace: false
@@ -136,8 +136,8 @@ storage-class:
   enable: false
 
 tekton-cache:
-  createNamespace: true
-  enable: true
+  createNamespace: false
+  enable: false
 
 tekton:
   createNamespace: false
