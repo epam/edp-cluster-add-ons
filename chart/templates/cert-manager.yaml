@@ -19,7 +19,7 @@ spec:
         cert-manager:
         {{- toYaml (index .Values "cert-manager") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: cert-manager
   syncPolicy:
     automated:

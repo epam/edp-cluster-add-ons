@@ -17,7 +17,7 @@ spec:
         vault:
         {{- toYaml (index .Values "vault-kms") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: vault
   syncPolicy:
     automated:

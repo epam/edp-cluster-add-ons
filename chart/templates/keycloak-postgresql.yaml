@@ -19,7 +19,7 @@ spec:
         postgresql:
         {{- toYaml (index .Values "keycloak-postgresql") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security
   syncPolicy:
     automated:

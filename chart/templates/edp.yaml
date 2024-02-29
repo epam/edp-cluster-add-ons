@@ -19,7 +19,7 @@ spec:
         edp-install:
         {{- toYaml .Values.edp | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: edp
   syncPolicy:
     automated:

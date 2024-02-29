@@ -33,6 +33,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | defectdojo.createNamespace | bool | `false` | whether to create the namespace or not |
 | dependency-track.createNamespace | bool | `false` |  |
 | dependency-track.enable | bool | `false` |  |
+| destinationServer | string | `"in-cluster"` |  |
 | edp.createNamespace | bool | `false` |  |
 | edp.enable | bool | `false` |  |
 | extensions-oidc.createNamespace | bool | `false` |  |
@@ -70,6 +71,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | prometheus-operator.enable | bool | `false` |  |
 | redis-operator.createNamespace | bool | `false` |  |
 | redis-operator.enable | bool | `false` |  |
+| repoUrl | string | `"ssh://ci@git.example.com:22/cluster-add-ons"` |  |
 | report-portal.createNamespace | bool | `false` |  |
 | report-portal.enable | bool | `false` |  |
 | sonar-operator.createNamespace | bool | `false` |  |
@@ -77,6 +79,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | sonar.createNamespace | bool | `false` |  |
 | sonar.enable | bool | `false` |  |
 | storage-class.enable | bool | `false` |  |
+| targetRevision | string | `"main"` |  |
 | tekton-cache.createNamespace | bool | `false` |  |
 | tekton-cache.enable | bool | `false` |  |
 | tekton.createNamespace | bool | `false` |  |

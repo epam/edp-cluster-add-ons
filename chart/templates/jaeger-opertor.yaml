@@ -17,7 +17,7 @@ spec:
         jaeger-operator:
         {{- toYaml (index .Values "jaeger-operator") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: jaeger-operator
   syncPolicy:
     automated:

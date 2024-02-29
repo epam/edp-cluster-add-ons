@@ -13,7 +13,7 @@ spec:
     path: add-ons/tekton
     targetRevision: {{ .Values.targetRevision }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: tekton-pipelines
   syncPolicy:
     automated:

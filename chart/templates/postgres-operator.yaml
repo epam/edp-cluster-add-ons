@@ -17,7 +17,7 @@ spec:
         postgres-operator:
         {{- toYaml (index .Values "postgres-operator") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: postgres-operator
   syncPolicy:
     automated:

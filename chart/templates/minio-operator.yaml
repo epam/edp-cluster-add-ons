@@ -17,7 +17,7 @@ spec:
         minio-operator:
         {{- toYaml (index .Values "minio-operator") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: minio-operator
   syncPolicy:
     automated:

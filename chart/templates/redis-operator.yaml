@@ -17,7 +17,7 @@ spec:
         redis-operator:
         {{- toYaml (index .Values "redis-operator") | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: redis-operator
   syncPolicy:
     automated:

@@ -17,7 +17,7 @@ spec:
         nexus-repository-manager:
         {{- toYaml .Values.sonarqube | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: nexus
   syncPolicy:
     automated:

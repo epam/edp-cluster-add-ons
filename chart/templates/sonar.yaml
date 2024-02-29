@@ -17,7 +17,7 @@ spec:
         sonarqube:
         {{- toYaml .Values.sonar | nindent 10 }}
   destination:
-    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: sonar
   syncPolicy:
     automated:
