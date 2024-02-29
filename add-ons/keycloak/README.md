@@ -43,8 +43,8 @@ A Helm chart for Keycloak
 | keycloakx.command[8] | string | `"--spi-events-listener-jboss-logging-success-level=info"` |  |
 | keycloakx.command[9] | string | `"--spi-events-listener-jboss-logging-error-level=warn"` |  |
 | keycloakx.database.database | string | `"keycloak"` |  |
-| keycloakx.database.existingSecret | string | `"postgresql-pguser-admin"` |  |
-| keycloakx.database.hostname | string | `"postgresql-primary.security.svc"` |  |
+| keycloakx.database.existingSecret | string | `"keycloak-pguser-admin"` |  |
+| keycloakx.database.hostname | string | `"keycloak-primary.security.svc"` |  |
 | keycloakx.database.port | int | `5432` |  |
 | keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |

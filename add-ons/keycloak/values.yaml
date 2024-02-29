@@ -103,8 +103,8 @@ keycloakx:
 
   # PGO example (preconfigured by default)
     vendor: postgres
-    existingSecret: postgresql-pguser-admin
-    hostname: postgresql-primary.security.svc
+    existingSecret: keycloak-pguser-admin
+    hostname: keycloak-primary.security.svc
     port: 5432
     username: admin
     database: keycloak
