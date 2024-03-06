@@ -7,7 +7,7 @@ spec:
   firstName: ci.user
   lastName: CI
   email: ci.user@edp.com
-  secret: $nexus-ci-user:password
+  secret: $ci-nexus:password
   roles:
     - edp-admin
   nexusRef:

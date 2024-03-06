@@ -3,7 +3,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: nexus-ci.user
+  name: ci-nexus
 spec:
   refreshInterval: 1h
   secretStoreRef:
@@ -16,5 +16,5 @@ spec:
       decodingStrategy: None
       key: {{ $secretName }}
       metadataPolicy: None
-      property: nexus-ci-user.password
+      property: ci-nexus.password
 {{- end }}
