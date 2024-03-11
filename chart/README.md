@@ -58,7 +58,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | keycloak.enable | bool | `false` |  |
 | minio-operator.createNamespace | bool | `false` |  |
 | minio-operator.enable | bool | `false` |  |
-| nexus-operator | object | `{"createNamespace":false,"enable":false}` | kubectl apply -f https://raw.githubusercontent.com/epam/edp-component-operator/v0.13.0/deploy-templates/crds/v1.edp.epam.com_edpcomponents.yaml |
+| nexus-operator.createNamespace | bool | `false` |  |
+| nexus-operator.enable | bool | `false` |  |
 | nexus.createNamespace | bool | `false` |  |
 | nexus.enable | bool | `false` |  |
 | opensearch.createNamespace | bool | `false` |  |
