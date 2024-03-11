@@ -1,0 +1,11 @@
+kube-prometheus-stack:
+  defaultRules:
+    rules:
+      etcd: true
+
+  kubeControllerManager:
+    enabled: true
+  kubeEtcd:
+    enabled: true
+  kubeScheduler:
+    enabled: true

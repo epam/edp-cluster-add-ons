@@ -1,3 +1,12 @@
+<!-- TOC -->
+
+- [EPAM Delivery Platform EDP Cluster Add-ons Repository](#epam-delivery-platform-edp-cluster-add-ons-repository)
+  - [Repository structure](#repository-structure)
+  - [V2 Add-ons Approach with ArgoCD ApplicationSet](#v2-add-ons-approach-with-argocd-applicationset)
+  - [Available add-ons](#available-add-ons)
+
+<!-- /TOC -->
+
 # EPAM Delivery Platform (EDP) Cluster Add-ons Repository
 
 This repository contains a collection of pre-configured solutions (add-ons) for Kubernetes cluster. It follows the GitOps methodology and utilizes the ArgoCD App of Apps pattern for streamlined configuration and deployment.
@@ -10,8 +19,10 @@ Explore this repository to access a comprehensive collection of Kubernetes add-o
 
 ## Repository structure
 
-* `add-ons` - contains the source code of the Add Ons in the form of the Helm charts
-* `chart` - contains the Helm chart that uses Apps of Apps pattern and contains ArgoCD Application CRs
+- `add-ons` - contains the source code of the Add Ons in the form of the Helm charts
+- `chart` - contains the Helm chart that uses Apps of Apps pattern and contains ArgoCD Application CRs
+- `clusters` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) contains the configuration files for the add-ons that are specific to the cluster
+- `bootstrap` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) provision ApplicationSet (V2 approach only)
 
 ```bash
 .
@@ -35,6 +46,74 @@ Explore this repository to access a comprehensive collection of Kubernetes add-o
     └── values.yaml
     └── values.yaml
 ```
+
+## V2 Add-ons Approach with ArgoCD ApplicationSet
+
+In the V2 add-ons approach, we leverage the power of ArgoCD's ApplicationSet feature. The ApplicationSet is a new API resource that represents a group of Argo CD Applications. It allows us to deploy multiple applications as a set, which can be useful when dealing with microservices, multi-tenant environments, or deploying applications at scale.
+
+The ApplicationSet controller **automates** the process of generating Argo CD Applications based on a list of parameters. It can retrieve these parameters from different sources like Git files, JSON/YAML/TOML ConfigMaps, or even from cluster resources.
+
+In the context of EDP add-ons, we define an ApplicationSet based on the addons and clusters.
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrap-addons
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/epam/edp-cluster-add-ons
+              revision: HEAD
+              directories:
+              - path: add-ons/*
+
+          - clusters:
+              selector:
+                matchExpressions:
+                # Check labels to see if addon is enabled.
+                - key: enable_{{ .path.basename | snakecase }}
+                  operator: In
+                  values: ['true']
+  template:
+    metadata:
+      name: '{{.name}}-{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: '{{.path.basename}}'
+          ignoreMissingValueFiles: true
+          valueFiles:
+          - '../../../clusters/{{.name}}/addons/{{.path.basename}}.yaml'
+        repoURL: 'https://github.com/epam/edp-cluster-add-ons'
+        path: '{{.path.path}}'
+        targetRevision: HEAD
+      destination:
+        namespace: '{{.path.basename}}'
+        # name of your cluster in Argo CD
+        name: '{{.name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          # We can have huge CRDs, so we need to use ServerSideApply
+          - ServerSideApply=true
+```
+
+The ApplicationSet resource points to a Git directory that contains the definitions of all the applications that belong to the add-on. When the ApplicationSet is applied, the ApplicationSet controller generates an Argo CD Application for each enabled addon found in the Git directory.
+
+This approach provides several benefits:
+
+Scalability: We can manage a large number of applications efficiently.
+Consistency: All applications are managed in a uniform way.
+Automation: New applications can be automatically created by simply adding new definitions in the Git directory and enable flag on the Cluster resource.
+
+This new approach simplifies the management of add-ons and enhances the scalability and flexibility of application deployment in the EDP platform.
 
 ## Available add-ons
 

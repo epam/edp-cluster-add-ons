@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrap-addons
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/epam/edp-cluster-add-ons
+              revision: HEAD
+              directories:
+              - path: add-ons/*
+
+          - clusters:
+              selector:
+                matchExpressions:
+                # Check lables to see if addon is enabled.
+                - key: enable_{{ .path.basename | snakecase }}
+                  operator: In
+                  values: ['true']
+  template:
+    metadata:
+      name: '{{.name}}-{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: '{{.path.basename}}'
+          ignoreMissingValueFiles: true
+          valueFiles:
+          - '../../../clusters/{{.name}}/addons/{{.path.basename}}.yaml'
+        repoURL: 'https://github.com/epam/edp-cluster-add-ons'
+        path: '{{.path.path}}'
+        targetRevision: HEAD
+      destination:
+        namespace: '{{.path.basename}}'
+        name: '{{.name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
