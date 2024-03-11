@@ -1,13 +1,17 @@
+# EPAM Delivery Platform (EDP) Cluster Add-ons Repository
+
 <!-- TOC -->
 
 - [EPAM Delivery Platform EDP Cluster Add-ons Repository](#epam-delivery-platform-edp-cluster-add-ons-repository)
+  - [Overview](#overview)
   - [Repository structure](#repository-structure)
   - [V2 Add-ons Approach with ArgoCD ApplicationSet](#v2-add-ons-approach-with-argocd-applicationset)
+    - [How to enable an add-on](#how-to-enable-an-add-on)
   - [Available add-ons](#available-add-ons)
 
 <!-- /TOC -->
 
-# EPAM Delivery Platform (EDP) Cluster Add-ons Repository
+## Overview
 
 This repository contains a collection of pre-configured solutions (add-ons) for Kubernetes cluster. It follows the GitOps methodology and utilizes the ArgoCD App of Apps pattern for streamlined configuration and deployment.
 
@@ -19,10 +23,11 @@ Explore this repository to access a comprehensive collection of Kubernetes add-o
 
 ## Repository structure
 
-- `add-ons` - contains the source code of the Add Ons in the form of the Helm charts
-- `chart` - contains the Helm chart that uses Apps of Apps pattern and contains ArgoCD Application CRs
+- `add-ons` - contains the source code of the Add Ons in the form of the Helm charts, used in both V1 and V2 approaches
+- `bootstrap` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) provision ApplicationSet
+- `bootstrap.yaml` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) contains the ArgoCD Application CRs, which deploys the ApplicationSet from the `bootstrap` directory
+- `chart` - (V1 approach only) contains the Helm chart that uses Apps of Apps pattern and contains ArgoCD Application CRs
 - `clusters` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) contains the configuration files for the add-ons that are specific to the cluster
-- `bootstrap` - ([V2](#v2-add-ons-approach-with-argocd-applicationset) approach only) provision ApplicationSet (V2 approach only)
 
 ```bash
 .
@@ -49,7 +54,7 @@ Explore this repository to access a comprehensive collection of Kubernetes add-o
 
 ## V2 Add-ons Approach with ArgoCD ApplicationSet
 
-In the V2 add-ons approach, we leverage the power of ArgoCD's ApplicationSet feature. The ApplicationSet is a new API resource that represents a group of Argo CD Applications. It allows us to deploy multiple applications as a set, which can be useful when dealing with microservices, multi-tenant environments, or deploying applications at scale.
+In the V2 add-ons approach, we leverage the power of ArgoCD's ApplicationSet feature. The ApplicationSet is an API resource that represents a group of Argo CD Applications. It allows us to deploy multiple applications as a set, which can be useful when dealing with microservices, multi-tenant environments, or deploying applications at scale.
 
 The ApplicationSet controller **automates** the process of generating Argo CD Applications based on a list of parameters. It can retrieve these parameters from different sources like Git files, JSON/YAML/TOML ConfigMaps, or even from cluster resources.
 
@@ -81,6 +86,7 @@ spec:
                   values: ['true']
   template:
     metadata:
+      # Application name is based on the cluster name and the addon name, e.g "in-cluster-argocd"
       name: '{{.name}}-{{.path.basename}}'
     spec:
       project: default
@@ -107,11 +113,20 @@ spec:
 
 The ApplicationSet resource points to a Git directory that contains the definitions of all the applications that belong to the add-on. When the ApplicationSet is applied, the ApplicationSet controller generates an Argo CD Application for each enabled addon found in the Git directory.
 
+### How to enable an add-on
+
+To enable an add-on, follow the steps below:
+
+1. Add a new directory with the name of the add-on in the `add-ons` directory.
+2. Add a Helm chart for the add-on in the new directory.
+3. Create a new `{{addon}}.yaml` file in the `clusters/{{cluster}}/addons` directory to enable the add-on for a specific cluster.
+4. Enable the add-on by setting the `enable_{{addon}}: true` label on the Argo CD cluster (Secret) resource.
+
 This approach provides several benefits:
 
-Scalability: We can manage a large number of applications efficiently.
-Consistency: All applications are managed in a uniform way.
-Automation: New applications can be automatically created by simply adding new definitions in the Git directory and enable flag on the Cluster resource.
+- **Scalability**: We can manage a large number of applications efficiently.
+- **Consistency**: All applications are managed in a uniform way.
+- **Automation**: New applications can be automatically created by simply adding new definitions in the Git directory and enable flag on the Cluster resource.
 
 This new approach simplifies the management of add-ons and enhances the scalability and flexibility of application deployment in the EDP platform.
 
