@@ -1,0 +1,41 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+# Expose Keycloak
+
+Keycloak add-on provides the ability to split user endpoints and admin endpoints to different Ingress Controllers.<br>
+The user endpoints are used for user authentication and authorization, while the admin endpoints are used for Keycloak administration.
+
+To expose external Keycloak endpoint, follow the steps below:
+
+1. Set the `keycloak.ingress.enabled` parameter to `true` to enable the Ingress resource.
+
+2. Set the `keycloak.ingress.ingressClassName` parameter to `external-nginx` to use the External Ingress Controller.
+
+```yaml
+keycloak:
+  ingress:
+    enabled: true
+    ingressClassName: "external-nginx"
+```
+
+These changes provide the ability to expose Keycloak endpoints according to the rules from [documentation](https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations).
+
+To expose internal Keycloak endpoint, follow the steps below:
+
+1. Set the `keycloak.ingress.console.enabled` parameter to `true` to enable the Ingress resource for admin console endpoint.
+2. Set the `keycloak.ingress.console.ingressClassName` parameter to `nginx` or leave it empty to use the Internal Ingress Controller.
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

@@ -4,6 +4,31 @@
 
 A Helm chart for Keycloak
 
+# Expose Keycloak
+
+Keycloak add-on provides the ability to split user endpoints and admin endpoints to different Ingress Controllers.<br>
+The user endpoints are used for user authentication and authorization, while the admin endpoints are used for Keycloak administration.
+
+To expose external Keycloak endpoint, follow the steps below:
+
+1. Set the `keycloak.ingress.enabled` parameter to `true` to enable the Ingress resource.
+
+2. Set the `keycloak.ingress.ingressClassName` parameter to `external-nginx` to use the External Ingress Controller.
+
+```yaml
+keycloak:
+  ingress:
+    enabled: true
+    ingressClassName: "external-nginx"
+```
+
+These changes provide the ability to expose Keycloak endpoints according to the rules from [documentation](https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations).
+
+To expose internal Keycloak endpoint, follow the steps below:
+
+1. Set the `keycloak.ingress.console.enabled` parameter to `true` to enable the Ingress resource for admin console endpoint.
+2. Set the `keycloak.ingress.console.ingressClassName` parameter to `nginx` or leave it empty to use the Internal Ingress Controller.
+
 ## Requirements
 
 | Repository | Name | Version |
@@ -53,12 +78,22 @@ A Helm chart for Keycloak
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
 | keycloakx.health.enabled | bool | `false` |  |
 | keycloakx.ingress.annotations."ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
-| keycloakx.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
-| keycloakx.ingress.console.enabled | bool | `false` |  |
+| keycloakx.ingress.console.enabled | bool | `true` |  |
+| keycloakx.ingress.console.ingressClassName | string | `"nginx"` |  |
+| keycloakx.ingress.console.rules[0].host | string | `"keycloak-internal.example.com"` |  |
+| keycloakx.ingress.console.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/"` |  |
+| keycloakx.ingress.console.rules[0].paths[0].pathType | string | `"Prefix"` |  |
 | keycloakx.ingress.enabled | bool | `true` |  |
+| keycloakx.ingress.ingressClassName | string | `"external-nginx"` |  |
 | keycloakx.ingress.rules[0].host | string | `"keycloak.example.com"` |  |
-| keycloakx.ingress.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/"` |  |
+| keycloakx.ingress.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/realms/"` |  |
 | keycloakx.ingress.rules[0].paths[0].pathType | string | `"Prefix"` |  |
+| keycloakx.ingress.rules[0].paths[1].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/resources/"` |  |
+| keycloakx.ingress.rules[0].paths[1].pathType | string | `"Prefix"` |  |
+| keycloakx.ingress.rules[0].paths[2].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/robots.txt"` |  |
+| keycloakx.ingress.rules[0].paths[2].pathType | string | `"Prefix"` |  |
+| keycloakx.ingress.rules[0].paths[3].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/js/"` |  |
+| keycloakx.ingress.rules[0].paths[3].pathType | string | `"Prefix"` |  |
 | keycloakx.metrics.enabled | bool | `false` |  |
 | keycloakx.nameOverride | string | `"keycloakx"` |  |
 | keycloakx.proxy.enabled | bool | `true` |  |
@@ -68,4 +103,3 @@ A Helm chart for Keycloak
 | keycloakx.resources.requests.cpu | string | `"50m"` |  |
 | keycloakx.resources.requests.memory | string | `"512Mi"` |  |
 | pgo.enabled | bool | `true` | Enables creating a new database with Postgres operator. |
-

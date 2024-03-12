@@ -52,16 +52,35 @@ keycloakx:
   ingress:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: nginx
       ingress.kubernetes.io/affinity: cookie
-    # The following parameter is unrecommended to expose. Admin paths lead to an unnecessary attack vector.
-    console:
-      enabled: false
+    # Defines the class of the Ingress Controller.
+    # It allows you to choose which Ingress controller in cluster should be used to expose the Keycloak service to the outside world.
+    ingressClassName: "external-nginx"
+    # Exposes Keycloak paths according to the rules from documentation.
+    # Ref: https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations
     rules:
       - host: keycloak.example.com
         paths:
-          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/realms/'
             pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/resources/'
+            pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/robots.txt'
+            pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/js/'
+            pathType: Prefix
+    # Provides creating Ingress for Keycloak which is used to access the Keycloak Admin Console.
+    console:
+      enabled: true
+      # Defines the class of the Ingress controller.
+      # Use internal Ingress Class to expose the Keycloak Admin Console to the internal network.
+      ingressClassName: "nginx"
+      rules:
+        - host: keycloak-internal.example.com
+          # Paths for the host
+          paths:
+            - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+              pathType: Prefix
 
   proxy:
     enabled: true
