@@ -150,10 +150,10 @@ harbor:
   database:
     type: external
     external:
-      host: "postgresql-primary.harbor.svc"
+      host: "harbor-primary.harbor.svc"
       port: "5432"
       username: "harbor"
-      existingSecret: "postgresql-pguser-harbor"
+      existingSecret: "harbor-pguser-harbor"
 
   redis:
     type: external

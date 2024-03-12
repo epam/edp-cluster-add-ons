@@ -50,7 +50,7 @@ sonarqube:
 
   jdbcOverwrite:
     enable: true
-    jdbcUrl: "jdbc:postgresql://postgresql-primary.sonar:5432/sonar?socketTimeout=1500"
+    jdbcUrl: "jdbc:postgresql://sonar-primary.sonar:5432/sonar?socketTimeout=1500"
     jdbcUsername: "sonar"
-    jdbcSecretName: postgresql-pguser-sonar
+    jdbcSecretName: sonar-pguser-sonar
     jdbcSecretPasswordKey: "password"
