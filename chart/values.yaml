@@ -84,6 +84,10 @@ ingress-nginx:
   createNamespace: false
   enable: false
 
+ingress-nginx-external:
+  createNamespace: false
+  enable: false
+
 jaeger-operator:
   enable: false
   createNamespace: false

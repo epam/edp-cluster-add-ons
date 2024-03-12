@@ -1,0 +1,66 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+# Internal and External Ingress Controllers
+
+The **Internal Ingress Controller** is used for internal traffic, while the **External Ingress Controller** is used for external traffic.
+
+                                              ┌────────────────────────────────┐
+                                              │ Kubernetes Cluster             │
+                                              ├──────────┐                     │
+                                              │ NodePort │                     │
+                                         ┌────►          ◄──┐                  │
+                                         │    │  32443   │  │ ┌───────────┐    │
+        ┌───────────────────────┐        │    ├──────────┘  │ │ Internal  │    │
+        │ Internal LoadBalancer ├────────┤    │             ├─┤ Ingress   │    │
+        └───────────────────────┘        │    ├──────────┐  │ │ Controller│    │
+                                         │    │ NodePort │  │ └───────────┘    │
+                                         └────►          ◄──┘                  │
+                                              │  32080   │                     │
+                                              ├──────────┘                     │
+                                              │                                │
+                                              │                                │
+                                              ├──────────┐                     │
+                                              │ NodePort │                     │
+                                         ┌────►          ◄──┐                  │
+                                         │    │  31443   │  │ ┌───────────┐    │
+        ┌───────────────────────┐        │    ├──────────┘  │ │ External  │    │
+        │ External LoadBalancer ├────────┤    │             ├─┤ Ingress   │    │
+        └───────────────────────┘        │    ├──────────┐  │ │ Controller│    │
+                                         │    │ NodePort │  │ └───────────┘    │
+                                         └────►          ◄──┘                  │
+                                              │  31080   │                     │
+                                              ├──────────┘                     │
+                                              │                                │
+                                              └────────────────────────────────┘
+
+To deploy and use the **Internal Ingress Controller** and **External Ingress Controller** in the cluster, follow the steps below:
+
+1. Enable the `Internal Ingress Controller` add-on by setting the `ingress-nginx.enable: true` and `ingress-nginx.createNamespace: true` parameters in the `charts/values.yaml` file.<br>
+This will create the `ingress-nginx` namespace and deploy the **Internal Ingress Controller** in the cluster.<br>
+Internal Ingress Controller listens to the following node ports: 32080 and 32443.<br>
+The `watchIngressWithoutClass` parameter is set to `true`, so the Internal Ingress Controller will watch for all Ingress resources withing the cluster.
+
+> **NOTE:** Internal Ingress Controller is watching for all Ingress resources within a cluster.<br>
+You should set the `ingressClassName` parameter in the Ingress resource to `nginx` or leave it empty.
+
+2. Enable the `External Ingress Controller` add-on by setting the `ingress-nginx-external.enable: true` and `ingress-nginx-external.createNamespace: true` parameters in the `charts/values.yaml` file.<br>
+This will create the `ingress-nginx-external` namespace and deploy the **External Ingress Controller** in the cluster.<br>
+Internal Ingress Controller listens to the following node ports: 31080 and 31443.<br>
+
+> **NOTE:** External Ingress Controller is not watching for all Ingress resources within a cluster.<br>
+To use the External Ingress Controller, you need to set the `ingressClassName` parameter in the Ingress resource to `nginx-external`.
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

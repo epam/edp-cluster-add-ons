@@ -1,0 +1,33 @@
+{{- if and (index .Values "ingress-nginx-external") (index .Values "ingress-nginx-external" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx-external
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: add-ons/ingress-nginx-external
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      values: |
+        ingress-nginx:
+        {{- toYaml (index .Values "ingress-nginx-external") | nindent 10 }}
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: ingress-nginx-external
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace={{ (index .Values "ingress-nginx-external" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

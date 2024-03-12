@@ -156,6 +156,7 @@ make update-readme
 | harbor-ha              | 1.13.0    | 2.9.0        | False             | False    |
 | harbor-ha-okd          | 1.13.0    | 2.9.0        | False             | False    |
 | ingress-nginx          | 4.7.3     | 1.8.4        | False             | False    |
+| ingress-nginx-external | 4.7.3     | 1.8.4        | False             | False    |
 | jaeger-operator        | 1.45.0    | 1.45.0       | False             | False    |
 | keycloak               | 2.3.0     | 22.0.4       | False             | False    |
 | keycloak-postgresql    | 0.1.1     | 1.0          | False             | False    |

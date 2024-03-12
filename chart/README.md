@@ -48,6 +48,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | harbor-ha.enable | bool | `false` |  |
 | harbor.createNamespace | bool | `false` |  |
 | harbor.enable | bool | `false` |  |
+| ingress-nginx-external.createNamespace | bool | `false` |  |
+| ingress-nginx-external.enable | bool | `false` |  |
 | ingress-nginx.createNamespace | bool | `false` |  |
 | ingress-nginx.enable | bool | `false` |  |
 | jaeger-operator.createNamespace | bool | `false` |  |
