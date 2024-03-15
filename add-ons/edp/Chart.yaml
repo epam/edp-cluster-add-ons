@@ -3,10 +3,10 @@ description: A Helm chart for EDP Install
 home: https://epam.github.io/edp-install/
 name: edp-install
 type: application
-version: 3.7.5
-appVersion: 3.7.5
+version: 3.8.1
+appVersion: 3.8.1
 
 dependencies:
 - name: edp-install
-  version: 3.7.5
+  version: 3.8.1
   repository: https://epam.github.io/edp-helm-charts/stable

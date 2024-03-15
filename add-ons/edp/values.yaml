@@ -1,13 +1,16 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.7/deploy-templates/values.yaml and in each of subchart 
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.8/deploy-templates/values.yaml and in each of subchart
   global:
     # -- a cluster DNS wildcard name
     dnsWildCard: example.com
     # -- platform type that can be "kubernetes" or "openshift"
     platform: kubernetes
     # -- Can be gerrit, github or gitlab. By default: github
-    gitProvider: github
+    gitProviders:
+      - github
+      - gitlab
+      - gerrit
     # Below is an example of endpoint values for each registry type:
     # type:      | url
     # =============================
@@ -15,7 +18,7 @@ edp-install:
     # harbor     | <registry.example.com>
     # dockerhub  | 'docker.io'
     # openshift  | <image-registry.openshift-image-registry.svc:5000>
-    
+
     # For example to integrate platform with dockerhub and publish image under 'my_user' account:
     # dockerRegistry:
     #   type: "dockerhub"
@@ -27,7 +30,7 @@ edp-install:
 
   # -- Enable SSO for EDP oauth2-proxy. Default: false
   sso:
-    enabled: true
+    enabled: false
     # -- Keycloak URL
     keycloakUrl: https://keycloak.example.com
     # -- Administrators of EDP tenant
@@ -43,7 +46,7 @@ edp-install:
   # https://external-secrets.io/latest/provider-aws-secrets-manager/
   externalSecrets:
     # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
-    enabled: true
+    enabled: false
     secretProvider:
       aws:
         role: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
@@ -54,6 +57,8 @@ edp-install:
     config:
       # -- base url path at which headlamp should run
       baseURL: ""
+      # -- Ensure that the specified client is associated with cluster OIDC integration.
+      # -- For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/
       oidc:
         # Enable OIDC integration. Default: false
         enabled: true
@@ -93,16 +98,106 @@ edp-install:
           # nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
           # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
 
-    github:
-      host: github.com
-    # gitlab:
-    #   # -- The GitLab host, adjust this if you run a GitLab enterprise. Default: gitlab.com
-    #   host: gitlab.com
+    # GitServers configuration section
+    # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
+    # the GitServer will not be created.
+    gitServers: {}
+    #   my-github:
+    #     gitProvider: github
+    #     host: github.com
+    #     webhook:
+    #       skipWebhookSSLVerification: false
+    #     eventListener:
+    #       # -- Enable EventListener
+    #       enabled: true
+    #       # -- EventListener resources
+    #       resources:
+    #         requests:
+    #           memory: "64Mi"
+    #           cpu: "50m"
+    #         limits:
+    #           memory: "128Mi"
+    #           cpu: "500m"
+    #       # -- Node labels for EventListener pod assignment
+    #       nodeSelector: {}
+    #       # -- Tolerations for EventListener pod assignment
+    #       tolerations: []
+    #       # -- Affinity for EventListener pod assignment
+    #       affinity: {}
 
-  # Proxy configuration section
-  oauth2_proxy:
-    # oauth2-proxy requires keycloak to be configured properly before deployment
-    # you can set enable: true, when your platform is deployed and keycloak is
-    # configured. Use 'sso' section.
-    # -- Install oauth2-proxy as a part of EDP deployment. Default: false
-    enabled: true
+    #       ingress:
+    #         # -- Enable ingress controller resource
+    #         enabled: true
+    #         # -- Ingress annotations
+    #         annotations: {}
+    #         # -- Ingress TLS configuration
+    #         tls: []
+
+    #   my-gitlab:
+    #     gitProvider: gitlab
+    #     host: gitlab.com
+    #     webhook:
+    #       # codebase operator will use this URL to create webhooks in GitLab, if it is not defined
+    #       # the operator will use the Ingress value
+    #       url: "http://gitlab.example.com"
+    #       skipWebhookSSLVerification: false
+    #     eventListener:
+    #       # -- Enable EventListener
+    #       enabled: true
+    #       # -- EventListener resources
+    #       resources:
+    #         requests:
+    #           memory: "64Mi"
+    #           cpu: "50m"
+    #         limits:
+    #           memory: "128Mi"
+    #           cpu: "500m"
+    #       # -- Node labels for EventListener pod assignment
+    #       nodeSelector: {}
+    #       # -- Tolerations for EventListener pod assignment
+    #       tolerations: []
+    #       # -- Affinity for EventListener pod assignment
+    #       affinity: {}
+
+    #       ingress:
+    #         # -- Enable ingress controller resource
+    #         enabled: true
+    #         # -- Ingress annotations
+    #         annotations: {}
+    #         # -- Ingress TLS configuration
+    #         tls: []
+
+    #   my-gerrit:
+    #     gitProvider: gerrit
+    #     host: gerrit.example.com
+    #     gitUser: ci-user
+    #     httpsPort: 443
+    #     nameSshKeySecret: gerrit-ciuser-sshkey
+    #     sshPort: 30022
+    #     webhook:
+    #       skipWebhookSSLVerification: false
+    #     eventListener:
+    #       # -- Enable EventListener
+    #       enabled: true
+    #       # -- EventListener resources
+    #       resources:
+    #         requests:
+    #           memory: "64Mi"
+    #           cpu: "50m"
+    #         limits:
+    #           memory: "128Mi"
+    #           cpu: "500m"
+    #       # -- Node labels for EventListener pod assignment
+    #       nodeSelector: {}
+    #       # -- Tolerations for EventListener pod assignment
+    #       tolerations: []
+    #       # -- Affinity for EventListener pod assignment
+    #       affinity: {}
+
+    #       ingress:
+    #         # -- Enable ingress controller resource
+    #         enabled: true
+    #         # -- Ingress annotations
+    #         annotations: {}
+    #         # -- Ingress TLS configuration
+    #         tls: []
