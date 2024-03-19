@@ -21,6 +21,7 @@ A Helm chart for Argo CD Install
 | argo-cd.configs.cm."oidc.config" | string | `"name: Keycloak\nissuer: https://keycloak.example.com/auth/realms/shared\nclientID: argocd-tenant\nclientSecret: $keycloak-client-argocd-secret:clientSecret\nrequestedScopes:\n  - openid\n  - profile\n  - email\n  - groups\n"` |  |
 | argo-cd.configs.cm.url | string | `"https://argocd-dev.example.com"` |  |
 | argo-cd.configs.params."application.namespaces" | string | `"edp"` |  |
+| argo-cd.configs.params."applicationsetcontroller.namespaces" | string | `"edp"` |  |
 | argo-cd.configs.params."server.insecure" | bool | `true` |  |
 | argo-cd.configs.rbac."policy.csv" | string | `"# default global admins\ng, ArgoCDAdmins, role:admin\n# Default global developers\ng, ArgoCDDevelopers, role:readonly\n"` |  |
 | argo-cd.configs.rbac.scopes | string | `"[groups]"` |  |
@@ -33,8 +34,8 @@ A Helm chart for Argo CD Install
 | argo-cd.redis.enabled | bool | `false` |  |
 | argo-cd.server.env[0].name | string | `"ARGOCD_API_SERVER_REPLICAS"` |  |
 | argo-cd.server.env[0].value | string | `"1"` |  |
-| argo-cd.server.ingress.enabled | bool | `true` |  |
-| argo-cd.server.ingress.hosts[0] | string | `"argocd-dev.example.com"` |  |
+| argo-cd.server.ingress.enabled | bool | `false` |  |
+| argo-cd.server.ingress.hostname | string | `"argocd-dev.example.com"` |  |
 | argo-cd.server.replicas | int | `1` |  |
 | argo-cd.server.route.enabled | bool | `false` | Enable an OpenShift Route for the Argo CD server |
 | argo-cd.server.route.hostname | string | `""` | Hostname of OpenShift Route |

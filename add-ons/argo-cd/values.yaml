@@ -13,10 +13,8 @@ argo-cd:
         value: '1'
 
     ingress:
-      enabled: true
-      hosts:
-        # after domain creation update
-        - "argocd-dev.example.com"
+      enabled: false
+      hostname: "argocd-dev.example.com"
 
     route:
     # -- Enable an OpenShift Route for the Argo CD server
@@ -54,6 +52,8 @@ argo-cd:
           - email
           - groups
     params:
+      applicationsetcontroller.namespaces: >-
+        edp
       server.insecure: true
       application.namespaces: >-
         edp
