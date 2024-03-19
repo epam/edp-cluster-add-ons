@@ -2,11 +2,11 @@ apiVersion: v2
 name: argo-cd
 description: A Helm chart for Argo CD Install
 
-version: 5.52.1
+version: 6.7.2
 
-appVersion: "v2.9.3"
+appVersion: "v2.10.3"
 
 dependencies:
 - name: argo-cd
-  version: 5.52.1
+  version: 6.7.2
   repository: https://argoproj.github.io/argo-helm
