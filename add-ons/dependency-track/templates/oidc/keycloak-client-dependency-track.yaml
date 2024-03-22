@@ -15,7 +15,7 @@ spec:
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  webUrl: "https://{{ .Values.dependency-track.ingress.host }}"
+  webUrl: "https://{{ (index .Values "dependency-track" "ingress" "host") }}"
   protocolMappers:
     - name: roles
       protocol: openid-connect

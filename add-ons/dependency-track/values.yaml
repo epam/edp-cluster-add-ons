@@ -63,3 +63,6 @@ dependency-track:
       # allow large bom.xml uploads:
       nginx.ingress.kubernetes.io/proxy-body-size: 10m
     host: deptrack.example.com
+
+oidc:
+  enabled: false
