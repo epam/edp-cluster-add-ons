@@ -24,8 +24,8 @@ A Helm chart for Harbor with HA
 | harbor.core.configureUserSettings | string | `"{\n  \"auth_mode\": \"oidc_auth\",\n  \"oidc_name\": \"keycloak\",\n  \"oidc_endpoint\": \"https://keycloak.example.com/auth/realms/shared\",\n  \"oidc_client_id\": \"harbor\",\n  \"oidc_client_secret\": \"YOURSECRET\",\n  \"oidc_groups_claim\": \"roles\",\n  \"oidc_admin_group\": \"administrator\",\n  \"oidc_scope\": \"openid,email,profile,roles\",\n  \"oidc_auto_onboard\": \"true\",\n  \"oidc_user_claim\": \"preferred_username\"\n}\n"` |  |
 | harbor.core.replicas | int | `2` |  |
 | harbor.core.xsrfKey | string | `"somekey"` |  |
-| harbor.database.external.existingSecret | string | `"postgresql-pguser-harbor"` |  |
-| harbor.database.external.host | string | `"postgresql-primary.harbor.svc"` |  |
+| harbor.database.external.existingSecret | string | `"harbor-pguser-harbor"` |  |
+| harbor.database.external.host | string | `"harbor-primary.harbor.svc"` |  |
 | harbor.database.external.port | string | `"5432"` |  |
 | harbor.database.external.sslmode | string | `"require"` |  |
 | harbor.database.external.username | string | `"harbor"` |  |

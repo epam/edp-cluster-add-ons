@@ -86,7 +86,7 @@ eso:
   # -- Defines provider type. One of `aws` or `generic`.
   type: "aws"
   # -- Defines Secret Store name.
-  secretStoreName: "aws-parameterstore"
+  secretStoreName: "aws-parameterstore-nexus"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
   secretName: "/edp/eks/addons/nexus"
   # Defines Secret Store configuration. Used when eso.type is set to "generic".

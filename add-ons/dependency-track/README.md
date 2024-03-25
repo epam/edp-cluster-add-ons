@@ -56,4 +56,5 @@ A Helm chart for Dependecy Track
 | dependency-track.ingress.tls.enabled | bool | `false` |  |
 | dependency-track.ingress.tls.secretName | string | `""` |  |
 | dependency-track.nameOverride | string | `"deptrack"` |  |
+| oidc.enabled | bool | `false` |  |
 

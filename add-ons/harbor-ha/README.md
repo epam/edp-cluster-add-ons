@@ -26,8 +26,8 @@ A Helm chart for Harbor with HA
 | harbor.core.resources.requests.cpu | float | `0.05` |  |
 | harbor.core.resources.requests.memory | string | `"150Mi"` |  |
 | harbor.core.xsrfKey | string | `"somekey"` |  |
-| harbor.database.external.existingSecret | string | `"postgresql-pguser-harbor"` |  |
-| harbor.database.external.host | string | `"postgresql-primary.harbor.svc"` |  |
+| harbor.database.external.existingSecret | string | `"harbor-pguser-harbor"` |  |
+| harbor.database.external.host | string | `"harbor-primary.harbor.svc"` |  |
 | harbor.database.external.port | string | `"5432"` |  |
 | harbor.database.external.username | string | `"harbor"` |  |
 | harbor.database.type | string | `"external"` |  |

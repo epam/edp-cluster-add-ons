@@ -26,9 +26,9 @@ A Helm chart for Sonarqube
 | sonarqube.ingress.enabled | bool | `true` |  |
 | sonarqube.ingress.hosts[0].name | string | `"sonar.example.com"` |  |
 | sonarqube.jdbcOverwrite.enable | bool | `true` |  |
-| sonarqube.jdbcOverwrite.jdbcSecretName | string | `"postgresql-pguser-sonar"` |  |
+| sonarqube.jdbcOverwrite.jdbcSecretName | string | `"sonar-pguser-sonar"` |  |
 | sonarqube.jdbcOverwrite.jdbcSecretPasswordKey | string | `"password"` |  |
-| sonarqube.jdbcOverwrite.jdbcUrl | string | `"jdbc:postgresql://postgresql-primary.sonar:5432/sonar?socketTimeout=1500"` |  |
+| sonarqube.jdbcOverwrite.jdbcUrl | string | `"jdbc:postgresql://sonar-primary.sonar:5432/sonar?socketTimeout=1500"` |  |
 | sonarqube.jdbcOverwrite.jdbcUsername | string | `"sonar"` |  |
 | sonarqube.jvmCeOpts | string | `"-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=ce"` |  |
 | sonarqube.jvmOpts | string | `"-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=web"` |  |

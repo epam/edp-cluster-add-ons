@@ -40,7 +40,7 @@ A Helm chart for report-portal
 | reportportal.ingress.hosts[0] | string | `"report-portal.example.com"` |  |
 | reportportal.ingress.usedomainname | bool | `true` |  |
 | reportportal.postgresql.SecretName | string | `"reportportal-postgresql-creds"` |  |
-| reportportal.postgresql.endpoint.address | string | `"postgresql-primary.report-portal.svc.cluster.local"` |  |
+| reportportal.postgresql.endpoint.address | string | `"reportportal-primary.report-portal.svc.cluster.local"` |  |
 | reportportal.rabbitmq.SecretName | string | `"reportportal-rabbitmq-creds"` |  |
 | reportportal.rabbitmq.endpoint.address | string | `"report-portal-rabbitmq.report-portal.svc.cluster.local"` |  |
 | reportportal.rabbitmq.endpoint.apiuser | string | `"user"` |  |

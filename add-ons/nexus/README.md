@@ -18,7 +18,7 @@ A Helm chart for Nexus
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.secretName | string | `"/edp/eks/addons/nexus"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
-| eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
+| eso.secretStoreName | string | `"aws-parameterstore-nexus"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | nexus-repository-manager.deployment.initContainers[0].command[0] | string | `"mkdir"` |  |
 | nexus-repository-manager.deployment.initContainers[0].command[1] | string | `"-p"` |  |
