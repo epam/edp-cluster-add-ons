@@ -3,7 +3,7 @@ kind: SonarUser
 metadata:
   name: sonar-ci-user
 spec:
-  secret: sonar-ci-password
+  secret: ci-sonar
   login: ci-user
   name: ci-user
   groups:
