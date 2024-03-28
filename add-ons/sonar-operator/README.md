@@ -33,6 +33,6 @@ A Helm chart for EDP Sonar Operator
 | sonar-operator.resources.requests.cpu | string | `"50m"` |  |
 | sonar-operator.resources.requests.memory | string | `"64Mi"` |  |
 | sonar-operator.tolerations | list | `[]` |  |
-| sonarSecret | string | `"sonar-admin-password"` |  |
+| sonarSecret | string | `"sonar-admin-password"` | This is credantials name with administator rights for sonar. |
 | sonarUrl | string | `"https://sonar.example.com"` | URL and secret name which use sonar operator for configuring sonar |
 

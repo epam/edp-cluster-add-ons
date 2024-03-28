@@ -36,7 +36,11 @@ sonar-operator:
 
 # -- URL and secret name which use sonar operator for configuring sonar
 sonarUrl: "https://sonar.example.com"
+
+# -- This is credantials name with administator rights for sonar.
 sonarSecret: "sonar-admin-password"
+# -- If use a clean install of Sonar, need to set admin password during first login after deploy
+# -- To change password in accout navigate -> Administration -> Security -> Users -> admin -> Enter a new password
 
 # -- Integration with keycloak
 oidc:
