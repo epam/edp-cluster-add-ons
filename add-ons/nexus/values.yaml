@@ -71,6 +71,7 @@ oauth2-proxy:
       skip_jwt_bearer_tokens = "true"
       upstreams = [ "http://nexus:8081" ]
       whitelist_domains = ["*"]
+      silence_ping_logging = "true"
 
     existingSecret: oauth2-proxy
 
