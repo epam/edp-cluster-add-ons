@@ -30,4 +30,13 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 1m
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+      - .webhooks[].clientConfig.caBundle
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+      - .webhooks[].clientConfig.caBundle
 {{- end -}}
