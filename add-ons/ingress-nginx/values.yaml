@@ -1,5 +1,7 @@
 ingress-nginx:
   controller:
+    # We use snippet annotations for Grafana iframes
+    allowSnippetAnnotations: true
     podAnnotations:
       fluentbit.io/parser: k8s-nginx-ingress
     addHeaders:

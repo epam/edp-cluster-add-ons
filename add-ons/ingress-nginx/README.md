@@ -17,6 +17,7 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.controller.addHeaders.Strict-Transport-Security | string | `"max-age=63072000; includeSubDomains"` |  |
 | ingress-nginx.controller.addHeaders.X-Content-Type-Options | string | `"nosniff"` |  |
 | ingress-nginx.controller.addHeaders.X-Frame-Options | string | `"SAMEORIGIN"` |  |
+| ingress-nginx.controller.allowSnippetAnnotations | bool | `true` |  |
 | ingress-nginx.controller.config.client-header-buffer-size | string | `"64k"` |  |
 | ingress-nginx.controller.config.http2-max-field-size | string | `"64k"` |  |
 | ingress-nginx.controller.config.http2-max-header-size | string | `"64k"` |  |
