@@ -117,7 +117,7 @@ opensearch:
     tenantsSecret:
     # The following option simplifies securityConfig by using a single secret and
     # specifying the config files as keys in the secret instead of creating
-    # different secrets for for each config file.
+    # different secrets for each config file.
     # Note that this is an alternative to the individual secret configuration
     # above and shouldn't be used if the above secrets are used.
     config:
@@ -219,7 +219,7 @@ opensearch:
             backend_roles:
             - "administrator"
             - "admin"
-            description: "Maps EDP administrator role and interlnal admin role to all_access"
+            description: "Maps EDP administrator role and internal admin role to all_access"
           logstash:
             reserved: true
             backend_roles:
@@ -425,7 +425,7 @@ fluent-bit:
           Read_From_Tail On
 
       [INPUT]
-          # Grab EDP namespace logs to seprate index for development team
+          # Grab EDP namespace logs to separate index for development team
           Name tail
           Tag kube.edp.*
           Path /var/log/containers/*edp*.log
