@@ -22,6 +22,12 @@ kube-prometheus-stack:
         memory: "128Mi"
 
   prometheus:
+    # # https://epam.github.io/edp-install/operator-guide/tekton-monitoring/
+    # prometheusSpec:
+    #   additionalScrapeConfigsSecret:
+    #     enabled: true
+    #     name: additional-scrape-configs
+    #     key: prometheus-additional-job.yaml
     ingress:
       enabled: false
       hosts:
@@ -85,9 +91,7 @@ kube-prometheus-stack:
         auth_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth"
         token_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token"
         api_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/userinfo"
-        # FIXME: uncomment the line below when helm upgrade to v3.5.1
         role_attribute_path: contains(roles[*], 'administrator') && 'Admin' || contains(roles[*], 'developer') && 'Editor' || 'Viewer'
-        # role_attribute_path: contains(roles[*], 'administrator') && 'Admin' || 'Viewer'
 
     # created with expternal secret operator
     admin:
