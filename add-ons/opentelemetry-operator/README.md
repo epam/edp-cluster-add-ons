@@ -1,6 +1,6 @@
 # opentelemetry-operator
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.30.1](https://img.shields.io/badge/AppVersion-0.30.1-informational?style=flat-square)
+![Version: 0.56.0](https://img.shields.io/badge/Version-0.56.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.98.0](https://img.shields.io/badge/AppVersion-0.98.0-informational?style=flat-square)
 
 A Helm chart for Open Telemetry Operator
 
@@ -8,11 +8,12 @@ A Helm chart for Open Telemetry Operator
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://open-telemetry.github.io/opentelemetry-helm-charts | opentelemetry-operator | 0.30.1 |
+| https://open-telemetry.github.io/opentelemetry-helm-charts | opentelemetry-operator | 0.56.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | opentelemetry-operator.fullnameOverride | string | `"opentelemetry-operator"` |  |
+| opentelemetry-operator.manager.collectorImage.repository | string | `"otel/opentelemetry-collector-k8s"` |  |
 
