@@ -2,7 +2,14 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: general
+  # Add label to the collector. This label will be added to ServiceMonitor and tracked properly by Prometheus.
+  labels:
+    release: prom
 spec:
+  # This will create a ServiceMonitor for the OpenTelemetry Collector.
+  observability:
+    metrics:
+      enableMetrics: true
   config: |
     receivers:
       otlp:
@@ -20,9 +27,9 @@ spec:
         timeout: 10s
 
     exporters:
-      logging:
-      jaeger:
-        endpoint: "jaeger-operator-jaeger-collector.jaeger-operator:14250"
+      debug:
+      otlp:
+        endpoint: "jaeger-operator-jaeger-collector.observability:4317"
         tls:
           insecure: true
 
@@ -31,25 +38,14 @@ spec:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [logging, jaeger]
+          exporters: [debug, otlp]
         metrics:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [logging]
+          exporters: [debug]
         logs:
           receivers: [otlp]
-          exporters: [logging]
-  ingress:
-    route: {}
-  mode: deployment
-  replicas: 1
-  resources:
-    limits:
-      cpu: '1'
-      memory: 1Gi
-    requests:
-      cpu: 100m
-      memory: 256Mi
-  targetAllocator:
-    prometheusCR: {}
-  upgradeStrategy: automatic
+          exporters: [debug]
+      telemetry:
+        metrics:
+          address: ":8888"
