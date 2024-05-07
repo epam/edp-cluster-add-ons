@@ -54,3 +54,8 @@ sonarqube:
     jdbcUsername: "sonar"
     jdbcSecretName: sonar-pguser-sonar
     jdbcSecretPasswordKey: "password"
+
+# -- Integration with keycloak
+oidc:
+  # If set to true, the OIDC resources will be created.
+  enabled: false

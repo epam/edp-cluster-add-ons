@@ -13,7 +13,7 @@ spec:
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  webUrl: {{ .Values.sonarUrl }}
+  webUrl: https://{{ (index .Values.sonarqube.ingress.hosts 0).name }}
   protocolMappers:
     - name: roles
       protocol: openid-connect
