@@ -146,7 +146,7 @@ make update-readme
 | capsule                | 0.5.3     | 0.4.2        | False             | False    |
 | capsule-tenant         | N/A       | N/A          | N/A               | False    |
 | cert-manager           | 1.14.4    | v1.14.4      | False             | False    |
-| defectdojo             | 1.6.96    | 2.28.2       | False             | False    |
+| defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
 | dependency-track       | 1.5.5     | v1.12.1      | False             | False    |
 | edp                    | 3.8.1     | 3.8.1        | False             | False    |
 | extensions-oidc        | 1.20.0    | 1.20.0       | False             | False    |

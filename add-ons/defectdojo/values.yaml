@@ -1,5 +1,5 @@
 defectdojo:
-  tag: 2.28.2
+  tag: 2.34.1
   fullnameOverride: defectdojo
   host: defectdojo.example.com
   site_url: https://defectdojo.example.com
@@ -33,7 +33,7 @@ defectdojo:
 
   rabbitmq:
     persistence:
-      size: 2Gi
+      size: 1Gi
 
   # SSO Enablement. for additional options, please consult https://defectdojo.github.io/django-DefectDojo/integrations/social-authentication/#keycloak
   # Keycloak integration also requires DD_SOCIAL_AUTH_KEYCLOAK_SECRET to be defined, we recommend to create secret with name `defectdojo-extrasecrets`

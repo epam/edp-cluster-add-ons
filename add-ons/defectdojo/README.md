@@ -1,6 +1,6 @@
 # defectdojo
 
-![Version: 1.6.96](https://img.shields.io/badge/Version-1.6.96-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.28.2](https://img.shields.io/badge/AppVersion-2.28.2-informational?style=flat-square)
+![Version: 1.6.127](https://img.shields.io/badge/Version-1.6.127-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.34.1](https://img.shields.io/badge/AppVersion-2.34.1-informational?style=flat-square)
 
 A Helm chart for DefectDojo Install
 
@@ -8,7 +8,7 @@ A Helm chart for DefectDojo Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.96 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.127 |
 
 ## Values
 
@@ -36,9 +36,9 @@ A Helm chart for DefectDojo Install
 | defectdojo.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` |  |
 | defectdojo.postgresql.enabled | bool | `false` |  |
 | defectdojo.postgresql.postgresServer | string | `"defectdojo-primary.defectdojo.svc"` |  |
-| defectdojo.rabbitmq.persistence.size | string | `"2Gi"` |  |
+| defectdojo.rabbitmq.persistence.size | string | `"1Gi"` |  |
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
-| defectdojo.tag | string | `"2.28.2"` |  |
+| defectdojo.tag | string | `"2.34.1"` |  |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.secretName | string | `"/edp/eks/addons/defectdojo"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |

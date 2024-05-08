@@ -1,11 +1,18 @@
 apiVersion: v2
-description: A Helm chart for DefectDojo Install
 name: defectdojo
+description: A Helm chart for DefectDojo Install
+
 type: application
-version: 1.6.96
-appVersion: 2.28.2
+
+# The chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 1.6.127
+
+# Version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: 2.34.1
 
 dependencies:
 - name: defectdojo
-  version: 1.6.96
+  version: 1.6.127
   repository: https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts
