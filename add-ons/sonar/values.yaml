@@ -27,7 +27,7 @@ sonarqube:
     install:
       - "https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar"
       - "https://github.com/checkstyle/sonar-checkstyle/releases/download/10.12.1/checkstyle-sonar-plugin-10.12.1.jar"
-      - "https://github.com/spotbugs/sonar-findbugs/releases/download/4.2.3/sonar-findbugs-plugin-4.2.3.jar"
+      - "https://github.com/spotbugs/sonar-findbugs/releases/download/4.2.9/sonar-findbugs-plugin-4.2.9.jar"
       - "https://github.com/jborgers/sonar-pmd/releases/download/3.4.0/sonar-pmd-plugin-3.4.0.jar"
       - "https://github.com/sbaudoin/sonar-ansible/releases/download/v2.5.1/sonar-ansible-plugin-2.5.1.jar"
       - "https://github.com/sbaudoin/sonar-yaml/releases/download/v1.7.0/sonar-yaml-plugin-1.7.0.jar"
