@@ -57,7 +57,6 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.autoscaling.metrics[0].type | string | `"Resource"` |  |
 | keycloakx.autoscaling.minReplicas | int | `1` |  |
 | keycloakx.command[0] | string | `"/opt/keycloak/bin/kc.sh"` |  |
-| keycloakx.command[10] | string | `"--import-realm"` |  |
 | keycloakx.command[1] | string | `"--verbose"` |  |
 | keycloakx.command[2] | string | `"start"` |  |
 | keycloakx.command[3] | string | `"--auto-build"` |  |
