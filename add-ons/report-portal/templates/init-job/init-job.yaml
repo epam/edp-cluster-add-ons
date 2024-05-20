@@ -24,13 +24,13 @@ spec:
               secret1_found=true
             fi
 
-            if [ "$secret2_found" = false ] && kubectl get secret postgresql-pguser-postgres --namespace report-portal; then
-              echo "Secret postgresql-pguser-postgres exists"
+            if [ "$secret2_found" = false ] && kubectl get secret reportportal-pguser-postgres --namespace report-portal; then
+              echo "Secret reportportal-pguser-postgres exists"
               secret2_found=true
             fi
 
-            if [ "$secret3_found" = false ] && kubectl get secret postgresql-pguser-rpuser --namespace report-portal; then
-              echo "Secret postgresql-pguser-rpuser exists"
+            if [ "$secret3_found" = false ] && kubectl get secret reportportal-pguser-rpuser --namespace report-portal; then
+              echo "Secret reportportal-pguser-rpuser exists"
               secret3_found=true
             fi
 
@@ -53,8 +53,8 @@ spec:
           reportportal_postgresql_postgres_password=$(kubectl get secret reportportal-postgresql-creds --namespace report-portal -o=jsonpath='{.data.postgresql-postgres-password}' | base64 --decode)
 
           # Patch the secrets
-          kubectl patch secret postgresql-pguser-rpuser --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_password" | base64)\"}}"
-          kubectl patch secret postgresql-pguser-postgres --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_postgres_password" | base64)\"}}"
+          kubectl patch secret reportportal-pguser-rpuser --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_password" | base64)\"}}"
+          kubectl patch secret reportportal-pguser-postgres --namespace report-portal -p "{\"data\":{\"password\":\"$(echo -n "$reportportal_postgresql_postgres_password" | base64)\"}}"
 
           echo "Secrets copied and patched successfully."
       restartPolicy: Never
