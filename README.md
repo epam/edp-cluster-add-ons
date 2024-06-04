@@ -158,7 +158,7 @@ make update-readme
 | ingress-nginx          | 4.10.0    | 1.8.4        | False             | False    |
 | ingress-nginx-external | 4.10.0    | 1.8.4        | False             | False    |
 | jaeger-operator        | 2.53.0    | 1.52.0       | False             | False    |
-| keycloak               | 2.3.0     | 22.0.4       | False             | False    |
+| keycloak               | 2.3.0     | 24.0.4       | False             | False    |
 | keycloak-postgresql    | 0.1.1     | 1.0          | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
 | nexus                  | 61.0.2    | 3.61.0       | False             | False    |

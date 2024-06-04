@@ -1,6 +1,6 @@
 # keycloak
 
-![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 22.0.4](https://img.shields.io/badge/AppVersion-22.0.4-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 24.0.4](https://img.shields.io/badge/AppVersion-24.0.4-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
@@ -59,13 +59,6 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.command[0] | string | `"/opt/keycloak/bin/kc.sh"` |  |
 | keycloakx.command[1] | string | `"--verbose"` |  |
 | keycloakx.command[2] | string | `"start"` |  |
-| keycloakx.command[3] | string | `"--auto-build"` |  |
-| keycloakx.command[4] | string | `"--http-enabled=true"` |  |
-| keycloakx.command[5] | string | `"--http-port=8080"` |  |
-| keycloakx.command[6] | string | `"--hostname-strict=false"` |  |
-| keycloakx.command[7] | string | `"--hostname-strict-https=false"` |  |
-| keycloakx.command[8] | string | `"--spi-events-listener-jboss-logging-success-level=info"` |  |
-| keycloakx.command[9] | string | `"--spi-events-listener-jboss-logging-error-level=warn"` |  |
 | keycloakx.database.database | string | `"keycloak"` |  |
 | keycloakx.database.existingSecret | string | `"keycloak-pguser-admin"` |  |
 | keycloakx.database.hostname | string | `"keycloak-primary.security.svc"` |  |
@@ -73,18 +66,21 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |
 | keycloakx.dbchecker.enabled | bool | `true` |  |
-| keycloakx.extraEnv | string | `"- name: KC_HOSTNAME_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KC_HOSTNAME_ADMIN_URL\n  value: \"https://keycloak.example.com/auth\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
+| keycloakx.extraEnv | string | `"- name: KC_HOSTNAME\n  value: \"idp.example.com\"\n- name: KC_SPI_HOSTNAME_DEFAULT_ADMIN\n  value: \"idp.example.com\"\n- name: KC_HTTP_ENABLED\n  value: \"true\"\n- name: KC_HOSTNAME_STRICT\n  value: \"false\"\n- name: KC_HOSTNAME_STRICT_HTTPS\n  value: \"false\"\n- name: KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL\n  value: \"info\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n    -Dkeycloak.connectionsHttpClient.default.expect-continue-enabled=true\n    -Dkeycloak.connectionsHttpClient.default.reuse-connections=false\n- name: HTTP_ADDRESS_FORWARDING\n  value: \"true\"\n- name: PROXY_ADDRESS_FORWARDING\n  value: \"true\"\n"` |  |
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
 | keycloakx.health.enabled | bool | `false` |  |
-| keycloakx.ingress.annotations."ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| keycloakx.http.relativePath | string | `"/"` |  |
+| keycloakx.image.tag | string | `"24.0.4"` |  |
+| keycloakx.ingress.annotations."nginx.ingress.kubernetes.io/proxy-buffer-size" | string | `"256k"` |  |
+| keycloakx.ingress.console.annotations | string | `nil` |  |
 | keycloakx.ingress.console.enabled | bool | `true` |  |
 | keycloakx.ingress.console.ingressClassName | string | `"nginx"` |  |
-| keycloakx.ingress.console.rules[0].host | string | `"keycloak-internal.example.com"` |  |
-| keycloakx.ingress.console.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/"` |  |
+| keycloakx.ingress.console.rules[0].host | string | `"idp.example.com"` |  |
+| keycloakx.ingress.console.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/admin"` |  |
 | keycloakx.ingress.console.rules[0].paths[0].pathType | string | `"Prefix"` |  |
 | keycloakx.ingress.enabled | bool | `true` |  |
-| keycloakx.ingress.ingressClassName | string | `"external-nginx"` |  |
-| keycloakx.ingress.rules[0].host | string | `"keycloak.example.com"` |  |
+| keycloakx.ingress.ingressClassName | string | `"nginx"` |  |
+| keycloakx.ingress.rules[0].host | string | `"idp.example.com"` |  |
 | keycloakx.ingress.rules[0].paths[0].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/realms/"` |  |
 | keycloakx.ingress.rules[0].paths[0].pathType | string | `"Prefix"` |  |
 | keycloakx.ingress.rules[0].paths[1].path | string | `"{{ tpl .Values.http.relativePath $ | trimSuffix \"/\" }}/resources/"` |  |
@@ -96,7 +92,7 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.metrics.enabled | bool | `false` |  |
 | keycloakx.nameOverride | string | `"keycloakx"` |  |
 | keycloakx.proxy.enabled | bool | `true` |  |
-| keycloakx.proxy.mode | string | `"passthrough"` |  |
+| keycloakx.proxy.mode | string | `"edge"` |  |
 | keycloakx.replicas | int | `1` |  |
 | keycloakx.resources.limits.memory | string | `"2048Mi"` |  |
 | keycloakx.resources.requests.cpu | string | `"50m"` |  |
