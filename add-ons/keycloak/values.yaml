@@ -3,6 +3,9 @@ keycloakx:
   fullnameOverride: keycloakx
   replicas: 1
 
+  image:
+    tag: "24.0.4"
+
   # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
   health:
     enabled: false
@@ -14,22 +17,26 @@ keycloakx:
     - "/opt/keycloak/bin/kc.sh"
     - "--verbose"
     - "start"
-    - "--auto-build"
-    - "--http-enabled=true"
-    - "--http-port=8080"
-    - "--hostname-strict=false"
-    - "--hostname-strict-https=false"
-    - "--spi-events-listener-jboss-logging-success-level=info"
-    - "--spi-events-listener-jboss-logging-error-level=warn"
+
+  http:
+    relativePath: "/"
 
   # Additional environment variables for Keycloak.
   # Environment variables "KC_HOSTNAME ADMIN_URL" and "KC_HOSTNAME URL" for working in "passthrough" mode,
   # if they are not defined there will be an eternal loading of "LOGIN ADMIN UI"
   extraEnv: |
-    - name: KC_HOSTNAME_URL
-      value: "https://keycloak.example.com/auth"
-    - name: KC_HOSTNAME_ADMIN_URL
-      value: "https://keycloak.example.com/auth"
+    - name: KC_HOSTNAME
+      value: "idp.example.com"
+    - name: KC_SPI_HOSTNAME_DEFAULT_ADMIN
+      value: "idp.example.com"
+    - name: KC_HTTP_ENABLED
+      value: "true"
+    - name: KC_HOSTNAME_STRICT
+      value: "false"
+    - name: KC_HOSTNAME_STRICT_HTTPS
+      value: "false"
+    - name: KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL
+      value: "info"
     - name: KEYCLOAK_ADMIN
       valueFrom:
         secretKeyRef:
@@ -46,19 +53,49 @@ keycloakx:
         -XX:MaxRAMPercentage=50.0
         -Djava.awt.headless=true
         -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+        -Dkeycloak.connectionsHttpClient.default.expect-continue-enabled=true
+        -Dkeycloak.connectionsHttpClient.default.reuse-connections=false
+    - name: HTTP_ADDRESS_FORWARDING
+      value: "true"
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+
+  # Example how to add custom theme to Keycloak
+  # extraInitContainers: |
+  #   - name: theme-provider
+  #     image: docker.io/epamedp/edp-keycloak-theme:0.1.5
+  #     imagePullPolicy: IfNotPresent
+  #     command:
+  #       - sh
+  #     args:
+  #       - -c
+  #       - |
+  #         echo "Copying theme..."
+  #         cp -R /edp/* /theme
+  #     volumeMounts:
+  #       - name: theme
+  #         mountPath: /theme
+
+  # extraVolumeMounts: |
+  #   - name: theme
+  #     mountPath: /opt/keycloak/themes/edp
+
+  # extraVolumes: |
+  #   - name: theme
+  #     emptyDir: {}
 
   # This block should be uncommented if you install Keycloak on Kubernetes
   ingress:
     enabled: true
     annotations:
-      ingress.kubernetes.io/affinity: cookie
+      nginx.ingress.kubernetes.io/proxy-buffer-size: 256k
     # Defines the class of the Ingress Controller.
     # It allows you to choose which Ingress controller in cluster should be used to expose the Keycloak service to the outside world.
-    ingressClassName: "external-nginx"
+    ingressClassName: "nginx"
     # Exposes Keycloak paths according to the rules from documentation.
     # Ref: https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations
     rules:
-      - host: keycloak.example.com
+      - host: idp.example.com
         paths:
           - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/realms/'
             pathType: Prefix
@@ -74,27 +111,20 @@ keycloakx:
       # Defines the class of the Ingress controller.
       # Use internal Ingress Class to expose the Keycloak Admin Console to the internal network.
       ingressClassName: "nginx"
+      annotations:
+        # Defines the IP addresses that are allowed to access the Keycloak Admin Console.
+        # nginx.ingress.kubernetes.io/whitelist-source-range: "x.x.x.x/32"
       rules:
-        - host: keycloak-internal.example.com
+        - host: idp.example.com
           # Paths for the host
           paths:
-            - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+            - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/admin'
               pathType: Prefix
 
   proxy:
     enabled: true
-    mode: "passthrough"
-
-  # This block should be uncommented if you set Keycloak to OpenShift and change the host field
-  # route:
-  #   enabled: false
-  #   # Path for the Route
-  #   path: '/'
-  #   # Host name for the Route
-  #   host: "keycloak.<ROOT_DOMAIN>"
-  #   # TLS configuration
-  #   tls:
-  #     enabled: true
+    # Ensure X-Forwarded-For header is set to the client's IP address
+    mode: "edge"
 
   resources:
     limits:
