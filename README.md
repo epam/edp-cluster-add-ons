@@ -161,7 +161,7 @@ make update-readme
 | keycloak               | 2.3.0     | 24.0.4       | False             | False    |
 | keycloak-postgresql    | 0.1.1     | 1.0          | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
-| nexus                  | 61.0.2    | 3.61.0       | False             | False    |
+| nexus                  | 61.0.3    | 3.69.0       | False             | False    |
 | nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |
 | opensearch             | 2.19.1    | 2.13.1       | False             | False    |
 | opentelemetry-operator | 0.56.0    | 0.98.0       | False             | False    |
