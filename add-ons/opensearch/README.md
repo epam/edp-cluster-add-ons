@@ -23,7 +23,7 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.46.7 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.46.9 |
 | https://opensearch-project.github.io/helm-charts/ | opensearch | 2.20.0 |
 | https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.18.0 |
 

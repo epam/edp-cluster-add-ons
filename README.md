@@ -151,7 +151,7 @@ make update-readme
 | edp                    | 3.8.1     | 3.8.1        | False             | False    |
 | extensions-oidc        | 1.20.0    | 1.20.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
-| fluent-bit             | 0.1.0     | 2.1.4        | False             | False    |
+| fluent-bit             | 0.46.9    | 3.0.6        | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | False             | False    |
 | harbor-ha              | 1.13.0    | 2.9.0        | False             | False    |
 | harbor-ha-okd          | 1.13.0    | 2.9.0        | False             | False    |
