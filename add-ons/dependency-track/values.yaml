@@ -6,10 +6,9 @@ dependency-track:
     replicaCount: 1
     image:
       # we override the default image tag here, since the helm chart is a little behind
-      tag: 4.8.1
-    env:
-      - name: API_BASE_URL
-        value: "https://deptrack.example.com"
+      tag: 4.11.3
+    apiBaseUrl: "https://deptrack.example.com"
+    extraEnv:
       - name: OIDC_ISSUER
         value: "https://keycloak.example.com/auth/realms/shared"
       - name: OIDC_CLIENT_ID
@@ -20,15 +19,34 @@ dependency-track:
         value: "Login with Keycloak"
       - name: OIDC_FLOW
         value: "code"
+    resources:
+      requests:
+        cpu: 150m
+        memory: 64Mi
+      limits:
+        cpu: 500m
+        memory: 128Mi
 
-  apiserver:
+  apiServer:
     image:
       # we override the default image tag here, since the helm chart is a little behind
-      tag: 4.8.2
+      tag: 4.11.3
     persistentVolume:
-      size: 15Gi
-    env:
-      env:
+      size: 20Gi
+    extraEnv:
+      - name: ALPINE_DATABASE_MODE
+        value: "external"
+      - name: ALPINE_DATABASE_URL
+        value: "jdbc:postgresql://deptrack-primary.dependency-track.svc:5432/deptrack"
+      - name: ALPINE_DATABASE_DRIVER
+        value: "org.postgresql.Driver"
+      - name: ALPINE_DATABASE_USERNAME
+        value: "deptrack"
+      - name: ALPINE_DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: deptrack-pguser-deptrack
       - name: ALPINE_OIDC_ENABLED
         value: "true"
       - name: ALPINE_OIDC_CLIENT_ID
@@ -43,26 +61,23 @@ dependency-track:
         value: "roles"
       - name: ALPINE_OIDC_TEAM_SYNCHRONIZATION
         value: "true"
-
     resources:
     # https://docs.dependencytrack.org/getting-started/deploy-docker/
       requests:
-        cpu: 1
-        memory: 4608Mi
+        cpu: "1"
+        memory: 768Mi
       limits:
-        cpu: 2
-        memory: 12Gi
+        cpu: "2"
+        memory: 4608Mi
 
   ingress:
     enabled: true
-    tls:
-      enabled: false
-      secretName: ""
+    tls: []
     annotations:
       kubernetes.io/ingress.class: nginx
       # allow large bom.xml uploads:
       nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    host: deptrack.example.com
+    hostname: deptrack.example.com
 
 oidc:
   enabled: false

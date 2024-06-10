@@ -147,7 +147,7 @@ make update-readme
 | capsule-tenant         | N/A       | N/A          | N/A               | False    |
 | cert-manager           | 1.14.4    | v1.14.4      | False             | False    |
 | defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
-| dependency-track       | 1.5.5     | v1.12.1      | False             | False    |
+| dependency-track       | 0.9.1     | v4.11.3      | False             | False    |
 | edp                    | 3.8.1     | 3.8.1        | False             | False    |
 | extensions-oidc        | 1.20.0    | 1.20.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |

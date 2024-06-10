@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 1.5.5
+version: 0.9.1
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "v1.12.1"
+appVersion: "v4.11.3"
 
 dependencies:
-- name: dependency-track
-  version: 1.5.5
-  repository: https://evryfs.github.io/helm-charts/
+  - name: dependency-track
+    version: 0.9.1
+    repository: https://dependencytrack.github.io/helm-charts
