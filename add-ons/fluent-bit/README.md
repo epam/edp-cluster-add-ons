@@ -1,6 +1,6 @@
 # fluent-bit
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.4](https://img.shields.io/badge/AppVersion-2.1.4-informational?style=flat-square)
+![Version: 0.46.9](https://img.shields.io/badge/Version-0.46.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.6](https://img.shields.io/badge/AppVersion-3.0.6-informational?style=flat-square)
 
 A Helm chart for Fluent Bit
 
@@ -8,7 +8,7 @@ A Helm chart for Fluent Bit
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.30.2 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.46.9 |
 
 ## Values
 
@@ -19,7 +19,7 @@ A Helm chart for Fluent Bit
 | eso.secretName | string | `"/edp/eks/addons/fluent-bit"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
-| fluent-bit.config.customParsers | string | `"[PARSER]\n    Name docker_no_time\n    Format json\n    Time_Keep Off\n    Time_Key time\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\n\n[PARSER]\n    Name        java_multiline\n    Format      regex\n    Regex       /^(?<time>\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}) (?<level>[^\\s]+)(?<message>.*)/\n    Time_Key    time\n    Time_Format %Y-%m-%d %H:%M:%S\n\n[PARSER]\n    # https://rubular.com/r/IhIbCAIs7ImOkc\n    Name        k8s-nginx-ingress\n    Format      regex\n    Regex       ^(?<host>[^ ]*) - (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^\\\"]*?)(?: +\\S*)?)?\" (?<code>[^ ]*) (?<size>[^ ]*) \"(?<referer>[^\\\"]*)\" \"(?<agent>[^\\\"]*)\" (?<request_length>[^ ]*) (?<request_time>[^ ]*) \\[(?<proxy_upstream_name>[^ ]*)\\] (\\[(?<proxy_alternative_upstream_name>[^ ]*)\\] )?(?<upstream_addr>[^ ]*) (?<upstream_response_length>[^ ]*) (?<upstream_response_time>[^ ]*) (?<upstream_status>[^ ]*) (?<reg_id>[^ ]*).*$\n    Time_Key    time\n    Time_Format %d/%b/%Y:%H:%M:%S %z\n"` |  |
+| fluent-bit.config.customParsers | string | `"[PARSER]\n    Name docker_no_time\n    Format json\n    Time_Keep Off\n    Time_Key time\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\n\n[PARSER]\n    Name        java_multiline\n    Format      regex\n    Regex       /^(?<time>\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}) (?<level>[^\\s]+)(?<message>.*)/\n    Time_Key    time\n    Time_Format %Y-%m-%d %H:%M:%S\n"` |  |
 | fluent-bit.config.outputs | string | `"[OUTPUT]\n    Name            es\n    Match           kube.*\n    Host            opensearch-cluster-master\n    Port            9200\n    HTTP_User       ${ES_SUPERUSER_USER}\n    HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}\n    Logstash_Format On\n    Logstash_Prefix kube-fluent-bit\n    Time_Key        @timestamp\n    Replace_Dots    On\n    Retry_Limit     False\n    Trace_Error     Off\n    Suppress_Type_Name On\n    tls             On\n    tls.verify      Off\n"` |  |
 | fluent-bit.env[0].name | string | `"ES_SUPERUSER_USER"` |  |
 | fluent-bit.env[0].valueFrom.secretKeyRef.key | string | `"username"` |  |
