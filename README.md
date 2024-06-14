@@ -164,7 +164,7 @@ make update-readme
 | nexus                  | 61.0.3    | 3.69.0       | False             | False    |
 | nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |
 | opensearch             | 2.19.1    | 2.13.1       | False             | False    |
-| opentelemetry-operator | 0.56.0    | 0.98.0       | False             | False    |
+| opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
 | postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
 | report-portal          | 5.10.0    | 23.2         | False             | False    |
 | prometheus-operator    | 58.2.1    | v0.73.2      | False             | False    |
