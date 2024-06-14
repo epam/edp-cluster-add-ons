@@ -1,4 +1,4 @@
-apiVersion: opentelemetry.io/v1alpha1
+apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: general
@@ -6,18 +6,18 @@ metadata:
   labels:
     release: prom
 spec:
-  # This will create a ServiceMonitor for the OpenTelemetry Collector.
   observability:
     metrics:
       enableMetrics: true
-  config: |
+  config:
     receivers:
       otlp:
         protocols:
-          grpc:
-          http:
+          grpc: {}
+          http: {}
 
     processors:
+      k8sattributes: {}
       memory_limiter:
         check_interval: 1s
         limit_percentage: 75
@@ -27,9 +27,21 @@ spec:
         timeout: 10s
 
     exporters:
-      debug:
+      debug: {}
       otlp:
         endpoint: "jaeger-operator-jaeger-collector.observability:4317"
+        tls:
+          insecure: true
+      otlp/data-prepper-traces:
+        endpoint: data-prepper.data-prepper:21890
+        tls:
+          insecure: true
+      otlp/data-prepper-metrics:
+        endpoint: data-prepper.data-prepper:21891
+        tls:
+          insecure: true
+      otlp/data-prepper-logs:
+        endpoint: data-prepper.data-prepper:21892
         tls:
           insecure: true
 
@@ -37,15 +49,16 @@ spec:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [debug, otlp]
+          processors: [memory_limiter, batch, k8sattributes]
+          exporters: [debug, otlp/data-prepper-traces]
         metrics:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [debug]
+          exporters: [debug, otlp/data-prepper-metrics]
         logs:
           receivers: [otlp]
-          exporters: [debug]
+          processors: [memory_limiter, batch]
+          exporters: [debug, otlp/data-prepper-logs]
       telemetry:
         metrics:
           address: ":8888"

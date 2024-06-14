@@ -26,10 +26,10 @@ spec:
       value: http://general-collector.observability:4318
     image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.3.0
   nodejs:
-    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.49.1
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.51.0
   python:
     env:
     - name: OTEL_EXPORTER_OTLP_ENDPOINT
       value: http://general-collector.observability:4318
-    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.44b0
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.45b0
   resource: {}
