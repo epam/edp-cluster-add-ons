@@ -1,6 +1,6 @@
 # dependency-track
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.11.3](https://img.shields.io/badge/AppVersion-v4.11.3-informational?style=flat-square)
+![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.11.3](https://img.shields.io/badge/AppVersion-v4.11.3-informational?style=flat-square)
 
 A Helm chart for Dependecy Track
 
@@ -40,7 +40,7 @@ A Helm chart for Dependecy Track
 | dependency-track.apiServer.extraEnv[9].name | string | `"ALPINE_OIDC_USER_PROVISIONING"` |  |
 | dependency-track.apiServer.extraEnv[9].value | string | `"true"` |  |
 | dependency-track.apiServer.image.tag | string | `"4.11.3"` |  |
-| dependency-track.apiServer.persistentVolume.size | string | `"20Gi"` |  |
+| dependency-track.apiServer.persistentVolume.enabled | bool | `false` |  |
 | dependency-track.apiServer.resources.limits.cpu | string | `"2"` |  |
 | dependency-track.apiServer.resources.limits.memory | string | `"4608Mi"` |  |
 | dependency-track.apiServer.resources.requests.cpu | string | `"1"` |  |
