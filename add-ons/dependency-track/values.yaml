@@ -31,8 +31,9 @@ dependency-track:
     image:
       # we override the default image tag here, since the helm chart is a little behind
       tag: 4.11.3
+    # disabled because we use an external PostgreSQL database (PGO)
     persistentVolume:
-      size: 20Gi
+      enabled: false
     extraEnv:
       - name: ALPINE_DATABASE_MODE
         value: "external"
