@@ -1,6 +1,6 @@
 # sonar-operator
 
-![Version: 3.1.0](https://img.shields.io/badge/Version-3.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
+![Version: 3.1.1](https://img.shields.io/badge/Version-3.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square)
 
 A Helm chart for EDP Sonar Operator
 
@@ -8,7 +8,7 @@ A Helm chart for EDP Sonar Operator
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | sonar-operator | 3.1.0 |
+| https://epam.github.io/edp-helm-charts/stable | sonar-operator | 3.1.1 |
 
 ## Values
 
@@ -25,7 +25,7 @@ A Helm chart for EDP Sonar Operator
 | sonar-operator.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the container |
 | sonar-operator.extraVolumes | list | `[]` | Additional volumes to be added to the pod |
 | sonar-operator.image.repository | string | `"epamedp/sonar-operator"` | EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator) |
-| sonar-operator.image.tag | string | `"3.1.0"` | EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags) |
+| sonar-operator.image.tag | string | `"3.1.1"` | EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags) |
 | sonar-operator.imagePullPolicy | string | `"IfNotPresent"` |  |
 | sonar-operator.name | string | `"sonar-operator"` | component name |
 | sonar-operator.nodeSelector | object | `{}` |  |

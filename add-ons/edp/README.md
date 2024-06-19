@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.8.1](https://img.shields.io/badge/Version-3.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.8.1](https://img.shields.io/badge/AppVersion-3.8.1-informational?style=flat-square)
+![Version: 3.9.0](https://img.shields.io/badge/Version-3.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.9.0](https://img.shields.io/badge/AppVersion-3.9.0-informational?style=flat-square)
 
 A Helm chart for EDP Install
 
@@ -10,7 +10,7 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.8.1 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.9.0 |
 
 ## Values
 
@@ -37,8 +37,8 @@ A Helm chart for EDP Install
 | edp-install.global.dnsWildCard | string | `"example.com"` | a cluster DNS wildcard name |
 | edp-install.global.gitProviders | list | `["github","gitlab","gerrit"]` | Can be gerrit, github or gitlab. By default: github |
 | edp-install.global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| edp-install.sso | object | `{"admins":["john@example.com","mike@example.com"],"developers":["john@example.com","mike@example.com"],"enabled":false,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP oauth2-proxy. Default: false |
+| edp-install.sso | object | `{"admins":["john@example.com","mike@example.com"],"developers":["john@example.com","mike@example.com"],"enabled":false,"keycloakOperatorResources":{"createKeycloakCR":false,"kind":"ClusterKeycloak","name":"keycloak"},"keycloakUrl":"https://keycloak.example.com/auth"}` | Enable SSO for EDP oauth2-proxy. Default: false |
 | edp-install.sso.admins | list | `["john@example.com","mike@example.com"]` | Administrators of EDP tenant |
 | edp-install.sso.developers | list | `["john@example.com","mike@example.com"]` | Developers of EDP tenant |
-| edp-install.sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
+| edp-install.sso.keycloakUrl | string | `"https://keycloak.example.com/auth"` | Keycloak URL |
 

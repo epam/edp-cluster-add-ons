@@ -148,8 +148,8 @@ make update-readme
 | cert-manager           | 1.14.4    | v1.14.4      | False             | False    |
 | defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
 | dependency-track       | 0.9.2     | v4.11.3      | False             | False    |
-| edp                    | 3.8.1     | 3.8.1        | False             | False    |
-| extensions-oidc        | 1.20.0    | 1.20.0       | False             | False    |
+| edp                    | 3.9.0     | 3.9.0        | False             | False    |
+| extensions-oidc        | 1.21.0    | 1.21.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
 | fluent-bit             | 0.46.9    | 3.0.6        | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | False             | False    |
@@ -170,7 +170,7 @@ make update-readme
 | prometheus-operator    | 58.2.1    | v0.73.2      | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | False             | False    |
 | sonar                  | 8.0.2     | 9.9.2        | False             | False    |
-| sonar-operator         | 3.1.0     | 3.1.0        | False             | False    |
+| sonar-operator         | 3.1.1     | 3.1.1        | False             | False    |
 | storage-class          | N/A       | N/A          | N/A               | False    |
 | tekton-cache           | 0.3.2     | 0.3.2        | False             | False    |
 | tekton                 | N/A       | N/A          | False             | False    |
