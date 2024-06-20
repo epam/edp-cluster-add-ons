@@ -8,21 +8,33 @@ spec:
   name: EDP way
   default: true
   conditions:
-    new_coverage:
-      op: LT
-      error: "80"
-    new_duplicated_lines_density:
-      op: GT
-      error: "3"
     blocker_violations:
+      error: '0'
       op: GT
-      error: "0"
     critical_violations:
+      error: '0'
       op: GT
-      error: "0"
+    new_coverage:
+      error: '80'
+      op: LT
+    new_duplicated_lines_density:
+      error: '3'
+      op: GT
+    new_maintainability_rating:
+      error: '1'
+      op: GT
+    new_reliability_rating:
+      error: '1'
+      op: GT
+    new_security_hotspots_reviewed:
+      error: '100'
+      op: LT
+    new_security_rating:
+      error: '1'
+      op: GT
     test_errors:
+      error: '0'
       op: GT
-      error: "0"
     test_failures:
+      error: '0'
       op: GT
-      error: "0"
