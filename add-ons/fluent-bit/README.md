@@ -1,6 +1,6 @@
 # fluent-bit
 
-![Version: 0.46.9](https://img.shields.io/badge/Version-0.46.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.6](https://img.shields.io/badge/AppVersion-3.0.6-informational?style=flat-square)
+![Version: 0.46.11](https://img.shields.io/badge/Version-0.46.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.7](https://img.shields.io/badge/AppVersion-3.0.7-informational?style=flat-square)
 
 A Helm chart for Fluent Bit
 
@@ -8,7 +8,7 @@ A Helm chart for Fluent Bit
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.46.9 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.46.11 |
 
 ## Values
 

@@ -1,6 +1,6 @@
 # opensearch
 
-![Version: 2.19.1](https://img.shields.io/badge/Version-2.19.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.13.1](https://img.shields.io/badge/AppVersion-2.13.1-informational?style=flat-square)
+![Version: 2.21.1](https://img.shields.io/badge/Version-2.21.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.15.0](https://img.shields.io/badge/AppVersion-2.15.0-informational?style=flat-square)
 
 A Helm chart for OpenSearch Stack
 
@@ -23,9 +23,9 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.46.9 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.20.0 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.18.0 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.46.11 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.21.0 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.19.0 |
 
 ## Values
 
