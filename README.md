@@ -151,7 +151,7 @@ make update-readme
 | edp                    | 3.9.0     | 3.9.0        | False             | False    |
 | extensions-oidc        | 1.21.0    | 1.21.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
-| fluent-bit             | 0.46.9    | 3.0.6        | False             | False    |
+| fluent-bit             | 0.46.11   | 3.0.7        | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | False             | False    |
 | harbor-ha              | 1.13.0    | 2.9.0        | False             | False    |
 | harbor-ha-okd          | 1.13.0    | 2.9.0        | False             | False    |
@@ -163,11 +163,11 @@ make update-readme
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
 | nexus                  | 61.0.3    | 3.69.0       | False             | False    |
 | nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |
-| opensearch             | 2.19.1    | 2.13.1       | False             | False    |
+| opensearch             | 2.21.1    | 2.15.0       | False             | False    |
 | opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
 | postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
 | report-portal          | 5.10.0    | 23.2         | False             | False    |
-| prometheus-operator    | 58.2.1    | v0.73.2      | False             | False    |
+| prometheus-operator    | 60.1.0    | v0.73.2      | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | False             | False    |
 | sonar                  | 8.0.2     | 9.9.2        | False             | False    |
 | sonar-operator         | 3.1.1     | 3.1.1        | False             | False    |
