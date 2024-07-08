@@ -21,6 +21,7 @@ spec:
         - p, proj:edp:developer, repositories, delete, edp/*, allow
         - p, proj:edp:developer, repositories, update, edp/*, allow
         - p, proj:edp:developer, repositories, get, edp/*, allow
+        - p, ArgoCDDevelopers, exec, create, edp/*, allow
       groups:
         # Keycloak Group name
         - ArgoCD-edp-users

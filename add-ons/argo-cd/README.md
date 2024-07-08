@@ -18,6 +18,7 @@ A Helm chart for Argo CD Install
 | argo-cd.applicationSet.extraEnv[0].name | string | `"ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_SCM_PROVIDERS"` |  |
 | argo-cd.applicationSet.extraEnv[0].value | string | `"false"` |  |
 | argo-cd.configs.cm."application.instanceLabelKey" | string | `"argocd.argoproj.io/instance-edp"` |  |
+| argo-cd.configs.cm."exec.enabled" | bool | `true` |  |
 | argo-cd.configs.cm."oidc.config" | string | `"name: Keycloak\nissuer: https://keycloak.example.com/auth/realms/shared\nclientID: argocd-tenant\nclientSecret: $keycloak-client-argocd-secret:clientSecret\nrequestedScopes:\n  - openid\n  - profile\n  - email\n  - groups\n"` |  |
 | argo-cd.configs.cm.url | string | `"https://argocd-dev.example.com"` |  |
 | argo-cd.configs.params."application.namespaces" | string | `"edp"` |  |
