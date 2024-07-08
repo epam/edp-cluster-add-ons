@@ -37,6 +37,49 @@ It relies on the KubeRocketCI's OpenSearch chart for log storage and analysis, p
 
 For further customization and to tailor the Fluent Bit configuration to your needs, please review the `values.yaml` file.
 
+### Calculate duration for PipelineRuns and TaskRuns
+
+To calculate the duration of PipelineRuns and TaskRuns, you can add a scripted field in OpenSearch Dashboards.
+
+Navigate to the **Management** section in OpenSearch Dashboards.
+Go to Stack **Management** > **Index Patterns**.
+Select the index pattern that contains your data (e.g., logstash-cloudevents-*).
+Find and click on the **Scripted fields** tab, then click on **Add scripted field**.
+Fill in the **Name** for your field, for example, **duration**.
+For the **Language**, ensure that painless is selected.
+Set the Script type to **number**.
+In the Script field, enter the following code:
+
+```java
+long startTimeMillis = 0;
+long completionTimeMillis = 0;
+
+// Check for pipelineRun times
+if (doc.containsKey('pipelineRun.status.startTime') && !doc['pipelineRun.status.startTime'].empty) {
+    startTimeMillis = doc['pipelineRun.status.startTime'].value.getMillis();
+}
+
+if (doc.containsKey('pipelineRun.status.completionTime') && !doc['pipelineRun.status.completionTime'].empty) {
+    completionTimeMillis = doc['pipelineRun.status.completionTime'].value.getMillis();
+}
+
+// Check for taskRun times if pipelineRun times aren't set
+if (startTimeMillis == 0 && doc.containsKey('taskRun.status.startTime') && !doc['taskRun.status.startTime'].empty) {
+    startTimeMillis = doc['taskRun.status.startTime'].value.getMillis();
+}
+
+if (completionTimeMillis == 0 && doc.containsKey('taskRun.status.completionTime') && !doc['taskRun.status.completionTime'].empty) {
+    completionTimeMillis = doc['taskRun.status.completionTime'].value.getMillis();
+}
+
+// Calculate duration in seconds if both times are available
+if (startTimeMillis > 0 && completionTimeMillis > 0) {
+    return (completionTimeMillis - startTimeMillis) / 1000;
+} else {
+    return 0; // Return 0 or some default value if the necessary fields are missing or incomplete
+}
+```
+
 {{ template "chart.maintainersSection" . }}
 
 {{ template "chart.sourcesSection" . }}
