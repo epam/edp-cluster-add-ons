@@ -41,6 +41,7 @@ argo-cd:
       # required when SSO is enabled
       url: "https://argocd-dev.example.com"
       application.instanceLabelKey: argocd.argoproj.io/instance-edp
+      exec.enabled: true
       oidc.config: |
         name: Keycloak
         issuer: https://keycloak.example.com/auth/realms/shared
