@@ -1,6 +1,21 @@
+# This chart depends on the KubeRocketCI's opensearch chart and the fluent-bit chart.
 fluent-bit:
+  # we run only one instane of fluentbit which grabs events from k8s and cloud events
+  kind: Deployment
   testFramework:
     enabled: false
+
+  extraPorts:
+    # This port is used to receive CloudEvents from Tekton Pipelines
+    - name: cloudevents
+      port: 8888
+      containerPort: 8888
+      protocol: TCP
+
+  rbac:
+    create: true
+    # Work with kubernetes_events input plugin
+    eventsAccess: true
   env:
     - name: ES_SUPERUSER_USER
       valueFrom:
@@ -12,32 +27,101 @@ fluent-bit:
         secretKeyRef:
           name: fluentbit-creds
           key: password
-  config:
-    customParsers: |
-      [PARSER]
-          Name docker_no_time
-          Format json
-          Time_Keep Off
-          Time_Key time
-          Time_Format %Y-%m-%dT%H:%M:%S.%L
 
-      [PARSER]
-          Name        java_multiline
-          Format      regex
-          Regex       /^(?<time>\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) (?<level>[^\s]+)(?<message>.*)/
-          Time_Key    time
-          Time_Format %Y-%m-%d %H:%M:%S
+  serviceMonitor:
+    enabled: true
+    interval: 10s
+    scrapeTimeout: 10s
+    selector:
+      release: kube-prometheus
+    metricRelabelings:
+      - sourceLabels: [__meta_kubernetes_service_label_cluster]
+        targetLabel: cluster
+        regex: (.*)
+        replacement: ${1}
+        action: replace
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        separator: ;
+        regex: ^(.*)$
+        targetLabel: nodename
+        replacement: $1
+        action: replace
+
+    additionalEndpoints:
+      - port: metrics
+        path: /metrics
+        interval: 10s
+        scrapeTimeout: 10s
+        # metric relabel configs to apply to samples before ingestion.
+        #
+        metricRelabelings:
+          - sourceLabels: [__meta_kubernetes_service_label_cluster]
+            targetLabel: cluster
+            regex: (.*)
+            replacement: ${1}
+            action: replace
+        # relabel configs to apply to samples after ingestion.
+        #
+        relabelings:
+          - sourceLabels: [__meta_kubernetes_pod_node_name]
+            separator: ;
+            regex: ^(.*)$
+            targetLabel: nodename
+            replacement: $1
+            action: replace
+
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  config:
+    inputs: |
+      [INPUT]
+          Name kubernetes_events
+          # add the tag "k8s_events" to all events coming from this input
+          tag k8s_events
+          # ask k8s API for updates every 30 seconds
+          interval_sec 15
+          # fetch at most 250 items per requests (pagination)
+          kube_request_limit 2500
+
+      # Use as the synk for the CloudEvents from Tekton Pipelines
+      [INPUT]
+          name http
+          listen 0.0.0.0
+          port 8888
 
     outputs: |
       [OUTPUT]
           Name            es
-          Match           kube.*
+          Match           k8s_events
           Host            opensearch-cluster-master
           Port            9200
           HTTP_User       ${ES_SUPERUSER_USER}
           HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}
           Logstash_Format On
-          Logstash_Prefix kube-fluent-bit
+          Logstash_Prefix logstash-events
+          Time_Key        @timestamp
+          Replace_Dots    On
+          Retry_Limit     False
+          Trace_Error     Off
+          Suppress_Type_Name On
+          tls             On
+          tls.verify      Off
+
+      [OUTPUT]
+          Name            es
+          Match           http.0
+          Host            opensearch-cluster-master
+          Port            9200
+          HTTP_User       ${ES_SUPERUSER_USER}
+          HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}
+          Logstash_Format On
+          Logstash_Prefix logstash-cloudevents
           Time_Key        @timestamp
           Replace_Dots    On
           Retry_Limit     False

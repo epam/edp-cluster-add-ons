@@ -1,0 +1,46 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+## Fluentbit Events
+
+This chart integrates Fluent Bit as a log processor and forwarder, specifically configured to capture Kubernetes and CloudEvents from Tekton.
+It relies on the KubeRocketCI's OpenSearch chart for log storage and analysis, providing a cohesive logging solution.
+
++--------+       +-------------+       +------------+       +-----------+
+| Tekton +------>+ CloudEvents +------>+ Fluent Bit +------>+ OpenSearch|
++--------+       +-------------+       +------------+       +-----------+
+                                             |
+                                             |
+                                        +----+----+
+                                        | k8s     |
+                                        | Events  |
+                                        +---------+
+
+### Key Features and Configurations:
+
+- **Deployment Mode**: Fluent Bit is deployed as a single instance to efficiently gather events across the cluster.
+- **CloudEvents Support**: Custom port configuration (8888) to receive CloudEvents from Tekton Pipelines.
+- **RBAC and Access**: Automatically creates RBAC resources with access to Kubernetes events.
+- **Elasticsearch Integration**: Environment variables are configured to use credentials from a secret for Elasticsearch access.
+- **Monitoring**: A ServiceMonitor is configured for Prometheus scraping, with detailed metric and relabeling configurations.
+
+### Inputs and Outputs:
+
+- **Inputs**: Captures Kubernetes events and HTTP CloudEvents.
+- **Outputs**: Configured to forward logs to an OpenSearch cluster with specific formatting and TLS settings.
+
+For further customization and to tailor the Fluent Bit configuration to your needs, please review the `values.yaml` file.
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
