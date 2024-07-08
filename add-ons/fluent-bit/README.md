@@ -9,6 +9,7 @@ A Helm chart for Fluent Bit
 This chart integrates Fluent Bit as a log processor and forwarder, specifically configured to capture Kubernetes and CloudEvents from Tekton.
 It relies on the KubeRocketCI's OpenSearch chart for log storage and analysis, providing a cohesive logging solution.
 
+```plaintext
 +--------+       +-------------+       +------------+       +-----------+
 | Tekton +------>+ CloudEvents +------>+ Fluent Bit +------>+ OpenSearch|
 +--------+       +-------------+       +------------+       +-----------+
@@ -18,6 +19,7 @@ It relies on the KubeRocketCI's OpenSearch chart for log storage and analysis, p
                                         | k8s     |
                                         | Events  |
                                         +---------+
+```
 
 ### Key Features and Configurations:
 
