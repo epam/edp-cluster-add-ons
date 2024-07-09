@@ -134,3 +134,6 @@ eso:
       providerConfig: {}
       #  gcpsm:
       #    projectID: "alphabet-123"
+
+oidc:
+  enabled: false

@@ -78,4 +78,5 @@ A Helm chart for Prometheus Operator
 | kube-prometheus-stack.prometheusOperator.resources.limits.memory | string | `"256Mi"` |  |
 | kube-prometheus-stack.prometheusOperator.resources.requests.cpu | string | `"100m"` |  |
 | kube-prometheus-stack.prometheusOperator.resources.requests.memory | string | `"128Mi"` |  |
+| oidc.enabled | bool | `false` |  |
 
