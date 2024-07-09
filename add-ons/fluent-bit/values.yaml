@@ -115,7 +115,7 @@ fluent-bit:
 
       [OUTPUT]
           Name            es
-          Match           http.0
+          Match           http.*
           Host            opensearch-cluster-master
           Port            9200
           HTTP_User       ${ES_SUPERUSER_USER}
