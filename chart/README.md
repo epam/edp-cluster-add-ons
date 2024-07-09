@@ -36,6 +36,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | destinationServer | string | `"in-cluster"` |  |
 | edp.createNamespace | bool | `false` |  |
 | edp.enable | bool | `false` |  |
+| eks.createNamespace | bool | `false` |  |
+| eks.enable | bool | `false` |  |
 | extensions-oidc.createNamespace | bool | `false` |  |
 | extensions-oidc.enable | bool | `false` |  |
 | external-secrets.createNamespace | bool | `false` |  |

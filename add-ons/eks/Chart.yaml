@@ -1,0 +1,7 @@
+apiVersion: v2
+name: eks-oidc
+description: A Helm chart for EKS-oidc configuration
+
+version: 1.0.0
+
+appVersion: "v1.0.0"

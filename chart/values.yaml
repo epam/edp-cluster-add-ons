@@ -53,6 +53,10 @@ edp:
   createNamespace: false
   enable: false
 
+eks:
+  createNamespace: false
+  enable: false
+
 extensions-oidc:
   createNamespace: false
   enable: false
