@@ -79,6 +79,22 @@ fluent-bit:
       memory: 128Mi
 
   config:
+    service: |
+      [SERVICE]
+          Daemon Off
+          Flush {{ .Values.flush }}
+          Log_Level {{ .Values.logLevel }}
+          Parsers_File /fluent-bit/etc/parsers.conf
+          Parsers_File /fluent-bit/etc/conf/custom_parsers.conf
+          HTTP_Server On
+          HTTP_Listen 0.0.0.0
+          HTTP_Port {{ .Values.metricsPort }}
+          Health_Check On
+          Storage.path /var/log/flb-storage/
+          Storage.sync normal
+          Storage.checksum off
+          Storage.backlog.mem_limit 5M
+
     inputs: |
       [INPUT]
           Name kubernetes_events
@@ -88,12 +104,14 @@ fluent-bit:
           interval_sec 15
           # fetch at most 250 items per requests (pagination)
           kube_request_limit 2500
+          Storage.type filesystem
 
       # Use as the synk for the CloudEvents from Tekton Pipelines
       [INPUT]
           name http
           listen 0.0.0.0
           port 8888
+          Storage.type filesystem
 
     outputs: |
       [OUTPUT]
@@ -112,6 +130,7 @@ fluent-bit:
           Suppress_Type_Name On
           tls             On
           tls.verify      Off
+          Storage.total_limit_size 1G
 
       [OUTPUT]
           Name            es
@@ -129,6 +148,7 @@ fluent-bit:
           Suppress_Type_Name On
           tls             On
           tls.verify      Off
+          Storage.total_limit_size 1G
 
 # Configure components of the External Secrets Operator (ESO).
 eso:

@@ -149,6 +149,7 @@ make update-readme
 | defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
 | dependency-track       | 0.9.2     | v4.11.3      | False             | False    |
 | edp                    | 3.9.0     | 3.9.0        | False             | False    |
+| eks                    | 1.0.0     | v1.0.0       | False             | False    |
 | extensions-oidc        | 1.21.0    | 1.21.0       | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
 | fluent-bit             | 0.46.11   | 3.0.7        | False             | False    |
