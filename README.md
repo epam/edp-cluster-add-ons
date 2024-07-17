@@ -168,7 +168,7 @@ make update-readme
 | opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
 | postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
 | report-portal          | 5.10.0    | 23.2         | False             | False    |
-| prometheus-operator    | 60.1.0    | v0.73.2      | False             | False    |
+| prometheus-operator    | 61.3.2    | v0.75.1      | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | False             | False    |
 | sonar                  | 8.0.2     | 9.9.2        | False             | False    |
 | sonar-operator         | 3.1.1     | 3.1.1        | False             | False    |
