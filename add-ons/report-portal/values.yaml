@@ -83,6 +83,13 @@ opensearch:
   persistence:
     size: 3Gi
 
+# Enable SAML authentication via Keycloak.
+# Note: Enabling SAML authentication also requires the keycloak-operator to process Keycloak resources.
+# For detailed instructions on setting up SAML authentication for report-portal, refer to:
+# https://docs.kuberocketci.io/docs/operator-guide/project-management-and-reporting/reportportal-keycloak
+saml:
+  enabled: false
+
 # Configure components of the External Secrets Operator (ESO).
 eso:
   # -- Install components of the ESO.
