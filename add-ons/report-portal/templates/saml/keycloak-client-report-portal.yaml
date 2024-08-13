@@ -1,0 +1,19 @@
+{{- if .Values.saml.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: report-portal
+spec:
+  attributes:
+    saml.client.signature: 'false'
+  clientAuthenticatorType: client-secret
+  clientId: report.portal.sp.id
+  defaultClientScopes:
+    - report-portal
+  protocol: saml
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  secret: $keycloak-client-report-portal-secret:clientSecret
+  webUrl: https://report-portal.example.com
+{{- end }}

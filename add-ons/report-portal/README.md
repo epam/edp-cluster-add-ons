@@ -57,4 +57,5 @@ A Helm chart for report-portal
 | reportportal.storage.secretkeyName | string | `"root-password"` |  |
 | reportportal.storage.type | string | `"minio"` |  |
 | reportportal.uat.resources.requests.cpu | string | `"50m"` |  |
+| saml.enabled | bool | `false` |  |
 
