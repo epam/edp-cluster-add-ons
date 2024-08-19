@@ -1,0 +1,14 @@
+{{- if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: awx
+spec:
+  clientAuthenticatorType: client-secret
+  clientId: awx
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  secret: $keycloak-client-awx-secret:clientSecret
+  webUrl: https://{{ (index .Values.AWX.spec.ingress_hosts 0).hostname }}
+{{- end }}
