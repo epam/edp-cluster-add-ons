@@ -1,0 +1,32 @@
+{{- if and $.Values.AWX.enabled $.Values.AWX.postgres.enabled }}
+{{- $secretName := .Values.eso.secretName }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ include "postgres.secretName" . }}
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: {{ .Values.eso.secretStoreName }}
+  data:
+    - remoteRef:
+        key: {{ $secretName }}
+        property: awx-operator.postgresql-password
+      secretKey: postgresqlPassword
+  target:
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      data:
+        password: "{{ `{{ .postgresqlPassword }}` }}"
+        host: {{ .Values.AWX.postgres.host }}
+        port: {{ .Values.AWX.postgres.port | quote }}
+        database: {{ .Values.AWX.postgres.dbName }}
+        username: {{ .Values.AWX.postgres.username }}
+        sslmode: {{ .Values.AWX.postgres.sslmode }}
+        target_session_attrs: {{ .Values.AWX.postgres.target_session_attrs | default "any" }}
+        type: {{ .Values.AWX.postgres.type }}
+      engineVersion: v2
+      mergePolicy: Replace
+{{- end }}

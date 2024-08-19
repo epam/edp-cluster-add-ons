@@ -1,0 +1,63 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: awx
+spec:
+  postgresVersion: 14
+  port: 5432
+  instances:
+    - name: pgha1
+      replicas: 1
+      dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 3Gi
+
+  backups:
+    pgbackrest:
+      global:
+        log-level-console: info
+        log-level-file: info
+        repo1-retention-diff: '1'
+        repo1-retention-full: '1'
+        repo1-retention-full-type: time
+      manual:
+        options:
+          - '--type=full'
+        repoName: repo1
+      repos:
+        - name: repo1
+          schedules:
+            full: 5 2 * * *
+          volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 3Gi
+
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        parameters:
+          jit: false
+          maintenance_work_mem: 256MB
+          max_connections: '100'
+          random_page_cost: 1.1
+          shared_buffers: 256MB
+          shared_preload_libraries: 'pgaudit,pg_stat_statements,pgnodemx'
+          temp_buffers: 8MB
+          work_mem: 32MB
+        pg_hba:
+          - local all "postgres" peer
+          - hostssl replication "_crunchyrepl" all cert
+          - hostssl "postgres" "_crunchyrepl" all cert
+          - host all "_crunchyrepl" all reject
+          - hostssl all all all md5
+        use_pg_rewind: true
+    leaderLeaseDurationSeconds: 30
+    port: 8008
+    syncPeriodSeconds: 10

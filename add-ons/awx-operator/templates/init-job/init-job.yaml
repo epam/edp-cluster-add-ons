@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-and-patch-secrets-job
+spec:
+  template:
+    spec:
+      serviceAccountName: job-access-secrets-sa
+      initContainers:
+      - name: wait-for-check-secrets-job
+        image: bitnami/kubectl:latest
+        command:
+        - bash
+        - -c
+        - |
+          set -euo pipefail
+          secret1_found=false
+          secret2_found=false
+
+          while [ "$secret1_found" = false -o "$secret2_found" = false ]; do
+            if [ "$secret1_found" = false ] && kubectl get secret awx-postgres-configuration --namespace awx-operator; then
+              echo "Secret reportportal-postgresql-creds exists"
+              secret1_found=true
+            fi
+
+            if [ "$secret2_found" = false ] && kubectl get secret awx-pguser-awx --namespace awx-operator; then
+              echo "Secret reportportal-pguser-postgres exists"
+              secret2_found=true
+            fi
+
+            if [ "$secret1_found" = false -o "$secret2_found" = false ]; then
+              echo "Retry in 30 seconds..."
+              sleep 30
+            fi
+          done
+      containers:
+      - name: copy-and-patch-secrets
+        image: bitnami/kubectl:latest
+        command:
+        - bash
+        - -c
+        - |
+          set -euo pipefail
+
+          # Get the secret
+          postgresql_password=$(kubectl get secret awx-postgres-configuration --namespace awx-operator -o=jsonpath='{.data.password}' | base64 --decode)
+
+          # Patch the secret
+          kubectl patch secret awx-pguser-awx --namespace awx-operator -p "{\"data\":{\"password\":\"$(echo -n "$postgresql_password" | base64)\",\"verifier\":\"\"}}"
+
+          echo "Secret copied and patched successfully."
+      restartPolicy: Never
+  backoffLimit: 3
