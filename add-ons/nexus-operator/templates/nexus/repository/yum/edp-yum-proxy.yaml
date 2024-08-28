@@ -1,0 +1,32 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-yum-proxy
+spec:
+  nexusRef:
+    name: nexus
+  yum:
+    proxy:
+      name: edp-yum-proxy
+      proxy:
+        remoteUrl: http://fedora.ip-connect.info/linux/development/rawhide/Everything/x86_64/os/
+        contentMaxAge: 1440
+        metadataMaxAge: 1440
+      online: true
+      routingRule: "routing-rule"
+      cleanup:
+        policyNames:
+          - "cleanup-policy"
+      httpClient:
+        autoBlock: true
+        blocked: false
+        connection:
+          timeout: 1440
+          retries: 10
+          userAgentSuffix: "user-agent-suffix"
+      negativeCache:
+        enabled: true
+        timeToLive: 1440
+      storage:
+        blobStoreName: "edp-yum"
+        strictContentTypeValidation: true

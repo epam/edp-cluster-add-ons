@@ -1,0 +1,10 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: edp-yum
+spec:
+  name: edp-yum
+  file:
+    path: edp-yum
+  nexusRef:
+    name: nexus
