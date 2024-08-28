@@ -17,6 +17,7 @@ A Helm chart for the AWX Operator
 | AWX.postgres.sslmode | string | `"prefer"` |  |
 | AWX.postgres.type | string | `"unmanaged"` |  |
 | AWX.postgres.username | string | `"awx"` |  |
+| AWX.spec.admin_password_secret | string | `"awx-admin-password"` |  |
 | AWX.spec.admin_user | string | `"admin"` |  |
 | AWX.spec.image | string | `"quay.io/ansible/awx"` |  |
 | AWX.spec.image_version | string | `"24.6.1"` |  |
@@ -29,5 +30,5 @@ A Helm chart for the AWX Operator
 | eso.secretName | string | `"/edp/eks/addons/awx-operator"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
-| oidc.enabled | bool | `true` |  |
+| oidc.enabled | bool | `false` |  |
 
