@@ -15,7 +15,7 @@ spec:
       storage:
         blobStoreName: "edp-maven"
         strictContentTypeValidation: true
-        writePolicy: ALLOW
+        writePolicy: ALLOW_ONCE
       online: true
       component:
         proprietaryComponents: true
