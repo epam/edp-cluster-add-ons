@@ -6,6 +6,7 @@ AWX:
     image_version: 24.6.1
     image: quay.io/ansible/awx
     admin_user: admin
+    admin_password_secret: awx-admin-password
     ingress_type: ingress
     ingress_path: /
     ingress_path_type: Prefix
