@@ -1,0 +1,20 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusRepository
+metadata:
+  name: edp-yum-snapshots
+spec:
+  nexusRef:
+    name: nexus
+  yum:
+    hosted:
+      name: edp-yum-snapshots
+      storage:
+        blobStoreName: "edp-yum"
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      online: true
+      component:
+        proprietaryComponents: true
+      yum:
+        repodataDepth: 3
+        deployPolicy: STRICT
