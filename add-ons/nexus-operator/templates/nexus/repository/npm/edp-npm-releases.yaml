@@ -11,7 +11,7 @@ spec:
       storage:
         blobStoreName: "edp-npm"
         strictContentTypeValidation: true
-        writePolicy: ALLOW
+        writePolicy: ALLOW_ONCE
       online: true
       component:
         proprietaryComponents: true
