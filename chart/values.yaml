@@ -53,10 +53,6 @@ edp:
   createNamespace: false
   enable: false
 
-eks:
-  createNamespace: false
-  enable: false
-
 extensions-oidc:
   createNamespace: false
   enable: false
@@ -101,6 +97,10 @@ keycloak:
   enable: false
 
 keycloak-postgresql:
+  createNamespace: false
+  enable: false
+
+keycloak-operator:
   createNamespace: false
   enable: false
 
