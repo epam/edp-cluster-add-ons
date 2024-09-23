@@ -1,4 +1,4 @@
-{{ if .Values.oidc.enabled }}
+{{- if .Values.extensionsOIDC.kubernetes.enabled }}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
@@ -13,6 +13,7 @@ spec:
   directAccess: true
   defaultClientScopes:
     - groups
-  targetRealm: eks
-  webUrl: "*"
+  webUrl: "http://localhost:8000/"
+  redirectUris:
+    - "*"
 {{ end }}

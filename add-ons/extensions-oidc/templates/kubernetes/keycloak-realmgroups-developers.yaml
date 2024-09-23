@@ -1,10 +1,10 @@
-{{ if .Values.oidc.enabled }}
+{{- if .Values.extensionsOIDC.kubernetes.enabled }}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: edp-oidc-builders
+  name: edp-oidc-developers
 spec:
-  name: edp-oidc-builders
+  name: edp-oidc-developers
   realmRef:
     kind: ClusterKeycloakRealm
     name: main

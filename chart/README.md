@@ -36,8 +36,6 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | destinationServer | string | `"in-cluster"` |  |
 | edp.createNamespace | bool | `false` |  |
 | edp.enable | bool | `false` |  |
-| eks.createNamespace | bool | `false` |  |
-| eks.enable | bool | `false` |  |
 | extensions-oidc.createNamespace | bool | `false` |  |
 | extensions-oidc.enable | bool | `false` |  |
 | external-secrets.createNamespace | bool | `false` |  |
@@ -56,6 +54,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | ingress-nginx.enable | bool | `false` |  |
 | jaeger-operator.createNamespace | bool | `false` |  |
 | jaeger-operator.enable | bool | `false` |  |
+| keycloak-operator.createNamespace | bool | `false` |  |
+| keycloak-operator.enable | bool | `false` |  |
 | keycloak-postgresql.createNamespace | bool | `false` |  |
 | keycloak-postgresql.enable | bool | `false` |  |
 | keycloak.createNamespace | bool | `false` |  |

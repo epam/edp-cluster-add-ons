@@ -1,5 +1,5 @@
 extensionsOIDC:
-  keycloakUrl: "https://keycloak.example.com"
+  keycloakUrl: "https://example.com"
   # Recommended to utilize this realm primarily for enabling unique integrations and
   # inheriting these capabilities into other realms.
   broker:
@@ -17,10 +17,9 @@ extensionsOIDC:
   # Realm creating for connecting and managing shared services clients, such as Nexus, Sonar, DefectDojo, etc.
   sharedService: "shared"
 
-# ClusterReconciliationEnabled is enabled (set to true), the operator will reconcile all.
-# keycloak-operator objects throughout the cluster.
-keycloak-operator:
-  clusterReconciliationEnabled: true
+  # -- This block enable the creation of Keycloak operator resources for the EKS OIDC configuration, such as client, client scope, and realm groups.
+  kubernetes:
+    enabled: false
 
 # Configure components of the External Secrets Operator (ESO).
 eso:
@@ -29,9 +28,11 @@ eso:
   # -- Defines provider type. One of `aws` or `generic`.
   type: "aws"
   # -- Defines Secret Store name.
-  secretStoreName: "aws-parameterstore-oidc"
+  secretStoreName: "aws-parameterstore"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
   secretName: "/edp/eks/addons/extensionsOIDC"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
   # Defines Secret Store configuration. Used when eso.type is set to "generic".
   generic:
     secretStore:
