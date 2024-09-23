@@ -1,0 +1,44 @@
+oauth2-proxy:
+  config:
+    configFile: |-
+      allowed_roles = ["administrator", "developer"]
+      code_challenge_method="S256"
+      cookie_domains = ["example.com"]
+      cookie_secure = "false"
+      email_domains = [ "*" ]
+      insecure_oidc_allow_unverified_email = "true"
+      oidc_issuer_url = "https://keycloak.example.com/auth/realms/<cluster_name>"
+      pass_authorization_header = "true"
+      pass_basic_auth = "false"
+      pass_user_headers = "true"
+      provider = "keycloak-oidc"
+      redirect_url = "https://oauth-oauth2-proxy.example.com/oauth2/callback"
+      reverse_proxy = "true"
+      skip_jwt_bearer_tokens = "true"
+      skip_provider_button = "true"
+      whitelist_domains = ".example.com"
+
+    existingSecret: oauth2-proxy
+
+  ingress:
+    enabled: true
+    hosts:
+      - oauth-oauth2-proxy.example.com
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore-proxy"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/edp/eks/addons/oauth2-proxy"
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
