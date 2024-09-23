@@ -1,0 +1,34 @@
+{{- if .Values.eso.enabled }}
+{{- $secretName := .Values.eso.secretName }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: oauth2-proxy
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: {{ .Values.eso.secretStoreName }}
+  data:
+  - secretKey: client-id
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ $secretName }}
+      metadataPolicy: None
+      property: oauth2-proxy.client-id
+  - secretKey: client-secret
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ $secretName }}
+      metadataPolicy: None
+      property: oauth2-proxy.client-secret
+  - secretKey: cookie-secret
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ $secretName }}
+      metadataPolicy: None
+      property: oauth2-proxy.cookie-secret
+{{- end }}

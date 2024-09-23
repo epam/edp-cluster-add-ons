@@ -66,6 +66,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | nexus-operator.enable | bool | `false` |  |
 | nexus.createNamespace | bool | `false` |  |
 | nexus.enable | bool | `false` |  |
+| oauth2-proxy.createNamespace | bool | `false` |  |
+| oauth2-proxy.enable | bool | `false` |  |
 | opensearch.createNamespace | bool | `false` |  |
 | opensearch.enable | bool | `false` |  |
 | opentelemetry-operator.createNamespace | bool | `false` |  |

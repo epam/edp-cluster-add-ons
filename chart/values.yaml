@@ -116,6 +116,11 @@ nexus-operator:
   createNamespace: false
   enable: false
 
+# OAuth2 Proxy for tekton dashboard
+oauth2-proxy:
+  createNamespace: false
+  enable: false
+
 # opensearch includes opensearch, opensearch-dashboards, fluent-bit
 opensearch:
   createNamespace: false

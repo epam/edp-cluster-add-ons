@@ -1,0 +1,15 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: oauth2-proxy
+spec:
+  advancedProtocolMappers: true
+  clientId: oauth2-proxy
+  directAccess: true
+  defaultClientScopes:
+    - oauth2-proxy
+  secret: '$oauth2-proxy:client-secret'
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: https://{{ (first (index .Values "oauth2-proxy" "ingress" "hosts")) }}
