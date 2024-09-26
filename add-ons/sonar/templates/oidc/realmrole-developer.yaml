@@ -1,13 +1,12 @@
 {{- if .Values.oidc.enabled }}
 apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealmRoleBatch
+kind: KeycloakRealmRole
 metadata:
-  name: "sonar-developers"
+  name: sonar-developers
 spec:
+  description: "default developer role"
+  name: sonar-developers
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  roles:
-    - name: sonar-developers
-      description: "default developer role"
 {{ end }}
