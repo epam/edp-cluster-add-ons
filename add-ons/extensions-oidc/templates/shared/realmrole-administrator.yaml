@@ -1,0 +1,13 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmRole
+metadata:
+  name: administrator
+spec:
+  description: administrator role
+  name: administrator
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  composite: true
+  composites:
+    - name: sonar-administrators

@@ -1,13 +1,12 @@
 {{- if .Values.oidc.enabled }}
 apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealmRoleBatch
+kind: KeycloakRealmRole
 metadata:
-  name: "sonar-administrators"
+  name: sonar-administrators
 spec:
+  description: default administrator role
+  name: sonar-administrators
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  roles:
-    - name: sonar-administrators
-      description: "default developer role"
 {{ end }}
