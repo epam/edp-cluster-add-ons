@@ -1,7 +1,7 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmIdentityProvider
 metadata:
-  name: {{ .Values.extensionsOIDC.sharedService }}-idp
+  name: {{ .Values.sharedService }}-idp
 spec:
   realmRef:
     kind: ClusterKeycloakRealm
@@ -15,25 +15,25 @@ spec:
   config:
     acceptsPromptNoneForwardFromClient: "false"
     allowedClockSkew: "0"
-    authorizationUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/auth"
+    authorizationUrl: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/auth"
     backchannelSupported: "false"
     clientAuthMethod: "client_secret_post"
-    clientId: {{ .Values.extensionsOIDC.sharedService }}
+    clientId: {{ .Values.sharedService }}
     clientSecret: "$keycloak-client-shared-secret:clientSecret"
     defaultScope: ""
     disableUserInfo: "false"
     forwardParameters: ""
     guiOrder: ""
     hideOnLoginPage: "false"
-    issuer: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}"
-    jwksUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/certs"
+    issuer: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}"
+    jwksUrl: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/certs"
     loginHint: "false"
-    logoutUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/logout"
+    logoutUrl: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/logout"
     passMaxAge: "false"
     pkceEnabled: "false"
     prompt: ""
     syncMode: "IMPORT"
-    tokenUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/token"
+    tokenUrl: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/token"
     uiLocales: "false"
-    userInfoUrl: "{{ .Values.extensionsOIDC.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/userinfo"
+    userInfoUrl: "{{ .Values.keycloakUrl }}/auth/realms/{{ include "broker.name" . }}/protocol/openid-connect/userinfo"
     validateSignature: "false"

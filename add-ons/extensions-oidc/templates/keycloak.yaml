@@ -4,4 +4,4 @@ metadata:
   name: keycloak
 spec:
   secret: keycloak
-  url: {{ .Values.extensionsOIDC.keycloakUrl }}
+  url: {{ .Values.keycloakUrl }}

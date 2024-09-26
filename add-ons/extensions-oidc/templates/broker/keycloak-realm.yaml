@@ -1,11 +1,11 @@
-{{- if .Values.extensionsOIDC.broker.create -}}
+{{- if .Values.broker.create -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
-  name: {{ .Values.extensionsOIDC.broker.name }}
+  name: {{ .Values.broker.name }}
 spec:
   keycloakRef:
     kind: ClusterKeycloak
     name: keycloak
-  realmName: {{ .Values.extensionsOIDC.broker.name }}
+  realmName: {{ .Values.broker.name }}
 {{- end -}}
