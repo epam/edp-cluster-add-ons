@@ -1,7 +1,7 @@
 {{- define "broker.name" -}}
-{{- if .Values.extensionsOIDC.broker.create -}}
-{{- .Values.extensionsOIDC.broker.name -}}
+{{- if .Values.broker.create -}}
+{{- .Values.broker.name -}}
 {{- else -}}
-{{- .Values.extensionsOIDC.existingBroker -}}
+{{- .Values.existingBroker -}}
 {{- end -}}
 {{- end -}}
