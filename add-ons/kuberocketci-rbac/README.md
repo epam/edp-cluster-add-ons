@@ -1,8 +1,8 @@
-# extensions-oidc
+# kuberocketci-rbac
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
-A Helm chart for extensions-oidc
+A Helm chart for kuberocketci-rbac
 
 ```
 +-------------------------+   +-----------------+
@@ -32,7 +32,7 @@ sharedService - contains clients, application integrations, and identity provide
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/edp/eks/addons/extensionsOIDC"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
+| eso.secretName | string | `"/edp/eks/addons/kuberocketci-rbac"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | keycloakUrl | string | `"https://example.com"` |  |

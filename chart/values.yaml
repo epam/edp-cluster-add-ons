@@ -53,7 +53,7 @@ edp:
   createNamespace: false
   enable: false
 
-extensions-oidc:
+kuberocketci-rbac:
   createNamespace: false
   enable: false
 
