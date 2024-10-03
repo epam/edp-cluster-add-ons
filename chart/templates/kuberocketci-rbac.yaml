@@ -1,8 +1,8 @@
-{{- if and (index .Values "extensions-oidc") (index .Values "extensions-oidc" "enable") -}}
+{{- if and (index .Values "kuberocketci-rbac") (index .Values "kuberocketci-rbac" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: extensions-oidc
+  name: kuberocketci-rbac
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,12 +10,12 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: add-ons/extensions-oidc
+    path: add-ons/kuberocketci-rbac
     targetRevision: {{ .Values.targetRevision }}
     helm:
       values: |
-        extensions-oidc:
-        {{- toYaml (index .Values "extensions-oidc") | nindent 10 }}
+        kuberocketci-rbac:
+        {{- toYaml (index .Values "kuberocketci-rbac") | nindent 10 }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security
@@ -23,7 +23,7 @@ spec:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace={{ (index .Values "extensions-oidc" "createNamespace") }}
+      - CreateNamespace={{ (index .Values "kuberocketci-rbac" "createNamespace") }}
     retry:
       limit: 1
       backoff:

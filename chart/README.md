@@ -36,8 +36,6 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | destinationServer | string | `"in-cluster"` |  |
 | edp.createNamespace | bool | `false` |  |
 | edp.enable | bool | `false` |  |
-| extensions-oidc.createNamespace | bool | `false` |  |
-| extensions-oidc.enable | bool | `false` |  |
 | external-secrets.createNamespace | bool | `false` |  |
 | external-secrets.enable | bool | `false` |  |
 | fluent-bit.createNamespace | bool | `false` |  |
@@ -60,6 +58,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | keycloak-postgresql.enable | bool | `false` |  |
 | keycloak.createNamespace | bool | `false` |  |
 | keycloak.enable | bool | `false` |  |
+| kuberocketci-rbac.createNamespace | bool | `false` |  |
+| kuberocketci-rbac.enable | bool | `false` |  |
 | minio-operator.createNamespace | bool | `false` |  |
 | minio-operator.enable | bool | `false` |  |
 | nexus-operator.createNamespace | bool | `false` |  |

@@ -149,8 +149,7 @@ make update-readme
 | defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
 | dependency-track       | 0.9.2     | v4.11.3      | False             | False    |
 | edp                    | 3.9.0     | 3.9.0        | False             | False    |
-| eks                    | 1.0.0     | v1.0.0       | False             | False    |
-| extensions-oidc        | 1.21.0    | 1.21.0       | False             | False    |
+| kuberocketci-rbac      | 0.1.0     | 0.1.0        | False             | False    |
 | external-secrets       | 0.9.9     | 1.0          | False             | False    |
 | fluent-bit             | 0.46.11   | 3.0.7        | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | False             | False    |
@@ -161,9 +160,11 @@ make update-readme
 | jaeger-operator        | 2.53.0    | 1.52.0       | False             | False    |
 | keycloak               | 2.3.0     | 24.0.4       | False             | False    |
 | keycloak-postgresql    | 0.1.1     | 1.0          | False             | False    |
+| keycloak-operator      | 1.22.0    | 1.22.0       | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
 | nexus                  | 61.0.3    | 3.69.0       | False             | False    |
 | nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |
+| oauth2-proxy           | 7.6.0     | v7.6.0       | False             | False    |
 | opensearch             | 2.21.1    | 2.15.0       | False             | False    |
 | opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
 | postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
