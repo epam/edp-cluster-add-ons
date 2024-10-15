@@ -3,12 +3,12 @@ capsule:
     release: capsule
   # Make sure cert-manager is installed to generate certificates for webhooks automatically.
   certManager:
-    generateCertificates: true
+    generateCertificates: false
   tls:
-    # Disable automatic TLS certificate creation by the chart itself.
-    create: false
-    # Delegates TLS certificate management to cert-manager. Ensure cert-manager is properly set up.
-    enableController: false
+    # Disable/Enable automatic TLS certificate creation by the chart itself.
+    create: true
+    # Set to false to delegate TLS certificate management to cert-manager. Ensure cert-manager is appropriately set up.
+    enableController: true
   manager:
     options:
       # enable capsule for EDP tenant and cd-pipeline-operator
