@@ -8,7 +8,7 @@ spec:
   projectKeyPattern: ".+"
   default: true
   groupsPermissions:
-    non-interactive-users:
+    view-group:
     - user
     sonar-developers:
     - user
@@ -18,5 +18,9 @@ spec:
     sonar-administrators:
     - admin
     - user
+    - securityhotspotadmin
+    - issueadmin
+    - codeviewer
+    - scan
   sonarRef:
     name: sonar
