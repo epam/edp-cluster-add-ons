@@ -1,6 +1,6 @@
 # nexus
 
-![Version: 61.0.3](https://img.shields.io/badge/Version-61.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.69.0](https://img.shields.io/badge/AppVersion-3.69.0-informational?style=flat-square)
+![Version: 61.0.3](https://img.shields.io/badge/Version-61.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.70.3](https://img.shields.io/badge/AppVersion-3.70.3-informational?style=flat-square)
 
 A Helm chart for Nexus
 
@@ -30,7 +30,7 @@ A Helm chart for Nexus
 | nexus-repository-manager.deployment.initContainers[0].volumeMounts[0].mountPath | string | `"/nexus-data"` |  |
 | nexus-repository-manager.deployment.initContainers[0].volumeMounts[0].name | string | `"nexus-data"` |  |
 | nexus-repository-manager.fullnameOverride | string | `"nexus"` |  |
-| nexus-repository-manager.image.tag | string | `"3.69.0"` |  |
+| nexus-repository-manager.image.tag | string | `"3.70.3"` |  |
 | nexus-repository-manager.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"900m"` |  |
 | nexus-repository-manager.ingress.enabled | bool | `true` |  |
 | nexus-repository-manager.ingress.hostRepo | string | `"nexus-ci.example.com"` |  |
