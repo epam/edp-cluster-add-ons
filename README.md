@@ -167,7 +167,7 @@ make update-readme
 | oauth2-proxy           | 7.6.0     | v7.6.0       | False             | False    |
 | opensearch             | 2.21.1    | 2.15.0       | False             | False    |
 | opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
-| postgres-operator      | 0.1.0     | 5.4.3        | False             | False    |
+| postgres-operator      | 0.1.0     | 5.7.0        | False             | False    |
 | report-portal          | 5.10.0    | 23.2         | False             | False    |
 | prometheus-operator    | 61.3.2    | v0.75.1      | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | False             | False    |
