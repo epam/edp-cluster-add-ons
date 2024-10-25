@@ -1,0 +1,18 @@
+{{- if .Values.eso.enabled }}
+{{- $secretName := .Values.eso.secretName }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: krakend
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: {{ .Values.eso.secretStoreName }}
+  target:
+    name: krakend
+    creationPolicy: Owner
+  dataFrom:
+    - extract:
+        key: {{ $secretName }}
+{{- end }}

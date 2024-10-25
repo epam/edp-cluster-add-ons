@@ -104,6 +104,10 @@ keycloak-operator:
   createNamespace: false
   enable: false
 
+krakend:
+  createNamespace: false
+  enable: false
+
 minio-operator:
   createNamespace: false
   enable: false
