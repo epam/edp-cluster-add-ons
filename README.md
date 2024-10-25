@@ -161,6 +161,7 @@ make update-readme
 | keycloak               | 2.3.0     | 24.0.4       | False             | False    |
 | keycloak-postgresql    | 0.1.1     | 1.0          | False             | False    |
 | keycloak-operator      | 1.22.0    | 1.22.0       | False             | False    |
+| krakend                | 0.1.35    | 2.7.2        | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
 | nexus                  | 61.0.3    | 3.70.3       | False             | False    |
 | nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |

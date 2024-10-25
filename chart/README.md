@@ -58,6 +58,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | keycloak-postgresql.enable | bool | `false` |  |
 | keycloak.createNamespace | bool | `false` |  |
 | keycloak.enable | bool | `false` |  |
+| krakend.createNamespace | bool | `false` |  |
+| krakend.enable | bool | `false` |  |
 | kuberocketci-rbac.createNamespace | bool | `false` |  |
 | kuberocketci-rbac.enable | bool | `false` |  |
 | minio-operator.createNamespace | bool | `false` |  |
