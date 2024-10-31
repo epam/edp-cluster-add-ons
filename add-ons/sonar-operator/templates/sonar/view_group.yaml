@@ -1,0 +1,9 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: SonarGroup
+metadata:
+  name: view-group
+spec:
+  name: "view-group"
+  description: "Browse access"
+  sonarRef:
+    name: sonar
