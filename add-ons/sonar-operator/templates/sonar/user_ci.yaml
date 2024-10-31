@@ -7,7 +7,7 @@ spec:
   login: ci-user
   name: ci-user
   groups:
-    - non-interactive-users
+    - view-group
   permissions:
     - scan
   sonarRef:
