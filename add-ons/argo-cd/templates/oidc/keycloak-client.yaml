@@ -12,5 +12,5 @@ spec:
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  webUrl: https://argocd-dev.example.com
+  webUrl: {{ (index .Values "argo-cd" "configs" "cm" "url") }}
 {{ end }}
