@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: monitoring
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - ServerSideApply=true
       - CreateNamespace={{ (index .Values "prometheus-operator" "createNamespace") }}

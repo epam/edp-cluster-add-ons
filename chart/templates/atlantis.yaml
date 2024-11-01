@@ -1,8 +1,8 @@
-{{- if and (index .Values "ingress-nginx") (index .Values "ingress-nginx" "enable") -}}
+{{- if and (.Values.atlantis) (.Values.atlantis.enable) -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx
+  name: {{ .Values.destinationServer}}-atlantis
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,18 +10,16 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: add-ons/ingress-nginx
+    path: add-ons/atlantis
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        ingress-nginx:
-        {{- toYaml (index .Values "ingress-nginx") | nindent 10 }}
+      releaseName: atlantis
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: ingress-nginx
+    namespace: atlantis
   syncPolicy:
     syncOptions:
-      - CreateNamespace={{ (index .Values "ingress-nginx" "createNamespace") }}
+      - CreateNamespace={{ .Values.atlantis.createNamespace }}
     retry:
       limit: 1
       backoff:

@@ -181,3 +181,7 @@ vault-kms:
 vault-okd:
   createNamespace: false
   enable: false
+
+atlantis:
+  createNamespace: false
+  enable: false
