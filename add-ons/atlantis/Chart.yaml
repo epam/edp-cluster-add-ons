@@ -1,0 +1,25 @@
+apiVersion: v1
+# renovate: datasource=docker depName=ghcr.io/runatlantis/atlantis
+appVersion: v0.30.0
+description: A Helm chart for Atlantis https://www.runatlantis.io
+type: application
+name: atlantis
+version: 5.8.0
+keywords:
+  - terraform
+home: https://www.runatlantis.io
+icon: https://www.runatlantis.io/hero.png
+sources:
+  - https://github.com/runatlantis/atlantis
+maintainers:
+  - name: lkysow
+  - name: jamengual
+  - name: chenrui333
+  - name: nitrocode
+  - name: genpage
+  - name: gmartinez-sisti
+
+dependencies:
+- name: atlantis
+  version: 5.8.0
+  repository: https://runatlantis.github.io/helm-charts

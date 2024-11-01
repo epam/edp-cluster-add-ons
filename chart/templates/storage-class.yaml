@@ -12,8 +12,6 @@ spec:
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
   syncPolicy:
-    automated:
-      prune: true
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}

@@ -16,8 +16,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: tekton-pipelines
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ .Values.tekton.createNamespace }}
     retry:

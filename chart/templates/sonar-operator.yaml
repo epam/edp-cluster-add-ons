@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: sonar
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "sonar-operator" "createNamespace") }}
     retry:

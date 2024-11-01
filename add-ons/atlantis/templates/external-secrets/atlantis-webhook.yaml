@@ -1,0 +1,27 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: atlantis-webhook
+spec:
+  data:
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: /edp/eks/addons/atlantis
+        metadataPolicy: None
+        property: bitbucket_token
+      secretKey: bitbucket_token
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: /edp/eks/addons/atlantis
+        metadataPolicy: None
+        property: bitbucket_secret
+      secretKey: bitbucket_secret
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: aws-parameterstore
+  target:
+    creationPolicy: Owner
+    deletionPolicy: Retain

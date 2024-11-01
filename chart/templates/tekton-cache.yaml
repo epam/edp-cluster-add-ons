@@ -21,8 +21,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: tekton-cache
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "tekton-cache" "createNamespace") }}
     retry:

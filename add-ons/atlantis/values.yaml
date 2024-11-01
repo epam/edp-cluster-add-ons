@@ -1,0 +1,32 @@
+atlantis:
+  vcsSecretName: atlantis-webhook
+
+  bitbucket:
+    user: auto_example
+
+  ingress:
+    path: /
+    host: atlantis.example.com
+
+  image:
+    repository: epamedp/atlantis
+    # -- If not set appVersion field from Chart.yaml is used
+    tag: "0.1.1"
+  orgAllowlist: bitbucket.org/organization/*
+
+  defaultTFVersion: "1.5.7"
+  repoConfig: |
+    ---
+    repos:
+    - id: /.*/
+      allowed_overrides: ["workflow"]
+      allow_custom_workflows: true
+
+  serviceAccount:
+    annotations: {}
+    # annotations:
+    #   annotation1: value
+    #   annotation2: value
+    # IRSA example:
+    # annotations:
+    #   eks.amazonaws.com/role-arn: role-arn

@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: capsule-system
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ .Values.capsule.createNamespace }}
     retry:

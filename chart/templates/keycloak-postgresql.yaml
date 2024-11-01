@@ -22,8 +22,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "keycloak-postgresql" "createNamespace") }}
     retry:

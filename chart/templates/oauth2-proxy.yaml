@@ -21,8 +21,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: oauth2-proxy
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "oauth2-proxy" "createNamespace") }}
     retry:

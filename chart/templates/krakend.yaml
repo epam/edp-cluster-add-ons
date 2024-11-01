@@ -21,8 +21,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: krakend
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ .Values.krakend.createNamespace }}
     retry:
