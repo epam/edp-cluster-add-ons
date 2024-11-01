@@ -21,8 +21,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: nexus
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "nexus-operator" "createNamespace") }}
     retry:

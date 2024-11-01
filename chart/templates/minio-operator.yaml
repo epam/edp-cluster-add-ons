@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: minio-operator
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "minio-operator" "createNamespace") }}
     retry:

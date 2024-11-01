@@ -22,8 +22,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: cert-manager
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ .Values.certmanager.createNamespace }}
     retry:

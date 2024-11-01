@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "kuberocketci-rbac" "createNamespace") }}
     retry:

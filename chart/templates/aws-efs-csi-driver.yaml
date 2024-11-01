@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: kube-system
   syncPolicy:
-    automated:
-      prune: true
     retry:
       limit: 1
       backoff:

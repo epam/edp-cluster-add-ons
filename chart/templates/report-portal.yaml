@@ -21,8 +21,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: report-portal
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ (index .Values "report-portal" "createNamespace") }}
     retry:

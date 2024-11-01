@@ -20,8 +20,6 @@ spec:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: harbor
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace={{ .Values.harbor.createNamespace }}
     retry:

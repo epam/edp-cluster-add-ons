@@ -23,6 +23,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 |-----|------|---------|-------------|
 | argo-cd | object | `{"createNamespace":false,"enable":false}` | ArgoCD Deployment |
 | argo-cd.createNamespace | bool | `false` | whether to create the namespace or not |
+| atlantis.createNamespace | bool | `false` |  |
+| atlantis.enable | bool | `false` |  |
 | aws-efs-csi-driver | object | `{"enable":false}` | AWS EFS CSI Driver |
 | capsule | object | `{"createNamespace":false,"enable":false}` | Capsule |
 | capsule-tenant | object | `{"enable":false}` | Capsule Tenant |
