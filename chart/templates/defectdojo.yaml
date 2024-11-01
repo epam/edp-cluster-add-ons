@@ -13,9 +13,7 @@ spec:
     path: add-ons/defectdojo
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        defectdojo:
-        {{- toYaml .Values.defectdojo | nindent 10 }}
+      releaseName: defectdojo
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: defectdojo

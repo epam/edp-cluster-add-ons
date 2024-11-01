@@ -13,9 +13,7 @@ spec:
     path: add-ons/dependency-track
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        dependency-track:
-        {{- toYaml (index .Values "dependency-track") | nindent 10 }}
+      releaseName: dependency-track
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: dependency-track

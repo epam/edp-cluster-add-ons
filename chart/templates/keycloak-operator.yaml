@@ -13,9 +13,7 @@ spec:
     path: add-ons/keycloak-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        keycloak-operator:
-        {{- toYaml (index .Values "keycloak-operator") | nindent 10 }}
+      releaseName: keycloak-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: keycloak-operator

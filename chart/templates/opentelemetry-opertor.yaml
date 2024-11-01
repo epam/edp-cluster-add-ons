@@ -13,9 +13,7 @@ spec:
     path: add-ons/opentelemetry-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        opentelemetry-operator:
-        {{- toYaml (index .Values "opentelemetry-operator") | nindent 10 }}
+      releaseName: opentelemetry-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: opentelemetry-operator

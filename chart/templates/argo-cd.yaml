@@ -13,9 +13,7 @@ spec:
     path: add-ons/argo-cd
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        argo-cd:
-        {{- toYaml (index .Values "argo-cd") | nindent 10 }}
+      releaseName: argo-cd
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: edp

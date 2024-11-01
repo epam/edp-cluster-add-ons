@@ -13,9 +13,7 @@ spec:
     path: add-ons/sonar-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        sonar-operator:
-        {{- toYaml (index .Values "sonar-operator") | nindent 10 }}
+      releaseName: sonar-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: sonar

@@ -13,9 +13,7 @@ spec:
     path: add-ons/kuberocketci-rbac
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        kuberocketci-rbac:
-        {{- toYaml (index .Values "kuberocketci-rbac") | nindent 10 }}
+      releaseName: kuberocketci-rbac
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security

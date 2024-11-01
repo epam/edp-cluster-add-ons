@@ -13,9 +13,7 @@ spec:
     path: add-ons/prometheus-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        kube-prometheus-stack:
-        {{- toYaml (index .Values "prometheus-operator") | nindent 10 }}
+      releaseName: prometheus-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: monitoring

@@ -12,13 +12,11 @@ spec:
     repoURL: {{ .Values.repoUrl }}
     path: add-ons/minio-operator
     targetRevision: {{ .Values.targetRevision }}
-    helm:
-      values: |
-        minio-operator:
-        {{- toYaml (index .Values "minio-operator") | nindent 10 }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: minio-operator
+    helm:
+      releaseName: minio-operator
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "minio-operator" "createNamespace") }}

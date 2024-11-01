@@ -13,9 +13,7 @@ spec:
     path: add-ons/fluent-bit
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        fluent-bit:
-        {{- toYaml (index .Values "fluent-bit") | nindent 10 }}
+      releaseName: fluent-bit
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: logging

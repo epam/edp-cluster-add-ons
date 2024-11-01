@@ -13,9 +13,7 @@ spec:
     path: add-ons/opensearch
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        opensearch:
-        {{- toYaml .Values.opensearch | nindent 10 }}
+      releaseName: opensearch
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: logging

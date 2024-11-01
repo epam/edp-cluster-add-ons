@@ -15,9 +15,7 @@ spec:
     path: add-ons/keycloak-postgresql
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        postgresql:
-        {{- toYaml (index .Values "keycloak-postgresql") | nindent 10 }}
+      releaseName: keycloak-postgresql
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security

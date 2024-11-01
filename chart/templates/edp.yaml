@@ -15,9 +15,7 @@ spec:
     path: add-ons/edp
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        edp-install:
-        {{- toYaml .Values.edp | nindent 10 }}
+      releaseName: edp
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: edp
