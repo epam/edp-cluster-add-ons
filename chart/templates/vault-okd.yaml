@@ -13,9 +13,7 @@ spec:
     path: add-ons/vault-okd
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        vault:
-        {{- toYaml (index .Values "vault-okd") | nindent 10 }}
+      releaseName: vault-okd
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: vault

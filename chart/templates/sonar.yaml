@@ -13,9 +13,7 @@ spec:
     path: add-ons/sonar
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        sonarqube:
-        {{- toYaml .Values.sonar | nindent 10 }}
+      releaseName: sonar
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: sonar

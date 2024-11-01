@@ -13,9 +13,7 @@ spec:
     path: add-ons/ingress-nginx
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        ingress-nginx:
-        {{- toYaml (index .Values "ingress-nginx") | nindent 10 }}
+      releaseName: ingress-nginx
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: ingress-nginx

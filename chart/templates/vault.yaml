@@ -13,9 +13,7 @@ spec:
     path: add-ons/vault
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        vault:
-        {{- toYaml .Values.vault | nindent 10 }}
+      releaseName: vault
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: vault

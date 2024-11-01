@@ -13,9 +13,7 @@ spec:
     path: add-ons/aws-efs-csi-driver
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        aws-efs-csi-driver:
-        {{- toYaml (index .Values "aws-efs-csi-driver") | nindent 10 }}
+      releaseName: aws-efs-csi-driver
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: kube-system

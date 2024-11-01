@@ -1,4 +1,4 @@
-{{- if and (.Values.certmanager) (.Values.certmanager.enable) -}}
+{{- if and (index .Values "cert-manager") (index .Values "cert-manager" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,9 +15,7 @@ spec:
     path: add-ons/cert-manager
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        cert-manager:
-        {{- toYaml (index .Values "cert-manager") | nindent 10 }}
+      releaseName: cert-manager
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: cert-manager

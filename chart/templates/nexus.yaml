@@ -13,9 +13,7 @@ spec:
     path: add-ons/nexus
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        nexus-repository-manager:
-        {{- toYaml .Values.nexus | nindent 10 }}
+      releaseName: nexus
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: nexus

@@ -13,9 +13,7 @@ spec:
     path: add-ons/redis-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        redis-operator:
-        {{- toYaml (index .Values "redis-operator") | nindent 10 }}
+      releaseName: redis-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: redis-operator

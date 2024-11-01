@@ -13,9 +13,7 @@ spec:
     path: add-ons/vault-kms
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        vault:
-        {{- toYaml (index .Values "vault-kms") | nindent 10 }}
+      releaseName: vault-kms
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: vault

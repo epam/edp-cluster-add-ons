@@ -13,9 +13,7 @@ spec:
     path: add-ons/jaeger-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        jaeger-operator:
-        {{- toYaml (index .Values "jaeger-operator") | nindent 10 }}
+      releaseName: jaeger-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: jaeger-operator

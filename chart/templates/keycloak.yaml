@@ -13,9 +13,7 @@ spec:
     path: add-ons/keycloak
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        keycloakx:
-        {{- toYaml .Values.keycloak | nindent 10 }}
+      releaseName: keycloak
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: security

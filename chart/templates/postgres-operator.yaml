@@ -13,9 +13,7 @@ spec:
     path: add-ons/postgres-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        postgres-operator:
-        {{- toYaml (index .Values "postgres-operator") | nindent 10 }}
+      releaseName: postgres-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: postgres-operator

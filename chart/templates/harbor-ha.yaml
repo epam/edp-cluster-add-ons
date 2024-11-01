@@ -13,9 +13,7 @@ spec:
     path: add-ons/harbor-ha
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      values: |
-        harbor:
-        {{- toYaml (index .Values "harbor-ha") | nindent 10 }}
+      releaseName: harbor-ha
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: harbor
