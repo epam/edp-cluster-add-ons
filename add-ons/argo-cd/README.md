@@ -20,6 +20,7 @@ A Helm chart for Argo CD Install
 | argo-cd.configs.cm."application.instanceLabelKey" | string | `"argocd.argoproj.io/instance-edp"` |  |
 | argo-cd.configs.cm."exec.enabled" | bool | `true` |  |
 | argo-cd.configs.cm."oidc.config" | string | `"name: Keycloak\nissuer: https://keycloak.example.com/auth/realms/shared\nclientID: argocd-tenant\nclientSecret: $keycloak-client-argocd-secret:clientSecret\nrequestedScopes:\n  - openid\n  - profile\n  - email\n  - groups\n"` |  |
+| argo-cd.configs.cm."resource.exclusions" | string | `"- apiGroups:\n  - \"tekton.dev\"\n  kinds:\n  - \"PipelineRun\"\n  clusters:\n  - \"*\"\n"` |  |
 | argo-cd.configs.cm.url | string | `"https://argocd-dev.example.com"` |  |
 | argo-cd.configs.params."application.namespaces" | string | `"edp"` |  |
 | argo-cd.configs.params."applicationsetcontroller.namespaces" | string | `"edp"` |  |
