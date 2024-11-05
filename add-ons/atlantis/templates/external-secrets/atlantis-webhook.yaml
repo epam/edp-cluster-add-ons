@@ -1,3 +1,5 @@
+{{ if .Values.eso.enabled }}
+{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -7,21 +9,22 @@ spec:
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: /edp/eks/addons/atlantis
+        key: { $secretName }}
         metadataPolicy: None
         property: bitbucket_token
       secretKey: bitbucket_token
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: /edp/eks/addons/atlantis
+        key: { $secretName }}
         metadataPolicy: None
         property: bitbucket_secret
       secretKey: bitbucket_secret
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: aws-parameterstore
+    name: {{ .Values.eso.secretStoreName }}
   target:
     creationPolicy: Owner
     deletionPolicy: Retain
+{{- end }}
