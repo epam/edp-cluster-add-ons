@@ -4,13 +4,19 @@ edp-install:
   global:
     # -- a cluster DNS wildcard name
     dnsWildCard: example.com
+    # API Gateway URL configuration for Widget Functionality
+    # This configuration specifies the URL of the API Gateway that is used by various widgets within the platform.
+    # The 'api_gateway_url' should be set to the ingress URL of the KrakenD API Gateway
+    # By default, this value is left empty, and widgets are disabled
+    # -- API Gateway URL configuration for Widget Functionality
+    apiGatewayUrl: ""
     # -- platform type that can be "kubernetes" or "openshift"
     platform: kubernetes
     # -- Can be gerrit, github or gitlab. By default: github
     gitProviders:
-      - github
-      - gitlab
-      - gerrit
+      # - github
+      # - gitlab
+      # - gerrit
     # Below is an example of endpoint values for each registry type:
     # type:      | url
     # =============================
@@ -24,34 +30,12 @@ edp-install:
     #   type: "dockerhub"
     #   url: "docker.io"
     #   space: "my_user"
-
-  # -- AWS Region, e.g. "eu-central-1". Mandatory if dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
-  # awsRegion:
-
-  # -- Enable SSO for EDP oauth2-proxy. Default: false
-  sso:
-    enabled: false
-    keycloakOperatorResources:
-      # Set to false if using the add-ons approach (refer to https://github.com/epam/edp-cluster-add-ons)
-      # for EDP installation and if the extension-oidc is already installed.
-      # This prevents the creation of an additional Keycloak resource and secret.
-      # The 'kind' and 'name' must be specified in case of using an existing Keycloak/ClusterKeycloak resource.
-      # Create kind: Keycloak as a part of chart installation
-      createKeycloakCR: false
-      # Can be Keycloak or ClusterKeycloak.
-      kind: ClusterKeycloak
-      # Name of kind: Keycloak/ClusterKeycloak CR.
-      name: keycloak
-    # -- Keycloak URL
-    keycloakUrl: https://keycloak.example.com/auth
-    # -- Administrators of EDP tenant
-    admins:
-      - john@example.com
-      - mike@example.com
-    # -- Developers of EDP tenant
-    developers:
-      - john@example.com
-      - mike@example.com
+    # =============================
+    # dockerRegistry:
+    #   type: "ecr"
+    #   url: "<aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com"
+    #   space: "edp"
+    #   awsRegion: "eu-central-1"
 
   # Configure External Secrets Operator to provision secrets for Platform and/or EDP
   # https://external-secrets.io/latest/provider-aws-secrets-manager/
@@ -62,29 +46,53 @@ edp-install:
       aws:
         role: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
     manageEDPInstallSecrets: true
+    # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
     manageEDPInstallSecretsName: /edp/deploy-secrets
+    manageCodemieSecretsName: /edp/codemie-secrets
+    manageGitProviderSecretsName: /edp/git-provider-secrets
+
+  # -- Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/
+  # @default -- ``
+  quickLinks:
+  #   argocd: ""
+  #   defectdojo: ""
+  #   dependency_track: ""
+  #   docker_registry: ""
+  #   grafana: ""
+  #   kibana: ""
+  #   nexus: ""
+  #   sonar: ""
+  #   codemie: ""
+
+  # -- Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/
+  extraQuickLinks: {}
+    # - prometheus:
+    #     url: https://ingress-prometheus.example.com
+    #     visible: true
+    #     icon: icon_in_base64
+    # - another_tool:
+    #     url: https://ingress-anothertool.example.com
+    #     visible: true
+    #     icon: icon_in_base64
 
   edp-headlamp:
     config:
-      # -- base url path at which headlamp should run
-      baseURL: ""
       # -- Ensure that the specified client is associated with cluster OIDC integration.
       # -- For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/
       oidc:
         # Enable OIDC integration. Default: false
         enabled: true
-        # -- Keycloak URL
-        keycloakUrl: "https://keycloak.example.com"
+        # -- OIDC Issuer URL for authentication.
+        # -- This URL identifies the OpenID Connect provider endpoint. Examples:
+        # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
+        # -- Azure Entra: https://sts.windows.net/<tenant-id>/
+        issuerUrl: ""
         # -- OIDC client ID
         clientID: "shared"
         # -- OIDC client secret name
         clientSecretName: "keycloak-client-headlamp-secret"
         # -- OIDC client secret key
         clientSecretKey: "clientSecret"
-        # -- OIDC issuer realm
-        issuerRealm: ""
-        # -- OIDC scopes to be used
-        scopes: ""
 
   edp-tekton:
     tekton-cache:
@@ -212,3 +220,48 @@ edp-install:
     #         annotations: {}
     #         # -- Ingress TLS configuration
     #         tls: []
+    #   my-bitbucket:
+    #     gitProvider: bitbucket
+    #     host: bitbucket.org
+    #     webhook:
+    #       skipWebhookSSLVerification: false
+    #     eventListener:
+    #       # -- Enable EventListener
+    #       enabled: true
+    #       # -- EventListener resources
+    #       resources:
+    #         requests:
+    #           memory: "64Mi"
+    #           cpu: "50m"
+    #         limits:
+    #           memory: "128Mi"
+    #           cpu: "500m"
+    #       # -- Node labels for EventListener pod assignment
+    #       nodeSelector: {}
+    #       # -- Tolerations for EventListener pod assignment
+    #       tolerations: []
+    #       # -- Affinity for EventListener pod assignment
+    #       affinity: {}
+
+    #       ingress:
+    #         # -- Enable ingress controller resource
+    #         enabled: true
+    #         # -- Ingress annotations
+    #         annotations: {}
+    #         # -- Ingress TLS configuration
+    #         tls: []
+  cd-pipeline-operator:
+    # -- Defines the type of the tenant engine that can be "none", "kiosk" or "capsule";
+    # for Stages with external cluster tenancyEngine will be ignored. Default: none
+    tenancyEngine: "none"
+    # -- Flag indicating whether the operator should manage secrets for stages.
+    # This parameter controls the provisioning of the 'regcred' secret within deployed environments, facilitating access to private container registries.
+    # Set the parameter to "none" under the following conditions:
+    #   - If 'global.dockerRegistry.type=ecr' and IRSA is enabled, or
+    #   - If 'global.dockerRegistry.type=openshift'.
+    # For private registries, choose the most appropriate method to provide credentials to deployed environments. Refer to the guide for managing container registries (https://docs.kuberocketci.io/docs/user-guide/manage-container-registries).
+    # Possible values: own/eso/none.
+    #   - own: Copies the secret once from the parent namespace, without subsequent reconciliation. If updated in the parent namespace, manual updating in all created namespaces is required.
+    #   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator).
+    #   - none: Disables secrets management logic.
+    secretManager: own
