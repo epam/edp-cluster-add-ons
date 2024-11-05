@@ -1,0 +1,30 @@
+{{- if and (index .Values "prometheus-operator") (index .Values "prometheus-operator" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-prometheus-operator
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/prometheus-operator
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: prometheus-operator
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace={{ (index .Values "prometheus-operator" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

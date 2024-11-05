@@ -1,0 +1,21 @@
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/nexus-operator"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # -- To change default admin password in accout navigate -> Configuration -> Users -> admin -> Change password
+
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

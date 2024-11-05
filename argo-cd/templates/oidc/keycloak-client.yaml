@@ -1,0 +1,16 @@
+{{ if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: argocd
+spec:
+  advancedProtocolMappers: true
+  clientId: argocd-tenant
+  defaultClientScopes:
+    - groups
+  secret: $keycloak-client-argocd-secret:clientSecret
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: https://argocd.example.com
+{{ end }}

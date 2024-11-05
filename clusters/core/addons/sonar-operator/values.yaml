@@ -1,0 +1,69 @@
+sonar-operator:
+  # -- component name
+  name: sonar-operator
+  annotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  image:
+    # -- EDP sonar-operator Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator)
+    repository: epamedp/sonar-operator
+    # if not defined then .Chart.AppVersion is used
+    # -- EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags)
+    tag: 3.1.1
+  imagePullPolicy: "IfNotPresent"
+
+  resources:
+    limits:
+      memory: 192Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+
+  # -- Additional volumes to be added to the pod
+  extraVolumes: []
+  #  - name: custom-ca
+  #    secret:
+  #      defaultMode: 420
+  #      secretName: custom-ca
+
+  # -- Additional volumeMounts to be added to the container
+  extraVolumeMounts: []
+  #  - name: custom-ca
+  #    mountPath: /etc/ssl/certs/CA.crt
+  #    readOnly: true
+  #    subPath: CA.crt
+
+# -- URL and secret name which use sonar operator for configuring sonar
+sonarUrl: "https://sonar.example.com"
+
+# -- This is credantials name with administator rights for sonar.
+sonarSecret: "sonar-admin-password"
+# -- If use a clean install of Sonar, need to set admin password during first login after deploy
+# -- To change password in accout navigate -> Administration -> Security -> Users -> admin -> Enter a new password
+
+# -- Integration with keycloak
+oidc:
+  enabled: false
+  keycloakUrl: "https://keycloak.example.com"
+  keycloakRealm: "shared"
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/sonar-operator"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

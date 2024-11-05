@@ -1,0 +1,29 @@
+{{- if and (index .Values "keycloak-postgresql") (index .Values "keycloak-postgresql" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-keycloak-postgresql
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/keycloak-postgresql
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: keycloak-postgresql
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: security
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "keycloak-postgresql" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

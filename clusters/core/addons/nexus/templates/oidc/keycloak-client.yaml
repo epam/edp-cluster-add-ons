@@ -1,0 +1,17 @@
+{{ if index .Values "oauth2-proxy" "enabled" }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: nexus
+spec:
+  advancedProtocolMappers: true
+  clientId: nexus
+  defaultClientScopes:
+    - groups
+    - edp
+  secret: $keycloak-client-nexus-secret:clientSecret
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: https://{{ (first (index .Values "oauth2-proxy" "ingress" "hosts")) }}
+{{ end }}

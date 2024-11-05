@@ -1,4 +1,0 @@
-# we use dependency so ensure put values under 'cert-manager'
-cert-manager:
-  webhook:
-    timeoutSeconds: 50

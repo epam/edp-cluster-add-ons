@@ -1,0 +1,27 @@
+{{- if and (.Values.tekton) (.Values.tekton.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-tekton
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/tekton
+    targetRevision: {{ .Values.targetRevision }}
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: tekton-pipelines
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ .Values.tekton.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

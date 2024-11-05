@@ -1,0 +1,29 @@
+{{- if and (index .Values "jaeger-operator") (index .Values "jaeger-operator" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-jaeger-operator
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/jaeger-operator
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: jaeger-operator
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: jaeger-operator
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "jaeger-operator" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

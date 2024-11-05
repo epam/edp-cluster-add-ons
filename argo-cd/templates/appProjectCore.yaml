@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: core
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Manage all Core components
+  destinations:
+    # ensure we can deploy to ns with tenant prefix
+    - namespace: '*'
+    # allow to deploy to specific server (local in our case)
+      server: https://kubernetes.default.svc
+  # Deny all cluster-scoped resources from being created, except for Namespace
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+  # we are ok to create any resources inside namespace
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # enable access only for specific git server. The example below 'krci' - it is namespace where krci deployed
+  sourceRepos:
+    # path to code store
+    - ssh://git@github.com/organization/infra/*
+  # enable capability to deploy objects from namespaces
+  sourceNamespaces:
+    - krci

@@ -1,0 +1,52 @@
+atlantis:
+  vcsSecretName: atlantis-webhook
+
+  bitbucket:
+    user: auto_example
+
+  ingress:
+    path: /
+    host: atlantis.example.com
+
+  image:
+    repository: epamedp/atlantis
+    # -- If not set appVersion field from Chart.yaml is used
+    tag: "0.1.1"
+  orgAllowlist: bitbucket.org/organization/*
+
+  defaultTFVersion: "1.5.7"
+  repoConfig: |
+    ---
+    repos:
+    - id: /.*/
+      allowed_overrides: ["workflow"]
+      allow_custom_workflows: true
+
+  serviceAccount:
+    annotations: {}
+    # annotations:
+    #   annotation1: value
+    #   annotation2: value
+    # IRSA example:
+    # annotations:
+    #   eks.amazonaws.com/role-arn: role-arn
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/atlantis"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

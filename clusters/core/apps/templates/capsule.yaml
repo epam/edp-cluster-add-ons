@@ -1,0 +1,38 @@
+{{- if and (.Values.capsule) (.Values.capsule.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-capsule
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/capsule
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: capsule
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: capsule-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ .Values.capsule.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+      - .webhooks[].clientConfig.caBundle
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+      - .webhooks[].clientConfig.caBundle
+{{- end -}}

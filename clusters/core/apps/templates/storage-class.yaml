@@ -1,0 +1,18 @@
+{{- if and (index .Values "storage-class") (index .Values "storage-class" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-storage-class
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+  syncPolicy:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/storage-class
+    targetRevision: {{ .Values.targetRevision }}
+{{- end -}}

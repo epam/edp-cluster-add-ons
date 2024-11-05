@@ -1,0 +1,30 @@
+{{- if and (index .Values "redis-operator") (index .Values "redis-operator" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-redis-operator
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/redis-operator
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: redis-operator
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: redis-operator
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace={{ (index .Values "redis-operator" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

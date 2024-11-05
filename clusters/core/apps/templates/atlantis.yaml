@@ -1,0 +1,29 @@
+{{- if and (.Values.atlantis) (.Values.atlantis.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-atlantis
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/atlantis
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: atlantis
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: atlantis
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ .Values.atlantis.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

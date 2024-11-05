@@ -1,0 +1,222 @@
+keycloakx:
+  nameOverride: keycloakx
+  fullnameOverride: keycloakx
+  replicas: 1
+
+  image:
+    tag: "24.0.4"
+
+  # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
+  health:
+    enabled: false
+  # The following parameter is unrecommended to expose. Exposed metrics lead to an unnecessary attack vector.
+  metrics:
+    enabled: false
+
+  command:
+    - "/opt/keycloak/bin/kc.sh"
+    - "--verbose"
+    - "start"
+
+  http:
+    relativePath: "/"
+
+  # Additional environment variables for Keycloak.
+  # Environment variables "KC_HOSTNAME ADMIN_URL" and "KC_HOSTNAME URL" for working in "passthrough" mode,
+  # if they are not defined there will be an eternal loading of "LOGIN ADMIN UI"
+  extraEnv: |
+    - name: KC_HOSTNAME
+      value: "idp.example.com"
+    - name: KC_SPI_HOSTNAME_DEFAULT_ADMIN
+      value: "idp.example.com"
+    - name: KC_HTTP_ENABLED
+      value: "true"
+    - name: KC_HOSTNAME_STRICT
+      value: "false"
+    - name: KC_HOSTNAME_STRICT_HTTPS
+      value: "false"
+    - name: KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL
+      value: "info"
+    - name: KEYCLOAK_ADMIN
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-admin-creds
+          key: username
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-admin-creds
+          key: password
+    - name: JAVA_OPTS_APPEND
+      value: >-
+        -XX:+UseContainerSupport
+        -XX:MaxRAMPercentage=50.0
+        -Djava.awt.headless=true
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+        -Dkeycloak.connectionsHttpClient.default.expect-continue-enabled=true
+        -Dkeycloak.connectionsHttpClient.default.reuse-connections=false
+    - name: HTTP_ADDRESS_FORWARDING
+      value: "true"
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+
+  # Example how to add custom theme to Keycloak
+  # extraInitContainers: |
+  #   - name: theme-provider
+  #     image: docker.io/epamedp/edp-keycloak-theme:0.1.5
+  #     imagePullPolicy: IfNotPresent
+  #     command:
+  #       - sh
+  #     args:
+  #       - -c
+  #       - |
+  #         echo "Copying theme..."
+  #         cp -R /edp/* /theme
+  #     volumeMounts:
+  #       - name: theme
+  #         mountPath: /theme
+
+  # extraVolumeMounts: |
+  #   - name: theme
+  #     mountPath: /opt/keycloak/themes/edp
+
+  # extraVolumes: |
+  #   - name: theme
+  #     emptyDir: {}
+
+  # This block should be uncommented if you install Keycloak on Kubernetes
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-buffer-size: 256k
+    # Defines the class of the Ingress Controller.
+    # It allows you to choose which Ingress controller in cluster should be used to expose the Keycloak service to the outside world.
+    ingressClassName: "nginx"
+    # Exposes Keycloak paths according to the rules from documentation.
+    # Ref: https://www.keycloak.org/server/reverseproxy#_exposed_path_recommendations
+    rules:
+      - host: idp.example.com
+        paths:
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/realms/'
+            pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/resources/'
+            pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/robots.txt'
+            pathType: Prefix
+          - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/js/'
+            pathType: Prefix
+    # Provides creating Ingress for Keycloak which is used to access the Keycloak Admin Console.
+    console:
+      enabled: true
+      # Defines the class of the Ingress controller.
+      # Use internal Ingress Class to expose the Keycloak Admin Console to the internal network.
+      ingressClassName: "nginx"
+      annotations:
+        # Defines the IP addresses that are allowed to access the Keycloak Admin Console.
+        # nginx.ingress.kubernetes.io/whitelist-source-range: "x.x.x.x/32"
+      rules:
+        - host: idp.example.com
+          # Paths for the host
+          paths:
+            - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/admin'
+              pathType: Prefix
+
+  proxy:
+    enabled: true
+    # Ensure X-Forwarded-For header is set to the client's IP address
+    mode: "edge"
+
+  resources:
+    limits:
+      memory: "2048Mi"
+    requests:
+      cpu: "50m"
+      memory: "512Mi"
+
+  # Check database readiness at startup
+  dbchecker:
+    enabled: true
+
+  database:
+  # This section configure connection to the external database
+  #
+  # By default, keycloakx Helm Chart uses Postgres database from PGO.
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/keycloak/templates/postgres-cluster.yaml
+  # More detail how install PostgreSQL Operator you can find:
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/postgres-operator
+
+  # Optional, can use onboarding PostgreSQL database by Helm chart.
+  # To use this approach disables creating a database by Postgres operator, flag - Values.pgo.enabled=false
+  # Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/keycloak-postgresql
+
+  # PGO example (preconfigured by default)
+    vendor: postgres
+    existingSecret: keycloak-pguser-admin
+    hostname: keycloak-primary.security.svc
+    port: 5432
+    username: admin
+    database: keycloak
+
+  # Postgres database Helm chart example
+    # vendor: postgres
+    # existingSecret: keycloak-postgresql
+    # hostname: postgresql
+    # port: 5432
+    # username: admin
+    # database: keycloak
+
+  autoscaling:
+    # If `true`, an autoscaling/v2 HorizontalPodAutoscaler resource is created (requires Kubernetes 1.23 or above)
+    # Autoscaling seems to be most reliable when using KUBE_PING service discovery (see README for details)
+    # This disables the `replicas` field in the StatefulSet
+    enabled: true
+    # Additional HorizontalPodAutoscaler labels
+    labels: {}
+    # The minimum and maximum number of replicas for the Keycloak StatefulSet
+    minReplicas: 1
+    maxReplicas: 3
+    # The metrics to use for scaling
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 80
+    # The scaling policy to use. This will scale up quickly but only scale down a single Pod per 5 minutes.
+    # This is important because caches are usually only replicated to 2 Pods and if one of those Pods is terminated this will give the cluster time to recover.
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+          - type: Pods
+            value: 1
+            periodSeconds: 300
+
+# The section below allows to deploy a new PostgresCluster with the below details:
+# Endpoint (Kubernetes service): postgresql-primary.security.svc
+# User Secret (Kubernetes Secret): postgresql-pguser-admin
+# Ref: https://github.com/epam/edp-cluster-add-ons/tree/main/add-ons/postgres-operator
+pgo:
+  # -- Enables creating a new database with Postgres operator.
+  enabled: true
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore-keycloak"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/keycloak"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

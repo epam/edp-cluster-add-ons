@@ -1,0 +1,141 @@
+kube-prometheus-stack:
+  fullnameOverride: "prom"
+  nameOverride: "prom"
+
+  defaultRules:
+    rules:
+      etcd: false
+
+  kubeControllerManager:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+
+  prometheusOperator:
+    resources:
+      limits:
+        memory: "256Mi"
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+
+  prometheus:
+    # # https://epam.github.io/edp-install/operator-guide/tekton-monitoring/
+    # prometheusSpec:
+    #   additionalScrapeConfigsSecret:
+    #     enabled: true
+    #     name: additional-scrape-configs
+    #     key: prometheus-additional-job.yaml
+    ingress:
+      enabled: false
+      hosts:
+        - prometheus.example.com
+    additionalServiceMonitors: []
+
+  alertmanager:
+    enabled: false
+    config:
+      route:
+        receiver: 'msteams'
+        group_by: ['alertname']
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 12h
+        routes:
+        - receiver: 'msteams'
+        - match:
+            alertname: Watchdog
+          receiver: 'null'
+      inhibit_rules:
+        - target_match_re:
+            alertname: '.+Overcommit'
+          source_match:
+            alertname: 'Watchdog'
+          equal: ['prometheus']
+      receivers:
+      - name: 'null'
+      - name: 'msteams'
+        webhook_configs:
+        - url: "http://prometheus-msteams:2000/alert-sandbox"
+    ingress:
+      enabled: true
+      hosts:
+        - alertmanager.example.com
+    alertmanagerSpec:
+      resources:
+        limits:
+          memory: "300Mi"
+        requests:
+          cpu: "10m"
+          memory: "200Mi"
+
+  grafana:
+    fullnameOverride: grafana
+    # should be enabled for OIDC integration, secret field should be GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+    envFromSecret: keycloak-client-grafana-secret
+    grafana.ini:
+      server:
+        root_url: https://grafana.example.com
+      analytics:
+        check_for_updates: false
+      auth:
+        oauth_auto_login: true
+        disable_signout_menu: true
+      auth.generic_oauth:
+        enabled: true
+        client_id: grafana
+        allow_sign_up:  true
+        scopes:  openid profile email roles
+        auth_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth"
+        token_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token"
+        api_url: "https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/userinfo"
+        role_attribute_path: contains(roles[*], 'administrator') && 'Admin' || contains(roles[*], 'developer') && 'Editor' || 'Viewer'
+
+    # created with expternal secret operator
+    admin:
+      existingSecret: grafana-admin-creds
+      userKey: username
+      passwordKey: password
+
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.example.com
+      paths:
+        - /
+      pathType: ImplementationSpecific
+    resources:
+      limits:
+        memory: "128Mi"
+      requests:
+        cpu: "25m"
+        memory: "72Mi"
+    persistence:
+        enabled: true
+        storageClassName: "ebs-sc"
+        size: 1Gi
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/prometheus-operator"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
+
+oidc:
+  enabled: false

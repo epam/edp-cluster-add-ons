@@ -1,0 +1,101 @@
+nexus-repository-manager:
+  image:
+    tag: 3.70.3
+  nameOverride: "nexus"
+  fullnameOverride: "nexus"
+
+  serviceAccount:
+    name: nexus-repo
+
+  ingress:
+    # We use native nexus ingress for CI workload which is not covered with oauth2-proxy
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "900m"
+    hostRepo: nexus-ci.example.com
+
+  deployment:
+    initContainers:
+    - name: fmp-volume-permission
+      image: busybox
+      imagePullPolicy: IfNotPresent
+      command: ['mkdir','-p', '/nexus-data/etc']
+      volumeMounts:
+        - name: nexus-data
+          mountPath: /nexus-data
+
+  nexus:
+    docker:
+      enabled: true
+      registries:
+        - host: nexus-ci-container.example.com
+          port: 5000
+    env:
+      - name: NEXUS_SECURITY_RANDOMPASSWORD
+        value: "false"
+    resources:
+      limits:
+        memory: 6Gi
+      requests:
+        cpu: 100m
+        memory: 2Gi
+
+    properties:
+      override: true
+      data:
+        nexus.scripts.allowCreation: true
+        jetty.request.header.size: 100000
+
+  persistence:
+    enabled: true
+    storageSize: 30Gi
+
+oauth2-proxy:
+  enabled: false
+  config:
+    configFile: |-
+      allowed_roles = ["administrator", "developer"]
+      client_id = "nexus"
+      code_challenge_method="S256"
+      cookie_csrf_expire="5m"
+      cookie_csrf_per_request="true"
+      cookie_secure = "false"
+      email_domains = [ "*" ]
+      insecure_oidc_allow_unverified_email = "true"
+      oidc_issuer_url = "https://keycloak.example.com/auth/realms/<cluster_name>"
+      pass_access_token = "true"
+      pass_authorization_header = "true"
+      pass_basic_auth = "false"
+      provider = "keycloak-oidc"
+      redirect_url = "https://nexus.example.com/oauth2/callback"
+      skip_jwt_bearer_tokens = "true"
+      upstreams = [ "http://nexus:8081" ]
+      whitelist_domains = ["*"]
+      silence_ping_logging = "true"
+
+    existingSecret: oauth2-proxy
+
+  ingress:
+    enabled: true
+    hosts:
+      - nexus.example.com
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore-nexus"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/nexus"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
