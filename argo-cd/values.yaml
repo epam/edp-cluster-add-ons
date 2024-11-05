@@ -1,0 +1,97 @@
+argo-cd:
+  global:
+    # -- Default domain used by all components
+    ## Used for ingresses, certificates, SSO, notifications, etc.
+    domain: argocd.example.com
+
+  configs:
+    secret:
+      # -- Create the argocd-secret
+      createSecret: true
+    cm:
+      # required when SSO is enabled
+      url: "https://argocd.example.com"
+      exec.enabled: true
+      resource.exclusions: |
+        - apiGroups:
+          - "tekton.dev"
+          kinds:
+          - "PipelineRun"
+          clusters:
+          - "*"
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.example/auth/realms/shared
+        clientID: argocd-tenant
+        clientSecret: $keycloak-client-argocd-secret:clientSecret
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+
+    params:
+      server.insecure: true
+      applicationsetcontroller.namespaces: krci
+      application.namespaces: krci
+    rbac:
+      scopes: "[groups]"
+      policy.csv: |
+        # default global admins
+        g, ArgoCDAdmins, role:admin
+        # Default global developers
+        g, ArgoCDDevelopers, role:readonly
+    ssh:
+      knownHosts: |
+        # -- list of known host in format:
+        # [host]:port key-type key
+        # Example
+        # [ssh.github.com]:443 ssh-rsa qgSdfOuiYhew/+afhQnvjfjhnhnqgSdfOuiYhew/+afhQnvjfjhnhn
+
+  # we use Keycloak so no DEX is required
+  dex:
+    enabled: false
+  redis:
+    enabled: true
+
+  server:
+    replicas: 1
+    env:
+      - name: ARGOCD_API_SERVER_REPLICAS
+        value: '1'
+
+    # -- Enable after nginx-ingress is installed
+    ingress:
+      enabled: false
+      hostname: "argocd.example.com"
+
+  # Disabled for multitenancy env with single instance deployment
+  # applicationSet:
+  #   extraEnv:
+  #   - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_SCM_PROVIDERS
+  #     value: 'false'
+
+# Can be configured after keycloak-operator and external-secrets-operator are installed
+oidc:
+  enabled: false
+
+# Configure components of the External Secrets Operator (ESO).
+# Can be configured after keycloak-operator and external-secrets-operator are installed
+eso:
+  # -- Install components of the ESO.
+  enabled: false
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/argocd"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

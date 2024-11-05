@@ -1,0 +1,29 @@
+{{- if and (index .Values "sonar-operator") (index .Values "sonar-operator" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-sonar-operator
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/sonar-operator
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: sonar-operator
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: sonar
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "sonar-operator" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

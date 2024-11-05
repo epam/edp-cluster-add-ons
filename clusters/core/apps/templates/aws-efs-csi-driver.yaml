@@ -1,0 +1,27 @@
+{{- if and (index .Values "aws-efs-csi-driver") (index .Values "aws-efs-csi-driver" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-aws-efs-csi-driver
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/aws-efs-csi-driver
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: aws-efs-csi-driver
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: kube-system
+  syncPolicy:
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

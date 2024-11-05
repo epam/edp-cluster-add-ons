@@ -1,0 +1,29 @@
+{{- if and (index .Values "harbor-ha") (index .Values "harbor-ha" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-harbor-ha
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/harbor-ha
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: harbor-ha
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: harbor
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "harbor-ha" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

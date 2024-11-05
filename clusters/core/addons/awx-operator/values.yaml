@@ -1,0 +1,46 @@
+AWX:
+  # enable use of awx-deploy template
+  enabled: true
+  name: awx
+  spec:
+    image_version: 24.6.1
+    image: quay.io/ansible/awx
+    admin_user: admin
+    admin_password_secret: awx-admin-password
+    ingress_type: ingress
+    ingress_path: /
+    ingress_path_type: Prefix
+    ingress_hosts:
+      - hostname: awx.example.com
+  # configurations for external postgres instance
+  postgres:
+    enabled: true
+    host: "awx-primary.awx-operator.svc"
+    port: 5432
+    dbName: awx
+    username: awx
+    sslmode: prefer
+    type: unmanaged
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/awx-operator"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
+
+oidc:
+  enabled: false

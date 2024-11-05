@@ -1,0 +1,29 @@
+{{- if and (index .Values "nexus-operator") (index .Values "nexus-operator" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-nexus-operator
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/nexus-operator
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: nexus-operator
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: nexus
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "nexus-operator" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

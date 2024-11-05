@@ -1,0 +1,25 @@
+{{ if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: defectdojo
+spec:
+  advancedProtocolMappers: true
+  clientId: defectdojo
+  secret: $keycloak-client-defectdojo-secret:clientSecret
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  attributes:
+    request.object.signature.alg: "RS256"
+    user.info.response.signature.alg: "RS256"
+  protocolMappers:
+    - name: aud
+      protocol: openid-connect
+      protocolMapper: "oidc-audience-mapper"
+      config:
+        included.client.audience: "defectdojo"
+        id.token.claim: 'false'
+        access.token.claim: 'true'
+  webUrl: https://{{ .Values.defectdojo.site_url }}
+{{ end }}

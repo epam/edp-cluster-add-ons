@@ -1,0 +1,19 @@
+{{- if .Values.kubernetes.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: eks
+spec:
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  secret: $keycloak-client-eks-secret:clientSecret
+  advancedProtocolMappers: true
+  clientId: eks
+  directAccess: true
+  defaultClientScopes:
+    - groups
+  webUrl: "http://localhost:8000/"
+  redirectUris:
+    - "*"
+{{ end }}

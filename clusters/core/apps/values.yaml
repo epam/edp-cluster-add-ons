@@ -1,0 +1,194 @@
+# Place all applications under this project
+argoProject: core
+
+# Specifies the destination server where the code will be deployed.
+# In this case, "in-cluster" indicates that the deployment will happen within the Kubernetes cluster itself.
+destinationServer: "in-cluster"
+
+# Specifies the URL of the Git repository from which the code will be pulled for deployment.
+# It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
+# and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
+repoUrl: "ssh://git@github.com:22/edp-cluster-add-ons"
+
+# Specifies the target revision or branch of the Git repository that will be deployed.
+# In this case, "main" indicates that the main branch of the repository will be used for deployment.
+targetRevision: "main"
+
+# keep sorted order
+# -- ArgoCD Deployment
+argo-cd:
+  # -- whether to create the namespace or not
+  createNamespace: false
+  enable: false
+
+# we install it in kube-system namespace so we don't need to create it
+# -- AWS EFS CSI Driver
+aws-efs-csi-driver:
+  enable: false
+
+# -- Capsule
+capsule:
+  # -- whether to create the namespace or not
+  createNamespace: false
+  enable: false
+
+# -- Capsule Tenant
+capsule-tenant:
+  enable: false
+
+# -- Cert Manager
+cert-manager:
+  # -- whether to create the namespace or not
+  createNamespace: false
+  enable: false
+
+# -- DefectDojo
+defectdojo:
+  # -- whether to create the namespace or not
+  createNamespace: false
+  enable: false
+
+dependency-track:
+  createNamespace: false
+  enable: false
+
+kuberocketci:
+  createNamespace: false
+  enable: false
+
+kuberocketci-pipelines:
+  createNamespace: false
+  enable: false
+
+kuberocketci-rbac:
+  createNamespace: false
+  enable: false
+
+external-secrets:
+  createNamespace: false
+  enable: false
+
+# fluent-bit can be installed as a single component
+fluent-bit:
+  createNamespace: false
+  enable: false
+
+harbor:
+  createNamespace: false
+  enable: false
+
+# Harbor with High Availability
+harbor-ha:
+  createNamespace: false
+  enable: false
+
+# Harbor with HA, OKD Cluster
+harbor-ha-okd:
+  createNamespace: false
+  enable: false
+
+ingress-nginx:
+  createNamespace: false
+  enable: false
+
+ingress-nginx-external:
+  createNamespace: false
+  enable: false
+
+jaeger-operator:
+  enable: false
+  createNamespace: false
+
+keycloak:
+  createNamespace: false
+  enable: false
+
+keycloak-postgresql:
+  createNamespace: false
+  enable: false
+
+keycloak-operator:
+  createNamespace: false
+  enable: false
+
+krakend:
+  createNamespace: false
+  enable: false
+
+minio-operator:
+  createNamespace: false
+  enable: false
+
+nexus:
+  createNamespace: false
+  enable: false
+
+nexus-operator:
+  createNamespace: false
+  enable: false
+
+# OAuth2 Proxy for tekton dashboard
+oauth2-proxy:
+  createNamespace: false
+  enable: false
+
+# opensearch includes opensearch, opensearch-dashboards, fluent-bit
+opensearch:
+  createNamespace: false
+  enable: false
+
+opentelemetry-operator:
+  enable: false
+  createNamespace: false
+
+# Postgres Operator
+postgres-operator:
+  createNamespace: false
+  enable: false
+
+report-portal:
+  createNamespace: false
+  enable: false
+
+prometheus-operator:
+  createNamespace: false
+  enable: false
+
+redis-operator:
+  createNamespace: false
+  enable: false
+
+sonar:
+  createNamespace: false
+  enable: false
+
+sonar-operator:
+  createNamespace: false
+  enable: false
+
+storage-class:
+  enable: false
+
+tekton-cache:
+  createNamespace: false
+  enable: false
+
+tekton:
+  createNamespace: false
+  enable: false
+
+vault:
+  createNamespace: false
+  enable: false
+
+vault-kms:
+  createNamespace: false
+  enable: false
+
+vault-okd:
+  createNamespace: false
+  enable: false
+
+atlantis:
+  createNamespace: false
+  enable: false

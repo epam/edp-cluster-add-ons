@@ -1,0 +1,29 @@
+{{- if and (index .Values "fluent-bit") (index .Values "fluent-bit" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-fluent-bit
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/fluent-bit
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: fluent-bit
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: logging
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "fluent-bit" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

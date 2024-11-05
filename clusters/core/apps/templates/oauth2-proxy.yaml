@@ -1,0 +1,29 @@
+{{- if and (index .Values "oauth2-proxy") (index .Values "oauth2-proxy" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-oauth2-proxy
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/oauth2-proxy
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: oauth2-proxy
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: oauth2-proxy
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "oauth2-proxy" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

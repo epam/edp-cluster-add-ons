@@ -1,0 +1,15 @@
+{{ if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: opensearch
+spec:
+  defaultClientScopes:
+    - role
+  clientId: opensearch
+  secret: $keycloak-client-opensearch-secret:clientSecret
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: {{ .Values.oidc.dashboardUrl }}
+{{ end }}

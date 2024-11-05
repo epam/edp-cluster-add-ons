@@ -1,0 +1,14 @@
+# Main app of application which is responsible for deploying all addons to the 'core' cluster.
+# This manifest is applied manually to the 'core' Argo CD.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: addons-core
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: core
+  source:
+    path: chart/clusters/core-v2/apps
+    repoURL: ssh://git@github.com/epam/edp-cluster-add-ons.git
+    targetRevision: HEAD

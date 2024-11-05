@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: krci
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: CD pipelines for krci
+  roles:
+    - name: developer
+      description: Users for krci tenant
+      policies:
+        - p, proj:krci:developer, applications, create, krci/*, allow
+        - p, proj:krci:developer, applications, delete, krci/*, allow
+        - p, proj:krci:developer, applications, get, krci/*, allow
+        - p, proj:krci:developer, applications, override, krci/*, allow
+        - p, proj:krci:developer, applications, sync, krci/*, allow
+        - p, proj:krci:developer, applications, update, krci/*, allow
+        - p, proj:krci:developer, repositories, create, krci/*, allow
+        - p, proj:krci:developer, repositories, delete, krci/*, allow
+        - p, proj:krci:developer, repositories, update, krci/*, allow
+        - p, proj:krci:developer, repositories, get, krci/*, allow
+        - p, ArgoCDDevelopers, exec, create, krci/*, allow
+      groups:
+        # Keycloak Group name
+        - ArgoCD-krci-users
+  destinations:
+    # ensure we can deploy to ns with tenant prefix
+    - namespace: 'krci-*'
+    # allow to deploy to specific server (local in our case)
+      server: https://kubernetes.default.svc
+  # Deny all cluster-scoped resources from being created, except for Namespace
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+  # we are ok to create any resources inside namespace
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # enable access only for specific git server. The example below 'krci' - it is namespace where krci deployed
+  sourceRepos:
+    # path to code store
+    # (FIXME): Make sure that this is the correct path
+    - ssh://git@github.com/organization/*
+  # enable capability to deploy objects from namespaces
+  sourceNamespaces:
+    - krci

@@ -1,0 +1,29 @@
+{{- if and (index .Values "kuberocketci-rbac") (index .Values "kuberocketci-rbac" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-kuberocketci-rbac
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/core/addons/kuberocketci-rbac
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: kuberocketci-rbac
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: security
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "kuberocketci-rbac" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

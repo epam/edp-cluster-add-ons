@@ -1,0 +1,181 @@
+krakend:
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/cors-allow-headers: DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+      nginx.ingress.kubernetes.io/cors-allow-methods: OPTIONS, GET
+      nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+      nginx.ingress.kubernetes.io/enable-cors: 'true'
+    hosts:
+      - host: api.example.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+  krakend:
+    partials: null
+    settings: null
+    config: |
+      {
+        "$schema": "https://www.krakend.io/schema/krakend.json",
+        "version": 3,
+        "name": "KrakenD - API Gateway",
+        "timeout": "3000ms",
+        "cache_ttl": "300s",
+        "output_encoding": "json",
+        "extra_config": {
+          "router": {
+            "logger_skip_paths": [
+              "/__health"
+            ]
+          },
+          "auth/jwk-client": {
+              "@comment": "Enable a JWK shared cache amongst all endpoints of 60 minutes",
+              "shared_cache_duration": 3600
+          }
+        },
+        "endpoints": [
+          {
+            "endpoint": "/widgets/sonarqube/measures/component",
+            "method": "GET",
+            "output_encoding": "json",
+            "input_query_strings": [
+              "component",
+              "metricKeys"
+            ],
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/measures/component",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "SONARQUBE_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {},
+                  "modifier/martian": {
+                    "header.Append": {
+                      "scope": [
+                        "request"
+                      ],
+                      "name": "Authorization",
+                      "value": "Basic {{ env "SONARQUBE_TOKEN" }}"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/widgets/deptrack/project",
+            "method": "GET",
+            "output_encoding": "json",
+            "input_query_strings": [
+              "name"
+            ],
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/project",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "DEPTRACK_URL" }}"
+                ],
+                "is_collection": true,
+                "extra_config": {
+                  "qos/http-cache": {},
+                  "modifier/martian": {
+                    "header.Append": {
+                      "scope": [
+                        "request"
+                      ],
+                      "name": "X-Api-Key",
+                      "value": "{{ env "DEPTRACK_TOKEN" }}"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/widgets/deptrack/metrics/project/{uuid}/current",
+            "method": "GET",
+            "output_encoding": "json",
+            "input_query_strings": [
+              "name"
+            ],
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/metrics/project/{uuid}/current",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "DEPTRACK_URL" }}"
+                ],
+                "is_collection": false,
+                "extra_config": {
+                  "qos/http-cache": {},
+                  "modifier/martian": {
+                    "header.Append": {
+                      "scope": [
+                        "request"
+                      ],
+                      "name": "X-Api-Key",
+                      "value": "{{ env "DEPTRACK_TOKEN" }}"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+
+# Configure components of the External Secrets Operator (ESO).
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/krakend"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

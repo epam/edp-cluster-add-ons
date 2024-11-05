@@ -1,0 +1,29 @@
+{{ if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: harbor
+spec:
+  advancedProtocolMappers: true
+  clientId: harbor
+  directAccess: true
+  secret: $keycloak-client-harbor-secret:clientSecret
+  defaultClientScopes:
+    - profile
+    - email
+    - roles
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: "{{ .Values.harbor.externalURL }}"
+  protocolMappers:
+    - name: roles
+      protocol: openid-connect
+      protocolMapper: "oidc-usermodel-realm-role-mapper"
+      config:
+        "access.token.claim": "true"
+        "claim.name": "roles"
+        "id.token.claim": "true"
+        "userinfo.token.claim": "true"
+        "multivalued": "true"
+{{ end }}
