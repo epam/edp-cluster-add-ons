@@ -9,6 +9,6 @@ spec:
     server: https://kubernetes.default.svc
   project: core
   source:
-    path: chart/clusters/core-v2/apps
+    path: clusters/core/apps
     repoURL: ssh://git@github.com/epam/edp-cluster-add-ons.git
     targetRevision: HEAD
