@@ -9,7 +9,7 @@ metadata:
 spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
-    repoURL: ssh://git@github.example.com:22/infra/pipelines.git
+    repoURL: ssh://git@github.com:22/epmd-edp/helm-helm-pipeline.git
     path: .
     targetRevision: main
     helm:

@@ -31,7 +31,7 @@ spec:
   # enable access only for specific git server. The example below 'krci' - it is namespace where krci deployed
   sourceRepos:
     # path to code store
-    - ssh://git@github.com/organization/infra/*
+    - ssh://git@github.com/epam/*
   # enable capability to deploy objects from namespaces
   sourceNamespaces:
     - krci
