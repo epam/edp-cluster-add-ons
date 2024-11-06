@@ -1,17 +1,17 @@
 apiVersion: capsule.clastix.io/v1beta2
 kind: Tenant
 metadata:
-  name: edp
+  name: krci
 spec:
   owners:
-    # uncomment if Argo CD manage main EDP tenant
+    # uncomment if Argo CD manage main krci tenant
     # - clusterRoles:
     #     - admin
     #     - capsule-namespace-deleter
     #   kind: ServiceAccount
     #   name: system:serviceaccount:argocd:argocd-application-controller
     #
-    # uncomment if edp-oidc-admins group manage main EDP tenant
+    # uncomment if edp-oidc-admins group manage main krci tenant
     # - clusterRoles:
     #     - admin
     #     - capsule-namespace-deleter
