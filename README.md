@@ -60,8 +60,8 @@ helm install argocd argo-cd -n argocd --create-namespace
 ```
 3. To get access to the Argo CD UI run port-forward command.
 4. Configure integration with the forked repository by adding credential template to the Argo CD.
-5. Apply the `clusters/core/bootstrap-addons.yaml` application to the Argo CD.
-6. Enable the add-on by setting the `enable` field to `true` in the `clusters/core/apps/addons.yaml` file.
+5. Apply the [`clusters/core/bootstrap-addons.yaml`](clusters/core/bootstrap-addons.yaml) application to the Argo CD.
+6. Enable the add-on by setting the `enable` field to `true` in the [`clusters/core/apps/values.yaml`](clusters/core/apps/values.yaml) file.
 
 ## Available add-ons
 
