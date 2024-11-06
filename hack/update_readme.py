@@ -3,7 +3,7 @@ from tabulate import tabulate
 import os
 
 # Load the main YAML file
-with open('./chart/values.yaml', 'r') as file:
+with open('./clusters/core/apps/values.yaml', 'r') as file:
     data = yaml.safe_load(file)
 
 # Initialize the list for the table data
@@ -18,7 +18,7 @@ for key, value in data.items():
 
         # Try to open the Chart.yaml file for the component
         try:
-            with open(f'./add-ons/{key}/Chart.yaml', 'r') as file:
+            with open(f'./clusters/core/addons/{key}/Chart.yaml', 'r') as file:
                 chart_data = yaml.safe_load(file)
                 row['version'] = chart_data.get('version', 'N/A')
                 row['appVersion'] = chart_data.get('appVersion', 'N/A')
