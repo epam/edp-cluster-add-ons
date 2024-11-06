@@ -40,7 +40,7 @@ argo-cd:
         # default global admins
         g, ArgoCDAdmins, role:admin
         # Default global developers
-        g, ArgoCDDevelopers, role:readonly
+        g, ArgoCDReadOnly, role:readonly
     ssh:
       knownHosts: |
         # -- list of known host in format:

@@ -2,6 +2,7 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
+  # This group is mapped in the cluster role binding created by the edp-install Helm chart. You can view it here: https://github.com/epam/edp-install/blob/release/3.10/deploy-templates/templates/rbac/rolebinding_viewer.yaml
   name: krci-oidc-viewers
 spec:
   name: krci-oidc-viewers

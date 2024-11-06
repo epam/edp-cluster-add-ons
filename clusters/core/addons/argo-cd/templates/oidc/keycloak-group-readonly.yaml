@@ -2,9 +2,9 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: developer
+  name: readonly
 spec:
-  name: ArgoCDDevelopers
+  name: ArgoCDReadOnly
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
