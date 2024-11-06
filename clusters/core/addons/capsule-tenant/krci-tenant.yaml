@@ -11,9 +11,9 @@ spec:
     #   kind: ServiceAccount
     #   name: system:serviceaccount:argocd:argocd-application-controller
     #
-    # uncomment if edp-oidc-admins group manage main krci tenant
+    # uncomment if krci-oidc-admins group manage main krci tenant
     # - clusterRoles:
     #     - admin
     #     - capsule-namespace-deleter
     #   kind: Group
-    #   name: edp-oidc-admins
+    #   name: krci-oidc-admins

@@ -2,9 +2,9 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: edp-oidc-admins
+  name: krci-oidc-admins
 spec:
-  name: edp-oidc-admins
+  name: krci-oidc-admins
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
