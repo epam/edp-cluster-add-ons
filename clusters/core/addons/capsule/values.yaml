@@ -11,16 +11,16 @@ capsule:
     enableController: true
   manager:
     options:
-      # enable capsule for EDP tenant and cd-pipeline-operator
+      # enable capsule for KRCI tenant and cd-pipeline-operator
       # NOTE: Capsule cannot manage cluster system namespaces
       capsuleUserGroups:
         - capsule.clastix.io
-        # uncomment if Argo CD manage main EDP tenant
+        # uncomment if Argo CD manage main KRCI tenant
         # - system:serviceaccounts:argocd
         # enable for cd-pipeline-operator https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.17/deploy-templates/values.yaml#L10
         - system:serviceaccounts:krci
-        # uncomment if edp-oidc-admins group manage main EDP tenant https://epam.github.io/edp-install/operator-guide/edp-access-model
-        # - edp-oidc-admins
+        # uncomment if krci-oidc-admins group manage main KRCI tenant https://docs.kuberocketci.io/docs/operator-guide/auth/platform-auth-model
+        # - krci-oidc-admins
 
     resources:
       limits:

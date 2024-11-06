@@ -2,9 +2,9 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: edp-oidc-viewers
+  name: krci-oidc-viewers
 spec:
-  name: edp-oidc-viewers
+  name: krci-oidc-viewers
   realmRef:
     kind: ClusterKeycloakRealm
     name: main

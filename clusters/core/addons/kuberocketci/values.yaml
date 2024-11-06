@@ -78,7 +78,7 @@ edp-install:
   edp-headlamp:
     config:
       # -- Ensure that the specified client is associated with cluster OIDC integration.
-      # -- For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/
+      # -- For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc
       oidc:
         # Enable OIDC integration. Default: false
         enabled: true
@@ -104,12 +104,12 @@ edp-install:
       # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
       # -- To enable proxy protect use openshift_proxy or sso.enabled sections.
       # -- More details:
-      # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
+      # -- https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy
       enabled: true
       # -- Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false.
       readOnly: false
       ingress:
-        # -- Deploy EDP Dashboard ingress as a part of pipeline library when true. Default: true
+        # -- Deploy KubeRocketCI Dashboard ingress as a part of pipeline library when true. Default: true
         enabled: true
         # -- Annotations for Ingress resource
         annotations: {}

@@ -22,7 +22,7 @@ kube-prometheus-stack:
         memory: "128Mi"
 
   prometheus:
-    # # https://epam.github.io/edp-install/operator-guide/tekton-monitoring/
+    # # https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-monitoring
     # prometheusSpec:
     #   additionalScrapeConfigsSecret:
     #     enabled: true
