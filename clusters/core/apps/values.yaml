@@ -26,6 +26,10 @@ argo-cd:
 aws-efs-csi-driver:
   enable: false
 
+awx-operator:
+  createNamespace: false
+  enable: false
+
 # -- Capsule
 capsule:
   # -- whether to create the namespace or not

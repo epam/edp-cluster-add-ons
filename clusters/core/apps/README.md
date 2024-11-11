@@ -27,6 +27,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | atlantis.createNamespace | bool | `false` |  |
 | atlantis.enable | bool | `false` |  |
 | aws-efs-csi-driver | object | `{"enable":false}` | AWS EFS CSI Driver |
+| awx-operator.createNamespace | bool | `false` |  |
+| awx-operator.enable | bool | `false` |  |
 | capsule | object | `{"createNamespace":false,"enable":false}` | Capsule |
 | capsule-tenant | object | `{"enable":false}` | Capsule Tenant |
 | capsule.createNamespace | bool | `false` | whether to create the namespace or not |
