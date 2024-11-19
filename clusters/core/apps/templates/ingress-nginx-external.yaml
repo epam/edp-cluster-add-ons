@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/ingress-nginx-external
+    path: clusters/{{ .Values.clusterName }}/addons/ingress-nginx-external
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: ingress-nginx-external

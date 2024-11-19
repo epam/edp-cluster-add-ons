@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/nexus
+    path: clusters/{{ .Values.clusterName }}/addons/nexus
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: nexus

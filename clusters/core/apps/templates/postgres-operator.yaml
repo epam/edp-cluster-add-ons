@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/postgres-operator
+    path: clusters/{{ .Values.clusterName }}/addons/postgres-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: postgres-operator

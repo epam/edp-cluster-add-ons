@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/prometheus-operator
+    path: clusters/{{ .Values.clusterName }}/addons/prometheus-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: prometheus-operator

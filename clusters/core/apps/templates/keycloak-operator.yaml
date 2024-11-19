@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/keycloak-operator
+    path: clusters/{{ .Values.clusterName }}/addons/keycloak-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: keycloak-operator

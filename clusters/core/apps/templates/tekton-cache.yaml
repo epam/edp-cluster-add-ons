@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/tekton-cache
+    path: clusters/{{ .Values.clusterName }}/addons/tekton-cache
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: tekton-cache

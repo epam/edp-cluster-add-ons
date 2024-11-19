@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/redis-operator
+    path: clusters/{{ .Values.clusterName }}/addons/redis-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: redis-operator

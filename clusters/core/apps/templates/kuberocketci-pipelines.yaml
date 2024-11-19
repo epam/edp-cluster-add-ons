@@ -9,14 +9,14 @@ metadata:
 spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
-    repoURL: ssh://git@github.com:22/epmd-edp/helm-helm-pipeline.git
+    repoURL: {{ index .Values "kuberocketci-pipelines" "repoUrl" }}
     path: .
     targetRevision: main
     helm:
       releaseName: pipelines
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: krci
+    namespace: {{ index .Values "kuberocketci-pipelines" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "kuberocketci-pipelines" "createNamespace") }}

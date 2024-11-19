@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/oauth2-proxy
+    path: clusters/{{ .Values.clusterName }}/addons/oauth2-proxy
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: oauth2-proxy

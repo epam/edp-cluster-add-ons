@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/minio-operator
+    path: clusters/{{ .Values.clusterName }}/addons/minio-operator
     targetRevision: {{ .Values.targetRevision }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}

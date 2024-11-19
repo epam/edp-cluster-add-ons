@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/opentelemetry-operator
+    path: clusters/{{ .Values.clusterName }}/addons/opentelemetry-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: opentelemetry-operator

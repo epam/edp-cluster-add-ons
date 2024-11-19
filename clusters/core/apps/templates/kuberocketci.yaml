@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/kuberocketci
+    path: clusters/{{ .Values.clusterName }}/addons/kuberocketci
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: krci

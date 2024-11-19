@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/kuberocketci-rbac
+    path: clusters/{{ .Values.clusterName }}/addons/kuberocketci-rbac
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: kuberocketci-rbac

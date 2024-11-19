@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/opensearch
+    path: clusters/{{ .Values.clusterName }}/addons/opensearch
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: opensearch

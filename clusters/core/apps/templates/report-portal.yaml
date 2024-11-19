@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/report-portal
+    path: clusters/{{ .Values.clusterName }}/addons/report-portal
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: report-portal

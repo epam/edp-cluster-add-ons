@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/keycloak-postgresql
+    path: clusters/{{ .Values.clusterName }}/addons/keycloak-postgresql
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: keycloak-postgresql

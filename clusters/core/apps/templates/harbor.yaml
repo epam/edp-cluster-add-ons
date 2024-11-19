@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/harbor
+    path: clusters/{{ .Values.clusterName }}/addons/harbor
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: harbor

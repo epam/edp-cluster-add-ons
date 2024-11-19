@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/cert-manager
+    path: clusters/{{ .Values.clusterName }}/addons/cert-manager
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: cert-manager

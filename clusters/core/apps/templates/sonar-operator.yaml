@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/sonar-operator
+    path: clusters/{{ .Values.clusterName }}/addons/sonar-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: sonar-operator

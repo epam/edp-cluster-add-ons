@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/vault-okd
+    path: clusters/{{ .Values.clusterName }}/addons/vault-okd
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: vault-okd

@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/dependency-track
+    path: clusters/{{ .Values.clusterName }}/addons/dependency-track
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: dependency-track
