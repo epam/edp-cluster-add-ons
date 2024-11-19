@@ -3,7 +3,7 @@ krakend:
     enabled: true
     annotations:
       nginx.ingress.kubernetes.io/cors-allow-headers: DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
-      nginx.ingress.kubernetes.io/cors-allow-methods: OPTIONS, GET
+      nginx.ingress.kubernetes.io/cors-allow-methods: OPTIONS, GET, POST
       nginx.ingress.kubernetes.io/cors-allow-origin: '*'
       nginx.ingress.kubernetes.io/enable-cors: 'true'
     hosts:
@@ -22,6 +22,10 @@ krakend:
         "timeout": "3000ms",
         "cache_ttl": "300s",
         "output_encoding": "json",
+        "client_tls": {
+          "@comment": "Skip SSL verification when connecting to backends",
+          "allow_insecure_connections": true
+        },
         "extra_config": {
           "router": {
             "logger_skip_paths": [
@@ -151,6 +155,42 @@ krakend:
                       ],
                       "name": "X-Api-Key",
                       "value": "{{ env "DEPTRACK_TOKEN" }}"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/search/logs",
+            "method": "POST",
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/logstash-edp-*/_search",
+                "method": "POST",
+                "host": [
+                  "{{ env "OPENSEARCH_URL" }}"
+                ],
+                "encoding": "json",
+                "extra_config": {
+                  "qos/http-cache": {},
+                  "modifier/martian": {
+                    "header.Append": {
+                      "scope": [
+                        "request"
+                      ],
+                      "name": "Authorization",
+                      "value": "Basic {{ env "OPENSEARCH_CREDS" }}"
                     }
                   }
                 }
