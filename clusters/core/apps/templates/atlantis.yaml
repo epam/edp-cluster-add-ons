@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/atlantis
+    path: clusters/{{ .Values.clusterName }}/addons/atlantis
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: atlantis

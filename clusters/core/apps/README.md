@@ -34,6 +34,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | capsule.createNamespace | bool | `false` | whether to create the namespace or not |
 | cert-manager | object | `{"createNamespace":false,"enable":false}` | Cert Manager |
 | cert-manager.createNamespace | bool | `false` | whether to create the namespace or not |
+| clusterName | string | `"core"` |  |
 | defectdojo | object | `{"createNamespace":false,"enable":false}` | DefectDojo |
 | defectdojo.createNamespace | bool | `false` | whether to create the namespace or not |
 | dependency-track.createNamespace | bool | `false` |  |
@@ -65,6 +66,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krakend.enable | bool | `false` |  |
 | kuberocketci-pipelines.createNamespace | bool | `false` |  |
 | kuberocketci-pipelines.enable | bool | `false` |  |
+| kuberocketci-pipelines.namespace | string | `"krci"` |  |
+| kuberocketci-pipelines.repoUrl | string | `"ssh://git@github.com:22/epmd-edp/helm-helm-pipeline.git"` |  |
 | kuberocketci-rbac.createNamespace | bool | `false` |  |
 | kuberocketci-rbac.enable | bool | `false` |  |
 | kuberocketci.createNamespace | bool | `false` |  |

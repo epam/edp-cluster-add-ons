@@ -13,6 +13,6 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/storage-class
+    path: clusters/{{ .Values.clusterName }}/addons/storage-class
     targetRevision: {{ .Values.targetRevision }}
 {{- end -}}

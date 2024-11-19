@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/nexus-operator
+    path: clusters/{{ .Values.clusterName }}/addons/nexus-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: nexus-operator

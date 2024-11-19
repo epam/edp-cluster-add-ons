@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/vault-kms
+    path: clusters/{{ .Values.clusterName }}/addons/vault-kms
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: vault-kms

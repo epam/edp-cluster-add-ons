@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/tekton
+    path: clusters/{{ .Values.clusterName }}/addons/tekton
     targetRevision: {{ .Values.targetRevision }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}

@@ -1,6 +1,9 @@
 # Place all applications under this project
 argoProject: core
 
+# Specifies the name of the cluster. This value is used to dynamically set the path for Argo CD Application manifests.
+clusterName: core
+
 # Specifies the destination server where the code will be deployed.
 # In this case, "in-cluster" indicates that the deployment will happen within the Kubernetes cluster itself.
 destinationServer: "in-cluster"
@@ -63,6 +66,8 @@ kuberocketci:
 kuberocketci-pipelines:
   createNamespace: false
   enable: false
+  namespace: krci
+  repoUrl: ssh://git@github.com:22/epmd-edp/helm-helm-pipeline.git
 
 kuberocketci-rbac:
   createNamespace: false

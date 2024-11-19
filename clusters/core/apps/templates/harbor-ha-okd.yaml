@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/harbor-ha-okd
+    path: clusters/{{ .Values.clusterName }}/addons/harbor-ha-okd
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: harbor-ha-okd

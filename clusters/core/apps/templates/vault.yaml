@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/core/addons/vault
+    path: clusters/{{ .Values.clusterName }}/addons/vault
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: vault
