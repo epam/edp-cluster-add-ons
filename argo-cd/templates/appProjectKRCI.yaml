@@ -50,8 +50,7 @@ spec:
   # enable access only for specific git server. The example below 'krci' - it is namespace where krci deployed
   sourceRepos:
     # path to code store
-    # (FIXME): Make sure that this is the correct path
-    - ssh://git@github.com/epam/*
+    - ssh://git@github.com:22/kuberocketci/*
   # enable capability to deploy objects from namespaces
   sourceNamespaces:
     - krci
