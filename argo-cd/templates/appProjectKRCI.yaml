@@ -49,7 +49,9 @@ spec:
     kind: '*'
   # enable access only for specific git server. The example below 'krci' - it is namespace where krci deployed
   sourceRepos:
-    # path to code store
+    # Specifies the URL of the Git repository from which the code will be pulled for deployment.
+    # It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
+    # and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
     - ssh://git@github.com:22/kuberocketci/*
   # enable capability to deploy objects from namespaces
   sourceNamespaces:
