@@ -19,6 +19,75 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
  -key /usr/share/opensearch/config/admin-certs/tls.key
 ```
 
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic opensearch-dashboards-account \
+  --from-literal=username=<username> \
+  --from-literal=password=<password> \
+  --from-literal=cookie=<cookie> \
+  --from-literal=OIDC_CLIENT_SECRET=<OIDC_CLIENT_SECRET>
+```
+
+```bash
+kubectl create secret generic fluentbit-creds \
+  --from-literal=username=<username> \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic keycloak-client-opensearch-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic opensearch-admin-creds \
+  --from-literal=username=<username> \
+  --from-literal=password=<password>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "opensearch-dashboard": {
+    "username": "<username>",
+    "password": "<password>",
+    "cookie": "<cookie>",
+    "OIDC_CLIENT_SECRET": "<OIDC_CLIENT_SECRET>"
+  },
+  "fluentbit": {
+    "username": "<username>",
+    "password": "<password>"
+  },
+  "opensearch": {
+    "username": "<username>",
+    "password": "<password>"
+  }
+}
+```
+
+</details>
+
 ## Requirements
 
 | Repository | Name | Version |

@@ -2,7 +2,53 @@
 
 ![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.0](https://img.shields.io/badge/AppVersion-3.2.0-informational?style=flat-square)
 
-A Helm chart for EDP Nexus Operator
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic ci-nexus \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic nexus-admin-password \
+  --from-literal=user=<clientSecret> \
+  --from-literal=password=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "nexus": {
+    "user": "<user>",
+    "password": "<password>"
+  },
+  "ci-nexus": {
+    "password": "<password>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -20,4 +66,3 @@ A Helm chart for EDP Nexus Operator
 | eso.secretName | string | `"/infra/core/addons/nexus-operator"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
-

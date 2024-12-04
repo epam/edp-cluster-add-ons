@@ -2,7 +2,47 @@
 
 ![Version: 7.6.0](https://img.shields.io/badge/Version-7.6.0-informational?style=flat-square) ![AppVersion: v7.6.0](https://img.shields.io/badge/AppVersion-v7.6.0-informational?style=flat-square)
 
-A Helm chart for Oauth2 Stack
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic oauth2-proxy \
+  --from-literal=client-id=<client-id> \
+  --from-literal=client-secret=<client-secret> \
+  --from-literal=cookie-secret=<cookie-secret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "oauth2-proxy": {
+    "client-id": "<client-id>",
+    "client-secret": "<client-secret>",
+    "cookie-secret": "<cookie-secret>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -24,4 +64,3 @@ A Helm chart for Oauth2 Stack
 | oauth2-proxy.config.existingSecret | string | `"oauth2-proxy"` |  |
 | oauth2-proxy.ingress.enabled | bool | `true` |  |
 | oauth2-proxy.ingress.hosts[0] | string | `"oauth-oauth2-proxy.example.com"` |  |
-

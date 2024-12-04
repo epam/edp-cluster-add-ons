@@ -2,7 +2,54 @@
 
 ![Version: 65.5.1](https://img.shields.io/badge/Version-65.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.77.2](https://img.shields.io/badge/AppVersion-v0.77.2-informational?style=flat-square)
 
-A Helm chart for Prometheus Operator
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic grafana-admin-creds \
+  --from-literal=username=<username> \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic keycloak-client-grafana-secret \
+  --from-literal=GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=<clientSecret> \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "grafana": {
+    "username": "<username>",
+    "password": "<password>"
+  },
+  "keycloak-client-grafana-secret": {
+    "clientSecret": "<clientSecret>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -80,4 +127,3 @@ A Helm chart for Prometheus Operator
 | kube-prometheus-stack.prometheusOperator.resources.requests.cpu | string | `"100m"` |  |
 | kube-prometheus-stack.prometheusOperator.resources.requests.memory | string | `"128Mi"` |  |
 | oidc.enabled | bool | `false` |  |
-

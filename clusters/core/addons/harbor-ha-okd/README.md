@@ -2,7 +2,91 @@
 
 ![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
 
-A Helm chart for Harbor with HA
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic harbor \
+  --from-literal=HARBOR_ADMIN_PASSWORD=<HARBOR_ADMIN_PASSWORD> \
+  --from-literal=secretKey=<secretKey> \
+  --from-literal=REGISTRY_HTPASSWD=<REGISTRY_HTPASSWD> \
+  --from-literal=REGISTRY_PASSWD=<REGISTRY_PASSWD> \
+```
+
+```bash
+kubectl create secret generic keycloak-client-harbor-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic centralized-minio-users \
+  --from-literal=username1="username=<REGISTRY_STORAGE_S3_ACCESSKEY>
+  password=<REGISTRY_STORAGE_S3_SECRETKEY>
+  disabled=false
+  policies=harbor
+  setPolicies=false"
+```
+
+```bash
+kubectl create secret generic redis-creds \
+  --from-literal=REDIS_PASSWORD=<REDIS_PASSWORD>
+```
+
+```bash
+kubectl create secret generic minio-admin-ui \
+  --from-literal=root-user=<clientSecret> \
+  --from-literal=root-password=<clientSecret>
+```
+
+```bash
+kubectl create secret generic harbor-s3 \
+  --from-literal=REGISTRY_STORAGE_S3_ACCESSKEY=<REGISTRY_STORAGE_S3_ACCESSKEY> \
+  --from-literal=REGISTRY_STORAGE_S3_SECRETKEY=<REGISTRY_STORAGE_S3_SECRETKEY>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "harbor": {
+    "oidcClientSecret": "<oidcClientSecret>",
+    "HARBOR_ADMIN_PASSWORD": "<HARBOR_ADMIN_PASSWORD>",
+    "secretKey": "<secretKey>",
+    "REGISTRY_HTPASSWD": "<REGISTRY_HTPASSWD>",
+    "REGISTRY_PASSWD": "<REGISTRY_PASSWD>"
+  },
+  "s3-user": {
+    "ACCESSKEY": "<ACCESSKEY>",
+    "SECRETKEY": "<SECRETKEY>"
+  },
+  "redis": "REDIS_PASSWORD",
+  "minio": {
+    "ROOT_USER": "<root-user>",
+    "ROOT_PASSWORD": "<root-password>"
+  }
+
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -85,4 +169,3 @@ A Helm chart for Harbor with HA
 | redis.master.persistence.size | string | `"1Gi"` |  |
 | redis.replica.persistence.size | string | `"1Gi"` |  |
 | redis.sentinel.enabled | bool | `true` |  |
-

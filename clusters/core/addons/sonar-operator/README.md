@@ -2,7 +2,62 @@
 
 ![Version: 3.1.1](https://img.shields.io/badge/Version-3.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square)
 
-A Helm chart for EDP Sonar Operator
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+
+```bash
+kubectl create secret generic sonar-admin-password \
+  --from-literal=user=<user> \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic sonar-view-user \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic ci-sonar \
+  --from-literal=password=<password>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "sonarqube": {
+    "user": "<clientSecret>",
+    "password": "<password>"
+  },
+  "sonar-view-user": {
+    "password": "<password>"
+  },
+  "sonarqube-ci-user": {
+    "password": "<password>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -36,4 +91,3 @@ A Helm chart for EDP Sonar Operator
 | sonar-operator.tolerations | list | `[]` |  |
 | sonarSecret | string | `"sonar-admin-password"` | This is credantials name with administator rights for sonar. |
 | sonarUrl | string | `"https://sonar.example.com"` | URL and secret name which use sonar operator for configuring sonar |
-

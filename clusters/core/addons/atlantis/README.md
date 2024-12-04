@@ -2,8 +2,6 @@
 
 ![Version: 5.8.0](https://img.shields.io/badge/Version-5.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.30.0](https://img.shields.io/badge/AppVersion-v0.30.0-informational?style=flat-square)
 
-A Helm chart for Atlantis https://www.runatlantis.io
-
 **Homepage:** <https://www.runatlantis.io>
 
 ## Maintainers
@@ -16,6 +14,44 @@ A Helm chart for Atlantis https://www.runatlantis.io
 | nitrocode |  |  |
 | genpage |  |  |
 | gmartinez-sisti |  |  |
+
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic atlantis-webhook \
+  --from-literal=bitbucket_token=<bitbucket_secret> \
+  --from-literal=bitbucket_secret=<bitbucket_secret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "bitbucket_token": "<bitbucket_secret>",
+  "bitbucket_secret": "<bitbucket_secret>"
+}
+```
+
+</details>
 
 ## Source Code
 
@@ -41,4 +77,3 @@ A Helm chart for Atlantis https://www.runatlantis.io
 | eso.secretName | string | `"/infra/core/addons/atlantis"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
-

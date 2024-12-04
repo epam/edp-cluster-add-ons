@@ -23,6 +23,65 @@ broker - contains a list of users and basic settings, you can install or use a p
 
 sharedService - contains clients, application integrations, and identity providers for connect to `broker` realm.
 
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-shared-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic keycloak \
+  --from-literal=username=<username> \
+  --from-literal=password=<password>
+```
+
+```bash
+kubectl create secret generic keycloak-client-eks-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "keycloak-client-shared-secret":
+    {
+      "clientSecret": "<clientSecret>",
+    },
+  "keycloak":
+    {
+      "username": "<username>",
+      "password": "<password>"
+    },
+  "keycloak-client-eks-secret":
+    {
+      "clientSecret": "<client>"
+    }
+}
+```
+
+</details>
+
 ## Values
 
 | Key | Type | Default | Description |

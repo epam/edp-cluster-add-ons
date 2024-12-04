@@ -2,7 +2,67 @@
 
 ![Version: 5.10.0](https://img.shields.io/badge/Version-5.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2](https://img.shields.io/badge/AppVersion-23.2-informational?style=flat-square)
 
-A Helm chart for report-portal
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-report-portal-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic reportportal-rabbitmq-creds \
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie> \
+  --from-literal=rabbitmq-password=<rabbitmq-password>
+```
+
+```bash
+kubectl create secret generic reportportal-postgresql-creds \
+  --from-literal=postgresql-password=<pstgresql-password> \
+  --from-literal=postgresql-postgres-password=<postgresql-postgres-password>
+```
+
+```bash
+kubectl create secret generic reportportal-minio-creds \
+  --from-literal=root-password=<root-password> \
+  --from-literal=root-user=<root-user>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "reportportal": {
+    "clientSecret": "<clientSecret>",
+    "rabbitmq-cookie": "<rabbitmq-cookie>",
+    "rabbitmq-password": "<rabbitmq-password>",
+    "postgresql-password": "<postgresql-password>",
+    "postgresql-postgres-password": "<postgresql-postgres-password>",
+    "root-password": "<root-password>",
+    "root-user": "<root-user>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -59,4 +119,3 @@ A Helm chart for report-portal
 | reportportal.storage.type | string | `"minio"` |  |
 | reportportal.uat.resources.requests.cpu | string | `"50m"` |  |
 | saml.enabled | bool | `false` |  |
-

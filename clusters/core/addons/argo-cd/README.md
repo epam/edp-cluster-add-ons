@@ -2,7 +2,53 @@
 
 ![Version: 7.6.12](https://img.shields.io/badge/Version-7.6.12-informational?style=flat-square) ![AppVersion: v2.12.6](https://img.shields.io/badge/AppVersion-v2.12.6-informational?style=flat-square)
 
-A Helm chart for Argo CD Install
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-argocd-secret \
+  --from-literal=clientSecret=<client-secret>
+```
+
+```bash
+kubectl create secret generic argocd-vcs \
+  --from-literal=clientSecret=<client-secret> \
+  --from-literal=url=<url>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "argocd": {
+    "clientSecret": "<secret>"
+    },
+  "argocd-vcs": {
+    "sshPrivateKey": "<ssh_key>",
+    "url": "<url>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -39,4 +85,3 @@ A Helm chart for Argo CD Install
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | oidc.enabled | bool | `false` |  |
-

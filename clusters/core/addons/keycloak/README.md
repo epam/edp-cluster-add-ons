@@ -4,6 +4,47 @@
 
 A Helm chart for Keycloak
 
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-admin-creds \
+  --from-literal=username=<username> \
+  --from-literal=password=<password>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "keycloak-admin-creds": {
+    "username": "<username>",
+    "password": "<password>",
+  }
+
+}
+```
+
+</details>
+
 # Expose Keycloak
 
 Keycloak add-on provides the ability to split user endpoints and admin endpoints to different Ingress Controllers.<br>

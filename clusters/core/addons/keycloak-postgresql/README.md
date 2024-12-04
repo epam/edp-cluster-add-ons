@@ -2,7 +2,44 @@
 
 ![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
-A Helm chart for Keycloak Postgresql
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-postgresql \
+  --from-literal=password=<password> \
+  --from-literal=postgres-password=<password>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "keycloak-postgresql": {
+    "password": "<password>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -30,4 +67,3 @@ A Helm chart for Keycloak Postgresql
 | postgresql.primary.persistence.size | string | `"3Gi"` |  |
 | postgresql.primary.persistence.storageClass | string | `"ebs-sc"` |  |
 | postgresql.readReplicas.replicaCount | int | `1` |  |
-

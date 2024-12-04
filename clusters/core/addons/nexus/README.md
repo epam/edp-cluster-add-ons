@@ -2,7 +2,55 @@
 
 ![Version: 61.0.3](https://img.shields.io/badge/Version-61.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.70.3](https://img.shields.io/badge/AppVersion-3.70.3-informational?style=flat-square)
 
-A Helm chart for Nexus
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-nexus-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic oauth2-proxy \
+  --from-literal=client-id=<clientSecret> \
+  --from-literal=client-secret=<clientSecret> \
+  --from-literal=cookie-secret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "keycloak-client-nexus-secret": {
+    "clientSecret": "<clientSecret>"
+  },
+  "oauth2-proxy": {
+    "client-id": "<clientSecret>",
+    "client-secret": "<client>",
+    "cookie-secret": "<cookie-secret>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -54,4 +102,3 @@ A Helm chart for Nexus
 | oauth2-proxy.enabled | bool | `false` |  |
 | oauth2-proxy.ingress.enabled | bool | `true` |  |
 | oauth2-proxy.ingress.hosts[0] | string | `"nexus.example.com"` |  |
-

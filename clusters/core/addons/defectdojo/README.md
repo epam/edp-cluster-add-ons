@@ -2,7 +2,69 @@
 
 ![Version: 1.6.127](https://img.shields.io/badge/Version-1.6.127-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.34.1](https://img.shields.io/badge/AppVersion-2.34.1-informational?style=flat-square)
 
-A Helm chart for DefectDojo Install
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic defectdojo-extrasecrets \
+  --from-literal=DD_SOCIAL_AUTH_KEYCLOAK_SECRET=<oidcClientSecret>
+```
+
+```bash
+kubectl create secret generic defectdojo-rabbitmq-specific \
+  --from-literal=rabbitmq-password=<rabbitmq-password>
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie>
+```
+
+```bash
+kubectl create secret generic defectdojo \
+  --from-literal=DD_ADMIN_PASSWORD=<DD_ADMIN_PASSWORD> \
+  --from-literal=DD_SECRET_KEY=<DD_SECRET_KEY> \
+  --from-literal=DD_CREDENTIAL_AES_256_KEY=<DD_CREDENTIAL_AES_256_KEY> \
+  --from-literal=METRICS_HTTP_AUTH_PASSWORD=<METRICS_HTTP_AUTH_PASSWORD>
+```
+
+```bash
+kubectl create secret generic keycloak-client-defectdojo-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "defectdojo": {
+    "oidcClientSecret": "<oidcClientSecret>",
+    "rabbitmq-erlang-cookie": "<rabbitmq-erlang-cookie>",
+    "rabbitmq-password": "<rabbitmq-password>",
+    "DD_ADMIN_PASSWORD": "<DD_ADMIN_PASSWORD>",
+    "DD_SECRET_KEY": "<DD_SECRET_KEY>",
+    "DD_CREDENTIAL_AES_256_KEY": "<DD_CREDENTIAL_AES_256_KEY>",
+    "METRICS_HTTP_AUTH_PASSWORD": "<METRICS_HTTP_AUTH_PASSWORD>",
+    "oidcClientSecret": "<oidcClientSecret>"
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -42,8 +104,7 @@ A Helm chart for DefectDojo Install
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/infra/core/addons//defectdojo"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
+| eso.secretName | string | `"/infra/core/addons/defectdojo"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | oidc.enabled | bool | `false` |  |
-
