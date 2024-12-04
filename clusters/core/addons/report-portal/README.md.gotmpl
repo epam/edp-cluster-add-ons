@@ -1,0 +1,77 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-report-portal-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic reportportal-rabbitmq-creds \
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie> \
+  --from-literal=rabbitmq-password=<rabbitmq-password>
+```
+
+```bash
+kubectl create secret generic reportportal-postgresql-creds \
+  --from-literal=postgresql-password=<pstgresql-password> \
+  --from-literal=postgresql-postgres-password=<postgresql-postgres-password>
+```
+
+```bash
+kubectl create secret generic reportportal-minio-creds \
+  --from-literal=root-password=<root-password> \
+  --from-literal=root-user=<root-user>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "reportportal": {
+    "clientSecret": "<clientSecret>",
+    "rabbitmq-cookie": "<rabbitmq-cookie>",
+    "rabbitmq-password": "<rabbitmq-password>",
+    "postgresql-password": "<postgresql-password>",
+    "postgresql-postgres-password": "<postgresql-postgres-password>",
+    "root-password": "<root-password>",
+    "root-user": "<root-user>"
+  }
+}
+```
+
+</details>
+
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

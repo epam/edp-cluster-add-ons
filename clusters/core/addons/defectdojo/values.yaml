@@ -63,7 +63,7 @@ eso:
   # -- Defines Secret Store name.
   secretStoreName: "aws-parameterstore"
   # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
-  secretName: "/infra/core/addons//defectdojo"
+  secretName: "/infra/core/addons/defectdojo"
   # -- Role ARN for the ExternalSecretOperator to assume.
   roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
   # Defines Secret Store configuration. Used when eso.type is set to "generic".

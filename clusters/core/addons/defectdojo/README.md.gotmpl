@@ -1,0 +1,79 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic defectdojo-extrasecrets \
+  --from-literal=DD_SOCIAL_AUTH_KEYCLOAK_SECRET=<oidcClientSecret>
+```
+
+```bash
+kubectl create secret generic defectdojo-rabbitmq-specific \
+  --from-literal=rabbitmq-password=<rabbitmq-password>
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie>
+```
+
+```bash
+kubectl create secret generic defectdojo \
+  --from-literal=DD_ADMIN_PASSWORD=<DD_ADMIN_PASSWORD> \
+  --from-literal=DD_SECRET_KEY=<DD_SECRET_KEY> \
+  --from-literal=DD_CREDENTIAL_AES_256_KEY=<DD_CREDENTIAL_AES_256_KEY> \
+  --from-literal=METRICS_HTTP_AUTH_PASSWORD=<METRICS_HTTP_AUTH_PASSWORD>
+```
+
+```bash
+kubectl create secret generic keycloak-client-defectdojo-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "defectdojo": {
+    "oidcClientSecret": "<oidcClientSecret>",
+    "rabbitmq-erlang-cookie": "<rabbitmq-erlang-cookie>",
+    "rabbitmq-password": "<rabbitmq-password>",
+    "DD_ADMIN_PASSWORD": "<DD_ADMIN_PASSWORD>",
+    "DD_SECRET_KEY": "<DD_SECRET_KEY>",
+    "DD_CREDENTIAL_AES_256_KEY": "<DD_CREDENTIAL_AES_256_KEY>",
+    "METRICS_HTTP_AUTH_PASSWORD": "<METRICS_HTTP_AUTH_PASSWORD>",
+    "oidcClientSecret": "<oidcClientSecret>"
+  }
+}
+```
+
+</details>
+
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

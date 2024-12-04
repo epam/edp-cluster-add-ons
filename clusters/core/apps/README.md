@@ -90,7 +90,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | prometheus-operator.enable | bool | `false` |  |
 | redis-operator.createNamespace | bool | `false` |  |
 | redis-operator.enable | bool | `false` |  |
-| repoUrl | string | `"ssh://git@github.com:22/epam/edp-cluster-add-ons"` |  |
+| repoUrl | string | `"ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"` |  |
 | report-portal.createNamespace | bool | `false` |  |
 | report-portal.enable | bool | `false` |  |
 | sonar-operator.createNamespace | bool | `false` |  |

@@ -2,7 +2,49 @@
 
 ![Version: 2.19.1](https://img.shields.io/badge/Version-2.19.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.19.1](https://img.shields.io/badge/AppVersion-2.19.1-informational?style=flat-square)
 
-A Helm chart for the AWX Operator
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic keycloak-client-awx-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+```bash
+kubectl create secret generic awx-admin-password \
+  --from-literal=password=<admin-password>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "awx-operator": {
+    "admin-password": "<admin-password>",
+    "clientSecret": "<clientSecret>"
+  }
+}
+```
+
+</details>
 
 ## Values
 
@@ -32,4 +74,3 @@ A Helm chart for the AWX Operator
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | oidc.enabled | bool | `false` |  |
-

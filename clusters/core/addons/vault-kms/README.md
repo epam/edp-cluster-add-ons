@@ -74,6 +74,45 @@ A Helm chart for Vault
     kubectl get secret vault-external-secret -o jsonpath='{.data.example}' | base64 --decode
     ```
 
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+
+```bash
+kubectl create secret generic keycloak-client-vault-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "vaultOIDC": {
+    "oidcClientSecret": "<oidcClientSecret>"
+  }
+}
+```
+
+</details>
+
 ## Requirements
 
 | Repository | Name | Version |

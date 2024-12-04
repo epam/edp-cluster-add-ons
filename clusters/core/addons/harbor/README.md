@@ -2,7 +2,55 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.2](https://img.shields.io/badge/AppVersion-1.12.2-informational?style=flat-square)
 
-A Helm chart for Harbor
+## Secret managment
+
+There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
+
+<details open>
+<summary><b>Kubectl</b></summary>
+
+Run following command to create a secret(s):
+```bash
+kubectl create secret generic harbor \
+  --from-literal=HARBOR_ADMIN_PASSWORD=<HARBOR_ADMIN_PASSWORD> \
+  --from-literal=secretKey=<secretKey> \
+  --from-literal=REGISTRY_HTPASSWD=<REGISTRY_HTPASSWD> \
+  --from-literal=REGISTRY_PASSWD=<REGISTRY_PASSWD> \
+```
+
+```bash
+kubectl create secret generic keycloak-client-harbor-secret \
+  --from-literal=clientSecret=<clientSecret>
+```
+
+</details>
+
+<details>
+<summary><b>External Secret Operator</b></summary>
+
+Update [values.yaml](values.yaml) to enable ESO:
+
+```yaml
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+```
+
+AWS Parameter Store structure:
+
+```json
+{
+  "harbor": {
+    "oidcClientSecret": "<oidcClientSecret>",
+    "HARBOR_ADMIN_PASSWORD": "<HARBOR_ADMIN_PASSWORD>",
+    "secretKey": "<secretKey>",
+    "REGISTRY_HTPASSWD": "<REGISTRY_HTPASSWD>",
+    "REGISTRY_PASSWD": "<REGISTRY_PASSWD>",
+  }
+}
+```
+
+</details>
 
 ## Requirements
 
@@ -50,4 +98,3 @@ A Helm chart for Harbor
 | harbor.registry.secret | string | `"SomeSecret"` |  |
 | harbor.updateStrategy.type | string | `"Recreate"` |  |
 | oidc.enabled | bool | `false` |  |
-
