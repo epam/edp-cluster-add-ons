@@ -23,7 +23,7 @@ broker - contains a list of users and basic settings, you can install or use a p
 
 sharedService - contains clients, application integrations, and identity providers for connect to `broker` realm.
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

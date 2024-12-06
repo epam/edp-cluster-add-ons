@@ -74,7 +74,7 @@ A Helm chart for Vault
     kubectl get secret vault-external-secret -o jsonpath='{.data.example}' | base64 --decode
     ```
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

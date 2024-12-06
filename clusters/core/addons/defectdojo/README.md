@@ -2,7 +2,7 @@
 
 ![Version: 1.6.127](https://img.shields.io/badge/Version-1.6.127-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.34.1](https://img.shields.io/badge/AppVersion-2.34.1-informational?style=flat-square)
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

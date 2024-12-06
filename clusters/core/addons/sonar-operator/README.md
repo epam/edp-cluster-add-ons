@@ -2,7 +2,7 @@
 
 ![Version: 3.1.1](https://img.shields.io/badge/Version-3.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square)
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 
@@ -75,7 +75,9 @@ AWS Parameter Store structure:
 | eso.secretName | string | `"/infra/core/addons/sonar-operator"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
-| oidc | object | `{"enabled":false,"keycloakRealm":"shared","keycloakUrl":"https://keycloak.example.com"}` | Integration with keycloak |
+| oidc.enabled | bool | `false` |  |
+| oidc.keycloakRealm | string | `"shared"` |  |
+| oidc.keycloakUrl | string | `"https://keycloak.example.com"` |  |
 | sonar-operator.affinity | object | `{}` |  |
 | sonar-operator.annotations | object | `{}` |  |
 | sonar-operator.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the container |

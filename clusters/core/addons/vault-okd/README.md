@@ -31,7 +31,7 @@ user_claim="sub" \
 policies=reader
 ```
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

@@ -37,8 +37,14 @@ edp-install:
     #   space: "edp"
     #   awsRegion: "eu-central-1"
 
-  # Configure External Secrets Operator to provision secrets for Platform and/or EDP
-  # https://external-secrets.io/latest/provider-aws-secrets-manager/
+  # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+  # Prerequisite: Ensure that ESO is installed in the cluster.
+  # Refer to the EDP cluster add-on for ESO installation and setup:
+  # https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+  #
+  # Ensure that you have created the necessary roles for ESO integration.
+  # Follow the detailed instructions here:
+  # https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
   externalSecrets:
     # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
     enabled: false
