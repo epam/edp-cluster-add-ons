@@ -42,13 +42,28 @@ sonarSecret: "sonar-admin-password"
 # -- If use a clean install of Sonar, need to set admin password during first login after deploy
 # -- To change password in accout navigate -> Administration -> Security -> Users -> admin -> Enter a new password
 
-# -- Integration with keycloak
+
+# Configuration for setting up resources in Keycloak to enable OIDC authentication.
+# Prerequisite: Ensure that the Keycloak Operator is installed and integrated with Keycloak.
+# Refer to the installation guide for the Keycloak Operator:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/keycloak-operator
+#
+# Additionally, necessary Keycloak resources such as realms, roles, and groups must be created
+# to support component functionality. This can be done using the provided add-ons or manually:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/kuberocketci-rbac
 oidc:
   enabled: false
   keycloakUrl: "https://keycloak.example.com"
   keycloakRealm: "shared"
 
-# Configure components of the External Secrets Operator (ESO).
+# This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+# Prerequisite: Ensure that ESO is installed in the cluster.
+# Refer to the EDP cluster add-on for ESO installation and setup:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+#
+# Ensure that you have created the necessary roles for ESO integration.
+# Follow the detailed instructions here:
+# https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
 eso:
   # -- Install components of the ESO.
   enabled: true

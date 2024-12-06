@@ -14,7 +14,7 @@ A Helm chart for Sonarqube
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| oidc | object | `{"enabled":false}` | Integration with keycloak |
+| oidc.enabled | bool | `false` |  |
 | sonarqube.deploymentType | string | `"Deployment"` |  |
 | sonarqube.env[0].name | string | `"SONAR_TELEMETRY_ENABLE"` |  |
 | sonarqube.env[0].value | string | `"false"` |  |

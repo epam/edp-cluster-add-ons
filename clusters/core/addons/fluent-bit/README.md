@@ -4,7 +4,7 @@
 
 A Helm chart for Fluent Bit
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

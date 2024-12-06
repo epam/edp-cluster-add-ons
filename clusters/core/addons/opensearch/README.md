@@ -19,7 +19,7 @@ cd /usr/share/opensearch/plugins/opensearch-security/tools/
  -key /usr/share/opensearch/config/admin-certs/tls.key
 ```
 
-## Secret managment
+## Secret management
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 

@@ -55,7 +55,15 @@ sonarqube:
     jdbcSecretName: sonar-pguser-sonar
     jdbcSecretPasswordKey: "password"
 
-# -- Integration with keycloak
+
+# Configuration for setting up resources in Keycloak to enable OIDC authentication.
+# Prerequisite: Ensure that the Keycloak Operator is installed and integrated with Keycloak.
+# Refer to the installation guide for the Keycloak Operator:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/keycloak-operator
+#
+# Additionally, necessary Keycloak resources such as realms, roles, and groups must be created
+# to support component functionality. This can be done using the provided add-ons or manually:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/kuberocketci-rbac
 oidc:
   # If set to true, the OIDC resources will be created.
   enabled: false
