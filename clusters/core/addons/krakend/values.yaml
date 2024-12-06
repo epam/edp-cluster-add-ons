@@ -14,6 +14,8 @@ krakend:
   krakend:
     partials: null
     settings: null
+    # -- Defines the name of the Secret that contains the KrakenD configuration.
+    envFromSecret: "krakend"
     config: |
       {
         "$schema": "https://www.krakend.io/schema/krakend.json",
