@@ -6,10 +6,10 @@ spec:
   id: ci.user
   firstName: ci.user
   lastName: CI
-  email: ci.user@edp.com
+  email: ci.user@krci.com
   secret: $ci-nexus:password
   roles:
-    - edp-admin
+    - krci-admin
   nexusRef:
     name: nexus
     kind: Nexus
