@@ -41,6 +41,11 @@ argo-cd:
         g, ArgoCDAdmins, role:admin
         # Default global developers
         g, ArgoCDReadOnly, role:readonly
+
+        # Default role to run Terminal for krci Project
+        p, role:krci-exec, exec, create, krci/*, allow
+        # Assign role to developer group
+        g, developer, role:krci-exec
     ssh:
       knownHosts: |
         # -- list of known host in format:

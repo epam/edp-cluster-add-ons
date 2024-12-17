@@ -21,8 +21,6 @@ spec:
         - p, proj:krci:developer, repositories, delete, krci/*, allow
         - p, proj:krci:developer, repositories, update, krci/*, allow
         - p, proj:krci:developer, repositories, get, krci/*, allow
-        # Enable access to terminal. Can be uncommented after token for 'ci-argocd' secret is created.
-        # - p, ArgoCD-krci-users, exec, create, krci/*, allow
       groups:
         # Keycloak Group name
         - ArgoCD-krci-users

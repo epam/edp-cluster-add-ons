@@ -67,7 +67,7 @@ AWS Parameter Store structure:
 | argo-cd.configs.params."application.namespaces" | string | `"krci"` |  |
 | argo-cd.configs.params."applicationsetcontroller.namespaces" | string | `"krci"` |  |
 | argo-cd.configs.params."server.insecure" | bool | `true` |  |
-| argo-cd.configs.rbac."policy.csv" | string | `"# default global admins\ng, ArgoCDAdmins, role:admin\n# Default global developers\ng, ArgoCDReadOnly, role:readonly\n"` |  |
+| argo-cd.configs.rbac."policy.csv" | string | `"# default global admins\ng, ArgoCDAdmins, role:admin\n# Default global developers\ng, ArgoCDReadOnly, role:readonly\n\n# Default role to run Terminal for krci Project\np, role:krci-exec, exec, create, krci/*, allow\n# Assign role to developer group\ng, developer, role:krci-exec\n"` |  |
 | argo-cd.configs.rbac.scopes | string | `"[groups]"` |  |
 | argo-cd.configs.secret.createSecret | bool | `true` | Create the argocd-secret |
 | argo-cd.configs.ssh.knownHosts | string | `"# -- list of known host in format:\n# [host]:port key-type key\n# Example\n# [ssh.github.com]:443 ssh-rsa qgSdfOuiYhew/+afhQnvjfjhnhnqgSdfOuiYhew/+afhQnvjfjhnhn\n"` |  |
