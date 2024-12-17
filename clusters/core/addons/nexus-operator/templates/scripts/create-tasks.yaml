@@ -40,7 +40,7 @@ spec:
         "cron": "0 20 9 * * ?",
         "typeId": "blobstore.compact",
         "taskProperties": {
-          "blobstoreName": "edp-container"
+          "blobstoreName": "krci-container"
         }
       },
       {
@@ -56,7 +56,7 @@ spec:
         "cron": "0 20 9 * * ?",
         "typeId": "blobstore.compact",
         "taskProperties": {
-          "blobstoreName": "edp-dotnet"
+          "blobstoreName": "krci-dotnet"
         }
       },
       {
@@ -64,7 +64,7 @@ spec:
         "cron": "0 20 9 * * ?",
         "typeId": "blobstore.compact",
         "taskProperties": {
-          "blobstoreName": "edp-maven"
+          "blobstoreName": "krci-maven"
         }
       },
       {
@@ -72,7 +72,7 @@ spec:
         "cron": "0 20 9 * * ?",
         "typeId": "blobstore.compact",
         "taskProperties": {
-          "blobstoreName": "edp-npm"
+          "blobstoreName": "krci-npm"
         }
       },
       {

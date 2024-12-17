@@ -1,20 +1,20 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-dotnet-group
+  name: krci-dotnet-group
 spec:
   nexusRef:
     name: nexus
   nuget:
     group:
-      name: edp-dotnet-group
+      name: krci-dotnet-group
       group:
         memberNames:
-          - edp-dotnet-proxy
-          - edp-dotnet-releases
-          - edp-dotnet-snapshots
-          - edp-dotnet-hosted
+          - krci-dotnet-proxy
+          - krci-dotnet-releases
+          - krci-dotnet-snapshots
+          - krci-dotnet-hosted
       online: true
       storage:
-        blobStoreName: "edp-dotnet"
+        blobStoreName: "krci-dotnet"
         strictContentTypeValidation: true

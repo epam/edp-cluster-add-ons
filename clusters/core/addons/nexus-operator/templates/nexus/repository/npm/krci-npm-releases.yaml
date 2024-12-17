@@ -1,21 +1,17 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-maven-snapshots
+  name: krci-npm-releases
 spec:
   nexusRef:
     name: nexus
-  maven:
+  npm:
     hosted:
-      name: edp-maven-snapshots
-      maven:
-        versionPolicy: SNAPSHOT
-        layoutPolicy: STRICT
-        contentDisposition: INLINE
+      name: krci-npm-releases
       storage:
-        blobStoreName: "edp-maven"
+        blobStoreName: "krci-npm"
         strictContentTypeValidation: true
-        writePolicy: ALLOW
+        writePolicy: ALLOW_ONCE
       online: true
       component:
         proprietaryComponents: true

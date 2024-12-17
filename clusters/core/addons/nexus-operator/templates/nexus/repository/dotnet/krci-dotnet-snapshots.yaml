@@ -1,15 +1,15 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-python-snapshots
+  name: krci-dotnet-snapshots
 spec:
   nexusRef:
     name: nexus
-  pypi:
+  nuget:
     hosted:
-      name: edp-python-snapshots
+      name: krci-dotnet-snapshots
       storage:
-        blobStoreName: "edp-python"
+        blobStoreName: "krci-dotnet"
         strictContentTypeValidation: true
         writePolicy: ALLOW
       online: true

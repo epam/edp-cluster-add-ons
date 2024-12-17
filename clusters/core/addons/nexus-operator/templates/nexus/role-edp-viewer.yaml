@@ -1,13 +1,13 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRole
 metadata:
-  name: edp-viewer
+  name: krci-viewer
 spec:
-  id: edp-viewer
+  id: krci-viewer
   nexusRef:
     name: nexus
     kind: Nexus
-  name: edp-viewer
+  name: krci-viewer
   description: Read access rights to all repos
   privileges:
     - nx-repository-view-*-*-browse

@@ -1,10 +1,10 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
-  name: edp-container
+  name: krci-npm
 spec:
-  name: edp-container
+  name: krci-npm
   file:
-    path: edp-container
+    path: krci-npm
   nexusRef:
     name: nexus
