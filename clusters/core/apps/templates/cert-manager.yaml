@@ -19,7 +19,7 @@ spec:
     namespace: cert-manager
   syncPolicy:
     syncOptions:
-      - CreateNamespace={{ .Values.certmanager.createNamespace }}
+      - CreateNamespace={{ (index .Values "cert-manager" "createNamespace")  }}
     retry:
       limit: 1
       backoff:
