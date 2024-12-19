@@ -6,6 +6,10 @@
 
 There is two way for creating secret for this add-on: manual by using kubectl command and using External Secret Operator.
 
+> **Note:** `SONARQUBE_TOKEN` should be base64 encoded in the following format: `token:` (with the colon included at the end).
+
+> **Note:** `OPENSEARCH_CREDS` should be base64 encoded in the following format: `username:password`.
+
 <details open>
 <summary><b>Kubectl</b></summary>
 
@@ -13,9 +17,11 @@ Run following command to create a secret(s):
 ```bash
 kubectl create secret generic krakend \
   --from-literal=SONARQUBE_URL=<SONARQUBE_URL> \
-  --from-literal=SONARQUBE_TOKEN=<SONARQUBE_TOKEN> \
+  --from-literal=SONARQUBE_TOKEN=<BASE64_ENCODED_SONARQUBE_TOKEN> \
   --from-literal=DEPTRACK_URL=<DEPTRACK_URL> \
   --from-literal=DEPTRACK_TOKEN=<DEPTRACK_TOKEN> \
+  --from-literal=OPENSEARCH_URL=<OPENSEARCH_URL> \
+  --from-literal=OPENSEARCH_CREDS=<BASE64_ENCODED_OPENSEARCH_CREDS> \
   --from-literal=JWK_URL=<JWK_URL>
 ```
 
@@ -37,9 +43,11 @@ AWS Parameter Store structure:
 ```json
 {
   "SONARQUBE_URL": "http://sonar.sonar:9000",
-  "SONARQUBE_TOKEN": "<sonarqube-token>",
+  "SONARQUBE_TOKEN": "<base64-encoded-sonarqube-token>",
   "DEPTRACK_URL": "http://dependency-track-api-server.dependency-track:8080",
   "DEPTRACK_TOKEN": "<dependency-track-token>",
+  "OPENSEARCH_URL": "https://opensearch-cluster-master.logging:9200",
+  "OPENSEARCH_CREDS": "<base64-encoded-opensearch-creds>",
   "JWK_URL": "https://keycloak.example.com/auth/realms/<sharedService>/protocol/openid-connect/certs"
 }
 ```
