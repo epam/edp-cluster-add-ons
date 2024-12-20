@@ -1,13 +1,13 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRole
 metadata:
-  name: edp-admin
+  name: krci-admin
 spec:
-  id: edp-admin
+  id: krci-admin
   nexusRef:
     name: nexus
     kind: Nexus
-  name: edp-admin
+  name: krci-admin
   description: Read and write access to all repos and scripts
   privileges:
     - nx-apikey-all

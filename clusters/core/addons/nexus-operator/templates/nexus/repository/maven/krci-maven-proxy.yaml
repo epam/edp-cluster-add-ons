@@ -1,22 +1,26 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-dotnet-proxy
+  name: krci-maven-proxy
 spec:
   nexusRef:
     name: nexus
-  nuget:
+  maven:
     proxy:
-      name: edp-dotnet-proxy
+      maven:
+        versionPolicy: MIXED
+        layoutPolicy: STRICT
+        contentDisposition: INLINE
+      name: krci-maven-proxy
       proxy:
-        remoteUrl: https://api.nuget.org/v3/index.json
+        remoteUrl: https://repo1.maven.org/maven2/
         contentMaxAge: 1440
         metadataMaxAge: 1440
       online: true
       routingRule: "routing-rule"
       cleanup:
         policyNames:
-          - "dotnet-nexus-cleanup-policy"
+          - "maven-nexus-cleanup-policy"
       httpClient:
         autoBlock: true
         blocked: false
@@ -28,5 +32,5 @@ spec:
         enabled: true
         timeToLive: 1440
       storage:
-        blobStoreName: "edp-dotnet"
+        blobStoreName: "krci-maven"
         strictContentTypeValidation: true

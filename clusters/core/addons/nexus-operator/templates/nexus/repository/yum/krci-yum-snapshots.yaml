@@ -1,17 +1,17 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-yum-releases
+  name: krci-yum-snapshots
 spec:
   nexusRef:
     name: nexus
   yum:
     hosted:
-      name: edp-yum-releases
+      name: krci-yum-snapshots
       storage:
-        blobStoreName: "edp-yum"
+        blobStoreName: "krci-yum"
         strictContentTypeValidation: true
-        writePolicy: ALLOW_ONCE
+        writePolicy: ALLOW
       online: true
       component:
         proprietaryComponents: true

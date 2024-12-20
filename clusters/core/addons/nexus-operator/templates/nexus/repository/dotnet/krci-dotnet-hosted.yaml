@@ -1,20 +1,16 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-yum-snapshots
+  name: krci-dotnet-hosted
 spec:
   nexusRef:
     name: nexus
-  yum:
+  nuget:
     hosted:
-      name: edp-yum-snapshots
+      name: krci-dotnet-hosted
       storage:
-        blobStoreName: "edp-yum"
+        blobStoreName: "krci-dotnet"
         strictContentTypeValidation: true
-        writePolicy: ALLOW
       online: true
       component:
         proprietaryComponents: true
-      yum:
-        repodataDepth: 3
-        deployPolicy: STRICT

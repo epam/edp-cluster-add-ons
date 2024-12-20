@@ -1,22 +1,22 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-yum-proxy
+  name: krci-dotnet-proxy
 spec:
   nexusRef:
     name: nexus
-  yum:
+  nuget:
     proxy:
-      name: edp-yum-proxy
+      name: krci-dotnet-proxy
       proxy:
-        remoteUrl: http://fedora.ip-connect.info/linux/development/rawhide/Everything/x86_64/os/
+        remoteUrl: https://api.nuget.org/v3/index.json
         contentMaxAge: 1440
         metadataMaxAge: 1440
       online: true
       routingRule: "routing-rule"
       cleanup:
         policyNames:
-          - "cleanup-policy"
+          - "dotnet-nexus-cleanup-policy"
       httpClient:
         autoBlock: true
         blocked: false
@@ -28,5 +28,5 @@ spec:
         enabled: true
         timeToLive: 1440
       storage:
-        blobStoreName: "edp-yum"
+        blobStoreName: "krci-dotnet"
         strictContentTypeValidation: true

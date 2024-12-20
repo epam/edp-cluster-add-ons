@@ -1,18 +1,18 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-container-hosted
+  name: krci-container-hosted
 spec:
   nexusRef:
     name: nexus
   docker:
     hosted:
-      name: edp-container-hosted
+      name: krci-container-hosted
       docker:
         forceBasicAuth: true
         httpPort: 5000
         v1Enabled: true
       storage:
-        blobStoreName: "edp-container"
+        blobStoreName: "krci-container"
         strictContentTypeValidation: true
       online: true

@@ -1,22 +1,22 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-npm-proxy
+  name: krci-yum-proxy
 spec:
   nexusRef:
     name: nexus
-  npm:
+  yum:
     proxy:
-      name: edp-npm-proxy
+      name: krci-yum-proxy
       proxy:
-        remoteUrl: https://registry.npmjs.org
+        remoteUrl: http://fedora.ip-connect.info/linux/development/rawhide/Everything/x86_64/os/
         contentMaxAge: 1440
         metadataMaxAge: 1440
       online: true
       routingRule: "routing-rule"
       cleanup:
         policyNames:
-          - "npm-nexus-cleanup-policy"
+          - "cleanup-policy"
       httpClient:
         autoBlock: true
         blocked: false
@@ -28,6 +28,5 @@ spec:
         enabled: true
         timeToLive: 1440
       storage:
-        blobStoreName: "edp-npm"
+        blobStoreName: "krci-yum"
         strictContentTypeValidation: true
-

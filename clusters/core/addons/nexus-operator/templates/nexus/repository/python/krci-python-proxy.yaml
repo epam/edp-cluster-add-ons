@@ -1,26 +1,22 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-maven-proxy
+  name: krci-python-proxy
 spec:
   nexusRef:
     name: nexus
-  maven:
+  pypi:
     proxy:
-      maven:
-        versionPolicy: MIXED
-        layoutPolicy: STRICT
-        contentDisposition: INLINE
-      name: edp-maven-proxy
+      name: krci-python-proxy
       proxy:
-        remoteUrl: https://repo1.maven.org/maven2/
+        remoteUrl: https://pypi.org
         contentMaxAge: 1440
         metadataMaxAge: 1440
       online: true
       routingRule: "routing-rule"
       cleanup:
         policyNames:
-          - "maven-nexus-cleanup-policy"
+          - "cleanup-policy"
       httpClient:
         autoBlock: true
         blocked: false
@@ -32,5 +28,5 @@ spec:
         enabled: true
         timeToLive: 1440
       storage:
-        blobStoreName: "edp-maven"
+        blobStoreName: "krci-python"
         strictContentTypeValidation: true

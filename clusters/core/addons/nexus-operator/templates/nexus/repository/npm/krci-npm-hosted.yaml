@@ -1,15 +1,15 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-dotnet-hosted
+  name: krci-npm-hosted
 spec:
   nexusRef:
     name: nexus
-  nuget:
+  npm:
     hosted:
-      name: edp-dotnet-hosted
+      name: krci-npm-hosted
       storage:
-        blobStoreName: "edp-dotnet"
+        blobStoreName: "krci-npm"
         strictContentTypeValidation: true
       online: true
       component:

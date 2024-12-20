@@ -1,20 +1,19 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-npm-group
+  name: krci-maven-group
 spec:
   nexusRef:
     name: nexus
-  npm:
+  maven:
     group:
-      name: edp-npm-group
+      name: krci-maven-group
       group:
         memberNames:
-          - edp-npm-proxy
-          - edp-npm-releases
-          - edp-npm-snapshots
-          - edp-npm-hosted
+          - krci-maven-proxy
+          - krci-maven-releases
+          - krci-maven-snapshots
       online: true
       storage:
-        blobStoreName: "edp-npm"
+        blobStoreName: "krci-maven"
         strictContentTypeValidation: true

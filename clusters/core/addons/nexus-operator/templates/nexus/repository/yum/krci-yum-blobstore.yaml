@@ -1,10 +1,10 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
-  name: edp-dotnet
+  name: krci-yum
 spec:
-  name: edp-dotnet
+  name: krci-yum
   file:
-    path: edp-dotnet
+    path: krci-yum
   nexusRef:
     name: nexus

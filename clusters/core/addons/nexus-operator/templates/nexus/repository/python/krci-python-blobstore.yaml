@@ -1,10 +1,10 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
-  name: edp-yum
+  name: krci-python
 spec:
-  name: edp-yum
+  name: krci-python
   file:
-    path: edp-yum
+    path: krci-python
   nexusRef:
     name: nexus

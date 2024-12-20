@@ -1,22 +1,22 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-python-proxy
+  name: krci-npm-proxy
 spec:
   nexusRef:
     name: nexus
-  pypi:
+  npm:
     proxy:
-      name: edp-python-proxy
+      name: krci-npm-proxy
       proxy:
-        remoteUrl: https://pypi.org
+        remoteUrl: https://registry.npmjs.org
         contentMaxAge: 1440
         metadataMaxAge: 1440
       online: true
       routingRule: "routing-rule"
       cleanup:
         policyNames:
-          - "cleanup-policy"
+          - "npm-nexus-cleanup-policy"
       httpClient:
         autoBlock: true
         blocked: false
@@ -28,5 +28,6 @@ spec:
         enabled: true
         timeToLive: 1440
       storage:
-        blobStoreName: "edp-python"
+        blobStoreName: "krci-npm"
         strictContentTypeValidation: true
+

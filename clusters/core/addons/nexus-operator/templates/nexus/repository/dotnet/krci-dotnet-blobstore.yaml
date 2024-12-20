@@ -1,10 +1,10 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
-  name: edp-python
+  name: krci-dotnet
 spec:
-  name: edp-python
+  name: krci-dotnet
   file:
-    path: edp-python
+    path: krci-dotnet
   nexusRef:
     name: nexus

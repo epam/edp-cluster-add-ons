@@ -1,16 +1,17 @@
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusRepository
 metadata:
-  name: edp-npm-hosted
+  name: krci-python-snapshots
 spec:
   nexusRef:
     name: nexus
-  npm:
+  pypi:
     hosted:
-      name: edp-npm-hosted
+      name: krci-python-snapshots
       storage:
-        blobStoreName: "edp-npm"
+        blobStoreName: "krci-python"
         strictContentTypeValidation: true
+        writePolicy: ALLOW
       online: true
       component:
         proprietaryComponents: true
