@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 7.6.12](https://img.shields.io/badge/Version-7.6.12-informational?style=flat-square) ![AppVersion: v2.12.6](https://img.shields.io/badge/AppVersion-v2.12.6-informational?style=flat-square)
+![Version: 7.7.11](https://img.shields.io/badge/Version-7.7.11-informational?style=flat-square) ![AppVersion: v2.13.2](https://img.shields.io/badge/AppVersion-v2.13.2-informational?style=flat-square)
 
 A Helm chart for Argo CD Install
 
@@ -8,7 +8,7 @@ A Helm chart for Argo CD Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 7.6.12 |
+| https://argoproj.github.io/argo-helm | argo-cd | 7.7.11 |
 
 ## Values
 
