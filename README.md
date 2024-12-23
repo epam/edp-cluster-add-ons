@@ -99,7 +99,7 @@ make update-readme
 | krakend                | 0.1.36    | 2.7.2        | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | False             | False    |
 | nexus                  | 61.0.3    | 3.70.3       | False             | False    |
-| nexus-operator         | 3.2.0     | 3.2.0        | False             | False    |
+| nexus-operator         | 3.3.0     | 3.3.0        | False             | False    |
 | oauth2-proxy           | 7.6.0     | v7.6.0       | False             | False    |
 | opensearch             | 2.26.1    | 2.17.1       | False             | False    |
 | opentelemetry-operator | 0.62.0    | 0.102.0      | False             | False    |
@@ -112,6 +112,7 @@ make update-readme
 | storage-class          | N/A       | N/A          | N/A               | False    |
 | tekton-cache           | 0.4.0     | 0.4.0        | False             | False    |
 | tekton                 | N/A       | N/A          | False             | False    |
+| tekton-custom-task     | 0.1.0     | 0.1.0        | False             | False    |
 | vault                  | 0.24.1    | 1.13.1       | False             | False    |
 | vault-kms              | 0.25.0    | 1.14.0       | False             | False    |
 | vault-okd              | 0.25.0    | 1.14.0       | False             | False    |

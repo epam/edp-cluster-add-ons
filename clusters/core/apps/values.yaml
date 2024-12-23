@@ -186,6 +186,10 @@ tekton:
   createNamespace: false
   enable: false
 
+tekton-custom-task:
+  createNamespace: false
+  enable: false
+
 vault:
   createNamespace: false
   enable: false

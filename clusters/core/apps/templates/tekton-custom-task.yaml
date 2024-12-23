@@ -1,0 +1,29 @@
+{{- if and (index .Values "tekton-custom-task") (index .Values "tekton-custom-task" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-tekton-custom-task
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/tekton-custom-task
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: tekton-custom-task
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: tekton-custom-task
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "tekton-custom-task" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

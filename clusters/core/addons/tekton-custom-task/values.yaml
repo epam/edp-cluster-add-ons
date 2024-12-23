@@ -1,0 +1,21 @@
+tekton-custom-task:
+  # -- component name
+  name: tekton-custom-task
+  annotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  image:
+     # -- tekton-custom-task Docker image name. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/tekton-custom-task)
+    repository: epamedp/tekton-custom-task
+    # if not defined then .Chart.AppVersion is used
+    # -- tekton-custom-task Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/tekton-custom-task)
+    tag: "0.1.0"
+  imagePullPolicy: "IfNotPresent"
+
+  resources:
+    limits:
+      memory: 192Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
