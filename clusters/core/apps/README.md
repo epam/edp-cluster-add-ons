@@ -101,6 +101,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | targetRevision | string | `"main"` |  |
 | tekton-cache.createNamespace | bool | `false` |  |
 | tekton-cache.enable | bool | `false` |  |
+| tekton-custom-task.createNamespace | bool | `false` |  |
+| tekton-custom-task.enable | bool | `false` |  |
 | tekton.createNamespace | bool | `false` |  |
 | tekton.enable | bool | `false` |  |
 | vault-kms.createNamespace | bool | `false` |  |
