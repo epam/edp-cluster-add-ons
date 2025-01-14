@@ -28,6 +28,9 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` |  |
 | ingress-nginx.controller.config.upstream-keepalive-timeout | string | `"120"` |  |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` |  |
+| ingress-nginx.controller.metrics.enabled | bool | `true` |  |
+| ingress-nginx.controller.metrics.serviceMonitor.additionalLabels.release | string | `"prometheus"` |  |
+| ingress-nginx.controller.metrics.serviceMonitor.enabled | bool | `true` |  |
 | ingress-nginx.controller.podAnnotations."fluentbit.io/parser" | string | `"k8s-nginx-ingress"` |  |
 | ingress-nginx.controller.resources.limits.memory | string | `"256Mi"` |  |
 | ingress-nginx.controller.resources.requests.cpu | string | `"50m"` |  |
@@ -37,7 +40,6 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.controller.service.type | string | `"NodePort"` |  |
 | ingress-nginx.controller.watchIngressWithoutClass | bool | `true` |  |
 | ingress-nginx.defaultBackend.enabled | bool | `true` |  |
-| ingress-nginx.metrics.enabled | bool | `true` |  |
 | ingress-nginx.serviceAccount.create | bool | `true` |  |
 | ingress-nginx.serviceAccount.name | string | `"nginx-ingress-service-account"` |  |
 | ingress-nginx.updateStrategy.rollingUpdate.maxUnavailable | int | `1` |  |

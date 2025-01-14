@@ -35,12 +35,16 @@ ingress-nginx:
       nodePorts:
         http: 32080
         https: 32443
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: prometheus
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
     type: RollingUpdate
-  metrics:
-    enabled: true
   defaultBackend:
     enabled: true
   serviceAccount:
