@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  version: {{ .Values.dashboard.image.tag }}
+kind: ConfigMap
+metadata:
+  labels:
+    app: tekton-dashboard
+  name: dashboard-info

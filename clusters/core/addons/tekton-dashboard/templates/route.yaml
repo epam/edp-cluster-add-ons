@@ -1,0 +1,21 @@
+{{ if eq .Values.global.platform "openshift" }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    {{- include "tekton-dashboard.labels" . | nindent 4 }}
+  name: {{ include "tekton-dashboard.name" . }}
+spec:
+  host: tekton-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+  path: /
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: {{ include "tekton-dashboard.name" . }}
+    weight: 100
+  wildcardPolicy: None
+{{ end }}

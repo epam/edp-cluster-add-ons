@@ -1,0 +1,80 @@
+global:
+  # -- a cluster DNS wildcard name
+  dnsWildCard: ""
+  # -- platform type that can be "kubernetes" or "openshift"
+  platform: "kubernetes"
+
+# Configuration parameters for Tekton Dashboard
+dashboard:
+  # -- The resource limits and requests for the Tekton Dashboard
+  resources:
+    limits:
+      cpu: "60m"
+      memory: "70Mi"
+    requests:
+      cpu: "50m"
+      memory: "40Mi"
+  # -- Make it possible to use openshift as OIDC provider to hide tekton-dashboard.
+  # -- Only for openshift deploy scenario,
+  # -- For EKS scenario - uncomment dashboard.ingress.annotations block
+  openshift_proxy:
+    # -- Enable oauth-proxy to include authorization layer on tekton-dashboard. Default: false
+    enabled: false
+    image:
+      # -- oauth-proxy image repository
+      repository: quay.io/openshift/origin-oauth-proxy
+      # -- oauth-proxy image tag
+      tag: 4.9.0
+
+    # -- The resource limits and requests for the Tekton Proxy
+    resources:
+      limits:
+        cpu: "60m"
+        memory: "70Mi"
+      requests:
+        cpu: "50m"
+        memory: "40Mi"
+
+  # -- Namespace where cluster tekton pipelines deployed. Default: tekton-pipelines
+  pipelinesNamespace: "tekton-pipelines"
+  # -- Namespace where cluster tekton triggers deployed. Default: tekton-pipelines
+  triggersNamespace: "tekton-pipelines"
+
+  nameOverride: "tekton-dashboard"
+  # -- Define mode for Tekton Dashboard. Enable/disable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false
+  readOnly: false
+
+  image:
+    # -- Define tekton dashboard docker image name
+    repository: ghcr.io/tektoncd/dashboard/dashboard-9623576a202fe86c8b7d1bc489905f86
+    # -- Define tekton dashboard docker image tag
+    tag: v0.52.0
+
+  ingress:
+    # -- Enable external endpoint access. Default Ingress/Route host pattern: tekton-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+    enabled: true
+    # -- Annotations for Ingress resource
+    annotations: {}
+      # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
+      # nginx.ingress.kubernetes.io/auth-signin: 'https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
+      # nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.oauth2-proxy.svc.cluster.local:80/oauth2/auth'
+    # -- Defines the base URL for the tekton.
+    # -- If not defined, it will be created by the pattern "tekton-[namespace].[global DNS wildcard]"
+    host: ""
+    # -- Ingress TLS configuration
+    # -- If hosts not defined, they will be created by the pattern "tekton-[namespace].[global DNS wildcard]"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - tekton-krci.example.com
+
+  quicklink:
+    # -- Enable creation of quick link to the Tekton Dashboard. Default: false
+    enabled: false
+
+  # -- Node labels for pod assignment
+  nodeSelector: {}
+  # -- Toleration labels for pod assignment
+  tolerations: []
+  # -- Affinity settings for pod assignment
+  affinity: {}

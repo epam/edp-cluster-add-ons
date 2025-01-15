@@ -113,6 +113,7 @@ make update-readme
 | tekton-cache           | 0.4.0     | 0.4.0        | False             | False    |
 | tekton                 | N/A       | N/A          | False             | False    |
 | tekton-custom-task     | 0.1.0     | 0.1.0        | False             | False    |
+| tekton-dashboard       | 0.52.0    | 0.52.0       | False             | False    |
 | vault                  | 0.24.1    | 1.13.1       | False             | False    |
 | vault-kms              | 0.25.0    | 1.14.0       | False             | False    |
 | vault-okd              | 0.25.0    | 1.14.0       | False             | False    |
