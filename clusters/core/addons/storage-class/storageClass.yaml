@@ -8,4 +8,5 @@ allowedTopologies: []
 mountOptions: []
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Retain
+allowVolumeExpansion: true
 volumeBindingMode: Immediate

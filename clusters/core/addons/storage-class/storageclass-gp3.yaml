@@ -6,4 +6,5 @@ allowedTopologies: []
 mountOptions: []
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
