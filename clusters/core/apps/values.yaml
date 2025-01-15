@@ -208,6 +208,11 @@ tekton-custom-task:
   createNamespace: false
   enable: false
 
+tekton-dashboard:
+  createNamespace: false
+  enable: false
+  namespace: krci
+
 vault:
   createNamespace: false
   enable: false

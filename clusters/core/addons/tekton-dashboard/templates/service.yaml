@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+{{- include "tekton-dashboard.labels" . | nindent 4 }}
+  name: {{ include "tekton-dashboard.name" . }}
+  {{ if and .Values.dashboard.openshift_proxy.enabled (eq .Values.global.platform "openshift")  }}
+  annotations:
+      service.alpha.openshift.io/serving-cert-secret-name: proxy-tls
+  {{ end }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+    {{ if .Values.dashboard.openshift_proxy.enabled }}
+      targetPort: proxy
+    {{ else }}
+      targetPort: 9097
+    {{ end }}
+      protocol: TCP
+      name: http
+  selector:
+    {{ include "tekton-dashboard.selectorLabels" . | nindent 4 }}

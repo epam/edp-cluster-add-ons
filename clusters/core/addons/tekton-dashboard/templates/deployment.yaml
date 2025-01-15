@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "tekton-dashboard.labels" . | nindent 4 }}
+  name: {{ include "tekton-dashboard.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ include "tekton-dashboard.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "tekton-dashboard.labels" . | nindent 8 }}
+    spec:
+      containers:
+      {{ if and .Values.dashboard.openshift_proxy.enabled (eq .Values.global.platform "openshift") }}
+        - terminationMessagePath: /dev/termination-log
+          name: oauth-proxy
+          env:
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tekton-dashboard-proxy-cookie-secret
+                  key: cookie-secret
+            - name: OAUTH2_PROXY_COOKIE_EXPIRE
+              value: 8h0m0s
+            - name: OAUTH2_PROXY_COOKIE_REFRESH
+              value: 7h45m0s
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+          ports:
+            - name: proxy
+              containerPort: 4180
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+          image: {{ .Values.dashboard.openshift_proxy.image.repository }}:{{ .Values.dashboard.openshift_proxy.image.tag }}
+          resources:
+            {{- toYaml .Values.dashboard.openshift_proxy.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/tls/private
+              name: proxy-tls
+          args:
+            - --openshift-service-account={{ include "tekton-dashboard.name" . }}
+            - --upstream=http://localhost:9097
+            - --tls-cert=/etc/tls/private/tls.crt
+            - --tls-key=/etc/tls/private/tls.key
+            - --skip-provider-button
+            - --pass-basic-auth=false
+            - --cookie-secure=true
+            - --http-address=http://0.0.0.0:4180
+            - --skip-provider-button=true
+      {{ end }}
+        - args:
+            - --port=9097
+            - --logout-url=
+            - --pipelines-namespace={{ .Values.dashboard.pipelinesNamespace }}
+            - --triggers-namespace={{ .Values.dashboard.triggersNamespace }}
+            - --read-only={{ .Values.dashboard.readOnly }}
+            - --log-level=info
+            - --log-format=json
+            - --stream-logs=true
+            - --external-logs=
+            - --namespaces={{ .Release.Namespace }}
+          env:
+            - name: INSTALLED_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          image: {{ .Values.dashboard.image.repository }}:{{ .Values.dashboard.image.tag }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9097
+          name: tekton-dashboard
+          ports:
+            - containerPort: 9097
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9097
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+      {{- with .Values.dashboard.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccount: {{ include "tekton-dashboard.name" . }}
+      serviceAccountName: {{ include "tekton-dashboard.name" . }}
+      {{ if and .Values.dashboard.openshift_proxy.enabled (eq .Values.global.platform "openshift") }}
+      volumes:
+        - name: proxy-tls
+          secret:
+            secretName: proxy-tls
+      {{ end }}
