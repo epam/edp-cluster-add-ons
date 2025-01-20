@@ -19,10 +19,6 @@ A Helm chart for Sonarqube
 | sonarqube.env[0].name | string | `"SONAR_TELEMETRY_ENABLE"` |  |
 | sonarqube.env[0].value | string | `"false"` |  |
 | sonarqube.fullnameOverride | string | `"sonar"` |  |
-| sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization"` |  |
-| sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"OPTIONS, GET"` |  |
-| sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"*"` |  |
-| sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
 | sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"64m"` |  |
 | sonarqube.ingress.enabled | bool | `true` |  |
 | sonarqube.ingress.hosts[0].name | string | `"sonar.example.com"` |  |
