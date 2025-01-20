@@ -1,0 +1,31 @@
+{{- $timeInterval := .Values.timeInterval }}
+{{- range $namespace := .Values.kedaTenants.namespaces }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: tekton-interceptor-scaler
+  namespace: {{ $namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tekton-interceptor
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prom-prometheus.monitoring.svc:9090
+        metricName: pods_created_last_{{ $timeInterval }}_sec
+        query: |
+          count(kube_pod_created{namespace="{{ $namespace }}", pod!~"tekton-resource-pruner.*"} > time() - {{ $timeInterval }}) or vector(0)
+        threshold: "1"
+    - type: prometheus
+      metadata:
+        serverAddress: http://prom-prometheus.monitoring.svc:9090
+        metricName: http_requests_to_portal_last_{{ $timeInterval }}_sec
+        query: |
+          sum(rate(nginx_ingress_controller_requests{exported_namespace="{{ $namespace }}",ingress="portal",status="503"}[{{ $timeInterval }}s]) or rate(nginx_ingress_controller_requests{exported_namespace="{{ $namespace }}",ingress="portal",status="201"}[{{ $timeInterval }}s]))
+        threshold: "1"
+{{- end }}

@@ -1,0 +1,14 @@
+kedaTenants:
+  # -- This value specifies the namespaces where KubeRocketCI deployed.
+  namespaces:
+  - krci
+# -- Interval in seconds to scale resources.
+timeInterval: '7200'
+
+# -- This parameter specifies which Git servers are installed in KubeRocketCI.
+# -- https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L2
+gitProviders:
+  - github
+  # - gitlab
+  # - bitbucket
+  # - gerrit

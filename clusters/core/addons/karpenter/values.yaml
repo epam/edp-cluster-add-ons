@@ -1,0 +1,35 @@
+karpenter:
+  # tolerations:
+  # - key: "type"
+  #   operator: "Equal"
+  #   value: "system"
+  #   effect: "NoSchedule"
+  # nodeSelector:
+  #   type: system
+  controller:
+    resources:
+     requests:
+       cpu: 1
+       memory: 1Gi
+     limits:
+       cpu: 1
+       memory: 1Gi
+
+  replicas: 1
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: DoesNotExist
+
+  # -- Karpenter IAM role to manage cluster nodes
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::0123456789:role/KarpenterControllerRole-eks
+  
+  # -- EKS cluster name
+  settings:
+    clusterName: eks
