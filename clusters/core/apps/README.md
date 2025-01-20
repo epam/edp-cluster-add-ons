@@ -56,6 +56,12 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | ingress-nginx.enable | bool | `false` |  |
 | jaeger-operator.createNamespace | bool | `false` |  |
 | jaeger-operator.enable | bool | `false` |  |
+| karpenter-np | object | `{"createNamespace":false,"enable":false}` | Application with Karpenter resources: NodePools and NodeClass |
+| karpenter.createNamespace | bool | `false` |  |
+| karpenter.enable | bool | `false` |  |
+| keda-tenants | object | `{"createNamespace":false,"enable":false}` | Keda Job Scaler for KRCI deployments |
+| keda.createNamespace | bool | `false` |  |
+| keda.enable | bool | `false` |  |
 | keycloak-operator.createNamespace | bool | `false` |  |
 | keycloak-operator.enable | bool | `false` |  |
 | keycloak-postgresql.createNamespace | bool | `false` |  |

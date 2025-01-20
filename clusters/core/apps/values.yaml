@@ -59,6 +59,24 @@ dependency-track:
   createNamespace: false
   enable: false
 
+# -- Application with Karpenter resources: NodePools and NodeClass
+karpenter-np:
+  createNamespace: false
+  enable: false
+
+karpenter:
+  createNamespace: false
+  enable: false
+
+# -- Keda Job Scaler for KRCI deployments
+keda-tenants:
+  createNamespace: false
+  enable: false
+
+keda:
+  createNamespace: false
+  enable: false
+
 kuberocketci:
   createNamespace: false
   enable: false

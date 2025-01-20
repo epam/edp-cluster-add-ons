@@ -1,0 +1,8 @@
+keda:
+  # tolerations:
+  # - key: "type"
+  #   operator: "Equal"
+  #   value: "system"
+  #   effect: "NoSchedule"
+  # nodeSelector:
+  #   type: system

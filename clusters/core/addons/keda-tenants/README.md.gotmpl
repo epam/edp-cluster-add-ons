@@ -1,0 +1,19 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+## General Concepts
+
+This application enables scaling of KubeRocketCI resources based on activity in the environment. It leverages Prometheus metrics to monitor the state of resources.
+Therefore, a configured Prometheus instance collecting cluster metrics is required for its operation, along with enabled metric export from the NGINX Ingress Controller.
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
