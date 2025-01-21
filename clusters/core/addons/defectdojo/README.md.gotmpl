@@ -21,9 +21,8 @@ kubectl create secret generic defectdojo-extrasecrets \
 ```
 
 ```bash
-kubectl create secret generic defectdojo-rabbitmq-specific \
-  --from-literal=rabbitmq-password=<rabbitmq-password>
-  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie>
+kubectl create secret generic defectdojo-redis-specific \
+  --from-literal=redis-password=<redis-password>
 ```
 
 ```bash

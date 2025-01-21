@@ -1,6 +1,6 @@
 # defectdojo
 
-![Version: 1.6.127](https://img.shields.io/badge/Version-1.6.127-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.34.1](https://img.shields.io/badge/AppVersion-2.34.1-informational?style=flat-square)
+![Version: 1.6.168](https://img.shields.io/badge/Version-1.6.168-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.42.1](https://img.shields.io/badge/AppVersion-2.42.1-informational?style=flat-square)
 
 ## Secret management
 
@@ -16,9 +16,8 @@ kubectl create secret generic defectdojo-extrasecrets \
 ```
 
 ```bash
-kubectl create secret generic defectdojo-rabbitmq-specific \
-  --from-literal=rabbitmq-password=<rabbitmq-password>
-  --from-literal=rabbitmq-erlang-cookie=<rabbitmq-erlang-cookie>
+kubectl create secret generic defectdojo-redis-specific \
+  --from-literal=redis-password=<redis-password>
 ```
 
 ```bash
@@ -70,7 +69,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.127 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.168 |
 
 ## Values
 
@@ -98,9 +97,9 @@ AWS Parameter Store structure:
 | defectdojo.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` |  |
 | defectdojo.postgresql.enabled | bool | `false` |  |
 | defectdojo.postgresql.postgresServer | string | `"defectdojo-primary.defectdojo.svc"` |  |
-| defectdojo.rabbitmq.persistence.size | string | `"1Gi"` |  |
+| defectdojo.redis.master.persistence.size | string | `"2Gi"` |  |
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
-| defectdojo.tag | string | `"2.34.1"` |  |
+| defectdojo.tag | string | `"2.42.1"` |  |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
