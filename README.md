@@ -81,7 +81,7 @@ make update-readme
 | capsule-tenant         | N/A       | N/A          | N/A               | False    |
 | cert-manager           | 1.16.1    | v1.16.1      | False             | False    |
 | defectdojo             | 1.6.127   | 2.34.1       | False             | False    |
-| dependency-track       | 0.9.2     | v4.11.3      | False             | False    |
+| dependency-track       | 0.24.0    | v4.12.2      | False             | False    |
 | kuberocketci           | 3.10.2    | 3.10.2       | False             | False    |
 | kuberocketci-pipelines | N/A       | N/A          | False             | False    |
 | kuberocketci-rbac      | 0.1.0     | 0.1.0        | False             | False    |

@@ -3,6 +3,7 @@ kind: PostgresCluster
 metadata:
   name: deptrack
 spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.7-0
   postgresVersion: 14
   port: 5432
   instances:
@@ -21,6 +22,7 @@ spec:
 
   backups:
     pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
       global:
         log-level-console: info
         log-level-file: info

@@ -6,7 +6,7 @@ dependency-track:
     replicaCount: 1
     image:
       # we override the default image tag here, since the helm chart is a little behind
-      tag: 4.11.3
+      tag: 4.12.2
     apiBaseUrl: "https://deptrack.example.com"
     extraEnv:
       - name: OIDC_ISSUER
@@ -30,7 +30,7 @@ dependency-track:
   apiServer:
     image:
       # we override the default image tag here, since the helm chart is a little behind
-      tag: 4.11.3
+      tag: 4.12.2
     # disabled because we use an external PostgreSQL database (PGO)
     persistentVolume:
       enabled: false
