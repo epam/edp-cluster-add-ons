@@ -106,6 +106,7 @@ AWS Parameter Store structure:
 | kube-prometheus-stack.grafana.admin.userKey | string | `"username"` |  |
 | kube-prometheus-stack.grafana.envFromSecret | string | `"keycloak-client-grafana-secret"` |  |
 | kube-prometheus-stack.grafana.fullnameOverride | string | `"grafana"` |  |
+| kube-prometheus-stack.grafana.ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet" | string | `"more_set_headers X-Frame-Options: none;"` |  |
 | kube-prometheus-stack.grafana.ingress.enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana.ingress.hosts[0] | string | `"grafana.example.com"` |  |
 | kube-prometheus-stack.grafana.ingress.pathType | string | `"ImplementationSpecific"` |  |

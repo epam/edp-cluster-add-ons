@@ -101,6 +101,10 @@ kube-prometheus-stack:
 
     ingress:
       enabled: true
+      annotations:
+        # This annotation is intended to configure NGINX so that the X-Frame-Options header does not block
+        # embedding of the grafana web in an iframe.
+        nginx.ingress.kubernetes.io/configuration-snippet: "more_set_headers X-Frame-Options: none;"
       hosts:
         - grafana.example.com
       paths:
