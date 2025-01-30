@@ -82,6 +82,8 @@ AWS Parameter Store structure:
 
 </details>
 
+User Creation Process for Keycloak Integration Across Configurations
+
 <details>
 <summary><b>Examples 1: Users management without predefined broker realm:</b></summary>
 
@@ -101,7 +103,7 @@ Step-by-Step Guide to onboarding User:
 
 Step 1: Create a New User in the `broker` Realm:
 1. Go to the `broker` Realm.
-2. Select Users from the menu on the left and click Add User.
+2. Navigate `Users` tab and click `Add User` button.
 3. Enter the following details:
   * Username: A unique `username` (e.g., `developer123`).
   * Email: The user's `email address` (e.g., `developer@example.com`).
@@ -119,7 +121,7 @@ Step 1: Create a New User in the `broker` Realm:
 Step 2: Link the User in the `shared` Realm
 1. Go to the `shared` Realm.
 2. Open `Users` tab and click `Add User` button.
-3. Set the Username to match the username in `broker` (e.g., `developer123`).
+3. Set the same `username` from `step 1.3`.
 4. Click Save to create the user.
 5. Open the newly created user, go to the `Identity Provider` Links tab:
    Provide the following details from the `step 1.6`:
@@ -165,6 +167,17 @@ sharedService: "shared"
 
 Step-by-Step Guide to onboarding User:
 
+(Optional step) if user does not exist in `project-broker` Realm:
+
+1. Go to the `project-broker` Realm.
+2. Navigate `Users` tab and click `Add User` button.
+3. Enter the following details:
+  * Username: A unique `username` (e.g., `developer123`).
+  * Email: The user's `email address` (e.g., `developer@example.com`).
+  * First Name: The user's `first name` (e.g., `John`).
+  * Last Name: The user's `last name` (e.g., `Doe`).
+4. Click Save to save the user's details.
+
 Step 1: Copy `username` and `ID` from existing `project-broker` Realm:
 1. Go to the `project-broker` Realm.
 2. Select `Users` tab.
@@ -174,8 +187,8 @@ Step 1: Copy `username` and `ID` from existing `project-broker` Realm:
 
 Step 2: Link the User in the `shared` Realm
 1. Go to the `shared` Realm.
-2. Open `Users` tab and click `Add User` button.
-3. Set the Username to match the `username` in `project-broker`.
+2. Navigate `Users` tab and click `Add User` button.
+3. Set the same `username` from `step 1.3`.
 4. Click Save to create the user.
 5. Open the newly created user, go to the `Identity Provider` Links tab:
    Provide the following details from the `step 1.4`:
