@@ -1,0 +1,29 @@
+{{- if and (index .Values "karma-dashboard") (index .Values "karma-dashboard" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-karma-dashboard
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/karma-dashboard
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: karma-dashboard
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "karma-dashboard" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

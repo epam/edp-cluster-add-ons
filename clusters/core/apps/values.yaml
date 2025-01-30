@@ -59,6 +59,10 @@ dependency-track:
   createNamespace: false
   enable: false
 
+karma-dashboard:
+  createNamespace: false
+  enable: false
+
 # -- Application with Karpenter resources: NodePools and NodeClass
 karpenter-np:
   createNamespace: false
