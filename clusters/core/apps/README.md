@@ -56,6 +56,8 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | ingress-nginx.enable | bool | `false` |  |
 | jaeger-operator.createNamespace | bool | `false` |  |
 | jaeger-operator.enable | bool | `false` |  |
+| karma-dashboard.createNamespace | bool | `false` |  |
+| karma-dashboard.enable | bool | `false` |  |
 | karpenter-np | object | `{"createNamespace":false,"enable":false}` | Application with Karpenter resources: NodePools and NodeClass |
 | karpenter.createNamespace | bool | `false` |  |
 | karpenter.enable | bool | `false` |  |

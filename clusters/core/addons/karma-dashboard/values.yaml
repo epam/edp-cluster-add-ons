@@ -1,0 +1,11 @@
+karma:
+  env:
+    # Specify the Alertmanager URI
+    - name: ALERTMANAGER_URI
+      value: "http://prom-alertmanager.monitoring.svc:9093/"
+  ingress:
+    enabled: true
+    path: /
+    # Specify the hostname for the ingress resource
+    hosts:
+      - "karma-dashboard.example.com"
