@@ -60,20 +60,20 @@ harbor:
     resourcePolicy: "keep"
     persistentVolumeClaim:
       registry:
-        storageClass: "ebs-sc"
+        storageClass: "gp3-retain"
         size: 30Gi
       jobservice:
         jobLog:
-          storageClass: "ebs-sc"
+          storageClass: "gp3-retain"
           size: 1Gi
       database:
-        storageClass: "ebs-sc"
+        storageClass: "gp3-retain"
         size: 2Gi
       redis:
-        storageClass: "ebs-sc"
+        storageClass: "gp3-retain"
         size: 1Gi
       trivy:
-        storageClass: "ebs-sc"
+        storageClass: "gp3-retain"
         size: 5Gi
 
   database:

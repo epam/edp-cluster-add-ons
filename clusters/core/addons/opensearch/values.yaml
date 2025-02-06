@@ -49,7 +49,7 @@ opensearch:
       memory: "1024Mi"
 
   persistence:
-    storageClass: "ebs-sc"
+    storageClass: "gp3-retain"
     # Set to false to disable the `fsgroup-volume` initContainer that will update permissions on the persistent disk.
     enableInitChown: false
 

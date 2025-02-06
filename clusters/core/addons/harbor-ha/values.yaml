@@ -131,7 +131,7 @@ harbor:
     resourcePolicy: "keep"
     persistentVolumeClaim:
       trivy:
-        storageClass: "ebs-sc"
+        storageClass: "gp3-retain"
         size: 5Gi
     imageChartStorage:
       type: "s3"

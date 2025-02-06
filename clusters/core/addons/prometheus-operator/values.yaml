@@ -118,7 +118,7 @@ kube-prometheus-stack:
         memory: "72Mi"
     persistence:
         enabled: true
-        storageClassName: "ebs-sc"
+        storageClassName: "gp3-retain"
         size: 1Gi
 
 # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
