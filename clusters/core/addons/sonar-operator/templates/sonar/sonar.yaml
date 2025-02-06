@@ -16,6 +16,11 @@ spec:
       value: "{{ .Values.oidc.keycloakUrl }}/auth/realms/{{ .Values.oidc.keycloakRealm }}"
     - key: sonar.auth.oidc.clientId.secured
       value: "sonar"
+    - key: sonar.auth.oidc.clientSecret.secured
+      valueRef:
+        secretKeyRef:
+          key: clientSecret
+          name: keycloak-client-sonar-secret
     - key: sonar.core.serverBaseURL
       value: {{ .Values.sonarUrl }}
     - key: sonar.auth.oidc.groupsSync.claimName

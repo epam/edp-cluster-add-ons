@@ -6,14 +6,14 @@ metadata:
 spec:
   advancedProtocolMappers: true
   clientId: sonar
-  public: true
   defaultClientScopes:
     - profile
     - email
   realmRef:
     kind: ClusterKeycloakRealm
     name: main
-  webUrl: https://{{ (index .Values.sonarqube.ingress.hosts 0).name }}
+  webUrl: {{ .Values.sonarUrl }}
+  secret: '$keycloak-client-sonar-secret:clientSecret'
   protocolMappers:
     - name: roles
       protocol: openid-connect
