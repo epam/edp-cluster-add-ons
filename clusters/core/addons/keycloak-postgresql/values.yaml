@@ -19,7 +19,7 @@ postgresql:
   primary:
     persistence:
       enabled: true
-      storageClass: "ebs-sc"
+      storageClass: "gp3-retain"
       size: 3Gi
 
 # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.

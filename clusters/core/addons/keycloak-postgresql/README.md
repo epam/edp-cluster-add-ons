@@ -65,5 +65,5 @@ AWS Parameter Store structure:
 | postgresql.nameOverride | string | `"postgresql"` |  |
 | postgresql.primary.persistence.enabled | bool | `true` |  |
 | postgresql.primary.persistence.size | string | `"3Gi"` |  |
-| postgresql.primary.persistence.storageClass | string | `"ebs-sc"` |  |
+| postgresql.primary.persistence.storageClass | string | `"gp3-retain"` |  |
 | postgresql.readReplicas.replicaCount | int | `1` |  |
