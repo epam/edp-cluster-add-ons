@@ -1,0 +1,12 @@
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusCleanupPolicy
+metadata:
+  name: container-nexus-cleanup-policy
+spec:
+  nexusRef:
+    name: nexus
+  name: container-nexus-cleanup-policy
+  format: "docker"
+  description: "Cleanup policy for docker containers"
+  criteria:
+    lastBlobUpdated: 30
