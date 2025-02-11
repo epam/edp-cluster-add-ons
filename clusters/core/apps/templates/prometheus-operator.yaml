@@ -16,7 +16,7 @@ spec:
       releaseName: prometheus-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: monitoring
+    namespace: {{ index .Values "prometheus-operator" "namespace" }}
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

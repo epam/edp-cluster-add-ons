@@ -16,7 +16,7 @@ spec:
       releaseName: keycloak
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: security
+    namespace: {{ index .Values "keycloak" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.keycloak.createNamespace }}

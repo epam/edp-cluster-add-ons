@@ -16,7 +16,7 @@ spec:
       releaseName: cert-manager
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: cert-manager
+    namespace: {{ index .Values "cert-manager" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "cert-manager" "createNamespace")  }}

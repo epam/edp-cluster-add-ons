@@ -16,7 +16,7 @@ spec:
       releaseName: harbor-ha-okd
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: harbor
+    namespace: {{ index .Values "harbor-ha-okd" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "harbor-ha-okd" "createNamespace") }}

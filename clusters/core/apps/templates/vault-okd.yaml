@@ -16,7 +16,7 @@ spec:
       releaseName: vault-okd
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: vault
+    namespace: {{ index .Values "vault-okd" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "vault-okd" "createNamespace") }}

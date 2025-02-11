@@ -1,8 +1,8 @@
-{{- if and (index .Values "jaeger-operator") (index .Values "jaeger-operator" "enable") -}}
+{{- if and (index .Values "opentelemetry-operator") (index .Values "opentelemetry-operator" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.destinationServer}}-jaeger-operator
+  name: {{ .Values.destinationServer}}-opentelemetry-operator
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,16 +10,16 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/{{ .Values.clusterName }}/addons/jaeger-operator
+    path: clusters/{{ .Values.clusterName }}/addons/opentelemetry-operator
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      releaseName: jaeger-operator
+      releaseName: opentelemetry-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: jaeger-operator
+    namespace: {{ index .Values "opentelemetry-operator" "namespace" }}
   syncPolicy:
     syncOptions:
-      - CreateNamespace={{ (index .Values "jaeger-operator" "createNamespace") }}
+      - CreateNamespace={{ (index .Values "opentelemetry-operator" "createNamespace") }}
     retry:
       limit: 1
       backoff:
