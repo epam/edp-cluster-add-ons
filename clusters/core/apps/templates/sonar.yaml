@@ -16,7 +16,7 @@ spec:
       releaseName: sonar
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: sonar
+    namespace: {{ index .Values "sonar" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.sonar.createNamespace }}

@@ -16,7 +16,7 @@ spec:
       releaseName: postgres-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: postgres-operator
+    namespace: {{ index .Values "postgres-operator" "namespace" }}
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

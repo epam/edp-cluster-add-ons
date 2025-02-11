@@ -14,7 +14,14 @@ for key, value in data.items():
     # Check if value is a dictionary
     if isinstance(value, dict):
         # Initialize the row data with placeholders
-        row = {'Component': key, 'version': 'N/A', 'appVersion': 'N/A', 'createNamespace': value.get('createNamespace', 'N/A'), 'enable': value.get('enable', 'N/A')}
+        row = {
+            'Component': key,
+            'version': 'N/A',
+            'appVersion': 'N/A',
+            'namespace': value.get('namespace', 'N/A'),
+            'createNamespace': value.get('createNamespace', 'N/A'),
+            'enable': value.get('enable', 'N/A')
+        }
 
         # Try to open the Chart.yaml file for the component
         try:

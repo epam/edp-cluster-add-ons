@@ -16,7 +16,7 @@ spec:
       releaseName: defectdojo
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: defectdojo
+    namespace: {{ index .Values "defectdojo" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.defectdojo.createNamespace }}

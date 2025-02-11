@@ -14,7 +14,7 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: tekton-pipelines
+    namespace: {{ index .Values "tekton" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.tekton.createNamespace }}

@@ -16,7 +16,7 @@ spec:
       releaseName: ingress-nginx
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: ingress-nginx
+    namespace: {{ index .Values "ingress-nginx" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "ingress-nginx" "createNamespace") }}

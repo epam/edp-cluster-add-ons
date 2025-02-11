@@ -16,7 +16,7 @@ spec:
       releaseName: redis-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: redis-operator
+    namespace: {{ index .Values "redis-operator" "namespace" }}
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

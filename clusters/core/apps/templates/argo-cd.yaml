@@ -16,7 +16,7 @@ spec:
       releaseName: argocd
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: krci
+    namespace: {{ index .Values "argo-cd" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "argo-cd" "createNamespace") }}
