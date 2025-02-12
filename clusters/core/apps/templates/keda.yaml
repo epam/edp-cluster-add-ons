@@ -16,7 +16,7 @@ spec:
       releaseName: keda
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: keda
+    namespace: {{ index .Values "keda" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.keda.createNamespace }}

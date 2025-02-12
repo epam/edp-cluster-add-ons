@@ -2,7 +2,70 @@
 
 ![Version: 7.7.11](https://img.shields.io/badge/Version-7.7.11-informational?style=flat-square) ![AppVersion: v2.13.2](https://img.shields.io/badge/AppVersion-v2.13.2-informational?style=flat-square)
 
-A Helm chart for Argo CD Install
+## Secret Management for VCS Integration
+
+1. <b>GitHub</b>
+
+To create a secret for connecting to GitHub:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-credentials
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+type: Opaque
+data:
+  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
+  url: "ssh://git@github.com:22/organization-name"
+EOF
+```
+
+2. <b>GitLab</b>
+
+To create a secret for connecting to GitLab:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-credentials
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+type: Opaque
+data:
+  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
+  url: "ssh://git@gitlab.com:22/organization-name"
+EOF
+```
+
+3. <b>Bitbucket</b>
+
+To create a secret for connecting to Bitbucket:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bitbucket-ssh-credentials
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+type: Opaque
+data:
+  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
+  url: "ssh://git@bitbucket.org:22/organization-name"
+EOF
+```
+
+Important:
+
+The label `argocd.argoproj.io/secret-type: repo-creds` is mandatory for proper integration with ArgoCD. Without this label, ArgoCD may not recognize the secret as valid for VCS integration.
+
+Make sure the path to your SSH private key (~/.ssh/id_rsa) is correct. This key should be used to authenticate access to your GitHub, GitLab, or Bitbucket repository.
 
 ## Requirements
 
@@ -39,4 +102,3 @@ A Helm chart for Argo CD Install
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | oidc.enabled | bool | `false` |  |
-

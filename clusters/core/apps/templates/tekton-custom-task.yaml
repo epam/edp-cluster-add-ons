@@ -16,7 +16,7 @@ spec:
       releaseName: tekton-custom-task
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: tekton-custom-task
+    namespace: {{ index .Values "tekton-custom-task" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "tekton-custom-task" "createNamespace") }}

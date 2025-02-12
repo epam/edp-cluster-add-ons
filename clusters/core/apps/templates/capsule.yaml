@@ -16,7 +16,7 @@ spec:
       releaseName: capsule
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: capsule-system
+    namespace: {{ index .Values "capsule" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.capsule.createNamespace }}

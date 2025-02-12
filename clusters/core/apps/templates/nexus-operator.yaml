@@ -16,7 +16,7 @@ spec:
       releaseName: nexus-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: nexus
+    namespace: {{ index .Values "nexus-operator" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "nexus-operator" "createNamespace") }}

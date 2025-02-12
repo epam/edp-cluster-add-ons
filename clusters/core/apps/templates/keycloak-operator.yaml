@@ -16,7 +16,7 @@ spec:
       releaseName: keycloak-operator
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: keycloak-operator
+    namespace: {{ index .Values "keycloak-operator" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "keycloak-operator" "createNamespace") }}

@@ -16,7 +16,7 @@ spec:
       releaseName: atlantis
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: atlantis
+    namespace: {{ index .Values "atlantis" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.atlantis.createNamespace }}

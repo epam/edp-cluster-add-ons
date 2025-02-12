@@ -16,7 +16,7 @@ spec:
       releaseName: opensearch
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: logging
+    namespace: {{ index .Values "opensearch" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.opensearch.createNamespace }}

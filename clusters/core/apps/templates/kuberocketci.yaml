@@ -16,7 +16,7 @@ spec:
       releaseName: krci
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: krci
+    namespace: {{ index .Values "kuberocketci" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.kuberocketci.createNamespace }}

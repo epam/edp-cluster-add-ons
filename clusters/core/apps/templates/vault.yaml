@@ -16,7 +16,7 @@ spec:
       releaseName: vault
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: vault
+    namespace: {{ index .Values "vault" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.vault.createNamespace }}

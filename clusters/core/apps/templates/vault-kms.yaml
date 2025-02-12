@@ -16,7 +16,7 @@ spec:
       releaseName: vault-kms
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: vault
+    namespace: {{ index .Values "vault-kms" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "vault-kms" "createNamespace") }}

@@ -16,7 +16,7 @@ spec:
       releaseName: keycloak-postgresql
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: security
+    namespace: {{ index .Values "keycloak-postgresql" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "keycloak-postgresql" "createNamespace") }}

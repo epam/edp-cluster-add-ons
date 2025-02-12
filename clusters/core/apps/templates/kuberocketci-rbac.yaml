@@ -16,7 +16,7 @@ spec:
       releaseName: kuberocketci-rbac
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: security
+    namespace: {{ index .Values "kuberocketci-rbac" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "kuberocketci-rbac" "createNamespace") }}

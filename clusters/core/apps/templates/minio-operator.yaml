@@ -14,7 +14,7 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: minio-operator
+    namespace: {{ index .Values "minio-operator" "namespace" }}
     helm:
       releaseName: minio-operator
   syncPolicy:

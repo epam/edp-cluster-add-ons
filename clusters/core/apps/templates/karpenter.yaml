@@ -16,7 +16,7 @@ spec:
       releaseName: karpenter
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: karpenter
+    namespace: {{ index .Values "karpenter" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.karpenter.createNamespace }}

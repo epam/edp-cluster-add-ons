@@ -16,7 +16,7 @@ spec:
       releaseName: krakend
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: krakend
+    namespace: {{ index .Values "krakend" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.krakend.createNamespace }}

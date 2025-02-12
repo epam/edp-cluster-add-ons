@@ -16,7 +16,7 @@ spec:
       releaseName: aws-efs-csi-driver
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: kube-system
+    namespace: {{ index .Values "aws-efs-csi-driver" "namespace" }}
   syncPolicy:
     retry:
       limit: 1

@@ -16,7 +16,7 @@ spec:
       releaseName: oauth2-proxy
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: oauth2-proxy
+    namespace: {{ index .Values "oauth2-proxy" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "oauth2-proxy" "createNamespace") }}

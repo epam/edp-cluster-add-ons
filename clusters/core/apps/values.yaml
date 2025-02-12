@@ -23,67 +23,144 @@ argo-cd:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false
+  namespace: krci
+
+atlantis:
+  createNamespace: false
+  enable: false
+  namespace: atlantis
 
 # we install it in kube-system namespace so we don't need to create it
 # -- AWS EFS CSI Driver
 aws-efs-csi-driver:
   enable: false
+  namespace: kube-system
 
 awx-operator:
   createNamespace: false
   enable: false
+  namespace: awx-operator
 
 # -- Capsule
 capsule:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false
+  namespace: capsule-system
 
 # -- Capsule Tenant
 capsule-tenant:
   enable: false
+  namespace: capsule-system
 
 # -- Cert Manager
 cert-manager:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false
+  namespace: cert-manager
 
 # -- DefectDojo
 defectdojo:
   # -- whether to create the namespace or not
   createNamespace: false
   enable: false
+  namespace: defectdojo
 
 dependency-track:
   createNamespace: false
   enable: false
+  namespace: dependency-track
+
+external-secrets:
+  createNamespace: false
+  enable: false
+  namespace: external-secrets
+
+# fluent-bit can be installed as a single component
+fluent-bit:
+  createNamespace: false
+  enable: false
+  namespace: logging
+
+harbor:
+  createNamespace: false
+  enable: false
+  namespace: harbor
+
+# Harbor with High Availability
+harbor-ha:
+  createNamespace: false
+  enable: false
+  namespace: harbor
+
+# Harbor with HA, OKD Cluster
+harbor-ha-okd:
+  createNamespace: false
+  enable: false
+  namespace: harbor
+
+ingress-nginx:
+  createNamespace: false
+  enable: false
+  namespace: ingress-nginx
+
+ingress-nginx-external:
+  createNamespace: false
+  enable: false
+  namespace: ingress-nginx-external
+
+jaeger-operator:
+  enable: false
+  createNamespace: false
+  namespace: jaeger-operator
 
 karma-dashboard:
   createNamespace: false
   enable: false
+  namespace: monitoring
 
 # -- Application with Karpenter resources: NodePools and NodeClass
 karpenter-np:
   createNamespace: false
   enable: false
+  namespace: karpenter
 
 karpenter:
   createNamespace: false
   enable: false
+  namespace: karpenter
 
 # -- Keda Job Scaler for KRCI deployments
 keda-tenants:
   createNamespace: false
   enable: false
+  namespace: keda
 
 keda:
   createNamespace: false
   enable: false
+  namespace: keda
 
-kuberocketci:
+keycloak:
   createNamespace: false
   enable: false
+  namespace: security
+
+keycloak-postgresql:
+  createNamespace: false
+  enable: false
+  namespace: security
+
+keycloak-operator:
+  createNamespace: false
+  enable: false
+  namespace: keycloak-operator
+
+krakend:
+  createNamespace: false
+  enable: false
+  namespace: krakend
 
 kuberocketci-pipelines:
   createNamespace: false
@@ -94,108 +171,75 @@ kuberocketci-pipelines:
 kuberocketci-rbac:
   createNamespace: false
   enable: false
+  namespace: security
 
-external-secrets:
+kuberocketci:
   createNamespace: false
   enable: false
-
-# fluent-bit can be installed as a single component
-fluent-bit:
-  createNamespace: false
-  enable: false
-
-harbor:
-  createNamespace: false
-  enable: false
-
-# Harbor with High Availability
-harbor-ha:
-  createNamespace: false
-  enable: false
-
-# Harbor with HA, OKD Cluster
-harbor-ha-okd:
-  createNamespace: false
-  enable: false
-
-ingress-nginx:
-  createNamespace: false
-  enable: false
-
-ingress-nginx-external:
-  createNamespace: false
-  enable: false
-
-jaeger-operator:
-  enable: false
-  createNamespace: false
-
-keycloak:
-  createNamespace: false
-  enable: false
-
-keycloak-postgresql:
-  createNamespace: false
-  enable: false
-
-keycloak-operator:
-  createNamespace: false
-  enable: false
-
-krakend:
-  createNamespace: false
-  enable: false
+  namespace: krci
 
 minio-operator:
   createNamespace: false
   enable: false
+  namespace: minio-operator
 
 nexus:
   createNamespace: false
   enable: false
+  namespace: nexus
 
 nexus-operator:
   createNamespace: false
   enable: false
+  namespace: nexus
 
 # OAuth2 Proxy for tekton dashboard
 oauth2-proxy:
   createNamespace: false
   enable: false
+  namespace: oauth2-proxy
 
 # opensearch includes opensearch, opensearch-dashboards, fluent-bit
 opensearch:
   createNamespace: false
   enable: false
+  namespace: logging
 
 opentelemetry-operator:
   enable: false
   createNamespace: false
+  namespace: opentelemetry-operator
 
 # Postgres Operator
 postgres-operator:
   createNamespace: false
   enable: false
-
-report-portal:
-  createNamespace: false
-  enable: false
+  namespace: postgres-operator
 
 prometheus-operator:
   createNamespace: false
   enable: false
+  namespace: monitoring
 
 redis-operator:
   createNamespace: false
   enable: false
+  namespace: redis-operator
+
+report-portal:
+  createNamespace: false
+  enable: false
+  namespace: report-portal
 
 sonar:
   createNamespace: false
   enable: false
+  namespace: sonar
 
 sonar-operator:
   createNamespace: false
   enable: false
+  namespace: sonar
 
 storage-class:
   enable: false
@@ -203,32 +247,34 @@ storage-class:
 tekton-cache:
   createNamespace: false
   enable: false
+  namespace: tekton-cache
 
 tekton:
   createNamespace: false
   enable: false
+  namespace: tekton-pipelines
 
 tekton-custom-task:
   createNamespace: false
   enable: false
+  namespace: krci
 
 tekton-dashboard:
   createNamespace: false
   enable: false
   namespace: krci
 
-vault:
-  createNamespace: false
-  enable: false
-
 vault-kms:
   createNamespace: false
   enable: false
+  namespace: vault
 
 vault-okd:
   createNamespace: false
   enable: false
+  namespace: vault
 
-atlantis:
+vault:
   createNamespace: false
   enable: false
+  namespace: vault

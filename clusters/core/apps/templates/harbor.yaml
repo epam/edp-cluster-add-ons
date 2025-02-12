@@ -16,7 +16,7 @@ spec:
       releaseName: harbor
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: harbor
+    namespace: {{ index .Values "harbor" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.harbor.createNamespace }}

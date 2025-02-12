@@ -16,7 +16,7 @@ spec:
       releaseName: fluent-bit
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: logging
+    namespace: {{ index .Values "fluent-bit" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "fluent-bit" "createNamespace") }}

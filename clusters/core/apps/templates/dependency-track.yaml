@@ -16,7 +16,7 @@ spec:
       releaseName: dependency-track
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: dependency-track
+    namespace: {{ index .Values "dependency-track" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "dependency-track" "createNamespace") }}

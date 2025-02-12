@@ -16,7 +16,7 @@ spec:
       releaseName: report-portal
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
-    namespace: report-portal
+    namespace: {{ index .Values "report-portal" "namespace" }}
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ (index .Values "report-portal" "createNamespace") }}
