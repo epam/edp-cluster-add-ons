@@ -81,10 +81,10 @@ make update-readme
 | awx-operator           | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
 | capsule                | 0.5.3     | 0.4.2        | capsule-system         | False             | False    |
 | capsule-tenant         | N/A       | N/A          | capsule-system         | N/A               | False    |
-| cert-manager           | 1.16.1    | v1.16.1      | cert-manager           | False             | False    |
+| cert-manager           | 1.17.1    | 1.17.1       | cert-manager           | False             | False    |
 | defectdojo             | 1.6.168   | 2.42.1       | defectdojo             | False             | False    |
 | dependency-track       | 0.26.0    | v4.12.4      | dependency-track       | False             | False    |
-| external-secrets       | 0.10.5    | 1.0          | external-secrets       | False             | False    |
+| external-secrets       | 0.14.2    | 0.14.2       | external-secrets       | False             | False    |
 | fluent-bit             | 0.46.11   | 3.0.7        | logging                | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | harbor                 | False             | False    |
 | harbor-ha              | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
