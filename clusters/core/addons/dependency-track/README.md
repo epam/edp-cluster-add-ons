@@ -1,6 +1,6 @@
 # dependency-track
 
-![Version: 0.24.0](https://img.shields.io/badge/Version-0.24.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.12.2](https://img.shields.io/badge/AppVersion-v4.12.2-informational?style=flat-square)
+![Version: 0.26.0](https://img.shields.io/badge/Version-0.26.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.12.4](https://img.shields.io/badge/AppVersion-v4.12.4-informational?style=flat-square)
 
 A Helm chart for Dependecy Track
 
@@ -8,7 +8,7 @@ A Helm chart for Dependecy Track
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://dependencytrack.github.io/helm-charts | dependency-track | 0.24.0 |
+| https://dependencytrack.github.io/helm-charts | dependency-track | 0.26.0 |
 
 ## Values
 
@@ -39,7 +39,6 @@ A Helm chart for Dependecy Track
 | dependency-track.apiServer.extraEnv[8].value | string | `"preferred_username"` |  |
 | dependency-track.apiServer.extraEnv[9].name | string | `"ALPINE_OIDC_USER_PROVISIONING"` |  |
 | dependency-track.apiServer.extraEnv[9].value | string | `"true"` |  |
-| dependency-track.apiServer.image.tag | string | `"4.12.2"` |  |
 | dependency-track.apiServer.persistentVolume.enabled | bool | `false` |  |
 | dependency-track.apiServer.resources.limits.cpu | string | `"2"` |  |
 | dependency-track.apiServer.resources.limits.memory | string | `"4608Mi"` |  |
@@ -56,7 +55,6 @@ A Helm chart for Dependecy Track
 | dependency-track.frontend.extraEnv[3].value | string | `"Login with Keycloak"` |  |
 | dependency-track.frontend.extraEnv[4].name | string | `"OIDC_FLOW"` |  |
 | dependency-track.frontend.extraEnv[4].value | string | `"code"` |  |
-| dependency-track.frontend.image.tag | string | `"4.12.2"` |  |
 | dependency-track.frontend.replicaCount | int | `1` |  |
 | dependency-track.frontend.resources.limits.cpu | string | `"500m"` |  |
 | dependency-track.frontend.resources.limits.memory | string | `"128Mi"` |  |
