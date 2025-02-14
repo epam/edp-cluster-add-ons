@@ -1,0 +1,155 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nexus-ce.fullname" . }}
+  labels:
+    {{- include "nexus-ce.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nexus-ce.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nexus-ce.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nexus-ce.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        # chown nexus-data to 'nexus' user and init log directories/files for a new pod
+        # otherwise the side car containers will crash a couple of times and backoff whilst waiting
+        # for nxrm-app to start and this increases the total start up time.
+        - name: chown-nexusdata-owner-to-nexus-and-init-log-dir
+          image: busybox:1.33.1
+          command: [/bin/sh]
+          args:
+            - -c
+            - >-
+              mkdir -p /nexus-data/etc/logback &&
+              mkdir -p /nexus-data/log/tasks &&
+              mkdir -p /nexus-data/log/audit &&
+              touch -a /nexus-data/log/tasks/allTasks.log &&
+              touch -a /nexus-data/log/audit/audit.log &&
+              touch -a /nexus-data/log/request.log &&
+              chown -R '200:200' /nexus-data
+          volumeMounts:
+            - name: {{ include "nexus-ce.fullname" . }}-data
+              mountPath: /nexus-data
+          resources:
+            limits:
+              cpu: "0.2"
+              memory: "512Mi"
+            requests:
+              cpu: "0.1"
+              memory: "256Mi"
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: {{ template "nexus-ce.name" . }}-properties
+              mountPath: /nexus-data/etc/nexus.properties
+              subPath: nexus.properties
+            - name: {{ include "nexus-ce.fullname" . }}-data
+              mountPath: /nexus-data
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            {{- if .Values.docker.enabled }}
+            {{- range .Values.docker.registries }}
+            - name: docker-{{ .port }}
+              containerPort: {{ .port }}
+            {{- end }}
+            {{- end }}
+          env:
+            - name: NEXUS_SECURITY_INITIAL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.nexusAdminPassword.secret.name }}
+                  key: {{ .Values.nexusAdminPassword.secret.key }}
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.existigSecret }}
+                  key: {{ .Values.database.keys.dbname }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.existigSecret }}
+                  key: {{ .Values.database.keys.password }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.existigSecret }}
+                  key: {{ .Values.database.keys.username }}
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.existigSecret }}
+                  key: {{ .Values.database.keys.url }}
+            - name: INSTALL4J_ADD_VM_PARAMS
+              value: "-Xms2703m -Xmx2703m \
+              -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
+              -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:{{ .Values.database.keys.port }}/${DB_NAME} \
+              -Dnexus.datastore.nexus.username=${DB_USER} \
+              -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: {{ template "nexus-ce.name" . }}-properties
+          configMap:
+            name: {{ template "nexus-ce.name" . }}-properties
+            items:
+            - key: nexus.properties
+              path: nexus.properties
+        - name: {{ include "nexus-ce.fullname" . }}-data
+          {{- if .Values.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "nexus-ce.fullname" . }}-data
+          {{- else }}
+          emptyDir:
+            sizeLimit: {{ .Values.persistentVolume.storageSize | quote }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -26,3 +26,28 @@ eso:
       providerConfig: {}
       #  gcpsm:
       #    projectID: "alphabet-123"
+
+# -- To enable the S3 storage type, must be define role for Nexus service account.
+storageType:
+  # -- Mandatory field for S3 storage type.
+  region: "us-east-1"
+  container:
+    # -- Could be one of the following: "pvc", "s3".
+    type: "pvc"
+    # -- Defines the name of the S3 bucket.
+    bucketName: "krci-container"
+  dotnet:
+    type: "pvc"
+    bucketName: "krci-container"
+  maven:
+    type: "pvc"
+    bucketName: "krci-container"
+  npm:
+    type: "pvc"
+    bucketName: "krci-container"
+  python:
+    type: "pvc"
+    bucketName: "krci-container"
+  yum:
+    type: "pvc"
+    bucketName: "krci-container"

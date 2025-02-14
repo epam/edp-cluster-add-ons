@@ -1,3 +1,17 @@
+{{ if eq .Values.storageType.yum.type "s3"}}
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: krci-yum
+spec:
+  s3:
+    bucket:
+      name: {{ .Values.storageType.yum.bucketName }}
+      region: {{ .Values.storageType.region}}
+  name: krci-yum
+  nexusRef:
+    name: nexus
+{{ else }}
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
@@ -8,3 +22,4 @@ spec:
     path: krci-yum
   nexusRef:
     name: nexus
+{{ end }}

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "nexus-ce.name" . }}-properties
+data:
+  nexus.properties: |
+    nexus.scripts.allowCreation=true
+    jetty.request.header.size=100000

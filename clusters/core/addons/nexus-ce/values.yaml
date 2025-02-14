@@ -1,0 +1,261 @@
+# Default values for nexus-ce.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: sonatype/nexus3
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "3.77.1"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "nexus-ce"
+
+# -- Initial Nexus CE admin password.
+nexusAdminPassword:
+  secret:
+    name: "nexus-admin-password"
+    key: "password"
+
+docker:
+  enabled: true
+  registries:
+    - host: nexus-ce-ci-container.eks-sandbox.aws.main.edp.projects.epam.com
+      port: 5000
+
+# -- This block configure database connections for Nexus CE.
+database: 
+  # -- Name of the secret that contains the database credentials.
+  existigSecret: "nexus-ce-pguser-nexus-ce"
+  # -- This block configures the database connection secret fields name for Nexus CE.
+  keys:
+    dbname: "dbname"
+    url: "host"
+    username: "user"
+    password: "password"
+    port: "5432"
+  # -- Use PostgreSQL operator to create and manage database.
+  pgo:
+    enable: true
+
+persistentVolume:
+  enabled: true
+  # -- Access mode for the Persistent Volume.
+  accessMode: ReadWriteOnce
+  # -- Storage size for the Persistent Volume.
+  storageSize: 20Gi
+  # -- Storage class for the Persistent Volume.
+  storageClass: "ebs-sc"
+  # -- Existing Persistent Volume Claim.
+  existingClaim: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: #{}
+    # Add role annotation to use S3 blob store type
+    eks.amazonaws.com/role-arn: arn:aws:iam::093899590031:role/NexusS3BlobStorePolicy
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+livenessProbe:
+  initialDelaySeconds: 0
+  periodSeconds: 60
+  timeoutSeconds: 1
+  failureThreshold: 6
+  path: /
+readinessProbe:
+  initialDelaySeconds: 0
+  periodSeconds: 60
+  timeoutSeconds: 1
+  failureThreshold: 6
+  path: /
+
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8081
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "900m"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: nexus-ce-ci.eks-sandbox.aws.main.edp.projects.epam.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Configuration for setting up resources in Keycloak to enable OIDC authentication.
+# Prerequisite: Ensure that the Keycloak Operator is installed and integrated with Keycloak.
+# Refer to the installation guide for the Keycloak Operator:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/keycloak-operator
+#
+# Additionally, necessary Keycloak resources such as realms, roles, and groups must be created
+# to support component functionality. This can be done using the provided add-ons or manually:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/kuberocketci-rbac
+oauth2-proxy:
+  enabled: true
+  config:
+    configFile: |-
+      allowed_roles = ["administrator", "developer"]
+      client_id = "nexus-ce"
+      code_challenge_method="S256"
+      cookie_csrf_expire="5m"
+      cookie_csrf_per_request="true"
+      cookie_secure = "false"
+      email_domains = [ "*" ]
+      insecure_oidc_allow_unverified_email = "true"
+      oidc_issuer_url = "https://idp.core.kuberocketci.io/realms/sandbox"
+      pass_access_token = "true"
+      pass_authorization_header = "true"
+      pass_basic_auth = "false"
+      provider = "keycloak-oidc"
+      redirect_url = "https://nexus-ce.eks-sandbox.aws.main.edp.projects.epam.com/oauth2/callback"
+      skip_jwt_bearer_tokens = "true"
+      upstreams = [ "http://nexus-ce:8081" ]
+      whitelist_domains = ["*"]
+      silence_ping_logging = "true"
+    
+    existingSecret: oauth2-proxy
+
+  ingress:
+    enabled: true
+    hosts:
+      - nexus-ce.eks-sandbox.aws.main.edp.projects.epam.com
+
+
+  # Configure the session storage type, between cookie and redis
+  sessionStorage:
+    # Can be one of the supported session storage cookie|redis
+    type: cookie
+    redis:
+      # Name of the Kubernetes secret containing the redis & redis sentinel password values (see also `sessionStorage.redis.passwordKey`)
+      existingSecret: ""
+      # Redis password value. Applicable for all Redis configurations. Taken from redis subchart secret if not set. `sessionStorage.redis.existingSecret` takes precedence
+      password: ""
+      # Key of the Kubernetes secret data containing the redis password value. If you use the redis sub chart, make sure
+      # this password matches the one used in redis.global.redis.password (see below).
+      passwordKey: "redis-password"
+      # Can be one of standalone|cluster|sentinel
+      clientType: "standalone"
+      standalone:
+        # URL of redis standalone server for redis session storage (e.g. `redis://HOST[:PORT]`). Automatically generated if not set
+        connectionUrl: ""
+      cluster:
+        # List of Redis cluster connection URLs. Array or single string allowed.
+        connectionUrls: []
+        # - "redis://127.0.0.1:8000"
+        # - "redis://127.0.0.1:8001"
+      sentinel:
+        # Name of the Kubernetes secret containing the redis sentinel password value (see also `sessionStorage.redis.sentinel.passwordKey`). Default: `sessionStorage.redis.existingSecret`
+        existingSecret: ""
+        # Redis sentinel password. Used only for sentinel connection; any redis node passwords need to use `sessionStorage.redis.password`
+        password: ""
+        # Key of the Kubernetes secret data containing the redis sentinel password value
+        passwordKey: "redis-sentinel-password"
+        # Redis sentinel master name
+        masterName: ""
+        # List of Redis cluster connection URLs. Array or single string allowed.
+        connectionUrls: []
+        # - "redis://127.0.0.1:8000"
+        # - "redis://127.0.0.1:8001"
+
+  # Enables and configure the automatic deployment of the redis subchart
+  redis:
+    # provision an instance of the redis sub-chart
+    enabled: false
+    replica:
+      replicaCount: 1
+    # Redis specific helm chart settings, please see:
+    # https://github.com/bitnami/charts/tree/master/bitnami/redis#parameters
+    # global:
+    #   redis:
+    #     password: yourpassword
+    # If you install Redis using this sub chart, make sure that the password of the sub chart matches the password
+    # you set in sessionStorage.redis.password (see above).
+    # redisPort: 6379
+    # architecture: standalone
+
+
+
+
+
+
+
+# This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+# Prerequisite: Ensure that ESO is installed in the cluster.
+# Refer to the EDP cluster add-on for ESO installation and setup:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+#
+# Ensure that you have created the necessary roles for ESO integration.
+# Follow the detailed instructions here:
+# https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/edp/eks-sandbox/addons/nexus-ce"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::093899590031:role/AWSIRSASandboxExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

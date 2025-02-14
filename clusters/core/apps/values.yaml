@@ -183,12 +183,17 @@ minio-operator:
   enable: false
   namespace: minio-operator
 
-nexus:
+nexus-ce:
   createNamespace: false
   enable: false
   namespace: nexus
 
 nexus-operator:
+  createNamespace: false
+  enable: false
+  namespace: nexus
+
+nexus:
   createNamespace: false
   enable: false
   namespace: nexus

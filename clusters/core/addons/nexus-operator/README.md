@@ -66,3 +66,7 @@ AWS Parameter Store structure:
 | eso.secretName | string | `"/infra/core/addons/nexus-operator"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
 | eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
 | eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
+| storageType | object | `{"container":{"bucketName":"krci-container","type":"pvc"},"dotnet":{"bucketName":"krci-container","type":"pvc"},"maven":{"bucketName":"krci-container","type":"pvc"},"npm":{"bucketName":"krci-container","type":"pvc"},"python":{"bucketName":"krci-container","type":"pvc"},"region":"us-east-1","yum":{"bucketName":"krci-container","type":"pvc"}}` | To enable the S3 storage type, must be define role for Nexus service account. |
+| storageType.container.bucketName | string | `"krci-container"` | Defines the name of the S3 bucket. |
+| storageType.container.type | string | `"pvc"` | Could be one of the following: "pvc", "s3". |
+| storageType.region | string | `"us-east-1"` | Mandatory field for S3 storage type. |
