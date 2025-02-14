@@ -1,0 +1,34 @@
+{{- if .Values.ingress.enabled -}}
+{{ if .Values.docker.enabled }}
+{{- $fullName := include "nexus-ce.fullname" $ -}}
+{{ range $registry := .Values.docker.registries }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-container-{{ $registry.port }}
+  labels:
+    {{- include "nexus-ce.labels" $ | nindent 4 }}
+  {{- if $.Values.ingress.annotations }}
+  annotations:
+    {{- toYaml $.Values.ingress.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+    - hosts:
+      - {{ $registry.host | quote }}
+      secretName: {{ $registry.secretName }}
+  rules:
+    - host: {{ $registry.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName | trunc 49 }}-container
+                port:
+                  number: {{ $registry.port }}
+{{- end }}
+{{- end }}
+{{- end }}

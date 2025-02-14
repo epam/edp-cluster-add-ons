@@ -1,0 +1,22 @@
+{{- if .Values.persistentVolume.enabled }}
+{{- $fullName := include "nexus-ce.fullname" . -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}-data
+  labels:
+    {{- include "nexus-ce.labels" $ | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistentVolume.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistentVolume.storageSize | quote }}
+{{- if .Values.persistentVolume.storageClass }}
+{{- if (eq "-" .Values.persistentVolume.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

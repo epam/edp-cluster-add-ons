@@ -1,3 +1,17 @@
+{{ if eq .Values.storageType.maven.type "s3"}}
+apiVersion: edp.epam.com/v1alpha1
+kind: NexusBlobStore
+metadata:
+  name: krci-maven
+spec:
+  s3:
+    bucket:
+      name: {{ .Values.storageType.maven.bucketName }}
+      region: {{ .Values.storageType.region}}
+  name: krci-maven
+  nexusRef:
+    name: nexus
+{{ else }}
 apiVersion: edp.epam.com/v1alpha1
 kind: NexusBlobStore
 metadata:
@@ -8,3 +22,4 @@ spec:
     path: krci-maven
   nexusRef:
     name: nexus
+{{ end }}
