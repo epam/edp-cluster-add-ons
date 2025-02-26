@@ -160,7 +160,7 @@ keycloak-operator:
 krakend:
   createNamespace: false
   enable: false
-  namespace: krakend
+  namespace: krci-krakend
 
 kuberocketci-pipelines:
   createNamespace: false
@@ -171,7 +171,7 @@ kuberocketci-pipelines:
 kuberocketci-rbac:
   createNamespace: false
   enable: false
-  namespace: security
+  namespace: krci-security
 
 kuberocketci:
   createNamespace: false
