@@ -23,6 +23,10 @@ helm-docs: helmdocs	## generate helm docs
 helmdocs: ## Download helm-docs locally if necessary.
 	$(call go-get-tool,$(HELMDOCS),github.com/norwoodj/helm-docs/cmd/helm-docs,v1.10.0)
 
+.PHONY: check-dependencies
+check-dependencies:  ## Check Helm dependencies for updates
+	@./hack/check_dependencies.sh
+
 .PHONY: git-chglog
 git-chglog: ## Download git-chglog locally if necessary.
 	$(call go-get-tool,$(GITCHGLOG),github.com/git-chglog/git-chglog/cmd/git-chglog,v0.15.4)
