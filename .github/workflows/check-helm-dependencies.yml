@@ -1,0 +1,16 @@
+name: "Check Helm Dependencies Version"
+
+on: workflow_dispatch
+
+jobs:
+
+  check-helm-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Helm dependencies check
+        run: make check-dependencies
