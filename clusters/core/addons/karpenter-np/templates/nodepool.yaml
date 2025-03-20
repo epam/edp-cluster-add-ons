@@ -10,6 +10,12 @@ spec:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
         name: ec2-node-class
+      # Provisioned nodes will have these taints
+      # Taints may prevent pods from scheduling if they are not tolerated by the pod.
+      taints:
+        - key: example.com/special-taint
+          effect: NoSchedule
+
       requirements:
         - key: "karpenter.k8s.aws/instance-category"
           operator: In
