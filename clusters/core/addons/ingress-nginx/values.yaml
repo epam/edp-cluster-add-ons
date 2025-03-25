@@ -15,6 +15,11 @@ ingress-nginx:
         cpu: "50m"
         memory: "128M"
     config:
+      # Due to usage of the snippet annotations, it is necessary to set the risk level to Critical.
+      # Ref: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#annotations-risk-level,
+      # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations-risk,
+      # https://github.com/kubernetes/ingress-nginx/issues/12618
+      # annotations-risk-level: Critical
       ssl-redirect: 'true'
       client-header-buffer-size: '64k'
       http2-max-field-size: '64k'
