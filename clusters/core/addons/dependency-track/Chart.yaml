@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.26.0
+version: 0.29.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "v4.12.4"
+appVersion: "v4.12.7"
 
 dependencies:
   - name: dependency-track
-    version: 0.26.0
+    version: 0.29.0
     repository: https://dependencytrack.github.io/helm-charts

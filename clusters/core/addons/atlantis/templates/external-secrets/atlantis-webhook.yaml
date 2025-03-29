@@ -9,14 +9,14 @@ spec:
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: { $secretName }}
+        key: {{ $secretName }}
         metadataPolicy: None
         property: bitbucket_token
       secretKey: bitbucket_token
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: { $secretName }}
+        key: {{ $secretName }}
         metadataPolicy: None
         property: bitbucket_secret
       secretKey: bitbucket_secret

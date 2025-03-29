@@ -1,6 +1,6 @@
 # atlantis
 
-![Version: 5.8.0](https://img.shields.io/badge/Version-5.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.30.0](https://img.shields.io/badge/AppVersion-v0.30.0-informational?style=flat-square)
+![Version: 5.16.0](https://img.shields.io/badge/Version-5.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.34.0](https://img.shields.io/badge/AppVersion-v0.34.0-informational?style=flat-square)
 
 **Homepage:** <https://www.runatlantis.io>
 
