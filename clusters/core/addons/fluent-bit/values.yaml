@@ -113,6 +113,48 @@ fluent-bit:
           port 8888
           Storage.type filesystem
 
+    filters: |
+      # Nest the logs to be under the log key
+      [FILTER]
+          Name nest
+          Match http.*
+          Wildcard *
+          Nest_under log
+
+      # Rewrite tag. We search for the completionTime field in the pipelineRun status and rewrite the tag
+      [FILTER]
+          Name rewrite_tag
+          Match http.*
+          Rule $log['pipelineRun']['status']['completionTime'] ^(.+)$ tkn_pipelinerun true
+          Emitter_Name re_emitted_pipelinerun
+
+      [FILTER]
+          Name rewrite_tag
+          Match http.*
+          Rule $log['taskRun']['status']['completionTime'] ^(.+)$ tkn_taskrun true
+          Emitter_Name re_emitted_taskrun
+
+      # Drop managed fields and pipelineSpec from the logs
+      # We drop the managedFields and pipelineSpec fields from the logs, since they are too big and we don't need them
+      [FILTER]
+          name lua
+          match tkn_pipelinerun
+          call drop_managed_fields
+          code function drop_managed_fields(tag, timestamp, record) record["log"]["pipelineRun"]["metadata"]["managedFields"] = nil record["log"]["pipelineRun"]["status"]["pipelineSpec"] = nil return 1, timestamp, record end
+
+      [FILTER]
+          name lua
+          match tkn_taskrun
+          call drop_managed_fields
+          code function drop_managed_fields(tag, timestamp, record) record["log"]["taskRun"]["metadata"]["managedFields"] = nil record["log"]["taskRun"]["status"]["taskSpec"] = nil return 1, timestamp, record end
+
+      # Restore original log structure for Opensearch processing, by removing the log key
+      [FILTER]
+          Name nest
+          Match tkn*
+          Operation lift
+          Nested_under log
+
     outputs: |
       [OUTPUT]
           Name            es
@@ -134,7 +176,7 @@ fluent-bit:
 
       [OUTPUT]
           Name            es
-          Match           http.*
+          Match           tkn*
           Host            opensearch-cluster-master
           Port            9200
           HTTP_User       ${ES_SUPERUSER_USER}
