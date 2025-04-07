@@ -1,17 +1,18 @@
 atlantis:
   vcsSecretName: atlantis-webhook
 
+  # -- Uncomment to enable Basic Auth mode
+  # ref: https://www.runatlantis.io/docs/security.
+  # basicAuthSecretName: atlantis-creds
+
   bitbucket:
     user: auto_example
 
   ingress:
+    enabled: true
     path: /
     host: atlantis.example.com
 
-  image:
-    repository: epamedp/atlantis
-    # -- If not set appVersion field from Chart.yaml is used
-    tag: "0.1.1"
   orgAllowlist: bitbucket.org/organization/*
 
   defaultTFVersion: "1.5.7"
@@ -66,3 +67,39 @@ eso:
       providerConfig: {}
       #  gcpsm:
       #    projectID: "alphabet-123"
+
+oauth2-proxy:
+  enabled: false
+  extraArgs:
+    # Skip authentication for /events endpoint to allow Git webhook access
+    skip-auth-regex: "^/events$"
+  config:
+    configFile: |-
+      allowed_roles = ["administrator", "developer"]
+      client_id = "atlantis"
+      code_challenge_method="S256"
+      cookie_csrf_expire="5m"
+      cookie_csrf_per_request="true"
+      cookie_secure = "false"
+      email_domains = [ "*" ]
+      insecure_oidc_allow_unverified_email = "true"
+      oidc_issuer_url = "https://keycloak.example.com/realms/<realm_name>"
+      pass_access_token = "true"
+      pass_authorization_header = "true"
+      pass_basic_auth = "false"
+      provider = "keycloak-oidc"
+      redirect_url = "https://atlantis.example.com/oauth2/callback"
+      skip_jwt_bearer_tokens = "true"
+      upstreams = [ "http://atlantis:80" ]
+      whitelist_domains = ["*"]
+      silence_ping_logging = "true"
+
+    existingSecret: oauth2-proxy
+
+  ingress:
+    enabled: true
+    hosts:
+      - atlantis.example.com
+
+oidc:
+  enabled: false
