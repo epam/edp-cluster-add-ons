@@ -1,0 +1,24 @@
+{{- if .Values.oidc.enabled }}
+{{- if (index .Values "oauth2-proxy" "enabled") }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: atlantis
+spec:
+  advancedProtocolMappers: true
+  clientId: atlantis
+  protocolMappers:
+    - name: aud
+      protocol: openid-connect
+      protocolMapper: "oidc-audience-mapper"
+      config:
+        included.client.audience: "atlantis"
+        id.token.claim: 'false'
+        access.token.claim: 'true'
+  secret: '$keycloak-client-atlantis-secret:clientSecret'
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: https://{{ (first (index .Values "oauth2-proxy" "ingress" "hosts")) }}
+{{- end }}
+{{- end }}

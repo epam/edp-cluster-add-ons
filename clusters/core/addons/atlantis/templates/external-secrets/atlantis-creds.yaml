@@ -1,8 +1,9 @@
 {{- if .Values.eso.enabled }}
+{{- if .Values.atlantis.basicAuthSecretName -}}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: atlantis-webhook
+  name: atlantis-creds
 spec:
   data:
     - remoteRef:
@@ -10,15 +11,15 @@ spec:
         decodingStrategy: None
         key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
-        property: bitbucket_token
-      secretKey: bitbucket_token
+        property: username
+      secretKey: username
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
         key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
-        property: bitbucket_secret
-      secretKey: bitbucket_secret
+        property: password
+      secretKey: password
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
@@ -26,4 +27,5 @@ spec:
   target:
     creationPolicy: Owner
     deletionPolicy: Retain
+{{- end }}
 {{- end }}

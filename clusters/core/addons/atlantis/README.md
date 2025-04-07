@@ -61,10 +61,9 @@ AWS Parameter Store structure:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| atlantis.bitbucket.user | string | `"auto_example"` |  |
+| atlantis.bitbucket | object | `{"user":"auto_example"}` | Uncomment to enable Basic Auth mode ref: https://www.runatlantis.io/docs/security. basicAuthSecretName: atlantis-creds |
 | atlantis.defaultTFVersion | string | `"1.5.7"` |  |
-| atlantis.image.repository | string | `"epamedp/atlantis"` |  |
-| atlantis.image.tag | string | `"0.1.1"` | If not set appVersion field from Chart.yaml is used |
+| atlantis.ingress.enabled | bool | `true` |  |
 | atlantis.ingress.host | string | `"atlantis.example.com"` |  |
 | atlantis.ingress.path | string | `"/"` |  |
 | atlantis.orgAllowlist | string | `"bitbucket.org/organization/*"` |  |
@@ -82,3 +81,10 @@ AWS Parameter Store structure:
 | eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"atlantis"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
+| oauth2-proxy.config.configFile | string | `"allowed_roles = [\"administrator\", \"developer\"]\nclient_id = \"atlantis\"\ncode_challenge_method=\"S256\"\ncookie_csrf_expire=\"5m\"\ncookie_csrf_per_request=\"true\"\ncookie_secure = \"false\"\nemail_domains = [ \"*\" ]\ninsecure_oidc_allow_unverified_email = \"true\"\noidc_issuer_url = \"https://keycloak.example.com/realms/<realm_name>\"\npass_access_token = \"true\"\npass_authorization_header = \"true\"\npass_basic_auth = \"false\"\nprovider = \"keycloak-oidc\"\nredirect_url = \"https://atlantis.example.com/oauth2/callback\"\nskip_jwt_bearer_tokens = \"true\"\nupstreams = [ \"http://atlantis:80\" ]\nwhitelist_domains = [\"*\"]\nsilence_ping_logging = \"true\""` |  |
+| oauth2-proxy.config.existingSecret | string | `"oauth2-proxy"` |  |
+| oauth2-proxy.enabled | bool | `false` |  |
+| oauth2-proxy.extraArgs.skip-auth-regex | string | `"^/events$"` |  |
+| oauth2-proxy.ingress.enabled | bool | `true` |  |
+| oauth2-proxy.ingress.hosts[0] | string | `"atlantis.example.com"` |  |
+| oidc.enabled | bool | `false` |  |
