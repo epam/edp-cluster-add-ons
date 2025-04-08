@@ -1,28 +1,46 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.8/deploy-templates/values.yaml and in each of subchart
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.11/deploy-templates/values.yaml and in each of subchart
   global:
+     # -- platform type that can be "kubernetes" or "openshift"
+    platform: "kubernetes"
     # -- a cluster DNS wildcard name
     dnsWildCard: example.com
-    # API Gateway URL configuration for Widget Functionality
-    # This configuration specifies the URL of the API Gateway that is used by various widgets within the platform.
-    # The 'api_gateway_url' should be set to the ingress URL of the KrakenD API Gateway
-    # By default, this value is left empty, and widgets are disabled
+    # Specifies the URL of the API Gateway used by widgets in the platform.
+    # The 'apiGatewayUrl' should be set to the external URL of the KrakenD API Gateway exposed via Ingress.
+    # Example: https://api.domain.example.com
+    # By default, this value is left empty, and widgets are disabled.
     # -- API Gateway URL configuration for Widget Functionality
     apiGatewayUrl: ""
-    # -- platform type that can be "kubernetes" or "openshift"
-    platform: kubernetes
+    # The API endpoint for Kubernetes cluster. This should be the cluster's server endpoint
+    # in the format: https://<cluster-name>.<region>.eks.amazonaws.com.
+    # This parameter is used to generate the static kubeconfig for platform users.
+    # Example: "https://xxx.gr7.eu-central-1.eks.amazonaws.com"
+    # -- API Сluster Endpoint configuration for static kubeconfig generation
+    apiClusterEndpoint: ""
+    # -- Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3"
+    availableClusters: ""
+    # Specify the admin OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-admins.
+    adminGroupName: ""
+    # Specify the developer OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-developers.
+    developerGroupName: ""
+    # Specify the viewers OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-viewers.
+    viewerGroupName: ""
     # -- Can be gerrit, github or gitlab. By default: github
     gitProviders:
       # - github
       # - gitlab
       # - gerrit
+      # - bitbucket
+
     # Below is an example of endpoint values for each registry type:
     # type:      | url
     # =============================
     # ecr        | <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com
     # harbor     | <registry.example.com>
     # dockerhub  | 'docker.io'
+    # nexus      | <nexus.example.com>
+    # ghcr       | <ghcr.io>
     # openshift  | <image-registry.openshift-image-registry.svc:5000>
 
     # For example to integrate platform with dockerhub and publish image under 'my_user' account:
@@ -46,29 +64,83 @@ edp-install:
   # Follow the detailed instructions here:
   # https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
   externalSecrets:
-    # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
+    # -- Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false
     enabled: false
+    # -- Defines provider type. One of `aws` or `generic`.
+    type: "aws"
     secretProvider:
       aws:
+        # -- Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager
+        service: ParameterStore
+        # -- IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
         role: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+        # -- AWS Region where secrets are stored, e.g. eu-central-1
+        region: eu-central-1
+    # -- Create necessary secrets for KubeRocketCI installation, using External Secret Operator
     manageEDPInstallSecrets: true
     # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
     manageEDPInstallSecretsName: /edp/deploy-secrets
     manageCodemieSecretsName: /edp/codemie-secrets
     manageGitProviderSecretsName: /edp/git-provider-secrets
 
+  codebase-operator:
+    enabled: true
+    # image:
+    #   repository: epamedp/codebase-operator
+    #   tag:
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
+    # envs:
+    #   - name: RECONCILATION_PERIOD
+    #     value: "360"  # The value should be typed in minutes
+    #   # Maximum number of parallel reconciliation codebasebranches
+    #   - name: CODEBASE_BRANCH_MAX_CONCURRENT_RECONCILES
+    #     value: 3
+    # jira:
+    #   integration: false
+    #   name: "jira"
+    #   # -- Enable creation of QuickLink for Jira
+    #   quickLink:
+    #     enabled: true
+    #   apiUrl: "https://jiraeu-api.example.com"
+    #   rootUrl: "https://jiraeu.example.com"
+    #   credentialName: "ci-jira"
+
   # -- Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/
   # @default -- ``
   quickLinks:
-  #   argocd: ""
-  #   defectdojo: ""
-  #   dependency_track: ""
-  #   docker_registry: ""
-  #   grafana: ""
-  #   kibana: ""
-  #   nexus: ""
-  #   sonar: ""
-  #   codemie: ""
+    # Base URL value for the argocd Quick Link
+    argocd: ""
+    # Base URL value for the codemie Quick Link
+    codemie: ""
+    # Base URL value for the defectdojo Quick Link
+    defectdojo: ""
+    # Base URL value for the dependency track Quick Link
+    dependency_track: ""
+    # Base URL value for the container registry Quick Link (e.g. Nexus, DockerHub, ECR, etc.)
+    docker_registry: ""
+    # Configuration for the logging Quick Link
+    logging:
+      # -- Define the provider name for correct URL generation.
+      # Available providers: "opensearch", "datadog".
+      # If the provider name is not specified, the base URL will be used.
+      provider: ""
+      # Base URL value for the logging Quick Link
+      url: ""
+    # Configuration for the monitoring Quick Link
+    monitoring:
+      # -- Define the provider name for correct URL generation.
+      # Available providers: "grafana", "datadog".
+      # If the provider name is not specified, the base URL will be used.
+      provider: ""
+      # Base URL value for the monitoring Quick Link
+      url: ""
+    # Base URL value for the nexus Quick Link
+    nexus: ""
+    # Base URL value for the sonar Quick Link
+    sonar: ""
 
   # -- Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/
   extraQuickLinks: {}
@@ -82,12 +154,15 @@ edp-install:
     #     icon: icon_in_base64
 
   edp-headlamp:
+    enabled: true
     config:
+      # -- base url path at which headlamp should run
+      baseURL: ""
       # -- Ensure that the specified client is associated with cluster OIDC integration.
       # -- For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc
       oidc:
         # Enable OIDC integration. Default: false
-        enabled: true
+        enabled: false
         # -- OIDC Issuer URL for authentication.
         # -- This URL identifies the OpenID Connect provider endpoint. Examples:
         # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
@@ -99,29 +174,48 @@ edp-install:
         clientSecretName: "keycloak-client-headlamp-secret"
         # -- OIDC client secret key
         clientSecretKey: "clientSecret"
+        # -- OIDC scopes to be used
+        scopes: ""
+    # image:
+    #   repository: epamedp/edp-headlamp
+    #   tag:
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
 
   edp-tekton:
+    enabled: true
+
+    pipelines:
+      image:
+        # -- Registry for tekton pipelines images. Default: docker.io
+        registry: "docker.io"
+
+      # -- List of image pull secrets used by the Tekton ServiceAccount for pulling images from private registries.
+      # Example:
+      # imagePullSecrets:
+      #   - name: regcred
+      imagePullSecrets: []
+
     tekton-cache:
       enabled: true
       # Tekton cache endpoint for pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-tekton-cache.yaml
       # url: http://tekton-cache:8080
-    dashboard:
-      # -- Deploy Tekton Dashboard as a part of pipeline library when true. Default: true
-      # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
-      # -- To enable proxy protect use openshift_proxy or sso.enabled sections.
-      # -- More details:
-      # -- https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy
+
+    tekton:
+      pruner:
+        create: true
+        # -- List of ImagePullSecrets to be used by the pruner CronJob
+        # imagePullSecrets: []
+
+    interceptor:
+      # -- Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true
       enabled: true
-      # -- Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false.
-      readOnly: false
-      ingress:
-        # -- Deploy KubeRocketCI Dashboard ingress as a part of pipeline library when true. Default: true
-        enabled: true
-        # -- Annotations for Ingress resource
-        annotations: {}
-          # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
-          # nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
-          # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+      # -- Optional array of imagePullSecrets containing private registry credentials
+      ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+      # imagePullSecrets: []
+      # - name: regcred
 
     # GitServers configuration section
     # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
@@ -130,6 +224,9 @@ edp-install:
     #   my-github:
     #     gitProvider: github
     #     host: github.com
+    #     # -- Enable creation of QuickLink for GitHub
+    #     quickLink:
+    #       enabled: true
     #     webhook:
     #       skipWebhookSSLVerification: false
     #     eventListener:
@@ -161,6 +258,9 @@ edp-install:
     #   my-gitlab:
     #     gitProvider: gitlab
     #     host: gitlab.com
+    #     # -- Enable creation of QuickLink for GitLab
+    #     quickLink:
+    #       enabled: true
     #     webhook:
     #       # codebase operator will use this URL to create webhooks in GitLab, if it is not defined
     #       # the operator will use the Ingress value
@@ -195,6 +295,9 @@ edp-install:
     #   my-gerrit:
     #     gitProvider: gerrit
     #     host: gerrit.example.com
+    #     # -- Enable creation of QuickLink for Gerrit
+    #     quickLink:
+    #       enabled: true
     #     gitUser: ci-user
     #     httpsPort: 443
     #     nameSshKeySecret: gerrit-ciuser-sshkey
@@ -229,6 +332,9 @@ edp-install:
     #   my-bitbucket:
     #     gitProvider: bitbucket
     #     host: bitbucket.org
+    #     # -- Enable creation of QuickLink for Gerrit
+    #     quickLink:
+    #       enabled: true
     #     webhook:
     #       skipWebhookSSLVerification: false
     #     eventListener:
@@ -257,9 +363,24 @@ edp-install:
     #         # -- Ingress TLS configuration
     #         tls: []
   cd-pipeline-operator:
+    enabled: true
+    # image:
+    #   repository: epamedp/cd-pipeline-operator
+    #   tag:
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
     # -- Defines the type of the tenant engine that can be "none", "kiosk" or "capsule";
     # for Stages with external cluster tenancyEngine will be ignored. Default: none
     tenancyEngine: "none"
+    # -- Required tenancyEngine: capsule. Specify Capsule Tenant specification for Environments.
+    capsuleTenant:
+      # Enable Capsule Tenant creation as a part of cd-pipeline-operator deployment. Active if tenancyEngine="capsule"
+      create: false
+    # -- should the operator manage(create/delete) namespaces for stages
+    # Refer to the guide for managing namespace (https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management)
+    manageNamespace: true
     # -- Flag indicating whether the operator should manage secrets for stages.
     # This parameter controls the provisioning of the 'regcred' secret within deployed environments, facilitating access to private container registries.
     # Set the parameter to "none" under the following conditions:
@@ -271,3 +392,62 @@ edp-install:
     #   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator).
     #   - none: Disables secrets management logic.
     secretManager: own
+
+  gerrit-operator:
+    enabled: false
+    # image:
+    #   repository: epamedp/gerrit-operator
+    #   tag:
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
+    # gerrit:
+    #   deploy: true
+    #   name: "gerrit"
+    #   image: "openfrontier/gerrit"
+    #   version:
+    #   imagePullSecrets:
+    #   storage:
+    #     size: 1Gi
+    #     class: gp2
+    #   # Provide external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+    #   ingress:
+    #     # -- Enable external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+    #     annotations: {}
+    #     # --  pathType is only for k8s >= 1.1=
+    #     pathType: Prefix
+    #     # --  For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    #     # --  See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    #     # ingressClassName: nginx
+    #     tls: []
+    #     #  - secretName: chart-example-tls
+    #     #    hosts:
+    #     #      - gerrit-edp.example.com
+    #   # -- Additional environment variables
+    #   extraEnv: []
+    #     # - name: AUTH_TYPE
+    #     #   value: OAUTH
+    #     # - name: OAUTH_KEYCLOAK_CLIENT_ID
+    #     #   value: gerrit
+    #     # - name: OAUTH_KEYCLOAK_REALM
+    #     #   value: shared
+    #     # - name: OAUTH_KEYCLOAK_ROOT_URL
+    #     #   value: https://keycloak.example.com/auth
+    #     # - name: OAUTH_KEYCLOAK_CLIENT_SECRET
+    #     #   valueFrom:
+    #     #     secretKeyRef:
+    #     #       name: keycloak-client-gerrit-secret
+    #     #       key: clientSecret
+    #   sso:
+    #     # Create kind: KeycloakClient as a part of chart installation
+    #     enabled: true
+    #     # Enable creation of QuickLink for Keycloak
+    #     quickLink:
+    #       enabled: true
+    #     # Can be Realm or KeycloakRealm.
+    #     kind: KeycloakRealm
+    #     # Name of kind: Realm/KeycloakRealm CR.
+    #     name: main
+    #     # -- Keycloak URL.
+    #     keycloakUrl: https://keycloak.example.com/auth
