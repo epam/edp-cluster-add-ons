@@ -14,9 +14,14 @@ A Helm chart for Sonarqube
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.enabled | bool | `true` | Install components of the ESO. |
+| eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
+| eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
+| eso.secretName | string | `"/infra/core/addons/sonar"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
+| eso.secretStoreName | string | `"aws-parameterstore-sonar"` | Defines Secret Store name. |
+| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | sonarqube.deploymentType | string | `"Deployment"` |  |
-| sonarqube.env[0].name | string | `"SONAR_TELEMETRY_ENABLE"` |  |
-| sonarqube.env[0].value | string | `"false"` |  |
+| sonarqube.env | list | `[{"name":"SONAR_TELEMETRY_ENABLE","value":"false"}]` | Uncomment to enable monitoring passcode secret configuration. ref: https://docs.sonarsource.com/sonarqube-server/latest/setup-and-upgrade/deploy-on-kubernetes/set-up-monitoring/prometheus/ monitoringPasscodeSecretName: "monitoring-passcode" monitoringPasscodeSecretKey: "monitoring-passcode" |
 | sonarqube.fullnameOverride | string | `"sonar"` |  |
 | sonarqube.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"64m"` |  |
 | sonarqube.ingress.enabled | bool | `true` |  |
