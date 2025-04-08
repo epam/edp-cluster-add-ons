@@ -33,6 +33,11 @@ sonarqube:
   jvmCeOpts: -javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=ce
   jvmOpts: -javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=web
 
+  # -- Uncomment to enable monitoring passcode secret configuration.
+  # ref: https://docs.sonarsource.com/sonarqube-server/latest/setup-and-upgrade/deploy-on-kubernetes/set-up-monitoring/prometheus/
+  # monitoringPasscodeSecretName: "monitoring-passcode"
+  # monitoringPasscodeSecretKey: "monitoring-passcode"
+
   env:
   - name: SONAR_TELEMETRY_ENABLE
     value: "false"
@@ -50,3 +55,29 @@ sonarqube:
     jdbcSecretName: sonar-pguser-sonar
     jdbcSecretPasswordKey: "password"
 
+# This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+# Prerequisite: Ensure that ESO is installed in the cluster.
+# Refer to the EDP cluster add-on for ESO installation and setup:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+#
+# Ensure that you have created the necessary roles for ESO integration.
+# Follow the detailed instructions here:
+# https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws` or `generic`.
+  type: "aws"
+  # -- Defines Secret Store name.
+  secretStoreName: "aws-parameterstore-sonar"
+  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
+  secretName: "/infra/core/addons/sonar"
+  # -- Role ARN for the ExternalSecretOperator to assume.
+  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
+  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
