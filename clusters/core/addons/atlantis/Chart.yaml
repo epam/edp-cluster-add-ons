@@ -22,3 +22,8 @@ dependencies:
 - name: atlantis
   version: 5.16.0
   repository: https://runatlantis.github.io/helm-charts
+
+- name: oauth2-proxy
+  version: 7.12.8
+  repository: https://oauth2-proxy.github.io/manifests
+  condition: oauth2-proxy.enabled
