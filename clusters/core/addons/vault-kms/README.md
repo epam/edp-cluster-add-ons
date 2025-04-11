@@ -123,12 +123,17 @@ AWS Parameter Store structure:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
+| eso.aws.region | string | `"eu-central-1"` | AWS region. |
+| eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
-| eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/infra/core/addons/vault"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
-| eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
+| eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
+| eso.secretPath | string | `"/infra/core/addons/vault"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| eso.vault | object | `{"mountPath":"sdlc","role":"vault-kms","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault.role | string | `"vault-kms"` | Vault role for the Kubernetes authentication method. |
+| eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | job.clusterApiUrl | string | `"https://cluster-api.com"` |  |
 | job.keycloakUrl | string | `"https://keycloak.example.com/auth/realms/shared"` |  |
 | job.vaultUrl | string | `"vault.example.com"` |  |

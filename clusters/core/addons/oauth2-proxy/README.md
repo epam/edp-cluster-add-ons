@@ -54,12 +54,17 @@ AWS Parameter Store structure:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
+| eso.aws.region | string | `"eu-central-1"` | AWS region. |
+| eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
-| eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/infra/core/addons/oauth2-proxy"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
-| eso.secretStoreName | string | `"aws-parameterstore-proxy"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
+| eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
+| eso.secretPath | string | `"/infra/core/addons/oauth2-proxy"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| eso.vault | object | `{"mountPath":"sdlc","role":"oauth2-proxy","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault.role | string | `"oauth2-proxy"` | Vault role for the Kubernetes authentication method. |
+| eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | oauth2-proxy.config.configFile | string | `"allowed_roles = [\"administrator\", \"developer\"]\ncode_challenge_method=\"S256\"\ncookie_domains = [\"example.com\"]\ncookie_secure = \"false\"\nemail_domains = [ \"*\" ]\ninsecure_oidc_allow_unverified_email = \"true\"\noidc_issuer_url = \"https://keycloak.example.com/auth/realms/<cluster_name>\"\npass_authorization_header = \"true\"\npass_basic_auth = \"false\"\npass_user_headers = \"true\"\nprovider = \"keycloak-oidc\"\nredirect_url = \"https://oauth-oauth2-proxy.example.com/oauth2/callback\"\nreverse_proxy = \"true\"\nskip_jwt_bearer_tokens = \"true\"\nskip_provider_button = \"true\"\nwhitelist_domains = \".example.com\""` |  |
 | oauth2-proxy.config.existingSecret | string | `"oauth2-proxy"` |  |
 | oauth2-proxy.ingress.enabled | bool | `true` |  |

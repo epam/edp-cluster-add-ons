@@ -1,5 +1,5 @@
 {{- if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
+{{- $secretPath := .Values.eso.secretPath }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,18 +8,18 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   data:
   - secretKey: username
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ $secretPath }}
       property: fluentbit.username
   - secretKey: password
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ $secretPath }}
       property: fluentbit.password
 {{- end }}

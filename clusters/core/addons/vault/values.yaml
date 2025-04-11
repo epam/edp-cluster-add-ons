@@ -1,26 +1,30 @@
-vault:
-  fullnameOverride: vault
+oidc:
+  enabled: true
 
-  server:
-    standalone:
-      enabled: false
-    ha:
-      enabled: true
-      replicas: 3
-      raft:
-        enabled: true
-
-    dataStorage:
-      enabled: true
-      size: 1Gi
-      storageClass: gp3
-
-    ingress:
-      enabled: true
-      hosts:
-        - host: vault.example.com
-          paths:
-            - /
-
-  ui:
-    enabled: true
+eso:
+  # -- Install components of the ESO.
+  enabled: false
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "vault"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+  secretPath: "secret/infra/sdlc/addons/vault"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "sdlc"
+    # -- Vault role for the Kubernetes authentication method.
+    role: vault
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"
