@@ -1,5 +1,4 @@
 {{- if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,20 +7,20 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   data:
   - secretKey: username
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: opensearch-dashboard.username
   - secretKey: password
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: opensearch-dashboard.password
   # -- The cookie secret in OpenSearch Dashboards is used to encrypt and secure session cookies.
@@ -33,14 +32,14 @@ spec:
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: opensearch-dashboard.cookie
   - secretKey: OIDC_CLIENT_SECRET
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: opensearch-dashboard.OIDC_CLIENT_SECRET
 {{- end }}

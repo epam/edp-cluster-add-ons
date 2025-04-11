@@ -1,5 +1,4 @@
 {{- if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,7 +7,7 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   target:
     template:
       engineVersion: v2
@@ -25,14 +24,14 @@ spec:
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: {{ $secretName }}
+        key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
         property: s3-user.ACCESSKEY
     - secretKey: REGISTRY_STORAGE_S3_SECRETKEY
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: {{ $secretName }}
+        key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
         property: s3-user.SECRETKEY
 {{- end }}

@@ -160,6 +160,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | vault-okd.createNamespace | bool | `false` |  |
 | vault-okd.enable | bool | `false` |  |
 | vault-okd.namespace | string | `"vault"` |  |
+| vault-operator.createNamespace | bool | `false` |  |
+| vault-operator.enable | bool | `false` |  |
+| vault-operator.namespace | string | `"vault"` |  |
 | vault.createNamespace | bool | `false` |  |
 | vault.enable | bool | `false` |  |
 | vault.namespace | string | `"vault"` |  |

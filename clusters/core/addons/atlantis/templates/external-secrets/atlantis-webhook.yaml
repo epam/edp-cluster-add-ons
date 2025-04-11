@@ -1,5 +1,4 @@
 {{ if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -9,21 +8,21 @@ spec:
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: {{ $secretName }}
+        key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
         property: bitbucket_token
       secretKey: bitbucket_token
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: {{ $secretName }}
+        key: {{ .Values.eso.secretPath }}
         metadataPolicy: None
         property: bitbucket_secret
       secretKey: bitbucket_secret
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   target:
     creationPolicy: Owner
     deletionPolicy: Retain
