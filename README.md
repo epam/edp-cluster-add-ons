@@ -103,7 +103,7 @@ make update-readme
 | krakend                | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | kuberocketci-pipelines | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac      | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
-| kuberocketci           | 3.11.1    | 3.11.1       | krci                   | False             | False    |
+| kuberocketci           | 3.11.2    | 3.11.2       | krci                   | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | minio-operator         | False             | False    |
 | nexus-ce               | 0.1.0     | 1.16.0       | nexus                  | False             | False    |
 | nexus-operator         | 3.3.0     | 3.3.0        | nexus                  | False             | False    |
