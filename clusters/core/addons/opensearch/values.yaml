@@ -21,15 +21,24 @@ oidc:
 eso:
   # -- Install components of the ESO.
   enabled: true
-  # -- Defines provider type. One of `aws` or `generic`.
-  type: "aws"
-  # -- Defines Secret Store name.
-  secretStoreName: "aws-parameterstore"
-  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
-  secretName: "/infra/core/addons/opensearch"
-  # -- Role ARN for the ExternalSecretOperator to assume.
-  roleArn: arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess
-  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "aws"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+  secretPath: "/infra/core/addons/opensearch"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "sdlc"
+    # -- Vault role for the Kubernetes authentication method.
+    role: opensearch
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
   generic:
     secretStore:
       # -- Defines SecretStore provider configuration.

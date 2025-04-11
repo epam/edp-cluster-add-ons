@@ -8,13 +8,8 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.24.1
+version: 0.30.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "1.13.1"
-
-dependencies:
-- name: vault
-  version: 0.24.1
-  repository: https://helm.releases.hashicorp.com
+appVersion: "1.19.0"
