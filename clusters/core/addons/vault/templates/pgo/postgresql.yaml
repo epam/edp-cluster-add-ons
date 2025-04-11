@@ -1,0 +1,45 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: vault
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-16.3-0
+  postgresVersion: 16
+  instances:
+    - name: instance1
+      replicas: 1
+      resources:
+        limits:
+          cpu: "2.0"
+          memory: "4Gi"
+        requests:
+          cpu: "0.5"
+          memory: "1Gi"
+      dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 7Gi
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.47-0
+      repos:
+        - name: repo1
+          volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 7Gi
+  users:
+    - name: vault
+      databases:
+        - vault
+      privileges:
+        - SUPERUSER
+
+  databaseInitSQL:
+    key: init.sql
+    name: init-sql

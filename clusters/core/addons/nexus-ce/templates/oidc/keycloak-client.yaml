@@ -12,6 +12,6 @@ spec:
   secret: '$keycloak-client-nexus-secret:clientSecret'
   realmRef:
     kind: ClusterKeycloakRealm
-    name: sandbox
+    name: main
   webUrl: https://{{ (first (index .Values "oauth2-proxy" "ingress" "hosts")) }}
 {{ end }}

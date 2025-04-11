@@ -1,0 +1,266 @@
+apiVersion: vault.banzaicloud.com/v1alpha1
+kind: Vault
+metadata:
+  name: vault
+  labels:
+    app.kubernetes.io/name: vault
+    vault_cr: vault
+spec:
+  size: 3
+  image: "hashicorp/vault:{{ .Chart.AppVersion }}"
+  # Define the imagePullSecrets to pull the image from a private registry
+  # vaultPodSpec:
+  #   imagePullSecrets:
+  #     - name: regcred
+  bankVaultsImage: ghcr.io/bank-vaults/bank-vaults:v1.31.2
+
+  config:
+    storage:
+      postgresql:
+        table: "vault_kv_store"
+        ha_enabled: "true"
+        ha_table: "vault_ha_locks"
+    listener:
+      tcp:
+        address: "[::]:8200"
+        cluster_address: "[::]:8201"
+        tls_disable: true
+        telemetry:
+          unauthenticated_metrics_access: true
+    ui: true
+    disable_mlock: false
+    telemetry:
+      prometheus_retention_time: "24h"
+      disable_hostname: true
+
+  externalConfig:
+    policies:
+      - name: vault_admin
+        rules: |
+          # Allow managing leases
+          path "sys/leases/*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+
+          # Manage auth methods broadly across Vault
+          path "auth/*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+
+          # Create, update, and delete auth methods
+          path "sys/auth/*" {
+            capabilities = ["create", "update", "delete", "sudo"]
+          }
+
+          # List auth methods
+          path "sys/auth" {
+            capabilities = ["read"]
+          }
+
+          # List existing policies
+          path "sys/policies/acl" {
+            capabilities = ["read","list"]
+          }
+
+          # Create and manage ACL policies
+          path "sys/policies/acl/*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+
+          # List, create, update, and delete key/value secrets
+          path "secret/*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+
+          # Manage secret engines
+          path "sys/mounts/*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+
+          # List existing secret engines.
+          path "sys/mounts" {
+            capabilities = ["read"]
+          }
+
+          # Read health checks
+          path "sys/health" {
+            capabilities = ["read", "sudo"]
+          }
+      - name: vault_developer
+        rules: |
+          path "secret/data/dev/*" {
+          capabilities = ["create", "read", "update", "list"]
+          }
+      # Enable access for SDLC tools
+      - name: vault-ro-sdlc-eso
+        rules: |
+          path "secret/data/infra/sdlc/addons/vault" {
+            capabilities = ["read", "list"]
+          }
+      # - name: sonar-ro-sdlc-eso
+      #   rules: |
+      #     path "secret/data/infra/sdlc/addons/sonar" {
+      #       capabilities = ["read", "list"]
+      #     }
+      # - name: nexus-ro-sdlc-eso
+      #   rules: |
+      #     path "secret/data/infra/sdlc/addons/nexus" {
+      #       capabilities = ["read", "list"]
+      #     }
+      # - name: dependency-track-ro-sdlc-eso
+      #   rules: |
+      #     path "secret/data/infra/sdlc/addons/dependency-track" {
+      #       capabilities = ["read", "list"]
+      #     }
+      # - name: krci-ro-sdlc-eso
+      #   rules: |
+      #     path "secret/data/infra/sdlc/addons/krci" {
+      #       capabilities = ["read", "list"]
+      #     }
+
+    auth:
+      - type: oidc
+        path: oidc
+        config:
+          oidc_client_id: "vault"
+          oidc_discovery_url: "https://keycloak.example.com/realms/shared"
+          oidc_client_secret: "${ env `OIDC_CLIENT_SECRET` }"
+          default_role: default
+        roles:
+        - name: default
+          user_claim: sub
+          groups_claim: roles
+          oidc_scopes:
+            - openid
+            - roles
+          allowed_redirect_uris:
+            - "https://vault.example.com/ui/vault/auth/oidc/oidc/callback"
+            - "https://vault.example.com/oidc/oidc/callback"
+          policies:
+            - default
+      - type: kubernetes
+        path: sdlc
+        roles:
+          - name: vault
+            bound_service_account_names: externalsecrets-vault-vault
+            bound_service_account_namespaces: vault
+            policies: vault-ro-sdlc-eso
+            ttl: 1h
+          # - name: sonar
+          #   bound_service_account_names: ["externalsecrets-sonar-operator-vault", "externalsecrets-sonar-vault"]
+          #   bound_service_account_namespaces: sonar
+          #   policies: sonar-ro-sdlc-eso
+          #   ttl: 1h
+          # - name: nexus
+          #   bound_service_account_names: ["externalsecrets-nexus-operator-vault", "externalsecrets-nexus-vault"]
+          #   bound_service_account_namespaces: nexus
+          #   policies: nexus-ro-sdlc-eso
+          #   ttl: 1h
+          # - name: dependency-track
+          #   bound_service_account_names: externalsecrets-dependency-track-vault
+          #   bound_service_account_namespaces: dependency-track
+          #   policies: dependency-track-ro-sdlc-eso
+          #   ttl: 1h
+          # - name: krci
+          #   bound_service_account_names: externalsecrets-krci-vault
+          #   bound_service_account_namespaces: krci
+          #   policies: krci-ro-sdlc-eso
+          #   ttl: 1h
+
+    secrets:
+      - path: secret
+        type: kv
+        description: General secrets
+        options:
+          version: 2
+
+    groups:
+      - name: VAULT_ADMIN
+        type: external
+        policies:
+          - vault_admin
+      - name: VAULT_DEVELOPER
+        type: external
+        policies:
+          - vault_developer
+
+    group-aliases:
+      - name: "administrator"
+        mountpath: oidc
+        group: VAULT_ADMIN
+      - name: "developer"
+        mountpath: oidc
+        group: VAULT_DEVELOPER
+
+  unsealConfig:
+    kubernetes:
+      secretNamespace: "{{ .Release.Namespace }}"
+      secretName: bank-vaults
+
+  serviceType: ClusterIP
+
+  # Ensure that the Vault pods are scheduled on different nodes.
+  podAntiAffinity: kubernetes.io/hostname
+
+  serviceAccount: vault
+
+  vaultEnvsConfig:
+    - name: VAULT_PG_CONNECTION_URL
+      valueFrom:
+        secretKeyRef:
+          name: vault-pguser-vault
+          key: uri
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    - name: HOSTNAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: VAULT_API_ADDR
+      value: http://$(POD_IP):8200
+    - name: VAULT_CLUSTER_ADDR
+      value: https://$(HOSTNAME).vault:8201
+
+  envsConfig:
+    - name: OIDC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-client-vault-secret
+          key: clientSecret
+
+  resources:
+    vault:
+      limits:
+        memory: 2Gi
+      requests:
+        memory: 256Mi
+        cpu: 100m
+    bankVaults:
+      limits:
+        memory: 512Mi
+      requests:
+        memory: 256Mi
+        cpu: 100m
+    prometheusExporter:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 1Gi
+
+  ingress:
+    spec:
+      ingressClassName: "nginx"
+      rules:
+        - host: vault.example.com
+          http:
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+                backend:
+                  service:
+                    name: vault
+                    port:
+                      number: 8200

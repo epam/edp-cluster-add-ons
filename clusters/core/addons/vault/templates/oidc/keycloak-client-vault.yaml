@@ -1,0 +1,29 @@
+{{ if .Values.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: vault
+spec:
+  advancedProtocolMappers: true
+  clientId: vault
+  directAccess: true
+  defaultClientScopes:
+    - roles
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: "https://vault.example.com"
+  redirectUris:
+    - "https://vault.example.com/ui/vault/auth/oidc/oidc/callback"
+    - "https://vault.example.com/oidc/oidc/callback"
+  protocolMappers:
+    - name: roles
+      protocol: openid-connect
+      protocolMapper: "oidc-usermodel-realm-role-mapper"
+      config:
+        "access.token.claim": "true"
+        "claim.name": "roles"
+        "id.token.claim": "true"
+        "userinfo.token.claim": "true"
+        "multivalued": "true"
+{{ end }}

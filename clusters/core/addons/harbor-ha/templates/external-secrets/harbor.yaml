@@ -1,5 +1,4 @@
 {{- if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,34 +7,34 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   data:
   - secretKey: HARBOR_ADMIN_PASSWORD
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: harbor.HARBOR_ADMIN_PASSWORD
   - secretKey: secretKey
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: harbor.secretKey
   - secretKey: REGISTRY_HTPASSWD
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: harbor.REGISTRY_HTPASSWD
   - secretKey: REGISTRY_PASSWD
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: harbor.REGISTRY_PASSWD
 {{- end }}

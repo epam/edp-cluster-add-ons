@@ -124,4 +124,5 @@ make update-readme
 | tekton-dashboard       | 0.52.0    | 0.52.0       | krci                   | False             | False    |
 | vault-kms              | 0.25.0    | 1.14.0       | vault                  | False             | False    |
 | vault-okd              | 0.25.0    | 1.14.0       | vault                  | False             | False    |
-| vault                  | 0.24.1    | 1.13.1       | vault                  | False             | False    |
+| vault                  | 0.30.0    | 1.19.0       | vault                  | False             | False    |
+| vault-operator         | 1.22.5    | 1.22.5       | vault                  | False             | False    |
