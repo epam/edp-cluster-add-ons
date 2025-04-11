@@ -100,12 +100,17 @@ AWS Parameter Store structure:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
+| eso.aws.region | string | `"eu-central-1"` | AWS region. |
+| eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
-| eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/infra/core/addons/opensearch"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
-| eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
+| eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
+| eso.secretPath | string | `"/infra/core/addons/opensearch"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| eso.vault | object | `{"mountPath":"sdlc","role":"opensearch","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault.role | string | `"opensearch"` | Vault role for the Kubernetes authentication method. |
+| eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | fluent-bit.config.customParsers | string | `"[PARSER]\n    Name docker_no_time\n    Format json\n    Time_Keep Off\n    Time_Key time\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\n\n[PARSER]\n    Name        java_multiline\n    Format      regex\n    Regex       /^(?<time>\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}) (?<level>[^\\s]+)(?<message>.*)/\n    Time_Key    time\n    Time_Format %Y-%m-%d %H:%M:%S\n"` |  |
 | fluent-bit.config.filters | string | `"[FILTER]\n    Name kubernetes\n    Match kube.*\n    Merge_Log On\n    Keep_Log Off\n    K8S-Logging.Parser On\n    K8S-Logging.Exclude On\n\n# START of EDP logs chain\n[FILTER]\n    Name kubernetes\n    Match kube.edp.*\n    Merge_Log On\n    Keep_Log Off\n    Kube_Tag_Prefix  kube.edp.var.log.containers.\n    K8S-Logging.Parser On\n    K8S-Logging.Exclude On\n"` |  |
 | fluent-bit.config.inputs | string | `"[INPUT]\n    Name tail\n    Path /var/log/containers/*.log\n    multiline.parser docker, cri\n    Tag kube.*\n    Mem_Buf_Limit 5MB\n    Skip_Long_Lines On\n\n[INPUT]\n    Name systemd\n    Tag host.*\n    Systemd_Filter _SYSTEMD_UNIT=kubelet.service\n    Read_From_Tail On\n\n[INPUT]\n    # Grab EDP namespace logs to separate index for development team\n    Name tail\n    Tag kube.edp.*\n    Path /var/log/containers/*edp*.log\n    multiline.parser docker, cri\n    Mem_Buf_Limit 5MB\n    Skip_Long_Lines On\n"` |  |

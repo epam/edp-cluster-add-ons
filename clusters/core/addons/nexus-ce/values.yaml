@@ -23,7 +23,7 @@ nexusAdminPassword:
 docker:
   enabled: true
   registries:
-    - host: nexus-ce-ci-container.eks-sandbox.aws.main.edp.projects.epam.com
+    - host: nexus-ce-ci-container.example.com
       port: 5000
 
 # -- This block configure database connections for Nexus CE.
@@ -102,7 +102,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: nexus-ce-ci.eks-sandbox.aws.main.edp.projects.epam.com
+    - host: nexus-ce-ci.example.com
       paths:
         - path: /
           pathType: Prefix
@@ -156,12 +156,12 @@ oauth2-proxy:
       cookie_secure = "false"
       email_domains = [ "*" ]
       insecure_oidc_allow_unverified_email = "true"
-      oidc_issuer_url = "https://idp.core.kuberocketci.io/realms/sandbox"
+      oidc_issuer_url = "https://idp.core.kuberocketci.io/realms/shared"
       pass_access_token = "true"
       pass_authorization_header = "true"
       pass_basic_auth = "false"
       provider = "keycloak-oidc"
-      redirect_url = "https://nexus-ce.eks-sandbox.aws.main.edp.projects.epam.com/oauth2/callback"
+      redirect_url = "https://nexus-ce.example.com/oauth2/callback"
       skip_jwt_bearer_tokens = "true"
       upstreams = [ "http://nexus-ce:8081" ]
       whitelist_domains = ["*"]
@@ -172,7 +172,7 @@ oauth2-proxy:
   ingress:
     enabled: true
     hosts:
-      - nexus-ce.eks-sandbox.aws.main.edp.projects.epam.com
+      - nexus-ce.example.com
 
 
   # Configure the session storage type, between cookie and redis
@@ -227,12 +227,6 @@ oauth2-proxy:
     # redisPort: 6379
     # architecture: standalone
 
-
-
-
-
-
-
 # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
 # Prerequisite: Ensure that ESO is installed in the cluster.
 # Refer to the EDP cluster add-on for ESO installation and setup:
@@ -244,15 +238,24 @@ oauth2-proxy:
 eso:
   # -- Install components of the ESO.
   enabled: true
-  # -- Defines provider type. One of `aws` or `generic`.
-  type: "aws"
-  # -- Defines Secret Store name.
-  secretStoreName: "aws-parameterstore"
-  # -- Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store.
-  secretName: "/edp/eks-sandbox/addons/nexus-ce"
-  # -- Role ARN for the ExternalSecretOperator to assume.
-  roleArn: arn:aws:iam::093899590031:role/AWSIRSASandboxExternalSecretOperatorAccess
-  # Defines Secret Store configuration. Used when eso.type is set to "generic".
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "aws"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+  secretPath: "/infra/core/addons/nexus-ce"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "sdlc"
+    # -- Vault role for the Kubernetes authentication method.
+    role: nexus-ce
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
   generic:
     secretStore:
       # -- Defines SecretStore provider configuration.

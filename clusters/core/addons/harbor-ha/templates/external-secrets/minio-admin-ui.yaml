@@ -1,5 +1,4 @@
 {{- if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,20 +7,20 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   data:
   - secretKey: root-user
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: minio.ROOT_USER
   - secretKey: root-password
     remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       metadataPolicy: None
       property: minio.ROOT_PASSWORD
 {{- end }}

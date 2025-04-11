@@ -283,3 +283,8 @@ vault:
   createNamespace: false
   enable: false
   namespace: vault
+
+vault-operator:
+  createNamespace: false
+  enable: false
+  namespace: vault
