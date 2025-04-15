@@ -71,6 +71,7 @@ AWS Parameter Store structure:
 | argo-cd.configs.rbac.scopes | string | `"[groups]"` |  |
 | argo-cd.configs.secret.createSecret | bool | `true` | Create the argocd-secret |
 | argo-cd.configs.ssh.knownHosts | string | `"# -- list of known host in format:\n# [host]:port key-type key\n# Example\n# [ssh.github.com]:443 ssh-rsa qgSdfOuiYhew/+afhQnvjfjhnhnqgSdfOuiYhew/+afhQnvjfjhnhn\n"` |  |
+| argo-cd.controller.serviceAccount.annotations | object | `{}` | Annotations applied to created service account |
 | argo-cd.dex.enabled | bool | `false` |  |
 | argo-cd.global.domain | string | `"argocd-dev.example.com"` | Default domain used by all components # Used for ingresses, certificates, SSO, notifications, etc. |
 | argo-cd.redis.enabled | bool | `true` |  |
@@ -78,6 +79,7 @@ AWS Parameter Store structure:
 | argo-cd.server.env[0].value | string | `"1"` |  |
 | argo-cd.server.ingress | object | `{"enabled":false,"hostname":"argocd-dev.example.com"}` | Enable after nginx-ingress is installed |
 | argo-cd.server.replicas | int | `1` |  |
+| argo-cd.server.serviceAccount.annotations | object | `{}` | Annotations applied to created service account |
 | eso.enabled | bool | `false` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
