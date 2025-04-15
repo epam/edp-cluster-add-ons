@@ -59,7 +59,15 @@ argo-cd:
   redis:
     enabled: true
 
+  controller:
+    serviceAccount:
+      # -- Annotations applied to created service account
+      annotations: {}
+
   server:
+    serviceAccount:
+      # -- Annotations applied to created service account
+      annotations: {}
     replicas: 1
     env:
       - name: ARGOCD_API_SERVER_REPLICAS
@@ -72,6 +80,9 @@ argo-cd:
 
   # Disabled for multitenancy env with single instance deployment
   # applicationSet:
+  #   serviceAccount:
+  #     # -- Annotations applied to created service account
+  #     annotations: {}
   #   extraEnv:
   #   - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_SCM_PROVIDERS
   #     value: 'false'
