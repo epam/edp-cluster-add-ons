@@ -7,21 +7,15 @@ karpenter:
   #   effect: "NoSchedule"
   nodeSelector: {}
   #   type: system
-  
+
 # -- AMI that used by nodes in EKS cluster
 amiID: ami-XXXXXXXXXXXXXXXXX
 
 # -- EKS cluster name, must be the same as in Karpenter configuration
-clusterName: "eks"
-
-# -- This block enable CronJob to create and delete nodepool
-cronjob:
-  enabled: false
-  startTime: "00 9 * * *"
-  endTime: "00 18 * * *"
+clusterName: "<CLUSTER_NAME>"
 
 instanceType:
-  category: ["m", "c", "r"]
-  family: ["m5", "c5", "r5"]
-  size: ["xlarge", "2xlarge", "4xlarge"]
-  type: ["on-demand", "spot"]
+  category: ["m"]
+  family: ["m7i"]
+  size: ["xlarge"]
+  type: ["on-demand"]

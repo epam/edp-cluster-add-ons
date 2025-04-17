@@ -9,8 +9,7 @@ A Helm chart for karpenter
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | amiID | string | `"ami-XXXXXXXXXXXXXXXXX"` | AMI that used by nodes in EKS cluster |
-| clusterName | string | `"eks"` | EKS cluster name, must be the same as in Karpenter configuration |
-| cronjob | object | `{"enabled":false,"endTime":"00 18 * * *","startTime":"00 9 * * *"}` | This block enable CronJob to create and delete nodepool |
+| clusterName | string | `"<CLUSTER_NAME>"` | EKS cluster name, must be the same as in Karpenter configuration |
 | instanceType.category[0] | string | `"m"` |  |
 | instanceType.category[1] | string | `"c"` |  |
 | instanceType.category[2] | string | `"r"` |  |

@@ -1,16 +1,28 @@
-apiVersion: karpenter.k8s.aws/v1beta1
+apiVersion: karpenter.k8s.aws/v1
 kind: EC2NodeClass
 metadata:
   name: ec2-node-class
 spec:
-  role: "KarpenterNodeRole-{{ .Values.clusterName }}"
-  amiFamily: AL2  # Amazon Linux 2
+  # Please align the role name with the one created by karpenter terraform module https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
+  # More details: https://docs.kuberocketci.io/docs/operator-guide/kubernetes-cluster-scaling/namespace-and-cluster-autoscaling#karpenter
+  role: "Karpenter-{{ .Values.clusterName }}"
+  amiFamily: AL2 # Amazon Linux 2
   subnetSelectorTerms:
+    # Unique tag for each subnet where karpenter can provision nodes. Align with you existing tags or create new ones.
     - tags:
-        karpenter.sh/discovery: {{ .Values.clusterName }}
+        Name: net-euc1-{{ .Values.clusterName }}-private-eu-central-1a
+  blockDeviceMappings:
+    - deviceName: /dev/xvda
+      ebs:
+        encrypted: false
+        volumeSize: 80Gi
+        volumeType: gp3
   securityGroupSelectorTerms:
+    # Unique tag for each security group where karpenter can provision nodes. Align with you existing tags or create new ones.
     - tags:
-        karpenter.sh/discovery: {{ .Values.clusterName }}
+        Name: "{{ .Values.clusterName }}-node"
+    # - tags:
+    #     karpenter.sh/discovery: {{ .Values.clusterName }}
   amiSelectorTerms:
     - id: {{ .Values.amiID }}
   tags:

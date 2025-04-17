@@ -28,8 +28,10 @@ karpenter:
   # -- Karpenter IAM role to manage cluster nodes
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::0123456789:role/KarpenterControllerRole-eks
-  
+      # Please align the role arn with the one created by karpenter terraform module https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
+      # More details: https://docs.kuberocketci.io/docs/operator-guide/kubernetes-cluster-scaling/namespace-and-cluster-autoscaling#karpenter
+      eks.amazonaws.com/role-arn: arn:aws:iam::0123456789:role/KarpenterController
+
   # -- EKS cluster name
   settings:
-    clusterName: eks
+    clusterName: <CLUSTER_NAME>
