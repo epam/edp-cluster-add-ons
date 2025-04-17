@@ -1,6 +1,6 @@
 # karpenter
 
-![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.8](https://img.shields.io/badge/AppVersion-1.0.8-informational?style=flat-square)
+![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
 
 A Helm chart for karpenter
 
@@ -8,7 +8,7 @@ A Helm chart for karpenter
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://public.ecr.aws/karpenter | karpenter | 1.0.8 |
+| oci://public.ecr.aws/karpenter | karpenter | 1.3.3 |
 
 ## Values
 
@@ -21,6 +21,6 @@ A Helm chart for karpenter
 | karpenter.controller.resources.requests.cpu | int | `1` |  |
 | karpenter.controller.resources.requests.memory | string | `"1Gi"` |  |
 | karpenter.replicas | int | `1` |  |
-| karpenter.serviceAccount | object | `{"annotations":{"eks.amazonaws.com/role-arn":"arn:aws:iam::0123456789:role/KarpenterControllerRole-eks"}}` | Karpenter IAM role to manage cluster nodes |
-| karpenter.settings | object | `{"clusterName":"eks"}` | EKS cluster name |
+| karpenter.serviceAccount | object | `{"annotations":{"eks.amazonaws.com/role-arn":"arn:aws:iam::0123456789:role/KarpenterController"}}` | Karpenter IAM role to manage cluster nodes |
+| karpenter.settings | object | `{"clusterName":"<CLUSTER_NAME>"}` | EKS cluster name |
 

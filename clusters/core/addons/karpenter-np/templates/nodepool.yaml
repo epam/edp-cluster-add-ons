@@ -1,4 +1,3 @@
-{{ if not .Values.cronjob.enabled }}
 apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
@@ -12,9 +11,9 @@ spec:
         name: ec2-node-class
       # Provisioned nodes will have these taints
       # Taints may prevent pods from scheduling if they are not tolerated by the pod.
-      taints:
-        - key: example.com/special-taint
-          effect: NoSchedule
+      # taints:
+      #   - key: example.com/special-taint
+      #     effect: NoSchedule
 
       requirements:
         - key: "karpenter.k8s.aws/instance-category"
@@ -30,9 +29,8 @@ spec:
           operator: In
           values: {{ .Values.instanceType.type | toJson }}
   limits:
-    cpu: "1000"
-    memory: 1000Gi
+    cpu: "10"
+    memory: 48Gi
   disruption:
     consolidateAfter: 1m
     consolidationPolicy: WhenEmptyOrUnderutilized
-{{ end }}
