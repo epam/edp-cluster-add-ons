@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.46.11
+version: 0.48.4
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "3.0.7"
+appVersion: "3.2.4"
 
 dependencies:
 - name: fluent-bit
-  version: 0.46.11
+  version: 0.48.4
   repository: https://fluent.github.io/helm-charts
