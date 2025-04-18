@@ -36,7 +36,7 @@ spec:
     # Specifies the URL of the Git repository from which the code will be pulled for deployment.
     # It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
     # and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
-    - ssh://git@github.com:22/kuberocketci/*
+    - ssh://git@github.com:22/emilgaripov/*
   # enable capability to deploy objects from namespaces
   sourceNamespaces:
     - krci

@@ -11,7 +11,7 @@ destinationServer: "in-cluster"
 # Specifies the URL of the Git repository from which the code will be pulled for deployment.
 # It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
 # and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
-repoUrl: "ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"
+repoUrl: "ssh://git@github.com:22/emilgaripov/edp-cluster-add-ons"
 
 # Specifies the target revision or branch of the Git repository that will be deployed.
 # In this case, "main" indicates that the main branch of the repository will be used for deployment.
