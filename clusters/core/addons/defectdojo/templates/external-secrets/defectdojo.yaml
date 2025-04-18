@@ -1,5 +1,4 @@
 {{ if .Values.eso.enabled }}
-{{- $secretName := .Values.eso.secretName }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -8,22 +7,22 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
-    name: {{ .Values.eso.secretStoreName }}
+    name: {{ .Release.Name }}
   data:
   - secretKey: DD_ADMIN_PASSWORD
     remoteRef:
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       property: defectdojo.DD_ADMIN_PASSWORD
   - secretKey: DD_SECRET_KEY
     remoteRef:
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       property: defectdojo.DD_SECRET_KEY
   - secretKey: DD_CREDENTIAL_AES_256_KEY
     remoteRef:
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       property: defectdojo.DD_CREDENTIAL_AES_256_KEY
   - secretKey: METRICS_HTTP_AUTH_PASSWORD
     remoteRef:
-      key: {{ $secretName }}
+      key: {{ .Values.eso.secretPath }}
       property: defectdojo.METRICS_HTTP_AUTH_PASSWORD
 {{ end }}

@@ -129,12 +129,17 @@ if (startTimeMillis > 0 && completionTimeMillis > 0) {
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
+| eso.aws.region | string | `"eu-central-1"` | AWS region. |
+| eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
 | eso.enabled | bool | `true` | Install components of the ESO. |
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
-| eso.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | Role ARN for the ExternalSecretOperator to assume. |
-| eso.secretName | string | `"/infra/core/addons/fluent-bit"` | Value name in AWS ParameterStore, AWS SecretsManager or other Secret Store. |
-| eso.secretStoreName | string | `"aws-parameterstore"` | Defines Secret Store name. |
-| eso.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
+| eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
+| eso.secretPath | string | `"/infra/core/addons/fluent-bit"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| eso.vault | object | `{"mountPath":"sdlc","role":"fluent-bit","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault.role | string | `"fluent-bit"` | Vault role for the Kubernetes authentication method. |
+| eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | fluent-bit.config.inputs | string | `"[INPUT]\n    Name kubernetes_events\n    # add the tag \"k8s_events\" to all events coming from this input\n    tag k8s_events\n    # ask k8s API for updates every 30 seconds\n    interval_sec 15\n    # fetch at most 250 items per requests (pagination)\n    kube_request_limit 2500\n    Storage.type filesystem\n\n# Use as the synk for the CloudEvents from Tekton Pipelines\n[INPUT]\n    name http\n    listen 0.0.0.0\n    port 8888\n    Storage.type filesystem\n"` |  |
 | fluent-bit.config.outputs | string | `"[OUTPUT]\n    Name            es\n    Match           k8s_events\n    Host            opensearch-cluster-master\n    Port            9200\n    HTTP_User       ${ES_SUPERUSER_USER}\n    HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}\n    Logstash_Format On\n    Logstash_Prefix logstash-events\n    Time_Key        @timestamp\n    Replace_Dots    On\n    Retry_Limit     False\n    Trace_Error     Off\n    Suppress_Type_Name On\n    tls             On\n    tls.verify      Off\n    Storage.total_limit_size 1G\n\n[OUTPUT]\n    Name            es\n    Match           http.*\n    Host            opensearch-cluster-master\n    Port            9200\n    HTTP_User       ${ES_SUPERUSER_USER}\n    HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}\n    Logstash_Format On\n    Logstash_Prefix logstash-cloudevents\n    Time_Key        @timestamp\n    Replace_Dots    On\n    Retry_Limit     False\n    Trace_Error     Off\n    Suppress_Type_Name On\n    tls             On\n    tls.verify      Off\n    Storage.total_limit_size 1G\n"` |  |
 | fluent-bit.config.service | string | `"[SERVICE]\n    Daemon Off\n    Flush {{ .Values.flush }}\n    Log_Level {{ .Values.logLevel }}\n    Parsers_File /fluent-bit/etc/parsers.conf\n    Parsers_File /fluent-bit/etc/conf/custom_parsers.conf\n    HTTP_Server On\n    HTTP_Listen 0.0.0.0\n    HTTP_Port {{ .Values.metricsPort }}\n    Health_Check On\n    Storage.path /var/log/flb-storage/\n    Storage.sync normal\n    Storage.checksum off\n    Storage.backlog.mem_limit 5M\n"` |  |
