@@ -15,5 +15,5 @@ spec:
     - groups
   webUrl: "http://localhost:8000/"
   redirectUris:
-    - "*"
+    - "https://portal-krci.example.com/*"
 {{ end }}
