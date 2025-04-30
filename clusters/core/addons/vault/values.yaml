@@ -7,13 +7,13 @@ eso:
   # -- Defines provider type. One of `aws`, `generic`, or `vault`.
   provider: "vault"
   # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
-  secretPath: "secret/infra/sdlc/addons/vault"
+  secretPath: "secret/infra/core/addons/vault"
   # -- Vault configuration (if provider is `vault`).
   vault:
     # -- Vault server URL.
     server: "http://vault.vault:8200"
     # -- Mount path for the Kubernetes authentication method.
-    mountPath: "sdlc"
+    mountPath: "core"
     # -- Vault role for the Kubernetes authentication method.
     role: vault
   # -- AWS configuration (if provider is `aws`).

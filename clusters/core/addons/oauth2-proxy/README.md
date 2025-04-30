@@ -61,8 +61,8 @@ AWS Parameter Store structure:
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | eso.secretPath | string | `"/infra/core/addons/oauth2-proxy"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
-| eso.vault | object | `{"mountPath":"sdlc","role":"oauth2-proxy","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
-| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault | object | `{"mountPath":"core","role":"oauth2-proxy","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"oauth2-proxy"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | oauth2-proxy.config.configFile | string | `"allowed_roles = [\"administrator\", \"developer\"]\ncode_challenge_method=\"S256\"\ncookie_domains = [\"example.com\"]\ncookie_secure = \"false\"\nemail_domains = [ \"*\" ]\ninsecure_oidc_allow_unverified_email = \"true\"\noidc_issuer_url = \"https://keycloak.example.com/auth/realms/<cluster_name>\"\npass_authorization_header = \"true\"\npass_basic_auth = \"false\"\npass_user_headers = \"true\"\nprovider = \"keycloak-oidc\"\nredirect_url = \"https://oauth-oauth2-proxy.example.com/oauth2/callback\"\nreverse_proxy = \"true\"\nskip_jwt_bearer_tokens = \"true\"\nskip_provider_button = \"true\"\nwhitelist_domains = \".example.com\""` |  |

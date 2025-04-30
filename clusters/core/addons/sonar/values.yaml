@@ -75,7 +75,7 @@ eso:
     # -- Vault server URL.
     server: "http://vault.vault:8200"
     # -- Mount path for the Kubernetes authentication method.
-    mountPath: "sdlc"
+    mountPath: "core"
     # -- Vault role for the Kubernetes authentication method.
     role: sonar
   # -- AWS configuration (if provider is `aws`).
