@@ -103,6 +103,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | minio-operator.createNamespace | bool | `false` |  |
 | minio-operator.enable | bool | `false` |  |
 | minio-operator.namespace | string | `"minio-operator"` |  |
+| moon.createNamespace | bool | `false` |  |
+| moon.enable | bool | `false` |  |
+| moon.namespace | string | `"moon"` |  |
 | nexus-ce.createNamespace | bool | `false` |  |
 | nexus-ce.enable | bool | `false` |  |
 | nexus-ce.namespace | string | `"nexus"` |  |

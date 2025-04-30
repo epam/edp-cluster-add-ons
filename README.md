@@ -94,7 +94,7 @@ make update-readme
 | jaeger-operator        | 2.53.0    | 1.52.0       | jaeger-operator        | False             | False    |
 | karma-dashboard        | 2.9.3     | v0.120       | monitoring             | False             | False    |
 | karpenter-np           | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
-| karpenter              | 1.0.8     | 1.0.8        | karpenter              | False             | False    |
+| karpenter              | 1.3.3     | 1.3.3        | karpenter              | False             | False    |
 | keda-tenants           | 0.1.0     | 0.1.0        | keda                   | False             | False    |
 | keda                   | 2.15.2    | 2.15.1       | keda                   | False             | False    |
 | keycloak               | 2.3.0     | 24.0.4       | security               | False             | False    |
@@ -105,6 +105,7 @@ make update-readme
 | kuberocketci-rbac      | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
 | kuberocketci           | 3.11.2    | 3.11.2       | krci                   | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | minio-operator         | False             | False    |
+| moon                   | 2.7.4     | 2.7.4        | moon                   | False             | False    |
 | nexus-ce               | 0.1.0     | 1.16.0       | nexus                  | False             | False    |
 | nexus-operator         | 3.3.0     | 3.3.0        | nexus                  | False             | False    |
 | nexus                  | 61.0.3    | 3.70.3       | nexus                  | False             | False    |

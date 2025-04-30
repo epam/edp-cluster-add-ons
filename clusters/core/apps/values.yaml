@@ -183,6 +183,11 @@ minio-operator:
   enable: false
   namespace: minio-operator
 
+moon:
+  createNamespace: false
+  enable: false
+  namespace: moon
+
 nexus-ce:
   createNamespace: false
   enable: false
