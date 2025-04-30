@@ -69,8 +69,8 @@ AWS Parameter Store structure:
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | eso.secretPath | string | `"/infra/core/addons/harbor"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
-| eso.vault | object | `{"mountPath":"sdlc","role":"harbor","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
-| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault | object | `{"mountPath":"core","role":"harbor","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"harbor"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | harbor.core.configureUserSettings | string | `"{\n  \"auth_mode\": \"oidc_auth\",\n  \"oidc_name\": \"keycloak\",\n  \"oidc_endpoint\": \"https://keycloak.example.com/auth/realms/shared\",\n  \"oidc_client_id\": \"harbor\",\n  \"oidc_client_secret\": \"YOURSECRET\",\n  \"oidc_groups_claim\": \"roles\",\n  \"oidc_admin_group\": \"administrator\",\n  \"oidc_scope\": \"openid,email,profile,roles\",\n  \"oidc_auto_onboard\": \"true\",\n  \"oidc_user_claim\": \"preferred_username\"\n}\n"` |  |

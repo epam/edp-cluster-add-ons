@@ -67,8 +67,8 @@ AWS Parameter Store structure:
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | eso.secretPath | string | `"/infra/core/addons/nexus-operator"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
-| eso.vault | object | `{"mountPath":"sdlc","role":"nexus-operator","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
-| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault | object | `{"mountPath":"core","role":"nexus-operator","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"nexus-operator"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | storageType | object | `{"container":{"bucketName":"krci-container","type":"pvc"},"dotnet":{"bucketName":"krci-container","type":"pvc"},"maven":{"bucketName":"krci-container","type":"pvc"},"npm":{"bucketName":"krci-container","type":"pvc"},"python":{"bucketName":"krci-container","type":"pvc"},"region":"us-east-1","yum":{"bucketName":"krci-container","type":"pvc"}}` | To enable the S3 storage type, must be define role for Nexus service account. |

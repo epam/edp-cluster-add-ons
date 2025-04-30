@@ -87,8 +87,8 @@ AWS Parameter Store structure:
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | eso.secretPath | string | `"/infra/core/addons/vault-okd"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
-| eso.vault | object | `{"mountPath":"sdlc","role":"vault-okd","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
-| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault | object | `{"mountPath":"core","role":"vault-okd","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"vault-okd"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | job.clusterApiUrl | string | `"https://api.example.com:6443"` |  |

@@ -84,8 +84,8 @@ AWS Parameter Store structure:
 | eso.generic.secretStore.providerConfig | object | `{}` | Defines SecretStore provider configuration. |
 | eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | eso.secretPath | string | `"/infra/core/addons/reportportal"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
-| eso.vault | object | `{"mountPath":"sdlc","role":"report-portal","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
-| eso.vault.mountPath | string | `"sdlc"` | Mount path for the Kubernetes authentication method. |
+| eso.vault | object | `{"mountPath":"core","role":"report-portal","server":"http://vault.vault:8200"}` | Vault configuration (if provider is `vault`). |
+| eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"report-portal"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
 | minio.auth.existingSecret | string | `"reportportal-minio-creds"` |  |

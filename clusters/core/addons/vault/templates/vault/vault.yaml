@@ -91,30 +91,30 @@ spec:
           path "secret/data/dev/*" {
           capabilities = ["create", "read", "update", "list"]
           }
-      # Enable access for SDLC tools
-      - name: vault-ro-sdlc-eso
+      # Enable access for core tools
+      - name: vault-ro-core-eso
         rules: |
-          path "secret/data/infra/sdlc/addons/vault" {
+          path "secret/data/infra/core/addons/vault" {
             capabilities = ["read", "list"]
           }
-      # - name: sonar-ro-sdlc-eso
+      # - name: sonar-ro-core-eso
       #   rules: |
-      #     path "secret/data/infra/sdlc/addons/sonar" {
+      #     path "secret/data/infra/core/addons/sonar" {
       #       capabilities = ["read", "list"]
       #     }
-      # - name: nexus-ro-sdlc-eso
+      # - name: nexus-ro-core-eso
       #   rules: |
-      #     path "secret/data/infra/sdlc/addons/nexus" {
+      #     path "secret/data/infra/core/addons/nexus" {
       #       capabilities = ["read", "list"]
       #     }
-      # - name: dependency-track-ro-sdlc-eso
+      # - name: dependency-track-ro-core-eso
       #   rules: |
-      #     path "secret/data/infra/sdlc/addons/dependency-track" {
+      #     path "secret/data/infra/core/addons/dependency-track" {
       #       capabilities = ["read", "list"]
       #     }
-      # - name: krci-ro-sdlc-eso
+      # - name: krci-ro-core-eso
       #   rules: |
-      #     path "secret/data/infra/sdlc/addons/krci" {
+      #     path "secret/data/infra/core/addons/krci" {
       #       capabilities = ["read", "list"]
       #     }
 
@@ -139,32 +139,32 @@ spec:
           policies:
             - default
       - type: kubernetes
-        path: sdlc
+        path: core
         roles:
           - name: vault
             bound_service_account_names: externalsecrets-vault-vault
             bound_service_account_namespaces: vault
-            policies: vault-ro-sdlc-eso
+            policies: vault-ro-core-eso
             ttl: 1h
           # - name: sonar
           #   bound_service_account_names: ["externalsecrets-sonar-operator-vault", "externalsecrets-sonar-vault"]
           #   bound_service_account_namespaces: sonar
-          #   policies: sonar-ro-sdlc-eso
+          #   policies: sonar-ro-core-eso
           #   ttl: 1h
           # - name: nexus
           #   bound_service_account_names: ["externalsecrets-nexus-operator-vault", "externalsecrets-nexus-vault"]
           #   bound_service_account_namespaces: nexus
-          #   policies: nexus-ro-sdlc-eso
+          #   policies: nexus-ro-core-eso
           #   ttl: 1h
           # - name: dependency-track
           #   bound_service_account_names: externalsecrets-dependency-track-vault
           #   bound_service_account_namespaces: dependency-track
-          #   policies: dependency-track-ro-sdlc-eso
+          #   policies: dependency-track-ro-core-eso
           #   ttl: 1h
           # - name: krci
           #   bound_service_account_names: externalsecrets-krci-vault
           #   bound_service_account_namespaces: krci
-          #   policies: krci-ro-sdlc-eso
+          #   policies: krci-ro-core-eso
           #   ttl: 1h
 
     secrets:
