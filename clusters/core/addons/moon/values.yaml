@@ -1,0 +1,7 @@
+moon2:
+  ingress:
+    enabled: true
+    host: "moon.example.com"
+
+  deployment:
+    replicas: 1
