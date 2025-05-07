@@ -11,6 +11,14 @@ spec:
   authenticateByDefault: false
   enabled: true
   firstBrokerLoginFlowAlias: "first broker login"
+  mappers:
+    - config:
+        claim: picture
+        syncMode: FORCE
+        user.attribute: picture
+      identityProviderAlias: master
+      identityProviderMapper: oidc-user-attribute-idp-mapper
+      name: picture
   providerId: "keycloak-oidc"
   config:
     acceptsPromptNoneForwardFromClient: "false"
