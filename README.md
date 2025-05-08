@@ -120,7 +120,7 @@ make update-readme
 | kuberocketci           | 3.11.2    | 3.11.2       | krci                   | False             | False    |
 | minio-operator         | 0.1.0     | 5.0.5        | minio-operator         | False             | False    |
 | moon                   | 2.7.4     | 2.7.4        | moon                   | False             | False    |
-| nexus-ce               | 0.1.0     | 1.16.0       | nexus                  | False             | False    |
+| nexus-ce               | 0.1.0     | 3.79.1       | nexus                  | False             | False    |
 | nexus-operator         | 3.3.0     | 3.3.0        | nexus                  | False             | False    |
 | nexus                  | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy           | 7.6.0     | v7.6.0       | oauth2-proxy           | False             | False    |
