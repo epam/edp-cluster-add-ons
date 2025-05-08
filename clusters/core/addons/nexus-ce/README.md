@@ -1,6 +1,6 @@
 # nexus-ce
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.79.1](https://img.shields.io/badge/AppVersion-3.79.1-informational?style=flat-square)
 
 Nexus Community Edition chart for Kubernetes
 
@@ -40,7 +40,7 @@ Nexus Community Edition chart for Kubernetes
 | fullnameOverride | string | `"nexus-ce"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"sonatype/nexus3"` |  |
-| image.tag | string | `"3.77.1"` |  |
+| image.tag | string | `"3.79.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"900m"` |  |
 | ingress.className | string | `""` |  |
