@@ -23,10 +23,6 @@ helm-docs: helmdocs	## generate helm docs
 helmdocs: ## Download helm-docs locally if necessary.
 	$(call go-get-tool,$(HELMDOCS),github.com/norwoodj/helm-docs/cmd/helm-docs,v1.10.0)
 
-.PHONY: check-dependencies
-check-dependencies:  ## Check Helm dependencies for updates
-	@./hack/check_dependencies.sh
-
 .PHONY: git-chglog
 git-chglog: ## Download git-chglog locally if necessary.
 	$(call go-get-tool,$(GITCHGLOG),github.com/git-chglog/git-chglog/cmd/git-chglog,v0.15.4)
@@ -48,6 +44,10 @@ endef
 .PHONY: update-readme
 update-readme: .venv
 	.venv/bin/python ./hack/update_readme.py
+
+.PHONY: check-dependencies
+check-dependencies: .venv  ## Check and display Helm dependencies that need updating
+	.venv/bin/python ./hack/check_dependencies.py
 
 .venv:
 	virtualenv -p python3 .venv; \

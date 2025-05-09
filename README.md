@@ -85,7 +85,7 @@ make update-readme
 | defectdojo             | 1.6.168   | 2.42.1       | defectdojo             | False             | False    |
 | dependency-track       | 0.29.0    | v4.12.7      | dependency-track       | False             | False    |
 | external-secrets       | 0.14.2    | 0.14.2       | external-secrets       | False             | False    |
-| fluent-bit             | 0.46.11   | 3.0.7        | logging                | False             | False    |
+| fluent-bit             | 0.48.4    | 3.2.4        | logging                | False             | False    |
 | harbor                 | 0.1.0     | 1.12.2       | harbor                 | False             | False    |
 | harbor-ha              | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
 | harbor-ha-okd          | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
