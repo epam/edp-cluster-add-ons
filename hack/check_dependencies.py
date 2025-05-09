@@ -2,7 +2,6 @@ import os
 import subprocess
 import glob
 import yaml
-import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Set
@@ -105,18 +104,33 @@ def get_chart_name_from_path(chart_path: str) -> str:
     return os.path.basename(os.path.dirname(chart_path))
 
 
-def get_latest_version(name: str, repo: str) -> str:
-    """Get the latest version of a chart from its repository"""
+def get_latest_version(name: str, repo: str, current_version: str = "") -> Tuple[str, str]:
+    """Get the latest version and appVersion of a chart from its repository
+
+    Args:
+        name: Name of the chart
+        repo: Repository URL
+        current_version: Current version of the chart to filter results (optional)
+        Note: current_version is kept for API compatibility but not used for filtering
+
+    Returns:
+        Tuple[str, str]: A tuple with (version, appVersion)
+    """
     if not repo or repo == "-":
-        return "-"
+        return "-", "-"
 
     repo_alias = f"{name}-repo"
 
     try:
         if not repo.startswith("oci://"):
-            # Search for the chart in the repository (which should already be added)
+            # Search for the chart in the repository with all versions (which should already be added)
+            cmd = ["helm", "search", "repo", f"{repo_alias}/{name}", "--versions", "-o", "json"]
+
+            # We're not using version filtering because it limits results to the same major version
+            # We want to show all available versions, especially major upgrades
+
             result = subprocess.run(
-                ["helm", "search", "repo", f"{repo_alias}/{name}", "-o", "yaml"],
+                cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
                 text=True,
@@ -125,11 +139,16 @@ def get_latest_version(name: str, repo: str) -> str:
 
             if result.returncode == 0 and result.stdout:
                 try:
-                    chart_data = yaml.safe_load(result.stdout)
+                    import json
+                    chart_data = json.loads(result.stdout)
                     if chart_data and isinstance(chart_data, list) and len(chart_data) > 0:
-                        return chart_data[0].get("version", "-")
-                except Exception:
-                    pass
+                        # First entry is the latest version
+                        version = chart_data[0].get("version", "-")
+                        # Use app_version instead of appVersion since that's what the JSON output from helm uses
+                        app_version = chart_data[0].get("app_version", "-")
+                        return version, app_version
+                except Exception as e:
+                    print(f"Warning: Error parsing JSON for {name}: {e}", file=sys.stderr)
         else:
             # For OCI repositories
             result = subprocess.run(
@@ -143,17 +162,24 @@ def get_latest_version(name: str, repo: str) -> str:
             if result.returncode == 0 and result.stdout:
                 try:
                     chart_info = yaml.safe_load(result.stdout)
-                    return chart_info.get("version", "-")
+                    version = chart_info.get("version", "-")
+                    app_version = chart_info.get("appVersion", "-")
+                    return version, app_version
                 except Exception:
                     pass
     except Exception as e:
         print(f"Warning: Error checking latest version for {name}: {e}", file=sys.stderr)
 
-    return "-"
+    return "-", "-"
 
 
-def process_chart(chart_path: str) -> List[Tuple[str, str, str, str]]:
-    """Process a Chart.yaml file and return dependency information"""
+def process_chart(chart_path: str) -> List[Tuple[str, str, str, str, str, str]]:
+    """Process a Chart.yaml file and return dependency information
+
+    Returns:
+        List[Tuple[str, str, str, str, str, str]]: List of tuples with
+            (name, current_version, current_appversion, latest_version, latest_appversion, chart_path)
+    """
     results = []
 
     try:
@@ -163,14 +189,60 @@ def process_chart(chart_path: str) -> List[Tuple[str, str, str, str]]:
         # If chart has no dependencies section or empty dependencies
         if not chart_data.get("dependencies"):
             dir_name = get_chart_name_from_path(chart_path)
-            results.append((dir_name, "-", "-", chart_path))
+            # Try to get version and appVersion from the chart itself
+            chart_version = chart_data.get("version", "-")
+            chart_app_version = chart_data.get("appVersion", "-")
+            results.append((dir_name, chart_version, chart_app_version, "-", "-", chart_path))
             return results
 
         # Process dependencies
         for dep in chart_data.get("dependencies", []):
             name = dep.get("name", "")
             version = dep.get("version", "")
+            app_version = dep.get("appVersion", "-")
             repo = dep.get("repository", "")
+
+            # If not specified in the dependency, try to get app version from parent chart's appVersion
+            if app_version == "-":
+                # For direct dependencies, the parent chart might have the appVersion
+                if chart_data.get("appVersion"):
+                    app_version = chart_data.get("appVersion")
+
+            # Try to get app version from the referenced chart if still not found
+            if app_version == "-" and repo and name:
+                # First try to look for installed chart in the charts/ directory
+                chart_dir = os.path.dirname(chart_path)
+                chart_lock_path = os.path.join(chart_dir, "Chart.lock")
+
+                if os.path.exists(chart_lock_path):
+                    try:
+                        with open(chart_lock_path, 'r') as f:
+                            lock_data = yaml.safe_load(f)
+
+                            # Find the matching dependency in the lock file
+                            for lock_dep in lock_data.get("dependencies", []):
+                                if lock_dep.get("name") == name:
+                                    # Try to find the chart file based on the locked version
+                                    locked_version = lock_dep.get("version")
+                                    chart_tgz = os.path.join(chart_dir, "charts", f"{name}-{locked_version}.tgz")
+
+                                    if os.path.exists(chart_tgz):
+                                        # Extract app version from the chart archive
+                                        try:
+                                            result = subprocess.run(
+                                                ["helm", "show", "chart", chart_tgz],
+                                                stdout=subprocess.PIPE,
+                                                stderr=subprocess.DEVNULL,
+                                                text=True,
+                                                check=False
+                                            )
+                                            if result.returncode == 0:
+                                                chart_info = yaml.safe_load(result.stdout)
+                                                app_version = chart_info.get("appVersion", "-")
+                                        except Exception:
+                                            pass
+                    except Exception:
+                        pass
 
             # Handle incomplete dependencies
             if not name:
@@ -180,36 +252,37 @@ def process_chart(chart_path: str) -> List[Tuple[str, str, str, str]]:
             if not repo:
                 repo = "-"
                 latest_version = "-"
+                latest_app_version = "-"
             else:
-                latest_version = get_latest_version(name, repo)
+                latest_version, latest_app_version = get_latest_version(name, repo, version)
 
-            results.append((name, version, latest_version, chart_path))
+            results.append((name, version, app_version, latest_version, latest_app_version, chart_path))
 
         # If no results were created but dependencies existed, use directory name
         if not results and chart_data.get("dependencies"):
             dir_name = get_chart_name_from_path(chart_path)
-            results.append((dir_name, "-", "-", chart_path))
+            results.append((dir_name, "-", "-", "-", "-", chart_path))
 
     except Exception as e:
         print(f"Warning: Error processing {chart_path}: {e}", file=sys.stderr)
         dir_name = get_chart_name_from_path(chart_path)
-        results.append((dir_name, "-", "-", chart_path))
+        results.append((dir_name, "-", "-", "-", "-", chart_path))
 
     return results
 
 
-def print_table(all_dependencies: List[Tuple[str, str, str, str]]) -> None:
+def print_table(all_dependencies: List[Tuple[str, str, str, str, str, str]]) -> None:
     """Print the dependency table in the required format"""
-    header = "+--------------------------+-----------------+-----------------+--------------------------------------------------------+"
+    header = "+--------------------------+-----------------+-----------------+-----------------+-----------------+--------------------------------------------------------+"
     print(header)
-    print("| Dependency Name          | Current Version | Latest Version  | Path                                                   |")
+    print("| Dependency Name          | Current Version | Current AppVer  | Latest Version  | Latest AppVer   | Path                                                   |")
     print(header)
 
     # Sort dependencies by name (first element in each tuple)
     sorted_dependencies = sorted(all_dependencies, key=lambda x: x[0].lower())
 
-    for name, version, latest, path in sorted_dependencies:
-        print(f"| {name:<24} | {version:<15} | {latest:<15} | {path:<54} |")
+    for name, version, app_version, latest_version, latest_app_version, path in sorted_dependencies:
+        print(f"| {name:<24} | {version:<15} | {app_version:<15} | {latest_version:<15} | {latest_app_version:<15} | {path:<54} |")
 
     print(header)
 
