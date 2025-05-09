@@ -28,4 +28,4 @@ jobs:
           pip install virtualenv
 
       - name: Run Helm dependencies check
-        run: make check-dependencies
+        run: make check-dependencies ARGS="--workers 5"

@@ -3,6 +3,8 @@ import subprocess
 import glob
 import yaml
 import sys
+import concurrent.futures
+import argparse
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Set
 try:
@@ -289,6 +291,12 @@ def print_table(all_dependencies: List[Tuple[str, str, str, str, str, str]]) -> 
 
 def main():
     """Main function to check dependencies"""
+    # Setup command line argument parsing
+    parser = argparse.ArgumentParser(description="Check Helm chart dependencies for updates.")
+    parser.add_argument("--workers", "-w", type=int, default=5,
+                        help="Number of parallel workers for processing charts (default: 5)")
+    args = parser.parse_args()
+
     print("Finding Chart.yaml files...", file=sys.stderr)
     chart_files = find_chart_files()
     print(f"Found {len(chart_files)} Chart.yaml files", file=sys.stderr)
@@ -302,26 +310,42 @@ def main():
     # Update repositories once
     update_helm_repos()
 
-    # Second pass: process dependencies and get versions
+    # Second pass: process dependencies and get versions with parallel execution
     all_dependencies = []
 
-    print("Processing chart dependencies...", file=sys.stderr)
-    if TQDM_AVAILABLE:
-        chart_iterator = tqdm(
-            chart_files,
-            desc="Checking versions",
-            unit="chart",
-            ncols=100,
-            bar_format='{desc}: {percentage:3.0f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]'
-        )
-    else:
-        chart_iterator = chart_files
+    print(f"Processing chart dependencies in parallel with {args.workers} workers...", file=sys.stderr)
 
-    for chart_path in chart_iterator:
-        if not TQDM_AVAILABLE:
-            print(f"Processing {chart_path}...", file=sys.stderr)
-        dependencies = process_chart(chart_path)
-        all_dependencies.extend(dependencies)
+    # Use the number of workers specified in command line arguments
+    max_workers = args.workers
+
+    # Use ThreadPoolExecutor to process charts in parallel
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all chart processing tasks
+        future_to_chart = {executor.submit(process_chart, chart_path): chart_path for chart_path in chart_files}
+
+        # Setup progress bar if available
+        if TQDM_AVAILABLE:
+            futures_iterator = tqdm(
+                concurrent.futures.as_completed(future_to_chart),
+                total=len(chart_files),
+                desc="Checking versions",
+                unit="chart",
+                ncols=100,
+                bar_format='{desc}: {percentage:3.0f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]'
+            )
+        else:
+            futures_iterator = concurrent.futures.as_completed(future_to_chart)
+
+        # Process completed tasks as they finish
+        for future in futures_iterator:
+            chart_path = future_to_chart[future]
+            try:
+                if not TQDM_AVAILABLE:
+                    print(f"Processing {chart_path}...", file=sys.stderr)
+                dependencies = future.result()
+                all_dependencies.extend(dependencies)
+            except Exception as e:
+                print(f"Error processing {chart_path}: {e}", file=sys.stderr)
 
     print("\nGenerating dependency table...", file=sys.stderr)
     print_table(all_dependencies)
