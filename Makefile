@@ -2,6 +2,8 @@ CURRENT_DIR=$(shell pwd)
 HELMDOCS = ${CURRENT_DIR}/bin/helm-docs
 GITCHGLOG = ${CURRENT_DIR}/bin/git-chglog
 
+# ARGS="--workers 5"
+
 # use https://github.com/git-chglog/git-chglog/
 .PHONY: changelog
 changelog: git-chglog	## generate changelog
@@ -47,7 +49,7 @@ update-readme: .venv
 
 .PHONY: check-dependencies
 check-dependencies: .venv  ## Check and display Helm dependencies that need updating
-	.venv/bin/python ./hack/check_dependencies.py
+	.venv/bin/python ./hack/check_dependencies.py $(ARGS)
 
 .venv:
 	virtualenv -p python3 .venv; \
