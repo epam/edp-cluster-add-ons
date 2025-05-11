@@ -93,7 +93,7 @@ Nexus Community Edition chart for Kubernetes
 | securityContext | object | `{}` |  |
 | service.port | int | `8081` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations."eks.amazonaws.com/role-arn" | string | `"arn:aws:iam::093899590031:role/NexusS3BlobStorePolicy"` |  |
+| serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |

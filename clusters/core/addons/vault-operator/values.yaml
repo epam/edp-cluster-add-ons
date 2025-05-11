@@ -58,13 +58,13 @@ vault-operator:
   crdAnnotations: {}
 
   # -- Labels to be added to deployments.
-  labels: {} # team: banzai
+  labels: {}    # team: banzai
 
   # -- Labels to be added to pods.
-  podLabels: {} # team: banzai
+  podLabels: {}     # team: banzai
 
   # -- Annotations to be added to pods.
-  podAnnotations: {} # team: banzai
+  podAnnotations: {}    # team: banzai
 
   serviceAccount:
     # -- Enable service account creation.

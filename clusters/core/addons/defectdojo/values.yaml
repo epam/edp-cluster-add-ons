@@ -10,7 +10,7 @@ defectdojo:
     run: true
   django:
     ingress:
-      enabled: true # change to 'false' for OpenShift
+      enabled: true   # change to 'false' for OpenShift
       activateTLS: false
     uwsgi:
       livenessProbe:

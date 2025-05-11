@@ -12,7 +12,7 @@ karpenter:
 amiID: ami-XXXXXXXXXXXXXXXXX
 
 # -- EKS cluster name, must be the same as in Karpenter configuration
-clusterName: "<CLUSTER_NAME>"
+clusterName: "cluster-name"
 
 instanceType:
   category: ["m"]

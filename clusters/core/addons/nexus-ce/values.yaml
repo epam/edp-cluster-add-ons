@@ -27,7 +27,7 @@ docker:
       port: 5000
 
 # -- This block configure database connections for Nexus CE.
-database: 
+database:
   # -- Name of the secret that contains the database credentials.
   existigSecret: "nexus-ce-pguser-nexus-ce"
   # -- This block configures the database connection secret fields name for Nexus CE.
@@ -56,9 +56,9 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: #{}
+  annotations: {}
     # Add role annotation to use S3 blob store type
-    eks.amazonaws.com/role-arn: arn:aws:iam::093899590031:role/NexusS3BlobStorePolicy
+    # eks.amazonaws.com/role-arn: arn:aws:iam::012345678910:role/NexusS3BlobStorePolicy
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
@@ -166,7 +166,7 @@ oauth2-proxy:
       upstreams = [ "http://nexus-ce:8081" ]
       whitelist_domains = ["*"]
       silence_ping_logging = "true"
-    
+
     existingSecret: oauth2-proxy
 
   ingress:
