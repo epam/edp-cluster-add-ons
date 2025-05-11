@@ -9,7 +9,7 @@ A Helm chart for karpenter
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | amiID | string | `"ami-XXXXXXXXXXXXXXXXX"` | AMI that used by nodes in EKS cluster |
-| clusterName | string | `"<CLUSTER_NAME>"` | EKS cluster name, must be the same as in Karpenter configuration |
+| clusterName | string | `"cluster-name"` | EKS cluster name, must be the same as in Karpenter configuration |
 | instanceType.category[0] | string | `"m"` |  |
 | instanceType.family[0] | string | `"m7i"` |  |
 | instanceType.size[0] | string | `"xlarge"` |  |

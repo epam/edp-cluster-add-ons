@@ -1,6 +1,6 @@
 # prometheus-operator
 
-![Version: 65.5.1](https://img.shields.io/badge/Version-65.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.77.2](https://img.shields.io/badge/AppVersion-v0.77.2-informational?style=flat-square)
+![Version: 72.3.0](https://img.shields.io/badge/Version-72.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.82.0](https://img.shields.io/badge/AppVersion-v0.82.0-informational?style=flat-square)
 
 ## Secret management
 
@@ -55,7 +55,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 65.5.1 |
+| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 72.3.0 |
 
 ## Values
 
@@ -129,6 +129,7 @@ AWS Parameter Store structure:
 | kube-prometheus-stack.prometheus.additionalServiceMonitors | list | `[]` |  |
 | kube-prometheus-stack.prometheus.ingress.enabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus.ingress.hosts[0] | string | `"prometheus.example.com"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.scrapeConfigNamespaceSelector | string | `nil` |  |
 | kube-prometheus-stack.prometheusOperator.resources.limits.memory | string | `"256Mi"` |  |
 | kube-prometheus-stack.prometheusOperator.resources.requests.cpu | string | `"100m"` |  |
 | kube-prometheus-stack.prometheusOperator.resources.requests.memory | string | `"128Mi"` |  |

@@ -57,6 +57,13 @@ AWS Parameter Store structure:
 
 * <https://github.com/runatlantis/atlantis>
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://oauth2-proxy.github.io/manifests | oauth2-proxy | 7.12.8 |
+| https://runatlantis.github.io/helm-charts | atlantis | 5.16.0 |
+
 ## Values
 
 | Key | Type | Default | Description |

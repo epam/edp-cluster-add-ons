@@ -68,6 +68,20 @@ helm install argocd argo-cd -n argocd --create-namespace
 
 Check out the list of available add-ons in the [chart](./clusters/core/apps/README.md) directory.
 
+## Chart Testing and CI/CD
+
+This repository includes an automated CI pipeline that performs Helm chart validation and testing when pull requests are created:
+
+1. **Chart Testing**: The CI workflow uses [chart-testing](https://github.com/helm/chart-testing) to lint and validate all Helm charts.
+2. **Kind Cluster**: For chart installation testing, a Kubernetes in Docker (kind) cluster version 1.32 is automatically created.
+3. **Installation Validation**: Each chart is installed in the test cluster to verify proper deployment.
+
+You can also run chart tests locally using:
+
+```bash
+make test-charts-full
+```
+
 ```bash
 make update-readme
 ```
@@ -113,7 +127,7 @@ make update-readme
 | opensearch             | 2.26.1    | 2.17.1       | logging                | False             | False    |
 | opentelemetry-operator | 0.62.0    | 0.102.0      | opentelemetry-operator | False             | False    |
 | postgres-operator      | 0.1.0     | 5.7.0        | postgres-operator      | False             | False    |
-| prometheus-operator    | 65.5.1    | v0.77.2      | monitoring             | False             | False    |
+| prometheus-operator    | 72.3.0    | v0.82.0      | monitoring             | False             | False    |
 | redis-operator         | 0.1.0     | 3.2.8        | redis-operator         | False             | False    |
 | report-portal          | 5.10.0    | 23.2         | report-portal          | False             | False    |
 | sonar                  | 8.0.2     | 9.9.2        | sonar                  | False             | False    |

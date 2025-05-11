@@ -19,7 +19,7 @@ nexus-repository-manager:
     - name: fmp-volume-permission
       image: busybox
       imagePullPolicy: IfNotPresent
-      command: ['mkdir','-p', '/nexus-data/etc']
+      command: ['mkdir', '-p', '/nexus-data/etc']
       volumeMounts:
         - name: nexus-data
           mountPath: /nexus-data

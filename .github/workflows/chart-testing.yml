@@ -1,0 +1,64 @@
+name: Chart Testing
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'clusters/**/*.yaml'
+      - 'clusters/**/*.tpl'
+      - 'clusters/**/*.yml'
+      - 'clusters/**/Chart.yaml'
+      - 'clusters/**/values.yaml'
+      - 'ct.yaml'
+      - 'lint-conf.yaml'
+      - '.github/workflows/chart-testing.yml'
+
+jobs:
+  lint:
+    name: Lint Charts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          # We need more commit history to detect changes with ct
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Set up Chart Testing
+        uses: helm/chart-testing-action@v2.7.0
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          # Ensure we have proper git history
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run chart-testing (lint)
+        run: make ci-lint-chart
+
+      # TODO: Should be enabled when we will fix installation one-by-one
+      # - name: Set up kind cluster
+      #   if: steps.list-changed.outputs.changed == 'true'
+      #   uses: helm/kind-action@v1.9.0
+      #   with:
+      #     version: v0.24.0
+      #     config: kind-config.yaml
+
+      # - name: Run chart-testing (install and test)
+      #   if: steps.list-changed.outputs.changed == 'true'
+      #   run: ct install --config ct.yaml

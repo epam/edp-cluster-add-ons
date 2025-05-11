@@ -1,0 +1,48 @@
+# Chart Testing configuration
+# This file is used by the chart-testing tool to verify Helm charts in this repository
+# See https://github.com/helm/chart-testing for more information
+remote: origin
+target-branch: main
+chart-dirs:
+  - clusters/core/addons
+helm-extra-args: "--timeout 600s"
+validate-chart-schema: true
+validate-maintainers: false
+validate-yaml: true
+exclude-deprecated: true
+# Skip version increment check
+check-version-increment: false
+lint-conf: lint-conf.yaml
+debug: true
+chart-repos:
+  - argo=https://argoproj.github.io/argo-helm
+  - atlantis=https://runatlantis.github.io/helm-charts
+  - aws-efs-csi-driver=https://kubernetes-sigs.github.io/aws-efs-csi-driver
+  - bitnami=https://charts.bitnami.com/bitnami
+  - capsule=https://projectcapsule.github.io/charts
+  - codecentric=https://codecentric.github.io/helm-charts
+  - defectdojo=https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts
+  - dependencytrack=https://dependencytrack.github.io/helm-charts
+  - edp-stable=https://epam.github.io/edp-helm-charts/stable
+  - external-secrets=https://charts.external-secrets.io
+  - fluent=https://fluent.github.io/helm-charts
+  - goharbor=https://helm.goharbor.io
+  - grafana=https://grafana.github.io/helm-charts
+  - hashicorp=https://helm.releases.hashicorp.com
+  - ingress-nginx=https://kubernetes.github.io/ingress-nginx
+  - jaegertracing=https://jaegertracing.github.io/helm-charts
+  - jetstack=https://charts.jetstack.io
+  - keda=https://kedacore.github.io/charts
+  - krakend=https://helm.equinixmetal.com
+  - minio-operator=https://operator.min.io
+  - moon2=https://charts.aerokube.com
+  - oauth2-proxy=https://oauth2-proxy.github.io/manifests
+  - opensearch=https://opensearch-project.github.io/helm-charts
+  - opentelemetry=https://open-telemetry.github.io/opentelemetry-helm-charts
+  - prometheus-community=https://prometheus-community.github.io/helm-charts
+  - reportportal=https://reportportal.io/kubernetes
+  - sonatype=https://sonatype.github.io/helm3-charts
+  - sonarsource=https://SonarSource.github.io/helm-chart-sonarqube
+  - spotahome=https://spotahome.github.io/redis-operator
+  - wiremind=https://wiremind.github.io/wiremind-helm-charts
+helm-dependency-extra-args: "--skip-refresh"
