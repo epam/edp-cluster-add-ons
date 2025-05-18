@@ -68,6 +68,7 @@ AWS Parameter Store structure:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| atlantis.atlantisUrl | string | `"atlantis.example.com"` |  |
 | atlantis.bitbucket | object | `{"user":"auto_example"}` | Uncomment to enable Basic Auth mode ref: https://www.runatlantis.io/docs/security. basicAuthSecretName: atlantis-creds |
 | atlantis.defaultTFVersion | string | `"1.5.7"` |  |
 | atlantis.ingress.enabled | bool | `true` |  |

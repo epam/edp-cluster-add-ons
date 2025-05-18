@@ -8,6 +8,8 @@ atlantis:
   bitbucket:
     user: auto_example
 
+  atlantisUrl: "atlantis.example.com"
+
   ingress:
     enabled: true
     path: /
