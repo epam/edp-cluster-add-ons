@@ -1,0 +1,46 @@
+# Default values for prometheus-blackbox-exporter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+prometheus-blackbox-exporter:
+  # Add your specific configuration for prometheus-blackbox-exporter here
+  # For example:
+  # replicaCount: 1
+  # serviceMonitor:
+  #   enabled: true
+
+  # Refer to the official prometheus-blackbox-exporter chart values for all available options:
+  # https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-blackbox-exporter/values.yaml
+
+  # Example of overriding some default values:
+  config:
+    modules:
+      http_2xx:
+        prober: http
+        timeout: 5s
+        http:
+          valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+          follow_redirects: true
+          preferred_ip_protocol: "ip4"
+      # You can add more modules here
+#      tcp_connect:
+#        prober: tcp
+#        timeout: 5s
+#      icmp:
+#        prober: icmp
+#        timeout: 5s
+#        icmp:
+#          preferred_ip_protocol: "ip4"
+
+  # To keep the values.yaml clean, only include values that you are overriding from the default chart.
+  # For instance, if you want to change the replica count:
+  # replicas: 2
+
+  # If you need to allow ICMP (ping) probes, you might need to adjust securityContext:
+  # securityContext:
+  #   capabilities:
+  #     add: ["NET_RAW"]
+
+  # Ensure that the image version corresponds to the appVersion in Chart.yaml
+  # image:
+  #   tag: "v0.26.0"

@@ -127,6 +127,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | postgres-operator.createNamespace | bool | `false` |  |
 | postgres-operator.enable | bool | `false` |  |
 | postgres-operator.namespace | string | `"postgres-operator"` |  |
+| prometheus-blackbox-exporter.createNamespace | bool | `true` |  |
+| prometheus-blackbox-exporter.enable | bool | `false` |  |
+| prometheus-blackbox-exporter.namespace | string | `"monitoring"` |  |
 | prometheus-operator.createNamespace | bool | `false` |  |
 | prometheus-operator.enable | bool | `false` |  |
 | prometheus-operator.namespace | string | `"monitoring"` |  |
