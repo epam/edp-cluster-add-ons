@@ -231,6 +231,11 @@ prometheus-operator:
   enable: false
   namespace: monitoring
 
+prometheus-blackbox-exporter:
+  createNamespace: false
+  enable: false
+  namespace: monitoring
+
 redis-operator:
   createNamespace: false
   enable: false
