@@ -1,6 +1,6 @@
 # jaeger-operator
 
-![Version: 2.53.0](https://img.shields.io/badge/Version-2.53.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.52.0](https://img.shields.io/badge/AppVersion-1.52.0-informational?style=flat-square)
+![Version: 2.57.0](https://img.shields.io/badge/Version-2.57.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.61.0](https://img.shields.io/badge/AppVersion-1.61.0-informational?style=flat-square)
 
 A Helm chart for Jaeger Operator
 
@@ -8,7 +8,7 @@ A Helm chart for Jaeger Operator
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://jaegertracing.github.io/helm-charts | jaeger-operator | 2.53.0 |
+| https://jaegertracing.github.io/helm-charts | jaeger-operator | 2.57.0 |
 
 ## Values
 

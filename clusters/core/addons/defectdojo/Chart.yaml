@@ -6,13 +6,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 1.6.168
+version: 1.6.188
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 2.42.1
+appVersion: 2.46.3
 
 dependencies:
 - name: defectdojo
-  version: 1.6.168
+  version: 1.6.188
   repository: https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts

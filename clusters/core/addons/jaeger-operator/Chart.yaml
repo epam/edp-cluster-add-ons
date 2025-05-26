@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 2.53.0
+version: 2.57.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "1.52.0"
+appVersion: "1.61.0"
 
 dependencies:
 - name: jaeger-operator
-  version: 2.53.0
+  version: 2.57.0
   repository: https://jaegertracing.github.io/helm-charts
