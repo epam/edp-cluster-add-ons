@@ -18,7 +18,11 @@ The repository offers a variety of Kubernetes add-ons that can be easily integra
 
 Using ArgoCD, one can leverage the repository to expedite the setup process of the KubeRocketCI Platform and cluster components. The repository provides ready-to-use configurations for add-ons, simplifying deployment and reducing complexity.
 
-Explore this repository to access a comprehensive collection of Kubernetes add-ons for your Kubernetes. Simplify deployment, enhance cluster capabilities, and stay up-to-date with the evolving landscape of Kubernetes.
+### Developer Tools Integration
+
+This repository includes integration with developer tools to enhance the development experience:
+
+- **Adding New Add-ons**: [See guide](docs/add-new-addon.md) for detailed instructions on adding new add-ons.
 
 ## Repository structure
 
