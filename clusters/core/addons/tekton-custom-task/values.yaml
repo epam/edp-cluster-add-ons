@@ -10,8 +10,12 @@ tekton-custom-task:
     repository: epamedp/tekton-custom-task
     # if not defined then .Chart.AppVersion is used
     # -- tekton-custom-task Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/tekton-custom-task)
-    tag: "0.1.0"
+    tag: ""
   imagePullPolicy: "IfNotPresent"
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  imagePullSecrets: []
+    # - name: regcred
 
   resources:
     limits:

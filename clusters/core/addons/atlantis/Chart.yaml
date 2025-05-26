@@ -4,7 +4,7 @@ appVersion: v0.34.0
 description: A Helm chart for Atlantis https://www.runatlantis.io
 type: application
 name: atlantis
-version: 5.16.0
+version: 5.17.2
 keywords:
   - terraform
 home: https://www.runatlantis.io
@@ -20,10 +20,10 @@ maintainers:
   - name: gmartinez-sisti
 dependencies:
 - name: atlantis
-  version: 5.16.0
+  version: 5.17.2
   repository: https://runatlantis.github.io/helm-charts
 
 - name: oauth2-proxy
-  version: 7.12.8
+  version: 7.12.16
   repository: https://oauth2-proxy.github.io/manifests
   condition: oauth2-proxy.enabled

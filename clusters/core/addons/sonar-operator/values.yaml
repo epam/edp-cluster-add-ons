@@ -10,8 +10,12 @@ sonar-operator:
     repository: epamedp/sonar-operator
     # if not defined then .Chart.AppVersion is used
     # -- EDP sonar-operator Docker image tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags)
-    tag: 3.1.1
+    tag: ""
   imagePullPolicy: "IfNotPresent"
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  imagePullSecrets: []
+    # - name: regcred
 
   resources:
     limits:

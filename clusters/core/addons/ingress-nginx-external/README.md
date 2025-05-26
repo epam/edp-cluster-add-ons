@@ -1,6 +1,6 @@
 # ingress-nginx
 
-![Version: 4.12.1](https://img.shields.io/badge/Version-4.12.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.1](https://img.shields.io/badge/AppVersion-1.12.1-informational?style=flat-square)
+![Version: 4.12.2](https://img.shields.io/badge/Version-4.12.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.2](https://img.shields.io/badge/AppVersion-1.12.2-informational?style=flat-square)
 
 A Helm chart for Nginx Ingress Controller
 
@@ -58,7 +58,7 @@ To use the External Ingress Controller, you need to set the `ingressClassName` p
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes.github.io/ingress-nginx | ingress-nginx | 4.12.1 |
+| https://kubernetes.github.io/ingress-nginx | ingress-nginx | 4.12.2 |
 
 ## Values
 

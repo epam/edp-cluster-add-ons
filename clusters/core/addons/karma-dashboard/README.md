@@ -1,6 +1,6 @@
 # karma
 
-![Version: 2.9.3](https://img.shields.io/badge/Version-2.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.120](https://img.shields.io/badge/AppVersion-v0.120-informational?style=flat-square)
+![Version: 2.9.6](https://img.shields.io/badge/Version-2.9.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.121](https://img.shields.io/badge/AppVersion-v0.121-informational?style=flat-square)
 
 A Helm chart for Karma - an UI for Prometheus Alertmanager
 
@@ -8,7 +8,7 @@ A Helm chart for Karma - an UI for Prometheus Alertmanager
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://wiremind.github.io/wiremind-helm-charts | karma | 2.9.3 |
+| https://wiremind.github.io/wiremind-helm-charts | karma | 2.9.6 |
 
 ## Values
 

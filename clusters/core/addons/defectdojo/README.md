@@ -1,6 +1,6 @@
 # defectdojo
 
-![Version: 1.6.168](https://img.shields.io/badge/Version-1.6.168-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.42.1](https://img.shields.io/badge/AppVersion-2.42.1-informational?style=flat-square)
+![Version: 1.6.188](https://img.shields.io/badge/Version-1.6.188-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.46.3](https://img.shields.io/badge/AppVersion-2.46.3-informational?style=flat-square)
 
 ## Secret management
 
@@ -69,7 +69,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.168 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.188 |
 
 ## Values
 
