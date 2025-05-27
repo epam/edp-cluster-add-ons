@@ -27,6 +27,14 @@ Please let me know your choice and the issue number before I proceed.
 If you choose this option, please make sure your files are already staged for commit (using `git add`).
 
 I'll help you:
+1. Check if you're on a feature branch (if not, I'll suggest creating one)
+   ```
+   # Check current branch
+   git branch --show-current
+
+   # If needed, create and switch to a feature branch
+   git checkout -b feat/gh-{issue-number}
+   ```
 1. Generate a conventional commit message following the format:
    ```
    type(scope): Description (#issue number)
@@ -38,13 +46,19 @@ I'll help you:
 
 2. Create either a regular commit (`git commit`) or a signed commit (`git commit -s`)
 
-3. Push your changes to the remote branch (required for PR creation)
+3. Push your changes to the remote feature branch (required for PR creation)
+
+   ```
+   git push -u origin <feature-branch>
+   ```
+
+   Note: Always push to your feature branch, never directly to main.
 
 ## Option 2: Create PR from Latest Commit
 
 If you choose this option, I'll use information from your latest commit to help create the PR.
 
-I'll also ensure your branch is pushed to the remote repository before creating the PR.
+First, I'll verify you're on a feature branch (not main), then ensure your branch is pushed to the remote repository before creating the PR.
 
 ## For Both Options
 
@@ -58,7 +72,8 @@ Once we have a commit and the branch is pushed, I'll:
 
 This repository follows these standards for pull requests:
 - Target branch is always `main`
-- Source branch will be your current branch
+- Source branch will be your feature branch (never push directly to main)
+- Feature branches should follow naming convention: `feat/gh-{issue-number}` or `fix/gh-{issue-number}`
 - PRs must reference an issue number
 
 ## Tools I'll Use
@@ -69,11 +84,11 @@ For checking and creating commits:
 - `git status` to verify staged changes
 - `git commit -s -m "message"` for signed commits (if option 1 selected)
 - `git --no-pager log -1 --patch` to check the latest commit with full details and changes (for both options)
-- `git push -u origin <branch>` to push your branch to the remote repository
+- `git push -u origin <feature-branch>` to push your branch to the remote repository (always use a feature branch, never push to main)
 
 For creating the PR:
-- GitHub API to create the pull request (`bb7_create_pull_request`)
-- GitHub API to fetch issue details if needed (`bb7_get_issue`)
+- GitHub API to create the pull request (`create_pull_request`)
+- GitHub API to fetch issue details if needed (`get_issue`)
 
 This allows me to handle the entire workflow without requiring you to run additional commands.
 

@@ -11,10 +11,10 @@ I'll help you create a GitHub issue in the epam/edp-cluster-add-ons repository f
 The following tools are available for issue management:
 
 **GitHub Tools:**
-- `bb7_create_issue` - Creates a new issue in the repository
-- `bb7_list_issues` - Lists existing issues (helpful for checking duplicates)
-- `bb7_get_issue` - Gets details of a specific issue
-- `bb7_add_issue_comment` - Adds a comment to an existing issue
+- `create_issue` - Creates a new issue in the repository
+- `list_issues` - Lists existing issues (helpful for checking duplicates)
+- `get_issue` - Gets details of a specific issue
+- `add_issue_comment` - Adds a comment to an existing issue
 
 **Filesystem Tools:**
 - `read_file` - Reads the content of template files from the local filesystem
@@ -81,9 +81,9 @@ When helping a user create an issue:
 
 4. Draft the issue content using the template structure
 5. Present the draft for user review and await confirmation
-6. Upon confirmation, use bb7_create_issue to create the issue:
+6. Upon confirmation, use create_issue to create the issue:
    ```
-   bb7_create_issue(
+   create_issue(
      owner: "epam",
      repo: "edp-cluster-add-ons",
      title: <issue-title>,
@@ -93,7 +93,7 @@ When helping a user create an issue:
    ```
 7. Get the issue details and provide the link to the user:
    ```
-   bb7_get_issue(
+   get_issue(
      owner: "epam",
      repo: "edp-cluster-add-ons",
      issue_number: <created-issue-number>
@@ -177,7 +177,7 @@ Here's an example interaction flow to help guide the conversation:
 
 5. Before creating the issue, check for potential duplicates using:
    ```
-   bb7_list_issues(
+   list_issues(
      owner: "epam",
      repo: "edp-cluster-add-ons",
      state: "open"
