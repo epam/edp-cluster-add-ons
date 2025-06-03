@@ -124,10 +124,13 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | opentelemetry-operator.createNamespace | bool | `false` |  |
 | opentelemetry-operator.enable | bool | `false` |  |
 | opentelemetry-operator.namespace | string | `"opentelemetry-operator"` |  |
+| pgadmin.createNamespace | bool | `false` |  |
+| pgadmin.enable | bool | `false` |  |
+| pgadmin.namespace | string | `"pgadmin"` |  |
 | postgres-operator.createNamespace | bool | `false` |  |
 | postgres-operator.enable | bool | `false` |  |
 | postgres-operator.namespace | string | `"postgres-operator"` |  |
-| prometheus-blackbox-exporter.createNamespace | bool | `true` |  |
+| prometheus-blackbox-exporter.createNamespace | bool | `false` |  |
 | prometheus-blackbox-exporter.enable | bool | `false` |  |
 | prometheus-blackbox-exporter.namespace | string | `"monitoring"` |  |
 | prometheus-operator.createNamespace | bool | `false` |  |

@@ -45,4 +45,5 @@ chart-repos:
   - sonarsource=https://SonarSource.github.io/helm-chart-sonarqube
   - spotahome=https://spotahome.github.io/redis-operator
   - wiremind=https://wiremind.github.io/wiremind-helm-charts
+  - runix=https://helm.runix.net
 helm-dependency-extra-args: "--skip-refresh"
