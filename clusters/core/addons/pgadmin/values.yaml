@@ -1,0 +1,83 @@
+---
+pgadmin4:
+  ingress:
+    enabled: true
+    hosts:
+      - host: pgadmin4.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+
+  # Keycloak client for pgAdmin4
+  # extraConfigmapMounts:
+  #   - name: config-local
+  #     configMap: pgadmin4-config
+  #     subPath: config_local.py
+  #     mountPath: "/pgadmin4/config_local.py"
+  #     readOnly: true
+
+  # envVarsFromSecrets:
+  #   - pgadmin4-oauth2-secret
+
+  ## Admin user
+  existingSecret: pgadmin4-password
+
+  env:
+    email: pgadmin4@epam.com
+
+  envVarsExtra:
+    - name: CONFIG_DATABASE_URI
+      valueFrom:
+        secretKeyRef:
+          name: pgadmin-pguser-pgadmin
+          key: uri
+
+  persistentVolume:
+    enabled: false
+
+# Configuration for setting up resources in Keycloak to enable OIDC authentication.
+# Prerequisite: Ensure that the Keycloak Operator is installed and integrated with Keycloak.
+# Refer to the installation guide for the Keycloak Operator:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/keycloak-operator
+#
+# Additionally, necessary Keycloak resources such as realms, roles, and groups must be created
+# to support component functionality. This can be done using the provided add-ons or manually:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/kuberocketci-rbac
+oidc:
+  enabled: false
+
+# This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+# Prerequisite: Ensure that ESO is installed in the cluster.
+# Refer to the EDP cluster add-on for ESO installation and setup:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+#
+# Ensure that you have created the necessary roles for ESO integration.
+# Follow the detailed instructions here:
+# https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "aws"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+  secretPath: "/infra/core/addons/pgadmin"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "core"
+    # -- Vault role for the Kubernetes authentication method.
+    role: pgadmin
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

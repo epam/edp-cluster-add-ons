@@ -1,0 +1,63 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+Configuring the OAUTH2_AUTO_CREATE_USER Parameter
+The OAUTH2_AUTO_CREATE_USER parameter in the cm-pgadmin4-config.yaml file controls how pgAdmin handles user logins via OAuth2.
+
+When set to 'True', pgAdmin will automatically create a user upon their first successful OAuth2 login, if the user does not already exist in the system.
+
+```yaml
+OAUTH2_AUTO_CREATE_USER: 'True'
+```
+When set to 'False', only users who have been manually added to pgAdmin in advance will be able to log in. New users will not be created automatically, even if OAuth2 authentication is successful.
+
+```yaml
+OAUTH2_AUTO_CREATE_USER: 'False'
+```
+It is recommended to set OAUTH2_AUTO_CREATE_USER: 'False' if you want to restrict access to pgAdmin to a predefined set of users only.
+
+Important Note About Renaming the Admin User
+If you want to rename the default administrator user in pgAdmin, you must use the full email address of the user. The Helm chart documentation may be misleading, as it sometimes suggests using only the username without the domain.
+
+```yaml
+PGADMIN_DEFAULT_EMAIL: 'admin@example.com'
+```
+
+To enable OIDC authentication with Keycloak for pgAdmin4, follow these step-by-step instructions:
+
+1. Uncomment extraConfigmapMounts and envVarsFromSecrets
+In your values.yaml file, under the appropriate section (e.g., pgadmin4:), add:
+
+```
+  # Keycloak client for pgAdmin4
+  extraConfigmapMounts:
+    - name: config-local
+      configMap: pgadmin4-config
+      subPath: config_local.py
+      mountPath: "/pgadmin4/config_local.py"
+      readOnly: true
+
+  envVarsFromSecrets:
+    - pgadmin4-oauth2-secret
+```
+
+2. Enable oidc.enabled in values.yaml
+
+```yaml
+oidc:
+  enabled: false
+```
+
+3. Replace idp.example.com in cm-pgadmin4-config.yaml with the actual domain of your Keycloak instance.
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

@@ -220,6 +220,11 @@ opentelemetry-operator:
   createNamespace: false
   namespace: opentelemetry-operator
 
+pgadmin:
+  createNamespace: false
+  enable: false
+  namespace: pgadmin
+
 # Postgres Operator
 postgres-operator:
   createNamespace: false

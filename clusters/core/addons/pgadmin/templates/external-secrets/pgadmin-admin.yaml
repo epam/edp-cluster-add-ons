@@ -1,0 +1,26 @@
+{{- if .Values.eso.enabled }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: pgadmin4-password
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: {{ .Release.Name }}
+  data:
+  - secretKey: password
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ .Values.eso.secretPath }}
+      metadataPolicy: None
+      property: pgadmin4.password
+  - secretKey: email
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ .Values.eso.secretPath }}
+      metadataPolicy: None
+      property: pgadmin4.admin
+{{- end }}

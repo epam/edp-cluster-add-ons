@@ -1,0 +1,29 @@
+{{- if and (.Values.pgadmin) (.Values.pgadmin.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-pgadmin
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/pgadmin
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: pgadmin
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "pgadmin" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ .Values.pgadmin.createNamespace }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

@@ -26,4 +26,3 @@ Refer to the official chart documentation for all available configuration option
 | prometheus-blackbox-exporter.config.modules.http_2xx.http.valid_http_versions[1] | string | `"HTTP/2.0"` |  |
 | prometheus-blackbox-exporter.config.modules.http_2xx.prober | string | `"http"` |  |
 | prometheus-blackbox-exporter.config.modules.http_2xx.timeout | string | `"5s"` |  |
-| prometheus-blackbox-exporter.serviceMonitor.enabled | bool | `false` |  |
