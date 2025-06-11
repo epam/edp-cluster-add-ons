@@ -2,46 +2,38 @@
 mode: 'agent'
 description: 'Integrate an existing third-party Helm chart as a new add-on'
 ---
-# Integrate Third-Party Helm Chart as Add-on
 
-I'll help you integrate an existing third-party Helm chart as a new add-on in the EDP Cluster Add-ons repository. This process requires creating a wrapper chart that properly references the external chart as a dependency.
+# Integrate Third-Party Helm Chart
 
-First, I need some information:
+I'll help you create a wrapper chart for an existing third-party Helm chart.
 
-1. What is the name of the third-party Helm chart you want to integrate?
-2. What is the chart repository URL?
-3. Which version of the chart do you want to use?
-4. What namespace should this add-on be deployed in?
-5. Are there any specific configuration values needed for your environment?
+## Required Information
 
-Based on your answers, I'll help you:
+1. **Chart name**: Name of the third-party chart
+2. **Repository URL**: Helm chart repository URL
+3. **Chart version**: Specific version to use
+4. **Target namespace**: Deployment namespace
+5. **Custom values**: Any environment-specific configuration needed
 
-1. Create the appropriate directory structure in `clusters/core/addons/`
-2. Set up the Chart.yaml with the correct dependency references
-3. Create a values.yaml file that properly integrates with the external chart
-4. Ensure the top-level key in values.yaml matches the dependency chart name
-5. Create an App of Apps template in `clusters/core/apps/templates/`
-6. Update the App of Apps values.yaml with minimal configuration
-7. Add the chart repository to ct.yaml if needed
-8. Create a comprehensive README.md for the add-on
+## Integration Pattern
 
-I'll follow the pattern described in [add-new-addon.md](../docs/add-new-addon.md) and ensure your integration follows all repository standards for external chart dependencies.
-
-For example, if you're integrating "prometheus-operator", your values.yaml would look like:
+For a chart like `prometheus-operator`, I'll create:
 
 ```yaml
-# Values for the prometheus-operator wrapper chart
-
-# External chart values with chart name as top-level key
-prometheus-operator:
+# values.yaml structure
+prometheus-operator:  # Chart name as top-level key
   prometheusOperator:
     resources:
       limits:
         memory: "256Mi"
-      requests:
-        cpu: "50m"
-        memory: "128Mi"
-  # Additional configuration...
 ```
 
-Let's get started with integrating your third-party chart!
+## What I'll Generate
+
+- Wrapper chart with proper dependency configuration
+- Chart.yaml with external chart reference
+- Values.yaml with chart name as top-level key
+- App of Apps template and configuration
+- Repository reference in ct.yaml if needed
+
+Please provide the chart details to begin integration.
