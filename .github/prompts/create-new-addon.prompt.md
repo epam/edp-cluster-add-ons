@@ -2,26 +2,30 @@
 mode: 'agent'
 description: 'Create a new add-on for the EDP Cluster Add-ons repository'
 ---
+
 # Create New EDP Cluster Add-on
 
-I'll help you create a new add-on for the EDP Cluster Add-ons repository following all best practices.
+I'll help you create a new add-on following the repository's GitOps patterns and Helm best practices.
 
-First, I need some information about the add-on you want to create:
+## Required Information
 
-1. What is the name of the add-on?
-2. Is it based on an existing Helm chart? If yes, which one and what version?
-3. What namespace should it be deployed in?
-4. What is the purpose of this add-on in your cluster?
+1. **Add-on name**: What should this add-on be called?
+2. **Chart type**: New chart or wrapper for existing third-party chart?
+3. **Target namespace**: Where should it be deployed?
+4. **Purpose**: Brief description of what this add-on does
 
-Based on your answers, I'll help you:
+## What I'll Create
 
-1. Create the appropriate directory structure in `clusters/core/addons/`
-2. Create all required files (Chart.yaml, values.yaml, README.md, etc.)
-3. Set up proper dependency management if using existing charts
-4. Create the App of Apps integration template
-5. Update the App of Apps values.yaml with appropriate configuration
-6. Provide testing commands to validate your new add-on
+- Directory structure in `clusters/core/addons/{addon-name}/`
+- Required files: `Chart.yaml`, `values.yaml`, `README.md`
+- App of Apps integration in `clusters/core/apps/templates/`
+- Minimal configuration in App of Apps `values.yaml`
 
-I'll follow all best practices from the [add-new-addon.md](../docs/add-new-addon.md) guide and ensure your add-on conforms to all repository standards.
+## Standards I'll Follow
 
-Let's get started!
+- Self-contained add-on structure
+- Dependency chart name as top-level key in values.yaml
+- Proper Helm chart versioning
+- GitOps declarative configuration
+
+Ready to start? Please provide the required information above.

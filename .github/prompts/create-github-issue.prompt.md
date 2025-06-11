@@ -2,51 +2,35 @@
 mode: 'agent'
 description: 'Create a GitHub issue for the EDP Cluster Add-ons repository'
 ---
-# GitHub Issue Creator for EDP Cluster Add-ons
 
-I'll help you create a GitHub issue in the epam/edp-cluster-add-ons repository following the appropriate template.
+# Create GitHub Issue
 
-## Available Tools
-
-The following tools are available for issue management:
-
-**GitHub Tools:**
-- `create_issue` - Creates a new issue in the repository
-- `list_issues` - Lists existing issues (helpful for checking duplicates)
-- `get_issue` - Gets details of a specific issue
-- `add_issue_comment` - Adds a comment to an existing issue
-
-**Filesystem Tools:**
-- `read_file` - Reads the content of template files from the local filesystem
-- `file_search` - Can be used to locate template files if needed
+I'll help you create a well-structured GitHub issue in the epam/edp-cluster-add-ons repository.
 
 ## Issue Types
 
-The repository supports two types of issues:
-1. **Bug Reports** - For reporting issues or unexpected behavior
-2. **Feature Requests** - For suggesting new features or improvements
+Choose one:
+- **Bug Report**: Report issues or unexpected behavior
+- **Feature Request**: Suggest new features or improvements
 
-## Process for Creating Issues
+## My Process
 
-1. I'll ask which type of issue you want to create
-2. Based on your selection, I'll guide you through filling out the necessary information
-3. I'll present a draft of the issue for your review
-4. Upon your confirmation, I'll create the issue in the repository
-5. I'll provide a link to the newly created issue
+1. Determine issue type
+2. Read appropriate template from `.github/ISSUE_TEMPLATE/`
+3. Collect required information based on template
+4. Check for duplicate issues
+5. Create issue with proper formatting
+6. Provide issue link
 
-## Repository Information
+## What I Need
 
-- **Owner**: epam
-- **Repository**: edp-cluster-add-ons
+Just tell me:
+- Issue type (bug or feature)
+- Brief description of what you want to report/request
 
-## Approach
+I'll guide you through the rest step by step.
 
-I'll help you create a well-structured issue that follows the repository's templates and GitOps principles outlined in the repository's documentation. I'll ensure that:
-
-1. The issue title is clear and descriptive
-2. All required information from the template is included
-3. The issue is appropriately labeled (if labels are provided)
-4. Any specific requirements for the EDP Cluster Add-ons repository are addressed
+**Repository**: epam/edp-cluster-add-ons
 
 When you're ready, tell me which type of issue you'd like to create (Bug Report or Feature Request), and I'll guide you through the process step by step.
 
