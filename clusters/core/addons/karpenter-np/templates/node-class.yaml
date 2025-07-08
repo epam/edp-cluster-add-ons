@@ -6,7 +6,7 @@ spec:
   # Please align the role name with the one created by karpenter terraform module https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
   # More details: https://docs.kuberocketci.io/docs/operator-guide/kubernetes-cluster-scaling/namespace-and-cluster-autoscaling#karpenter
   role: "Karpenter-{{ .Values.clusterName }}"
-  amiFamily: AL2 # Amazon Linux 2
+  amiFamily: AL2023
   subnetSelectorTerms:
     # Unique tag for each subnet where karpenter can provision nodes. Align with you existing tags or create new ones.
     - tags:
@@ -30,3 +30,21 @@ spec:
     Name: {{ .Values.clusterName }}-tenant-demand
     userTag: {{ .Values.clusterName }}-cluster
     owner: krci
+  # userData: |
+  #   #!/bin/bash
+
+  #   echo "$(jq '.allowedUnsafeSysctls += ["net.ipv4.*"]' /etc/kubernetes/kubelet/config.json)" > /etc/kubernetes/kubelet/config.json
+
+  #   echo "ptp" >> /etc/modules-load.d/ptp.conf
+
+  #   echo "ptp_kvm" >> /etc/modules-load.d/ptp_kvm.conf
+
+  #   modprobe ptp || true
+
+  #   modprobe ptp_kvm || true
+
+  #   if ! grep -q "/dev/ptp0" /etc/chrony.conf; then
+  #     echo "refclock PHC /dev/ptp0 poll 0 delay 0.000000001 prefer" >> /etc/chrony.conf
+  #   fi
+
+  #   systemctl restart chronyd
