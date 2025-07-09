@@ -21,7 +21,7 @@ krakend:
         "$schema": "https://www.krakend.io/schema/krakend.json",
         "version": 3,
         "name": "KrakenD - API Gateway",
-        "timeout": "3000ms",
+        "timeout": "6000ms",
         "cache_ttl": "300s",
         "output_encoding": "json",
         "client_tls": {
@@ -195,6 +195,151 @@ krakend:
                       "value": "Basic {{ env "OPENSEARCH_CREDS" }}"
                     }
                   }
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/gitfusion/repositories",
+            "method": "GET",
+            "input_query_strings": ["*"],
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/repositories",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "GITFUSION_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {}
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/gitfusion/repository",
+            "method": "GET",
+            "input_query_strings": ["*"],
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/repository",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "GITFUSION_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {}
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/gitfusion/organizations",
+            "method": "GET",
+            "input_query_strings": ["*"],
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/user/organizations",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "GITFUSION_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {}
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/gitfusion/branches",
+            "method": "GET",
+            "input_query_strings": ["*"],
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/branches",
+                "encoding": "json",
+                "sd": "static",
+                "method": "GET",
+                "host": [
+                  "{{ env "GITFUSION_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {}
+                }
+              }
+            ]
+          },
+          {
+            "endpoint": "/gitfusion/invalidate",
+            "method": "POST",
+            "input_query_strings": ["*"],
+            "output_encoding": "json",
+            "extra_config": {
+              "auth/validator": {
+                "alg": "RS256",
+                "cache_duration": 3600,
+                "cache": true,
+                "disable_jwk_security": false,
+                "jwk_url": "{{ env "JWK_URL" }}"
+              }
+            },
+            "backend": [
+              {
+                "url_pattern": "/api/v1/cache/invalidate",
+                "encoding": "json",
+                "sd": "static",
+                "method": "DELETE",
+                "host": [
+                  "{{ env "GITFUSION_URL" }}"
+                ],
+                "extra_config": {
+                  "qos/http-cache": {}
                 }
               }
             ]
