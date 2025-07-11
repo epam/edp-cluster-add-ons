@@ -33,15 +33,17 @@ spec:
   # userData: |
   #   #!/bin/bash
 
+  #   echo "options ena phc_enable=1" > /etc/modprobe.d/ena.conf
+
+  #   modprobe -r ena
+
+  #   modprobe ena phc_enable=1
+
   #   echo "$(jq '.allowedUnsafeSysctls += ["net.ipv4.*"]' /etc/kubernetes/kubelet/config.json)" > /etc/kubernetes/kubelet/config.json
 
   #   echo "ptp" >> /etc/modules-load.d/ptp.conf
 
-  #   echo "ptp_kvm" >> /etc/modules-load.d/ptp_kvm.conf
-
   #   modprobe ptp || true
-
-  #   modprobe ptp_kvm || true
 
   #   if ! grep -q "/dev/ptp0" /etc/chrony.conf; then
   #     echo "refclock PHC /dev/ptp0 poll 0 delay 0.000000001 prefer" >> /etc/chrony.conf
