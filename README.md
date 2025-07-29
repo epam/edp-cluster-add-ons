@@ -95,7 +95,7 @@ make update-readme
 | Component                    | version   | appVersion   | namespace              | createNamespace   | enable   |
 |:-----------------------------|:----------|:-------------|:-----------------------|:------------------|:---------|
 | argo-cd                      | 7.7.11    | v2.13.2      | krci                   | False             | False    |
-| atlantis                     | 5.17.2    | v0.34.0      | atlantis               | False             | False    |
+| atlantis                     | 5.18.0    | v0.35.0      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 1.5.7     | 1.5.7        | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
 | capsule                      | 0.5.3     | 0.4.2        | capsule-system         | False             | False    |
