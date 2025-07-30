@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.11.3](https://img.shields.io/badge/Version-3.11.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.11.3](https://img.shields.io/badge/AppVersion-3.11.3-informational?style=flat-square)
+![Version: 3.12.0](https://img.shields.io/badge/Version-3.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.12.0](https://img.shields.io/badge/AppVersion-3.12.0-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -10,7 +10,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.11.3 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.12.0 |
 
 ## Values
 
@@ -48,6 +48,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.externalSecrets.type | string | `"aws"` | Defines provider type. One of `aws` or `generic`. |
 | edp-install.extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | edp-install.gerrit-operator.enabled | bool | `false` |  |
+| edp-install.gitfusion | object | `{"enabled":false}` | Enable GitFusion integration for repository and branch discovery. |
 | edp-install.global.adminGroupName | string | `""` |  |
 | edp-install.global.apiClusterEndpoint | string | `""` | API Сluster Endpoint configuration for static kubeconfig generation |
 | edp-install.global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |

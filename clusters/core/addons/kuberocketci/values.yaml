@@ -451,3 +451,7 @@ edp-install:
     #     name: main
     #     # -- Keycloak URL.
     #     keycloakUrl: https://keycloak.example.com/auth
+
+  # -- Enable GitFusion integration for repository and branch discovery.
+  gitfusion:
+    enabled: false
