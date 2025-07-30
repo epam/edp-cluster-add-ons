@@ -122,7 +122,7 @@ make update-readme
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
-| kuberocketci                 | 3.11.3    | 3.11.3       | krci                   | False             | False    |
+| kuberocketci                 | 3.12.0    | 3.12.0       | krci                   | False             | False    |
 | minio-operator               | 0.1.0     | 5.0.5        | minio-operator         | False             | False    |
 | moon                         | 2.7.4     | 2.7.4        | moon                   | False             | False    |
 | nexus-ce                     | 0.1.0     | 3.79.1       | nexus                  | False             | False    |
@@ -140,7 +140,7 @@ make update-readme
 | sonar                        | 8.0.2     | 9.9.2        | sonar                  | False             | False    |
 | sonar-operator               | 3.3.0     | 3.3.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
-| tekton-cache                 | 0.4.1     | 0.4.1        | tekton-cache           | False             | False    |
+| tekton-cache                 | 0.4.2     | 0.4.2        | tekton-cache           | False             | False    |
 | tekton                       | N/A       | N/A          | tekton-pipelines       | False             | False    |
 | tekton-custom-task           | 0.2.0     | 0.2.0        | krci                   | False             | False    |
 | tekton-dashboard             | 0.52.0    | 0.52.0       | krci                   | False             | False    |
