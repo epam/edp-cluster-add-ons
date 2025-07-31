@@ -103,7 +103,7 @@ make update-readme
 | cert-manager                 | 1.17.2    | 1.17.2       | cert-manager           | False             | False    |
 | defectdojo                   | 1.6.188   | 2.46.3       | defectdojo             | False             | False    |
 | dependency-track             | 0.33.0    | v4.13.2      | dependency-track       | False             | False    |
-| external-secrets             | 0.14.2    | 0.14.2       | external-secrets       | False             | False    |
+| external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
 | fluent-bit                   | 0.49.0    | 4.0.1        | logging                | False             | False    |
 | harbor                       | 0.1.0     | 1.12.2       | harbor                 | False             | False    |
 | harbor-ha                    | 1.13.0    | 2.9.0        | harbor                 | False             | False    |

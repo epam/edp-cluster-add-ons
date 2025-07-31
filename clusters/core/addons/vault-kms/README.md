@@ -32,7 +32,7 @@ A Helm chart for Vault
 4. Create Custom Resource `kind: SecretStore` with role-id got on the previous step:
 
     ```yaml
-    apiVersion: external-secrets.io/v1beta1
+    apiVersion: external-secrets.io/v1
     kind: SecretStore
     metadata:
       name: vault-backend
@@ -53,7 +53,7 @@ A Helm chart for Vault
 5. Create Custom Resource `kind: ExternalSecret` with SecretStore name created on the previous step:
 
     ```yaml
-    apiVersion: external-secrets.io/v1beta1
+    apiVersion: external-secrets.io/v1
     kind: ExternalSecret
     metadata:
       name: vault-external-secret
