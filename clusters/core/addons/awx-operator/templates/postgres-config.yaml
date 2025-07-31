@@ -1,5 +1,5 @@
 {{- if and $.Values.AWX.enabled $.Values.AWX.postgres.enabled }}
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: {{ include "postgres.secretName" . }}
