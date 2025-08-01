@@ -113,7 +113,7 @@ make update-readme
 | jaeger-operator              | 2.57.0    | 1.61.0       | jaeger-operator        | False             | False    |
 | karma-dashboard              | 2.9.6     | v0.121       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
-| karpenter                    | 1.3.3     | 1.3.3        | karpenter              | False             | False    |
+| karpenter                    | 1.6.1     | 1.6.1        | karpenter              | False             | False    |
 | keda-tenants                 | 0.1.0     | 0.1.0        | keda                   | False             | False    |
 | keda                         | 2.15.2    | 2.15.1       | keda                   | False             | False    |
 | keycloak                     | 2.3.0     | 24.0.4       | security               | False             | False    |
