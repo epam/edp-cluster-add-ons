@@ -125,7 +125,7 @@ make update-readme
 | kuberocketci                 | 3.12.0    | 3.12.0       | krci                   | False             | False    |
 | minio-operator               | 0.1.0     | 5.0.5        | minio-operator         | False             | False    |
 | moon                         | 2.7.4     | 2.7.4        | moon                   | False             | False    |
-| nexus-ce                     | 0.1.0     | 3.79.1       | nexus                  | False             | False    |
+| nexus-ce                     | 0.1.1     | 3.82.0       | nexus                  | False             | False    |
 | nexus-operator               | 3.5.0     | 3.5.0        | nexus                  | False             | False    |
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 7.6.0     | v7.6.0       | oauth2-proxy           | False             | False    |
@@ -137,7 +137,7 @@ make update-readme
 | prometheus-blackbox-exporter | 9.7.0     | v0.26.0      | monitoring             | False             | False    |
 | redis-operator               | 0.1.0     | 3.2.8        | redis-operator         | False             | False    |
 | report-portal                | 5.10.0    | 23.2         | report-portal          | False             | False    |
-| sonar                        | 8.0.2     | 9.9.2        | sonar                  | False             | False    |
+| sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
 | sonar-operator               | 3.3.0     | 3.3.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
 | tekton-cache                 | 0.4.2     | 0.4.2        | tekton-cache           | False             | False    |

@@ -5,4 +5,4 @@ metadata:
 data:
   nexus.properties: |
     nexus.scripts.allowCreation=true
-    jetty.request.header.size=100000
+    jetty.httpConfig.requestHeaderSize=100000
