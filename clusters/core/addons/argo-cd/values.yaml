@@ -80,6 +80,7 @@ argo-cd:
 
   # Disabled for multitenancy env with single instance deployment
   # applicationSet:
+  #   allowAnyNamespace: true
   #   serviceAccount:
   #     # -- Annotations applied to created service account
   #     annotations: {}
