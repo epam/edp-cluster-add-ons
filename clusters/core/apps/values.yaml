@@ -83,6 +83,12 @@ fluent-bit:
   enable: false
   namespace: logging
 
+# Required KrakenD deployment and configuration. More details at https://docs.kuberocketci.io/docs/operator-guide/extensions/krakend
+gitfusion:
+  createNamespace: false
+  enable: false
+  namespace: krci
+
 harbor:
   createNamespace: false
   enable: false
@@ -157,6 +163,7 @@ keycloak-operator:
   enable: false
   namespace: keycloak-operator
 
+# API gateway for KubeRocketCI Platform. More details at https://docs.kuberocketci.io/docs/operator-guide/extensions/krakend
 krakend:
   createNamespace: false
   enable: false
