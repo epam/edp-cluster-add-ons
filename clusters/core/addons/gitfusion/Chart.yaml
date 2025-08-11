@@ -1,0 +1,12 @@
+apiVersion: v2
+description: A Helm chart for KubeRocketCI Platform
+home: https://docs.kuberocketci.io/
+name: gitfusion
+type: application
+version: 0.1.1
+appVersion: 0.1.1
+
+dependencies:
+- name: gitfusion
+  version: 0.1.1
+  repository: https://epam.github.io/edp-helm-charts/stable

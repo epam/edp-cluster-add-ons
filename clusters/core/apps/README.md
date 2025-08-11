@@ -49,6 +49,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | fluent-bit.createNamespace | bool | `false` |  |
 | fluent-bit.enable | bool | `false` |  |
 | fluent-bit.namespace | string | `"logging"` |  |
+| gitfusion.createNamespace | bool | `false` |  |
+| gitfusion.enable | bool | `false` |  |
+| gitfusion.namespace | string | `"krci"` |  |
 | harbor-ha-okd.createNamespace | bool | `false` |  |
 | harbor-ha-okd.enable | bool | `false` |  |
 | harbor-ha-okd.namespace | string | `"harbor"` |  |
