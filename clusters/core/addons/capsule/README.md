@@ -1,6 +1,6 @@
 # capsule
 
-![Version: 0.5.3](https://img.shields.io/badge/Version-0.5.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.2](https://img.shields.io/badge/AppVersion-0.4.2-informational?style=flat-square)
+![Version: 0.7.4](https://img.shields.io/badge/Version-0.7.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.4](https://img.shields.io/badge/AppVersion-0.7.4-informational?style=flat-square)
 
 A Helm chart for capsule
 
@@ -8,7 +8,7 @@ A Helm chart for capsule
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://projectcapsule.github.io/charts | capsule | 0.5.3 |
+| https://projectcapsule.github.io/charts | capsule | 0.7.4 |
 
 ## Values
 
