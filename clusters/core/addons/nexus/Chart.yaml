@@ -19,6 +19,6 @@ dependencies:
   version: 61.0.2
   repository: https://sonatype.github.io/helm3-charts/
 - name: oauth2-proxy
-  version: 6.16.1
+  version: 7.18.0
   repository: https://oauth2-proxy.github.io/manifests/
   condition: oauth2-proxy.enabled

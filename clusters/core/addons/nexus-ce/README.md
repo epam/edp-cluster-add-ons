@@ -1,6 +1,6 @@
 # nexus-ce
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.82.0](https://img.shields.io/badge/AppVersion-3.82.0-informational?style=flat-square)
+![Version: 7.11.0](https://img.shields.io/badge/Version-7.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.11.0](https://img.shields.io/badge/AppVersion-7.11.0-informational?style=flat-square)
 
 Nexus Community Edition chart for Kubernetes
 
@@ -8,7 +8,7 @@ Nexus Community Edition chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
+| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 7.18.0 |
 
 ## Values
 
