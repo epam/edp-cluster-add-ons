@@ -92,7 +92,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.47.10 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.52.0 |
 | https://opensearch-project.github.io/helm-charts/ | opensearch | 2.26.1 |
 | https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.24.1 |
 

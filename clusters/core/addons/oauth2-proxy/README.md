@@ -1,6 +1,6 @@
 # oauth2-proxy
 
-![Version: 7.6.0](https://img.shields.io/badge/Version-7.6.0-informational?style=flat-square) ![AppVersion: v7.6.0](https://img.shields.io/badge/AppVersion-v7.6.0-informational?style=flat-square)
+![Version: 7.11.0](https://img.shields.io/badge/Version-7.11.0-informational?style=flat-square) ![AppVersion: 7.11.0](https://img.shields.io/badge/AppVersion-7.11.0-informational?style=flat-square)
 
 ## Secret management
 
@@ -48,7 +48,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://oauth2-proxy.github.io/manifests | oauth2-proxy | 7.1.0 |
+| https://oauth2-proxy.github.io/manifests | oauth2-proxy | 7.18.0 |
 
 ## Values
 

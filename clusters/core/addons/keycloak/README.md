@@ -1,6 +1,6 @@
 # keycloak
 
-![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 24.0.4](https://img.shields.io/badge/AppVersion-24.0.4-informational?style=flat-square)
+![Version: 7.1.1](https://img.shields.io/badge/Version-7.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.3.2](https://img.shields.io/badge/AppVersion-26.3.2-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
@@ -74,7 +74,7 @@ To expose internal Keycloak endpoint, follow the steps below:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://codecentric.github.io/helm-charts | keycloakx | 2.3.0 |
+| https://codecentric.github.io/helm-charts | keycloakx | 7.1.1 |
 
 ## Values
 
@@ -117,7 +117,7 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
 | keycloakx.health.enabled | bool | `false` |  |
 | keycloakx.http.relativePath | string | `"/"` |  |
-| keycloakx.image.tag | string | `"24.0.4"` |  |
+| keycloakx.image.tag | string | `"26.3.2"` |  |
 | keycloakx.ingress.annotations."nginx.ingress.kubernetes.io/proxy-buffer-size" | string | `"256k"` |  |
 | keycloakx.ingress.console.annotations | string | `nil` |  |
 | keycloakx.ingress.console.enabled | bool | `true` |  |

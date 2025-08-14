@@ -22,5 +22,5 @@ dependencies:
     version: 17.11.6
     repository: https://charts.bitnami.com/bitnami
   - name: minio
-    version: 12.6.5
+    version: 17.0.19
     repository: https://charts.bitnami.com/bitnami

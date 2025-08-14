@@ -56,7 +56,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
+| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 7.18.0 |
 | https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 61.0.2 |
 
 ## Values

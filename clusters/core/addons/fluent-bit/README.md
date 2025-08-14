@@ -1,6 +1,6 @@
 # fluent-bit
 
-![Version: 0.49.0](https://img.shields.io/badge/Version-0.49.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 0.52.0](https://img.shields.io/badge/Version-0.52.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.7](https://img.shields.io/badge/AppVersion-4.0.7-informational?style=flat-square)
 
 A Helm chart for Fluent Bit
 
@@ -123,7 +123,7 @@ if (startTimeMillis > 0 && completionTimeMillis > 0) {
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.49.0 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.52.0 |
 
 ## Values
 

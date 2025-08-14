@@ -92,7 +92,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | minio | 12.6.5 |
+| https://charts.bitnami.com/bitnami | minio | 17.0.19 |
 | https://charts.bitnami.com/bitnami | redis | 17.11.6 |
 | https://helm.goharbor.io | harbor | 1.13.0 |
 

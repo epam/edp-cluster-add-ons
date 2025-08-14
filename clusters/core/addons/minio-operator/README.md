@@ -1,6 +1,6 @@
 # minio-operator
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.0.5](https://img.shields.io/badge/AppVersion-5.0.5-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.1.1](https://img.shields.io/badge/AppVersion-7.1.1-informational?style=flat-square)
 
 A Helm chart for Minio Operator
 
@@ -8,7 +8,7 @@ A Helm chart for Minio Operator
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://operator.min.io/ | operator | 5.0.5 |
+| https://operator.min.io/ | operator | 7.1.1 |
 
 ## Values
 

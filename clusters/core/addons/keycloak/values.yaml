@@ -4,7 +4,7 @@ keycloakx:
   replicas: 1
 
   image:
-    tag: "24.0.4"
+    tag: "26.3.2"
 
   # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
   health:
