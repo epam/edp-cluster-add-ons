@@ -5,6 +5,7 @@ metadata:
   name: atlantis-webhook
 spec:
   data:
+  {{- if .Values.atlantis.bitbucket }}
     - remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
@@ -19,6 +20,55 @@ spec:
         metadataPolicy: None
         property: bitbucket_secret
       secretKey: bitbucket_secret
+  {{- end }}
+  {{- if .Values.atlantis.github }}
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: github_token
+      secretKey: github_token
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: github_secret
+      secretKey: github_secret
+  {{- end }}
+  {{- if .Values.atlantis.gitlab }}
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: gitlab_token
+      secretKey: gitlab_token
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: gitlab_secret
+      secretKey: gitlab_secret
+  {{- end }}
+  {{- if .Values.atlantis.gitea }}
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: gitea_token
+      secretKey: gitea_token
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: {{ .Values.eso.secretPath }}
+        metadataPolicy: None
+        property: gitea_secret
+      secretKey: gitea_secret
+  {{- end }}
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
