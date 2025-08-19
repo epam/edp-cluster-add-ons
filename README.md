@@ -173,7 +173,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | Component                    | version   | appVersion   | namespace              | createNamespace   | enable   |
 |:-----------------------------|:----------|:-------------|:-----------------------|:------------------|:---------|
 | argo-cd                      | 8.2.5     | v3.0.12      | krci                   | False             | False    |
-| atlantis                     | 5.18.0    | v0.35.0      | atlantis               | False             | False    |
+| atlantis                     | 5.18.1    | v0.35.1      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 1.5.7     | 1.5.7        | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
 | capsule                      | 0.7.4     | 0.7.4        | capsule-system         | False             | False    |
