@@ -98,13 +98,14 @@ make update-readme
 | atlantis                     | 5.18.0    | v0.35.0      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 1.5.7     | 1.5.7        | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
-| capsule                      | 0.5.3     | 0.4.2        | capsule-system         | False             | False    |
+| capsule                      | 0.7.4     | 0.7.4        | capsule-system         | False             | False    |
 | capsule-tenant               | N/A       | N/A          | capsule-system         | N/A               | False    |
 | cert-manager                 | 1.17.2    | 1.17.2       | cert-manager           | False             | False    |
 | defectdojo                   | 1.6.188   | 2.46.3       | defectdojo             | False             | False    |
 | dependency-track             | 0.33.0    | v4.13.2      | dependency-track       | False             | False    |
 | external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
 | fluent-bit                   | 0.49.0    | 4.0.1        | logging                | False             | False    |
+| gitfusion                    | 0.1.1     | 0.1.1        | krci                   | False             | False    |
 | harbor                       | 0.1.0     | 1.12.2       | harbor                 | False             | False    |
 | harbor-ha                    | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
 | harbor-ha-okd                | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
@@ -132,7 +133,7 @@ make update-readme
 | opensearch                   | 2.26.1    | 2.17.1       | logging                | False             | False    |
 | opentelemetry-operator       | 0.62.0    | 0.102.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.45.1    | 9.3          | pgadmin                | False             | False    |
-| postgres-operator            | 0.1.0     | 5.7.0        | postgres-operator      | False             | False    |
+| postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 72.3.0    | v0.82.0      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 9.7.0     | v0.26.0      | monitoring             | False             | False    |
 | redis-operator               | 0.1.0     | 3.2.8        | redis-operator         | False             | False    |

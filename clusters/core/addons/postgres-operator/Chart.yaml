@@ -12,9 +12,9 @@ version: 0.1.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "5.7.0"
+appVersion: "5.8.2"
 
 dependencies:
 - name: pgo
-  version: "5.7.0"
+  version: "5.8.2"
   repository: oci://registry.developers.crunchydata.com/crunchydata
