@@ -82,7 +82,8 @@ oauth2-proxy:
       code_challenge_method="S256"
       cookie_csrf_expire="5m"
       cookie_csrf_per_request="true"
-      cookie_secure = "false"
+      cookie_domains = ["atlantis.example.com"]
+      cookie_secure = "true"
       email_domains = [ "*" ]
       insecure_oidc_allow_unverified_email = "true"
       oidc_issuer_url = "https://keycloak.example.com/realms/<realm_name>"
@@ -93,7 +94,7 @@ oauth2-proxy:
       redirect_url = "https://atlantis.example.com/oauth2/callback"
       skip_jwt_bearer_tokens = "true"
       upstreams = [ "http://atlantis:80" ]
-      whitelist_domains = ["*"]
+      whitelist_domains = [".example.com"]
       silence_ping_logging = "true"
 
     existingSecret: oauth2-proxy

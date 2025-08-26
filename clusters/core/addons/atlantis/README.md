@@ -1,6 +1,6 @@
 # atlantis
 
-![Version: 5.18.0](https://img.shields.io/badge/Version-5.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.35.0](https://img.shields.io/badge/AppVersion-v0.35.0-informational?style=flat-square)
+![Version: 5.18.1](https://img.shields.io/badge/Version-5.18.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.35.1](https://img.shields.io/badge/AppVersion-v0.35.1-informational?style=flat-square)
 
 **Homepage:** <https://www.runatlantis.io>
 
@@ -62,7 +62,7 @@ AWS Parameter Store structure:
 | Repository | Name | Version |
 |------------|------|---------|
 | https://oauth2-proxy.github.io/manifests | oauth2-proxy | 7.14.2 |
-| https://runatlantis.github.io/helm-charts | atlantis | 5.18.0 |
+| https://runatlantis.github.io/helm-charts | atlantis | 5.18.1 |
 
 ## Values
 
@@ -89,7 +89,7 @@ AWS Parameter Store structure:
 | eso.vault.mountPath | string | `"core"` | Mount path for the Kubernetes authentication method. |
 | eso.vault.role | string | `"atlantis"` | Vault role for the Kubernetes authentication method. |
 | eso.vault.server | string | `"http://vault.vault:8200"` | Vault server URL. |
-| oauth2-proxy.config.configFile | string | `"allowed_roles = [\"administrator\", \"developer\"]\nclient_id = \"atlantis\"\ncode_challenge_method=\"S256\"\ncookie_csrf_expire=\"5m\"\ncookie_csrf_per_request=\"true\"\ncookie_secure = \"false\"\nemail_domains = [ \"*\" ]\ninsecure_oidc_allow_unverified_email = \"true\"\noidc_issuer_url = \"https://keycloak.example.com/realms/<realm_name>\"\npass_access_token = \"true\"\npass_authorization_header = \"true\"\npass_basic_auth = \"false\"\nprovider = \"keycloak-oidc\"\nredirect_url = \"https://atlantis.example.com/oauth2/callback\"\nskip_jwt_bearer_tokens = \"true\"\nupstreams = [ \"http://atlantis:80\" ]\nwhitelist_domains = [\"*\"]\nsilence_ping_logging = \"true\""` |  |
+| oauth2-proxy.config.configFile | string | `"allowed_roles = [\"administrator\", \"developer\"]\nclient_id = \"atlantis\"\ncode_challenge_method=\"S256\"\ncookie_csrf_expire=\"5m\"\ncookie_csrf_per_request=\"true\"\ncookie_domains = [\"atlantis.example.com\"]\ncookie_secure = \"true\"\nemail_domains = [ \"*\" ]\ninsecure_oidc_allow_unverified_email = \"true\"\noidc_issuer_url = \"https://keycloak.example.com/realms/<realm_name>\"\npass_access_token = \"true\"\npass_authorization_header = \"true\"\npass_basic_auth = \"false\"\nprovider = \"keycloak-oidc\"\nredirect_url = \"https://atlantis.example.com/oauth2/callback\"\nskip_jwt_bearer_tokens = \"true\"\nupstreams = [ \"http://atlantis:80\" ]\nwhitelist_domains = [\".example.com\"]\nsilence_ping_logging = \"true\""` |  |
 | oauth2-proxy.config.existingSecret | string | `"oauth2-proxy"` |  |
 | oauth2-proxy.enabled | bool | `false` |  |
 | oauth2-proxy.extraArgs.skip-auth-regex | string | `"^/events$"` |  |
