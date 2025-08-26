@@ -6,8 +6,8 @@ This repository follows GitOps principles and uses Argo CD's App of Apps pattern
 
 The repository follows this structure:
 - `/argo-cd/` - Main Argo CD configuration
-- `/clusters/core/addons/` - Individual add-on Helm charts
-- `/clusters/core/apps/` - App of Apps Helm chart referencing all add-ons
+- `/clusters/<cluster-name>/addons/` - Individual add-on Helm charts for appropriate Kubernetes cluster
+- `/clusters/<cluster-name>/apps/` - App of Apps Helm chart referencing all add-ons
 - `/docs/` - Documentation for the repository and add-ons
 
 ## Coding Standards and Patterns
@@ -31,18 +31,18 @@ The repository follows this structure:
 
 ## When Helping Users
 
-1. When helping users add new add-ons:
-   - Reference the pattern in `/docs/add-new-addon.md`
-   - Ensure they follow the directory structure and naming conventions
-   - Remind them to update the App of Apps configuration
-   - Suggest appropriate testing steps
+1. When helping users with adding new add-ons or adding new cluster directories:
+    - Reference the pattern in `/docs/add-new-addon.md`
+    - Ensure they follow the directory structure and naming conventions
+    - Remind them to update the App of Apps configuration
+    - Suggest appropriate testing steps
 
 2. When suggesting code changes:
-   - Respect the existing structure and patterns
-   - Provide explanations for your suggestions
-   - Consider potential impacts on other add-ons or the cluster as a whole
+    - Respect the existing structure and patterns
+    - Provide explanations for your suggestions
+    - Consider potential impacts on other add-ons or the cluster as a whole
 
 3. When answering questions:
-   - Refer to existing documentation when appropriate
-   - Explain GitOps and Argo CD concepts as needed
-   - Provide concrete examples based on the repository structure
+    - Refer to existing documentation when appropriate
+    - Explain GitOps and Argo CD concepts as needed
+    - Provide concrete examples based on the repository structure
