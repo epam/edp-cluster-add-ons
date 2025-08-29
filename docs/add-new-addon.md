@@ -68,10 +68,10 @@ Before adding a new add-on, it's important to understand the repository structur
 
 ### 1. Create the Add-on Directory
 
-Create a new directory for your add-on in the `clusters/core/addons` directory:
+Create a new directory for your add-on in the `clusters/<cluster-name>/addons` directory:
 
 ```bash
-mkdir -p clusters/core/addons/your-addon-name
+mkdir -p clusters/<cluster-name>/addons/your-addon-name
 ```
 
 ### 2. Create Helm Chart Files
@@ -79,7 +79,7 @@ mkdir -p clusters/core/addons/your-addon-name
 Add the necessary Helm chart files to your add-on directory. At minimum, you need:
 
 ```plaintext
-clusters/core/addons/your-addon-name/
+clusters/<cluster-name>/addons/your-addon-name/
 ├── Chart.yaml           # Chart metadata
 ├── README.md            # Documentation
 ├── templates/           # Kubernetes manifests templates
@@ -143,7 +143,7 @@ This ensures that values are correctly passed to the subchart and maintains sepa
 
 ##### For Custom Charts
 
-If you're creating a custom chart, your values.yaml might look like this:
+If you're creating a custom chart, your `values.yaml` might look like this:
 
 ```yaml
 # Default configuration values
@@ -166,7 +166,7 @@ config:
 
 ##### For Existing Helm Charts
 
-If you're integrating an existing Helm chart, your values.yaml should include the chart name as a top-level key:
+If you're integrating an existing Helm chart, your `values.yaml` should include the chart name as a top-level key:
 
 ```yaml
 # Using ingress-nginx as an example
@@ -188,10 +188,10 @@ This approach ensures that all configuration for the dependency is properly pass
 
 ### 3. Add the Add-on to the App of Apps
 
-Create an Argo CD Application template for your add-on in `clusters/core/apps/templates`:
+Create an Argo CD Application template for your add-on in `clusters/<cluster-name>/apps/templates`:
 
 ```bash
-touch clusters/core/apps/templates/your-addon-name.yaml
+touch clusters/<cluster-name>/apps/templates/your-addon-name.yaml
 ```
 
 Add the following content:
@@ -204,33 +204,38 @@ metadata:
   name: {{ .Values.destinationServer}}-your-addon-name
   namespace: {{ .Values.argoNamespace | default "argocd" }}
 spec:
-  destination:
-    namespace: {{ index .Values "your-addon-name" "namespace" | default "your-addon-namespace" }}
-    server: {{ $.Values.spec.destination.server }}
-  project: {{ $.Values.spec.project }}
+  project: {{ .Values.argoProject | default "default" }}
   source:
-    path: clusters/core/addons/your-addon-name
-    repoURL: {{ $.Values.spec.source.repoURL }}
-    targetRevision: {{ $.Values.spec.source.targetRevision }}
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/your-addon-name
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: your-addon-name
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "your-addon-name" "namespace" }}
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
     syncOptions:
-      - CreateNamespace={{ index .Values "your-addon-name" "createNamespace" | default "true" }}
-{{- end }}
+      - CreateNamespace={{ (index .Values "your-addon-name" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}
 ```
 
 Note that we're using `index .Values "your-addon-name"` syntax rather than `.Values.addons.your-addon-name` for addons that has dash in their name.
 
 ### 4. Update values.yaml in App of Apps
 
-Add your add-on to the `clusters/core/apps/values.yaml` file with minimal configuration:
+Add your add-on to the `clusters/<cluster-name>/apps/values.yaml` file with minimal configuration:
 
 ```yaml
 # ... existing add-ons ...
 your-addon-name:
-  enable: false  # Set to true to enable
+  enable: true  # Set to true to enable
   namespace: your-addon-namespace
   createNamespace: true  # Optional, defaults to true
 ```
@@ -350,10 +355,26 @@ metadata:
   name: {{ .Values.destinationServer}}-ingress-nginx
   namespace: {{ .Values.argoNamespace | default "argocd" }}
 spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/ingress-nginx
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: ingress-nginx
   destination:
     name: {{ .Values.destinationServer | default "in-cluster" }}
     namespace: {{ index .Values "ingress-nginx" "namespace" }}
-# ... remaining configuration
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "ingress-nginx" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}
 ```
 
 **App of Apps values.yaml** contains only the essential flags:
@@ -362,6 +383,7 @@ spec:
 ingress-nginx:
   enable: true
   namespace: ingress-nginx
+  createNamespace: true
 ```
 
 This pattern ensures that:
@@ -400,7 +422,7 @@ dependencies:
     condition: secondary-chart.enabled
 ```
 
-Structure your values.yaml to maintain clear separation between dependencies:
+Structure your `values.yaml` to maintain clear separation between dependencies:
 
 ```yaml
 # Global configuration

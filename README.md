@@ -5,75 +5,145 @@
 - [Cluster Add-ons Repository](#cluster-add-ons-repository)
   - [Overview](#overview)
   - [Repository structure](#repository-structure)
-    - [How to enable an add-on](#how-to-enable-an-add-on)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Deploying and Configuring Argo CD](#deploying-and-configuring-argo-cd)
+    - [Enabling and Deploying Add-ons](#enabling-and-deploying-add-ons)
+  - [Working with the Repository](#working-with-the-repository)
+    - [Adding New Add-ons](#adding-new-add-ons)
+    - [Adding New Clusters](#adding-new-clusters)
+    - [Chart Testing and CI/CD](#chart-testing-and-cicd)
   - [Available add-ons](#available-add-ons)
 
 <!-- /TOC -->
 
 ## Overview
 
-This repository contains a collection of pre-configured solutions (add-ons) for Kubernetes cluster. It follows the GitOps methodology and utilizes the ArgoCD App of Apps pattern for streamlined configuration and deployment.
+This repository contains a collection of pre-configured solutions (add-ons) for Kubernetes clusters. It follows the GitOps methodology and utilizes the Argo CD App of Apps pattern for streamlined configuration and deployment.
 
-The repository offers a variety of Kubernetes add-ons that can be easily integrated into Kubernetes cluster, whether running on Openshift or any other Managed Kubernetes distribution. These add-ons enhance cluster capabilities and provide additional functionalities for the KubeRocketCI Platform.
+The repository offers a variety of Kubernetes add-ons that can be easily integrated into Kubernetes clusters, whether running on Openshift or any other Managed Kubernetes distribution. These add-ons enhance cluster capabilities and provide additional functionalities for the KubeRocketCI Platform.
 
-Using ArgoCD, one can leverage the repository to expedite the setup process of the KubeRocketCI Platform and cluster components. The repository provides ready-to-use configurations for add-ons, simplifying deployment and reducing complexity.
-
-### Developer Tools Integration
-
-This repository includes integration with developer tools to enhance the development experience:
-
-- **Adding New Add-ons**: [See guide](docs/add-new-addon.md) for detailed instructions on adding new add-ons.
+Using Argo CD, one can leverage the repository to expedite the setup process of the KubeRocketCI Platform and cluster components. The repository provides ready-to-use configurations for add-ons, simplifying deployment and reducing complexity.
 
 ## Repository structure
 
-- `argo-cd` - contains the Helm chart for main Argo CD
-- `clusters` - contains the configuration files for the add-ons that are specific to the cluster
+The `edp-cluster-add-ons` repository is organized to facilitate easy management and deployment of add-ons across different clusters:
+
+- `argo-cd/` - contains the Helm chart for main Argo CD with templates for AppProjects, OIDC integration, and external secrets
+- `clusters/` - contains directories for different clusters (e.g., `core`, `prod`), each with its own set of add-ons and configurations
+- `docs/` - comprehensive documentation for working with the repository
 
 ```bash
 .
-├── argo-cd
+├── argo-cd               # Main Argo CD Helm chart
 │   ├── Chart.yaml
 │   ├── README.md
 │   ├── templates
-...
+│   │   ├── appProjectCore.yaml
+│   │   ├── appProjectKRCI.yaml
+│   │   ├── external-secrets/
+│   │   ├── oidc/
+│   │   └── ...
 └── clusters
-    ├── core
-    │   ├── apps
+    ├── core              # Core cluster directory
+    │   ├── apps          # App of Apps Helm chart that references all add-ons
     │   │   ├── templates
-    │   │   |   ├── argo-cd.yaml
-    │   │   |   ├── atlantis.yaml
-    │   │   |   ├── ...
+    │   │   │   ├── argo-cd.yaml
+    │   │   │   ├── atlantis.yaml
+    │   │   │   └── ...
     │   │   ├── Chart.yaml
     │   │   ├── README.md
-    │   │   ├── values.yaml
-    │   ├── addons
-    |   |   ├── argo-cd
-    |   |   ├── atlantis
-    |   |   ├── ...
-    │   ├── bootstrap-addons.yaml
-    ├── prod
+    │   │   └── values.yaml    # Values that store add-on specific configurations and cluster info
+    │   ├── addons             # Directory containing individual add-on Helm charts
+    │   │   ├── argo-cd
+    │   │   ├── atlantis
+    │   │   └── ...
+    │   └── bootstrap-addons.yaml  # Initial Argo CD application
+    └── prod                       # Production cluster directory
+        └── ...
 ```
 
-### How to enable an add-on
+## Getting Started
 
-1. Fork this repository.
-2. To init add-ons onboarding process, deploy main Argo CD instance by running the following command:
+### Prerequisites
 
-```bash
-helm install argocd argo-cd -n argocd --create-namespace
-```
+Before using this repository, ensure you have:
 
-3. To get access to the Argo CD UI run port-forward command.
-4. Configure integration with the forked repository by adding credential template to the Argo CD.
-5. Apply the [`clusters/core/bootstrap-addons.yaml`](clusters/core/bootstrap-addons.yaml) application to the Argo CD.
-6. Enable the add-on by setting the `enable` field to `true` in the [`clusters/core/apps/values.yaml`](clusters/core/apps/values.yaml) file.
-7. To change the application namespace, update the namespace field in the [`clusters/core/apps/values.yaml`](clusters/core/apps/values.yaml) file.
+- **Kubernetes Cluster**: Access to a Kubernetes cluster where you can deploy Argo CD and add-ons
+- **Helm**: Helm command-line tool installed on your local machine
+- **kubectl**: kubectl command-line tool installed and configured to interact with your Kubernetes cluster
+- (OPTIONAL) **External Secrets Operator (ESO)**: Required if using External Secrets Operator for managing secrets
+- (OPTIONAL) **keycloak-operator**: Required for Argo CD integration with Keycloak for SSO using OIDC
 
-## Available add-ons
+### Deploying and Configuring Argo CD
 
-Check out the list of available add-ons in the [chart](./clusters/core/apps/README.md) directory.
+1. **Fork the Repository**:
+   Fork this repository to your own GitHub account or organization to maintain your configurations.
 
-## Chart Testing and CI/CD
+2. **Configure Argo CD Helm Chart**:
+   Update the `argo-cd/values.yaml` file to match your Kubernetes cluster requirements, including settings for ingress, domain, and other parameters.
+
+3. **Configure AppProject Manifests**:
+   Edit the `appProjectCore.yaml` and `appProjectKRCI.yaml` files in the `argo-cd/templates` directory to specify the correct repository URLs.
+
+4. **Configure VCS Integration**:
+   Create secrets for VCS integration using either kubectl or External Secrets Operator (ESO).
+
+5. **Deploy Argo CD**:
+   ```bash
+   helm install argocd argo-cd/ -n argocd --create-namespace
+   ```
+
+For more detailed instructions, refer to the [Quick Start Guide](docs/quick-start-guide.md).
+
+### Enabling and Deploying Add-ons
+
+1. **Initialize Bootstrap Add-ons Application**:
+   Update the repository URL in `clusters/core/apps/values.yaml` and `clusters/core/bootstrap-addons.yaml`, then apply:
+   ```bash
+   kubectl apply -f clusters/core/bootstrap-addons.yaml
+   ```
+
+2. **Enable Add-ons**:
+   In the `clusters/core/apps/values.yaml` file, enable the desired add-ons by setting:
+   ```yaml
+   add-on-name:
+     enable: true
+     namespace: add-on-namespace
+     createNamespace: true
+   ```
+
+3. **Configure Add-on Values**:
+   Customize the add-on's configuration by editing its values.yaml file in `clusters/core/addons/add-on-name/`.
+
+4. **Sync Applications**:
+   In the Argo CD UI, sync the applications to deploy your add-ons.
+
+## Working with the Repository
+
+### Adding New Add-ons
+
+To add a new add-on to the repository:
+
+1. Create a new directory for your add-on in `clusters/<cluster-name>/addons/`
+2. Add the necessary Helm chart files (Chart.yaml, values.yaml, templates/)
+3. Create an Argo CD Application template in `clusters/<cluster-name>/apps/templates/`
+4. Update the App of Apps values.yaml to include your add-on
+
+For detailed instructions and best practices, see [Adding New Add-ons](docs/add-new-addon.md).
+
+### Adding New Clusters
+
+To add a new cluster to the repository:
+
+1. Create a new directory for your cluster in `clusters/`
+2. Create the initial bootstrap-addons.yaml file
+3. Set up the addons directory and App of Apps Helm chart
+4. Configure cluster-specific values
+
+For step-by-step guidance, refer to [Adding New Clusters](docs/add-new-cluster.md).
+
+### Chart Testing and CI/CD
 
 This repository includes an automated CI pipeline that performs Helm chart validation and testing when pull requests are created:
 
@@ -87,9 +157,17 @@ You can also run chart tests locally using:
 make test-charts-full
 ```
 
+To update the add-ons table in this README:
+
 ```bash
 make update-readme
 ```
+
+For more information about chart testing, see [Chart Testing](docs/chart-testing.md).
+
+## Available add-ons
+
+The repository provides a wide range of pre-configured add-ons for Kubernetes clusters. The complete list of available add-ons, their versions, and default configurations is automatically generated below.
 
 <!-- AUTOGENERATED CONTENT BELOW -->
 | Component                    | version   | appVersion   | namespace              | createNamespace   | enable   |
