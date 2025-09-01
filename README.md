@@ -130,7 +130,7 @@ make update-readme
 | nexus-operator               | 3.5.0     | 3.5.0        | nexus                  | False             | False    |
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 7.6.0     | v7.6.0       | oauth2-proxy           | False             | False    |
-| opensearch                   | 2.26.1    | 2.17.1       | logging                | False             | False    |
+| opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
 | opentelemetry-operator       | 0.62.0    | 0.102.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.45.1    | 9.3          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |

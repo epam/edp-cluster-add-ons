@@ -1,6 +1,6 @@
 # opensearch
 
-![Version: 2.26.1](https://img.shields.io/badge/Version-2.26.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.17.1](https://img.shields.io/badge/AppVersion-2.17.1-informational?style=flat-square)
+![Version: 3.2.1](https://img.shields.io/badge/Version-3.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.0](https://img.shields.io/badge/AppVersion-3.2.0-informational?style=flat-square)
 
 A Helm chart for OpenSearch Stack
 
@@ -92,9 +92,9 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://fluent.github.io/helm-charts | fluent-bit | 0.47.10 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.26.1 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 2.24.1 |
+| https://fluent.github.io/helm-charts | fluent-bit | 0.52.0 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch | 3.2.1 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch-dashboards | 3.2.1 |
 
 ## Values
 
