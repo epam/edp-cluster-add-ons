@@ -132,7 +132,7 @@ make update-readme
 | oauth2-proxy                 | 7.6.0     | v7.6.0       | oauth2-proxy           | False             | False    |
 | opensearch                   | 2.26.1    | 2.17.1       | logging                | False             | False    |
 | opentelemetry-operator       | 0.62.0    | 0.102.0      | opentelemetry-operator | False             | False    |
-| pgadmin                      | 1.45.1    | 9.3          | pgadmin                | False             | False    |
+| pgadmin                      | 1.49.0    | 9.7          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 72.3.0    | v0.82.0      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 11.3.1    | v0.27.0      | monitoring             | False             | False    |
