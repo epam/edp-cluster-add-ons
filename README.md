@@ -135,7 +135,7 @@ make update-readme
 | pgadmin                      | 1.45.1    | 9.3          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 72.3.0    | v0.82.0      | monitoring             | False             | False    |
-| prometheus-blackbox-exporter | 9.7.0     | v0.26.0      | monitoring             | False             | False    |
+| prometheus-blackbox-exporter | 11.3.1    | v0.27.0      | monitoring             | False             | False    |
 | redis-operator               | 0.1.0     | 3.2.8        | redis-operator         | False             | False    |
 | report-portal                | 5.10.0    | 23.2         | report-portal          | False             | False    |
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |

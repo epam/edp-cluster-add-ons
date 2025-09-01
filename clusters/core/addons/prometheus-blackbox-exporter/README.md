@@ -1,6 +1,6 @@
 # prometheus-blackbox-exporter
 
-![Version: 9.7.0](https://img.shields.io/badge/Version-9.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.26.0](https://img.shields.io/badge/AppVersion-v0.26.0-informational?style=flat-square)
+![Version: 11.3.1](https://img.shields.io/badge/Version-11.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.27.0](https://img.shields.io/badge/AppVersion-v0.27.0-informational?style=flat-square)
 
 This chart wraps the official [prometheus-blackbox-exporter](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-blackbox-exporter) Helm chart.
 
@@ -14,7 +14,7 @@ Refer to the official chart documentation for all available configuration option
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://prometheus-community.github.io/helm-charts | prometheus-blackbox-exporter | 9.7.0 |
+| https://prometheus-community.github.io/helm-charts | prometheus-blackbox-exporter | 11.3.1 |
 
 ## Values
 
