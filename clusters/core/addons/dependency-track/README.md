@@ -1,6 +1,6 @@
 # dependency-track
 
-![Version: 0.33.0](https://img.shields.io/badge/Version-0.33.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.13.2](https://img.shields.io/badge/AppVersion-v4.13.2-informational?style=flat-square)
+![Version: 0.35.0](https://img.shields.io/badge/Version-0.35.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.13.3](https://img.shields.io/badge/AppVersion-v4.13.3-informational?style=flat-square)
 
 A Helm chart for Dependecy Track
 
@@ -8,7 +8,7 @@ A Helm chart for Dependecy Track
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://dependencytrack.github.io/helm-charts | dependency-track | 0.33.0 |
+| https://dependencytrack.github.io/helm-charts | dependency-track | 0.35.0 |
 
 ## Values
 
