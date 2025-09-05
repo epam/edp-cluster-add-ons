@@ -43,7 +43,7 @@ spec:
         log-level-console: info
         log-level-file: info
         repo1-retention-full: "7"
-        repo1-retention-full-type: time
+        repo1-retention-full-type: count
       repos:
         - name: repo1
           schedules:

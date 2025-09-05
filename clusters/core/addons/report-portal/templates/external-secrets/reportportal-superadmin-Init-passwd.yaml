@@ -1,0 +1,19 @@
+{{- if .Values.eso.enabled }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: reportportal-superadmin-password
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: {{ .Release.Name }}
+  data:
+  - secretKey: superadmin-password
+    remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: {{ .Values.eso.secretPath }}
+      metadataPolicy: None
+      property: reportportal.superadmin-password
+{{- end }}
