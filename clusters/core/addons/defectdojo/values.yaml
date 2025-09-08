@@ -1,5 +1,4 @@
 defectdojo:
-  tag: 2.42.1
   fullnameOverride: defectdojo
   host: defectdojo.example.com
   site_url: https://defectdojo.example.com

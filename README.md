@@ -179,7 +179,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | capsule                      | 0.7.4     | 0.7.4        | capsule-system         | False             | False    |
 | capsule-tenant               | N/A       | N/A          | capsule-system         | N/A               | False    |
 | cert-manager                 | 1.17.2    | 1.17.2       | cert-manager           | False             | False    |
-| defectdojo                   | 1.6.188   | 2.46.3       | defectdojo             | False             | False    |
+| defectdojo                   | 1.6.205   | 2.50.0       | defectdojo             | False             | False    |
 | dependency-track             | 0.35.0    | v4.13.3      | dependency-track       | False             | False    |
 | external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
 | fluent-bit                   | 0.49.0    | 4.0.1        | logging                | False             | False    |
