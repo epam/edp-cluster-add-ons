@@ -1,6 +1,6 @@
 # aws-efs-csi-driver
 
-![Version: 1.5.7](https://img.shields.io/badge/Version-1.5.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.7](https://img.shields.io/badge/AppVersion-1.5.7-informational?style=flat-square)
+![Version: 3.2.2](https://img.shields.io/badge/Version-3.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.11](https://img.shields.io/badge/AppVersion-2.1.11-informational?style=flat-square)
 
 A Helm chart for installing the AWS EFS CSI driver
 
@@ -8,7 +8,7 @@ A Helm chart for installing the AWS EFS CSI driver
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-sigs.github.io/aws-efs-csi-driver/ | aws-efs-csi-driver | 2.4.6 |
+| https://kubernetes-sigs.github.io/aws-efs-csi-driver/ | aws-efs-csi-driver | 3.2.2 |
 
 ## Values
 

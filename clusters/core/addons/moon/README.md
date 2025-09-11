@@ -1,6 +1,6 @@
 # moon
 
-![Version: 2.7.4](https://img.shields.io/badge/Version-2.7.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.4](https://img.shields.io/badge/AppVersion-2.7.4-informational?style=flat-square)
+![Version: 2.7.7](https://img.shields.io/badge/Version-2.7.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.7](https://img.shields.io/badge/AppVersion-2.7.7-informational?style=flat-square)
 
 A Helm chart for Moon
 
@@ -8,7 +8,7 @@ A Helm chart for Moon
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.aerokube.com | moon2 | 2.7.4 |
+| https://charts.aerokube.com | moon2 | 2.7.7 |
 
 ## Values
 

@@ -1,4 +1,4 @@
-keda:
+keda: {}
   # tolerations:
   # - key: "type"
   #   operator: "Equal"

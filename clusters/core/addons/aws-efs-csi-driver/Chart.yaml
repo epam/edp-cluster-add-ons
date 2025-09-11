@@ -5,13 +5,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 1.5.7
+version: 3.2.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "1.5.7"
+appVersion: "2.1.11"
 
 dependencies:
 - name: aws-efs-csi-driver
-  version: 2.4.6
+  version: 3.2.2
   repository: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
