@@ -2,11 +2,11 @@ apiVersion: v2
 name: oauth2-proxy
 description: A Helm chart for Oauth2 Stack
 
-version: 7.6.0
+version: 8.2.0
 
-appVersion: "v7.6.0"
+appVersion: "v7.12.0"
 
 dependencies:
 - name: oauth2-proxy
-  version: 7.1.0
+  version: 8.2.0
   repository: https://oauth2-proxy.github.io/manifests

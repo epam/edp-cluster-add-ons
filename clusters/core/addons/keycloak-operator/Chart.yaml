@@ -2,10 +2,10 @@ apiVersion: v2
 description: A Helm chart for keycloak-opreator
 name: keycloak-opreator
 type: application
-version: 1.27.1
-appVersion: 1.27.1
+version: 1.28.0
+appVersion: 1.28.0
 
 dependencies:
 - name: keycloak-operator
-  version: 1.27.1
+  version: 1.28.0
   repository: https://epam.github.io/edp-helm-charts/stable

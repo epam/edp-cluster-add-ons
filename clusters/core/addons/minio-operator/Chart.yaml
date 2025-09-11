@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.1.0
+version: 7.1.1
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "5.0.5"
+appVersion: "v7.1.1"
 
 dependencies:
 - name: operator
-  version: 5.0.5
+  version: 7.1.1
   repository: https://operator.min.io/

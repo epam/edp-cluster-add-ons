@@ -1,6 +1,4 @@
 operator:
-  fullnameOverride: minio-operator
-  nameOverride: minio-operator
   resources:
     requests:
       cpu: 100m
