@@ -1,6 +1,6 @@
 # harbor-ha
 
-![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
+![Version: 1.17.2](https://img.shields.io/badge/Version-1.17.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
 
 ## Secret management
 
@@ -94,7 +94,7 @@ AWS Parameter Store structure:
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | minio | 12.6.5 |
 | https://charts.bitnami.com/bitnami | redis | 17.11.6 |
-| https://helm.goharbor.io | harbor | 1.13.0 |
+| https://helm.goharbor.io | harbor | 1.17.2 |
 
 ## Values
 
