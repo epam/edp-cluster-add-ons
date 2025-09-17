@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 1.22.5
+version: 1.23.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 1.22.5
+appVersion: 1.23.0
 
 dependencies:
   - name: vault-operator
-    version: 1.22.5
+    version: 1.23.0
     repository: oci://ghcr.io/bank-vaults/helm-charts
