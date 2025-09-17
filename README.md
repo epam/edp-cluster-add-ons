@@ -184,8 +184,8 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
 | fluent-bit                   | 0.53.0    | 4.0.7        | logging                | False             | False    |
 | gitfusion                    | 0.1.1     | 0.1.1        | krci                   | False             | False    |
-| harbor                       | 0.1.0     | 1.12.2       | harbor                 | False             | False    |
-| harbor-ha                    | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
+| harbor                       | 0.1.0     | 1.17.2       | harbor                 | False             | False    |
+| harbor-ha                    | 1.17.2    | 2.9.0        | harbor                 | False             | False    |
 | harbor-ha-okd                | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
 | ingress-nginx                | 4.13.2    | 1.13.2       | ingress-nginx          | False             | False    |
 | ingress-nginx-external       | 4.13.2    | 1.13.2       | ingress-nginx-external | False             | False    |
@@ -209,7 +209,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 8.2.0     | v7.12.0      | oauth2-proxy           | False             | False    |
 | opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
-| opentelemetry-operator       | 0.62.0    | 0.102.0      | opentelemetry-operator | False             | False    |
+| opentelemetry-operator       | 0.95.1    | 0.134.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.49.0    | 9.7          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 77.6.0    | v0.85.0      | monitoring             | False             | False    |

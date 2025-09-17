@@ -61,4 +61,9 @@ spec:
           exporters: [debug, otlp/data-prepper-logs]
       telemetry:
         metrics:
-          address: ":8888"
+          readers:
+            - pull:
+                exporter:
+                  prometheus:
+                    host: 0.0.0.0
+                    port: 8888
