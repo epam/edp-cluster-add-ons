@@ -1,43 +1,107 @@
+---
+dependencies:
+  data:
+    - devops-helm-k8s-standards.md
+    - edp-cluster-add-ons-structure.md
+  templates:
+    - krci-ai/core-task-template.md
+---
+
 # Task: Add New Add-on to Cluster
 
-# Description
+## Description
 
 Automate and validate the process of adding a new add-on (Helm chart) to an existing cluster directory in the cluster-add-ons repository. This task guides the DevOps agent through the creation of the add-on directory, initial configuration files, and integration into the App of Apps Helm chart, following repository conventions and best practices.
 
-### Reference Assets
+<prerequisites>
+- Existing cluster directory in repository
+- Access to Helm chart repository for the add-on
+- Understanding of Helm chart structure and versioning
+- Knowledge of repository standards and patterns
+- Required permissions for repository changes
+- Familiarity with App of Apps pattern
+</prerequisites>
 
-**Primary Dependencies**:
+## Reference Assets
 
+**Required Dependencies**:
 - Add new add-on guide: [add-new-addon.md](./../../docs/add-new-addon.md)
 - Add new cluster guide: [add-new-cluster.md](./../../docs/add-new-cluster.md)
-- edp-cluster-add-ons repository structure: [edp-cluster-add-ons-structure.md](./.krci-ai/data/edp-cluster-add-ons-structure.md)
-- DevOps Helm and Kubernetes standards: [devops-helm-k8s-standarts.md](./.krci-ai/data/devops-helm-k8s-standards.md)
+- Repository structure: [edp-cluster-add-ons-structure.md](./.krci-ai/data/edp-cluster-add-ons-structure.md)
+- DevOps standards: [devops-helm-k8s-standards.md](./.krci-ai/data/devops-helm-k8s-standards.md)
 
 Validation: Verify the dependencies exist at the specified paths before proceeding. HALT if any are missing.
 
 **IMPORTANT**: Do not change the path of the dependencies.
 
-## Overview
+<instructions>
+1. Gather Required Information
+   - Request cluster name (REQUIRED)
+   - Request add-on name and Helm chart details (REQUIRED)
+   - Request chart version (OPTIONAL, default to latest stable)
+   - Validate inputs against repository standards
 
-Your task is to add a new add-on to an existing cluster directory in the repository, following the step-by-step guide and best practices described in the reference assets. The process includes creating the add-on directory, initial Helm chart files, updating the App of Apps Helm chart, and ensuring proper configuration.
+2. Create Add-on Structure
+   - Create directory in clusters/{cluster-name}/addons/{addon-name}
+   - Initialize Helm chart structure
+   - Set up Chart.yaml with proper metadata
+   - Configure initial values.yaml
 
-## Instructions
+3. Configure Helm Chart
+   - Set up dependencies in Chart.yaml
+   - Configure default values following standards
+   - Add required labels and annotations
+   - Set resource limits and requests
 
-1. **Analyze the documentation**: Review the [add-new-cluster.md](../../docs/add-new-cluster.md) and [add-new-addon.md](../../docs/add-new-addon.md) files for precise instructions on how to add a new add-on to an existing cluster directory.
+4. Update App of Apps
+   - Add new application template
+   - Update values.yaml with enable flag
+   - Configure namespace settings
 
-**DO NOT**: Continue until analyzing the [add-new-cluster.md](../../docs/add-new-cluster.md) and [add-new-addon.md](../../docs/add-new-addon.md) files.
+5. Documentation
+   - Create README.md for the add-on
+   - Update version information
+   - Document configuration options
 
-## Implementation Steps
+6. Validation Steps
+   - Verify directory structure
+   - Check Helm chart syntax
+   - Validate against standards
+</instructions>
 
-### STEP-BY-STEP Implementation
+## Output Format
 
-1. **IMPORTANT FIRST STEP**: Ask the user to provide the following information:
+The task will create the following structure:
+```
+clusters/{cluster-name}/addons/{addon-name}/
+├── Chart.yaml
+├── README.md
+├── values.yaml
+└── templates/
+    └── (if custom templates needed)
+```
 
-    - Cluster name (the cluster to which the add-on will be added) (REQUIRED)
-    - Add-on name (the name of the add-on/Helm chart to be added) (REQUIRED)
-    - The Chart version (e.g., `1.2.3`) for the add-on (OPTIONAL, if not provided, use the latest stable version)
+<success_criteria>
+- Add-on directory created with proper structure
+- Chart.yaml configured with correct metadata and dependencies
+- values.yaml contains proper configuration following standards
+- App of Apps integration complete with enable flag
+- Documentation created and properly formatted
+- Directory structure matches repository standards
+- Chart passes initial validation checks
+</success_criteria>
 
-2. **IMPORTANT** Use the [add-new-addon.md](../../docs/add-new-addon.md) documentation as a step-by-step guide to create the add-on directory and necessary files.
+## Execution Checklist
 
-**NOTES**:
-- **DO NOT**: Run testing or linting commands. Only notify the user to run them manually after the process is complete.
+1. [ ] Required information collected
+2. [ ] Directory structure created
+3. [ ] Helm chart files configured
+4. [ ] App of Apps integration complete
+5. [ ] Documentation added
+6. [ ] Standards validation passed
+
+**IMPORTANT NOTES**:
+- Do not run testing or linting commands - notify user to run them manually
+- Follow security best practices for sensitive values
+- Ensure proper resource management
+- Maintain clear documentation
