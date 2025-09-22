@@ -8,7 +8,7 @@ spec:
       serviceAccountName: job-access-secrets-sa
       initContainers:
       - name: wait-for-check-secrets-job
-        image: bitnami/kubectl:latest
+        image: bitnamilegacy/kubectl:1.33.4
         command:
         - bash
         - -c
@@ -41,7 +41,7 @@ spec:
           done
       containers:
       - name: copy-and-patch-secrets
-        image: bitnami/kubectl:latest
+        image: bitnamilegacy/kubectl:1.33.4
         command:
         - bash
         - -c
