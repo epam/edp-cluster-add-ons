@@ -21,6 +21,6 @@ A Helm chart for karpenter
 | karpenter.controller.resources.requests.cpu | int | `1` |  |
 | karpenter.controller.resources.requests.memory | string | `"1Gi"` |  |
 | karpenter.replicas | int | `1` |  |
-| karpenter.serviceAccount | object | `{"annotations":{"eks.amazonaws.com/role-arn":"arn:aws:iam::0123456789:role/KarpenterController"}}` | Karpenter IAM role to manage cluster nodes |
+| karpenter.serviceAccount | object | `{"annotations":{"eks.amazonaws.com/role-arn":"arn:aws:iam::0123456789:role/KarpenterControllerRole-<ClusterName>"}}` | Karpenter IAM role to manage cluster nodes |
 | karpenter.settings | object | `{"clusterName":"cluster_name"}` | EKS cluster name |
 
