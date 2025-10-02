@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.12.0](https://img.shields.io/badge/Version-3.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.12.0](https://img.shields.io/badge/AppVersion-3.12.0-informational?style=flat-square)
+![Version: 3.12.2](https://img.shields.io/badge/Version-3.12.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.12.2](https://img.shields.io/badge/AppVersion-3.12.2-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -10,7 +10,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.12.0 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.12.2 |
 
 ## Values
 
