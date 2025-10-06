@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 8.2.5](https://img.shields.io/badge/Version-8.2.5-informational?style=flat-square) ![AppVersion: v3.0.12](https://img.shields.io/badge/AppVersion-v3.0.12-informational?style=flat-square)
+![Version: 8.5.6](https://img.shields.io/badge/Version-8.5.6-informational?style=flat-square) ![AppVersion: v3.1.7](https://img.shields.io/badge/AppVersion-v3.1.7-informational?style=flat-square)
 
 ## Secret management
 
@@ -54,7 +54,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 8.2.5 |
+| https://argoproj.github.io/argo-helm | argo-cd | 8.5.6 |
 
 ## Values
 
