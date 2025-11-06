@@ -1,0 +1,63 @@
+velero:
+  serviceAccount:
+    server:
+      create: true
+      name: velero-server
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::01234567890:role/AWSIRSA_Core_Velero"
+
+  credentials:
+    useSecret: false
+
+  configuration:
+    backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: velero-core
+      prefix: velero
+      config:
+        region: eu-central-1
+    volumeSnapshotLocation:
+    - name: default
+      provider: aws
+      config:
+        region: eu-central-1
+
+  initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.13.1
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
+# --------------------------------------------
+# Velero Schedule: krci
+# --------------------------------------------
+# Description:
+#   Creates daily backups of the "krci" namespace
+#   on weekdays (Monday–Friday) at 13:00 UTC.
+#   Excludes PersistentVolumes and PVCs,
+#   does not snapshot volumes,
+#   stores backups in the "default" location,
+#   and retains them for 72 hours.
+# --------------------------------------------
+
+  schedules:
+    krci:
+      disabled: true
+      paused: false
+      labels:
+        cluster: core
+        region: eu-central-1
+      schedule: "0 13 * * 1-5"
+      useOwnerReferencesInBackup: false
+      template:
+        excludedClusterScopedResources:
+          - persistentvolumes
+        excludedNamespaceScopedResources:
+          - persistentvolumeclaims
+        includedNamespaces:
+          - krci
+        snapshotVolumes: false
+        storageLocation: default
+        ttl: 72h0m0s

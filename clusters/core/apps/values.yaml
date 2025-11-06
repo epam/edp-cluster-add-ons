@@ -310,3 +310,8 @@ vault-operator:
   createNamespace: false
   enable: false
   namespace: vault
+
+velero:
+  createNamespace: false
+  enable: false
+  namespace: velero

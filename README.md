@@ -227,3 +227,4 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | vault-okd                    | 0.25.0    | 1.20.1       | vault                  | False             | False    |
 | vault                        | 0.30.0    | 1.20.1       | vault                  | False             | False    |
 | vault-operator               | 1.23.0    | 1.23.0       | vault                  | False             | False    |
+| velero                       | 11.1.1    | 1.17.0       | velero                 | False             | False    |

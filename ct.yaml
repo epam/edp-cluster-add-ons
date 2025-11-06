@@ -46,4 +46,5 @@ chart-repos:
   - spotahome=https://spotahome.github.io/redis-operator
   - wiremind=https://wiremind.github.io/wiremind-helm-charts
   - runix=https://helm.runix.net
+  - velero=https://vmware-tanzu.github.io/helm-charts
 helm-dependency-extra-args: "--skip-refresh"
