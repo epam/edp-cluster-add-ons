@@ -417,8 +417,6 @@ spec:
     java:S1541:
       severity: 'MAJOR'
       params: 'Threshold="9"'
-    java:S1114:
-      severity: 'BLOCKER'
     java:S1144:
       severity: 'MAJOR'
     java:S1118:
@@ -591,8 +589,6 @@ spec:
       severity: 'MAJOR'
     java:S1607:
       severity: 'MINOR'
-    java:S1610:
-      severity: 'MAJOR'
     java:S1611:
       severity: 'MINOR'
     java:S1612:
@@ -723,8 +719,6 @@ spec:
       severity: 'CRITICAL'
     java:S2164:
       severity: 'CRITICAL'
-    java:S2165:
-      severity: 'MAJOR'
     java:S2166:
       severity: 'MAJOR'
     java:S2167:
