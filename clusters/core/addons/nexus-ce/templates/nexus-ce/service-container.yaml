@@ -1,10 +1,10 @@
 {{- if .Values.docker.enabled }}
-{{- range $registry := .Values.docker.registries }}
+{{- range $i, $registry := .Values.docker.registries }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "nexus-ce.fullname" $ }}-container
+  name: {{ include "nexus-ce.fullname" $ }}-container-{{ $i }}
   labels:
     {{- include "nexus-ce.labels" $ | nindent 4 }}
 spec:
