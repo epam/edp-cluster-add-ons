@@ -309,7 +309,10 @@ vault:
 vault-operator:
   createNamespace: false
   enable: false
-  namespace: vault
+
+vault-remote-rbac:
+  createNamespace: false
+  enable: false
 
 velero:
   createNamespace: false

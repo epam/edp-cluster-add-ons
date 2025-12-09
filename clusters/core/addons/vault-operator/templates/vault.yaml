@@ -1,0 +1,354 @@
+apiVersion: vault.banzaicloud.com/v1alpha1
+kind: Vault
+metadata:
+  name: vault
+  labels:
+    app.kubernetes.io/name: vault
+    vault_cr: vault
+spec:
+  size: {{ .Values.vault.replicaCount }}
+  image: "{{ .Values.vault.vaultContainer.image }}:{{ .Values.vault.vaultContainer.tag }}"
+  bankVaultsImage: "{{ .Values.vault.bankVaultsContainer.image }}:{{ .Values.vault.bankVaultsContainer.tag }}"
+
+  # Vault Pods, Services and TLS Secret annotations
+  vaultAnnotations:
+    prometheus.io/scrape: "false"
+
+  # Vault Configurer Pods and Services annotations
+  vaultConfigurerAnnotations:
+    prometheus.io/scrape: "false"
+
+  config:
+    api_addr: "https://{{ .Values.vault.ingress.host }}"
+    cluster_addr: "https://vault-0.vault.vault.svc.cluster.local:8201"
+    storage:
+      postgresql:
+        connection_url: "$VAULT_PG_CONNECTION_URL"
+        ha_enabled: "true"
+        ha_table: "vault_ha_locks"
+        table: "vault_kv_store"
+    listener:
+      tcp:
+        address: "[::]:8200"
+        cluster_address: "[::]:8201"
+        tls_disable: true
+        telemetry:
+          unauthenticated_metrics_access: true
+    ui: true
+    disable_mlock: false
+    telemetry:
+      prometheus_retention_time: "24h"
+      disable_hostname: true
+
+  # We use prometheus to scrape vault metrics
+  statsdDisabled: true
+
+  externalConfig:
+    policies:
+      - name: vault-admin
+        rules: |
+          path "*" {
+            capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+          }
+      
+      - name: vault-ro
+        rules: |
+          path "secret/*" {
+            capabilities = ["read", "list"]
+          }
+      
+      {{- if .Values.vault.roles }}
+      {{- range .Values.vault.roles }}
+      - name: {{ .name | quote }}
+        rules: |
+          path "{{ .path }}/" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path }}/*" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path | replace "data" "metadata" }}/" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path | replace "data" "metadata" }}/*" {
+            capabilities = ["read", "list"]
+          }
+      {{- end }}
+      {{- end }}
+      
+      {{- if .Values.vault.remoteCluster }}
+      {{- range .Values.vault.remoteCluster }}
+      {{- range .roles }}
+      - name: {{ .name | quote }}
+        rules: |
+          path "{{ .path }}/" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path }}/*" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path | replace "data" "metadata" }}/" {
+            capabilities = ["read", "list"]
+          }
+          path "{{ .path | replace "data" "metadata" }}/*" {
+            capabilities = ["read", "list"]
+          }
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      
+      {{- if .Values.vault.extraPolicies }}
+      {{- range .Values.vault.extraPolicies }}
+      - name: {{ .name | quote }}
+        rules: |
+{{ .rules | indent 10 }}
+      {{- end }}
+      {{- end }}
+
+    auth:
+      # Local cluster kubernetes auth
+      - type: kubernetes
+        path: in-cluster
+        config:
+          kubernetes_host: "https://kubernetes.default.svc.cluster.local"
+        roles:
+          {{- if .Values.vault.roles }}
+          {{- range .Values.vault.roles }}
+          - name: {{ .name | quote }}
+            bound_service_account_names: [{{ .serviceAccount | quote }}]
+            bound_service_account_namespaces: [{{ .namespace | quote }}]
+            policies: 
+              - {{ .name | quote }}
+              {{- if .extraPolicies }}
+              {{- if kindIs "slice" .extraPolicies }}
+              {{- range .extraPolicies }}
+              - {{ . | quote }}
+              {{- end }}
+              {{- else }}
+              - {{ .extraPolicies | quote }}
+              {{- end }}
+              {{- end }}
+            ttl: 1h
+          {{- end }}
+          {{- end }}
+
+
+      {{ if .Values.vault.oidc.enabled }}
+      # OIDC authentication with Keycloak
+      - type: oidc
+        path: oidc
+        config:
+          bound_issuer: "{{ .Values.vault.oidc.issuer_url }}"
+          oidc_discovery_url: "{{ .Values.vault.oidc.discovery_url }}"
+          oidc_client_id: "vault"
+          oidc_client_secret: "${ env `OIDC_CLIENT_SECRET` }"
+          default_role: "default"
+        roles:
+          - name: "default"
+            bound_audiences: ["vault"]
+            allowed_redirect_uris: [
+              "https://{{ .Values.vault.ingress.host }}/ui/vault/auth/oidc/oidc/callback",
+              "https://{{ .Values.vault.ingress.host }}/oidc/callback"
+            ]
+            user_claim: "preferred_username"
+            groups_claim: "groups"
+            role_type: "oidc"
+            ttl: 8h
+            max_ttl: 24h
+      {{ end }}
+
+      {{- if .Values.vault.remoteCluster }}
+      # Remote cluster kubernetes auth  
+      {{- range .Values.vault.remoteCluster }}
+      - type: kubernetes
+        path: {{ .name | quote }}
+        config:
+          kubernetes_host: {{ .host }}
+          kubernetes_ca_cert: |
+{{ .cert | indent 12 }}
+          token_reviewer_jwt: "${ env `{{ .name | upper }}_TOKEN_REVIEWER_JWT` }"
+          disable_local_ca_jwt: true
+        roles:
+          {{- range .roles }}
+          - name: {{ .name | quote }}
+            bound_service_account_names: [{{ .serviceAccount | quote }}]
+            bound_service_account_namespaces: [{{ .namespace | quote }}]
+            policies: 
+              - {{ .name | quote }}
+              {{- if .extraPolicies }}
+              {{- if kindIs "slice" .extraPolicies }}
+              {{- range .extraPolicies }}
+              - {{ . | quote }}
+              {{- end }}
+              {{- else }}
+              - {{ .extraPolicies | quote }}
+              {{- end }}
+              {{- end }}
+            ttl: 1h
+          {{- end }}
+      {{- end }}
+      {{- end }}
+
+    {{- if .Values.vault.extraSecrets }}
+    secrets:
+    {{- range .Values.vault.extraSecrets }}
+      - path: {{ .path }}
+        type: {{ .type }}
+        description: {{ .description }}
+        options:
+          version: {{ .options.version }}
+    {{- end }}
+    {{- end }}
+
+    {{- if .Values.vault.oidc.groups }}
+    groups:
+      {{- range .Values.vault.oidc.groups }}
+      - name: {{ .name | quote }}
+        type: "external"
+        policies:
+          {{- range .policies }}
+          - {{ . | quote }}
+          {{- end }}
+      {{- end }}
+    group-aliases:
+      {{- range .Values.vault.oidc.groups }}
+      - name: {{ .name | quote }}
+        mountpath: "oidc"
+        group: {{ .name | quote }}
+      {{- end }}
+    {{- end }}
+
+  unsealConfig:
+    kubernetes:
+      secretNamespace: "vault"
+      secretName: bank-vaults
+
+  serviceType: ClusterIP
+
+  # Ensure that the Vault pods are scheduled on different nodes
+  podAntiAffinity: kubernetes.io/hostname
+
+  serviceAccount: vault
+
+  vaultEnvsConfig:
+    - name: VAULT_PG_CONNECTION_URL
+      valueFrom:
+        secretKeyRef:
+          name: {{ .Values.vault.database.secretName }}
+          key: uri
+
+  envsConfig:
+    - name: mock
+      value: "mock"
+    {{ if .Values.vault.oidc.enabled }}
+    - name: OIDC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          key: clientSecret
+          name: {{ .Values.vault.oidc.clientSecret }}
+          optional: false
+    {{ end }}
+    # Secrets for connection remote clusters
+    {{- if .Values.vault.remoteCluster }}
+    {{- range .Values.vault.remoteCluster }}
+    - name: "{{ .name | upper }}_TOKEN_REVIEWER_JWT"
+      valueFrom:
+        secretKeyRef:
+          key: TOKEN_REVIEWER_JWT
+          name: {{ .secretName }}
+          optional: true
+    {{ end }}
+    {{- end }}
+
+
+  resources:
+    vault:
+      limits:
+        memory: 2Gi
+      requests:
+        memory: 512Mi
+        cpu: 200m
+    bankVaults:
+      limits:
+        memory: 512Mi
+      requests:
+        memory: 256Mi
+        cpu: 100m
+    prometheusExporter:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 1Gi
+
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    spec:
+      ingressClassName: "nginx"
+      rules:
+        - host: "{{ .Values.vault.ingress.host }}"
+          http:
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+                backend:
+                  service:
+                    name: vault
+                    port:
+                      number: 8200
+
+  vaultInitContainers:
+    - name: init-create-db-tables
+      image: public.ecr.aws/docker/library/postgres:17.2-alpine
+      env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.database.secretName }}
+              key: {{ .Values.vault.database.hostKey }}
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.database.secretName }}
+              key: {{ .Values.vault.database.portKey }}
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.database.secretName }}
+              key: {{ .Values.vault.database.userKey }}
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.database.secretName }}
+              key: {{ .Values.vault.database.passwordKey }}
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.vault.database.secretName }}
+              key: {{ .Values.vault.database.dbNameKey }}
+      command:
+        - "sh"
+        - "-c"
+        - |
+          PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME <<SQL
+            CREATE TABLE IF NOT EXISTS vault_kv_store (
+              parent_path TEXT COLLATE "C" NOT NULL,
+              path        TEXT COLLATE "C",
+              key         TEXT COLLATE "C",
+              value       BYTEA,
+              CONSTRAINT pkey PRIMARY KEY (path, key)
+            );
+            CREATE INDEX IF NOT EXISTS parent_path_idx ON vault_kv_store (parent_path);
+            CREATE TABLE IF NOT EXISTS vault_ha_locks (
+              ha_key                                      TEXT COLLATE "C" NOT NULL,
+              ha_identity                                 TEXT COLLATE "C" NOT NULL,
+              ha_value                                    TEXT COLLATE "C",
+              valid_until                                 TIMESTAMP WITH TIME ZONE NOT NULL,
+              CONSTRAINT ha_key PRIMARY KEY (ha_key)
+            );
+          SQL
+      resources: {}
