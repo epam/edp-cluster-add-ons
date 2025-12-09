@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: externalsecrets-vault
+  labels:
+    app.kubernetes.io/name: externalsecrets-vault
+automountServiceAccountToken: true

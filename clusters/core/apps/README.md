@@ -178,4 +178,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | vault.createNamespace | bool | `false` |  |
 | vault.enable | bool | `false` |  |
 | vault.namespace | string | `"vault"` |  |
+| velero.createNamespace | bool | `false` |  |
+| velero.enable | bool | `false` |  |
+| velero.namespace | string | `"velero"` |  |
 

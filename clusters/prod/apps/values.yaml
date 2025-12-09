@@ -1,0 +1,23 @@
+# Place all applications under this project
+argoProject: core
+
+# Specifies the name of the cluster. This value is used to dynamically set the path for Argo CD Application manifests.
+clusterName: prod
+
+# Specifies the destination server where the code will be deployed.
+# In this case, "in-cluster" indicates that the deployment will happen within the Kubernetes cluster itself.
+destinationServer: "prod"
+
+# Specifies the URL of the Git repository from which the code will be pulled for deployment.
+# It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
+# and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
+repoUrl: "ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"
+
+# Specifies the target revision or branch of the Git repository that will be deployed.
+# In this case, "main" indicates that the main branch of the repository will be used for deployment.
+targetRevision: "main"
+
+vault-remote-rbac:
+  createNamespace: false
+  enable: false
+  namespace: vault
