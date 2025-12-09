@@ -1,0 +1,49 @@
+{{ if .Values.vault.pgo.enabled }}
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: vault
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.8-0
+  postgresVersion: 14
+  
+  users:
+    - name: vault
+      databases:
+        - vault
+      options: "SUPERUSER"
+  
+  instances:
+    - name: instance1
+      replicas: 2
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 10Gi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: vault
+                  postgres-operator.crunchydata.com/instance-set: instance1
+              topologyKey: kubernetes.io/hostname
+
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.45-0
+      global:
+        repo1-retention-full: "14"
+        repo1-retention-full-type: time
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 20Gi
+{{ end }}

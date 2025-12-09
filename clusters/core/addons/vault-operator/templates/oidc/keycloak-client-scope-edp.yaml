@@ -1,0 +1,20 @@
+{{ if index .Values.vault.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClientScope
+metadata:
+  name: vault
+spec:
+  description: default scope required for vault
+  name: vault
+  protocol: openid-connect
+  protocolMappers:
+    - config:
+        access.token.claim: 'true'
+        included.client.audience: vault
+      name: vault-audience
+      protocol: openid-connect
+      protocolMapper: oidc-audience-mapper
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+{{ end }}

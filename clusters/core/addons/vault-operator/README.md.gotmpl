@@ -1,8 +1,11 @@
-# vault-operator
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
 
-![Version: 1.23.0](https://img.shields.io/badge/Version-1.23.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
+{{ template "chart.badgesSection" . }}
 
-A Helm chart for Vault Operator
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
 
 This Helm chart deploys and configures HashiCorp Vault using the Bank-Vaults operator. The operator automatically manages the installation, configuration, and lifecycle of a Vault cluster in Kubernetes.
 
@@ -39,7 +42,7 @@ To use an external PostgreSQL database instead of PGO, you can configure the dat
 vault:
   database:
     # Name of the secret with configuration
-    secretName: vault-pguser-vault
+    secretName: vault-pguser-vault 
     # Block for configuring secret's key
     hostKey: host
     portKey: port
@@ -86,11 +89,11 @@ vault:
 
 *The diagram above illustrates the authentication process shown in the code examples below.*
 
-Roles are configured through the [roles](values.yaml#L13) section. By default, when creating a role, a policy for read access to the specified store is automatically created.
+Roles are configured through the [roles](values.yaml#L13) section. By default, when creating a role, a policy for read access to the specified store is automatically created. 
 
 #### Default Policy Generation
 
-For each role defined in values.yaml, the operator automatically generates a policy that follows the [principle of least privilege](https://developer.hashicorp.com/vault/docs/concepts/policies#policy-syntax).
+For each role defined in values.yaml, the operator automatically generates a policy that follows the [principle of least privilege](https://developer.hashicorp.com/vault/docs/concepts/policies#policy-syntax). 
 
 **Example role configuration:**
 ```yaml
@@ -147,7 +150,7 @@ vault:
       serviceAccount: "my-app"
       namespace: "my-namespace"
       path: "secret/data/my-app"
-      extraPolicies:
+      extraPolicies: 
         - "custom-app-policy"  # Additional policy
         - "shared-resources"   # Another policy
 ```
@@ -230,71 +233,10 @@ vault:
 
 After configuration, applications in the remote cluster will be able to authenticate with Vault and retrieve secrets using the Kubernetes auth method.
 
-## Requirements
+{{ template "chart.maintainersSection" . }}
 
-| Repository | Name | Version |
-|------------|------|---------|
-| oci://ghcr.io/bank-vaults/helm-charts | vault-operator | 1.23.0 |
+{{ template "chart.sourcesSection" . }}
 
-## Values
+{{ template "chart.requirementsSection" . }}
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| vault-operator.bankVaults.image.repository | string | `"ghcr.io/bank-vaults/bank-vaults"` | Bank-Vaults image repository. |
-| vault-operator.bankVaults.image.tag | string | `"v1.32.0"` | Bank-Vaults image tag (pinned to supported Bank-Vaults version). |
-| vault-operator.fullnameOverride | string | `""` | A name to substitute for the full names of resources. |
-| vault-operator.image.bankVaultsRepository | string | `""` | Bank-Vaults image repository **Deprecated:** use `bankVaults.image.repository` instead. |
-| vault-operator.image.bankVaultsTag | string | `""` | Bank-Vaults image tag **Deprecated:** use `bankVaults.image.tag` instead. |
-| vault-operator.image.imagePullSecrets | list | `[]` | Reference to one or more secrets to be used when [pulling images](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) (from private registries). (`global.imagePullSecrets` is also supported) |
-| vault-operator.image.pullPolicy | string | `"IfNotPresent"` | [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) for updating already existing images on a node. |
-| vault-operator.image.repository | string | `"ghcr.io/bank-vaults/vault-operator"` | Name of the image repository to pull the container image from. |
-| vault-operator.image.tag | string | `""` | Image tag override for the default value (chart appVersion). |
-| vault-operator.nameOverride | string | `""` | A name in place of the chart name for `app:` labels. |
-| vault-operator.pdb.create | bool | `true` | Create pod disruption budget if replicaCount > 1. |
-| vault-operator.pdb.minAvailable | int | `1` | Min available for PDB. |
-| vault-operator.replicaCount | int | `1` | Number of replicas (pods) to launch. |
-| vault-operator.syncPeriod | string | `"5m"` |  |
-| vault-operator.watchNamespace | string | `"vault"` | The namespace where the operator watches for vault CR objects. If not defined all namespaces are watched. |
-| vault.bankVaultsContainer.image | string | `"ghcr.io/bank-vaults/bank-vaults"` |  |
-| vault.bankVaultsContainer.tag | string | `"v1.32.0"` |  |
-| vault.database.dbNameKey | string | `"dbname"` |  |
-| vault.database.hostKey | string | `"host"` |  |
-| vault.database.passwordKey | string | `"password"` |  |
-| vault.database.portKey | string | `"port"` |  |
-| vault.database.secretName | string | `"vault-pguser-vault"` |  |
-| vault.database.userKey | string | `"user"` |  |
-| vault.extraPolicies | list | `[]` |  |
-| vault.extraSecrets[0].description | string | `"General secrets for krci-project and addons-project"` |  |
-| vault.extraSecrets[0].options.version | int | `2` |  |
-| vault.extraSecrets[0].path | string | `"secret"` |  |
-| vault.extraSecrets[0].type | string | `"kv"` |  |
-| vault.ingress.host | string | `"vault.core.kuberocketci.io"` |  |
-| vault.oidc.clientSecret | string | `"keycloak-client-vault-secret"` |  |
-| vault.oidc.client_id | string | `"vault"` |  |
-| vault.oidc.discovery_url | string | `"https://keycloak.example.com/realms/<realm_name>"` |  |
-| vault.oidc.enabled | bool | `false` |  |
-| vault.oidc.groups[0].name | string | `"administrator"` |  |
-| vault.oidc.groups[0].policies[0] | string | `"vault-admin"` |  |
-| vault.oidc.groups[1].name | string | `"developer"` |  |
-| vault.oidc.groups[1].policies[0] | string | `"vault-ro"` |  |
-| vault.oidc.issuer_url | string | `"https://keycloak.example.com/realms/<realm_name>"` |  |
-| vault.pgo.enabled | bool | `true` |  |
-| vault.remoteCluster | list | `[]` |  |
-| vault.replicaCount | int | `1` |  |
-| vault.roles[0].extraPolicies | list | `[]` |  |
-| vault.roles[0].name | string | `"krci-reader"` |  |
-| vault.roles[0].namespace | string | `"krci"` |  |
-| vault.roles[0].path | string | `"secret/data/krci"` |  |
-| vault.roles[0].serviceAccount | string | `"externalsecrets-vault"` |  |
-| vault.roles[1].extraPolicies | list | `[]` |  |
-| vault.roles[1].name | string | `"nexus"` |  |
-| vault.roles[1].namespace | string | `"nexus"` |  |
-| vault.roles[1].path | string | `"secret/data/addons/nexus"` |  |
-| vault.roles[1].serviceAccount | string | `"nexus"` |  |
-| vault.roles[2].extraPolicies | list | `[]` |  |
-| vault.roles[2].name | string | `"sonar"` |  |
-| vault.roles[2].namespace | string | `"sonar"` |  |
-| vault.roles[2].path | string | `"secret/data/addons/sonar"` |  |
-| vault.roles[2].serviceAccount | string | `"sonar"` |  |
-| vault.vaultContainer.image | string | `"hashicorp/vault"` |  |
-| vault.vaultContainer.tag | string | `"1.15.2"` |  |
+{{ template "chart.valuesSection" . }}

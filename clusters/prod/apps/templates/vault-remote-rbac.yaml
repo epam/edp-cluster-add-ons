@@ -1,8 +1,8 @@
-{{- if and (index .Values "vault-operator") (index .Values "vault-operator" "enable") -}}
+{{- if and (index .Values "vault-remote-rbac") (index .Values "vault-remote-rbac" "enable") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.destinationServer}}-vault-operator
+  name: {{ .Values.destinationServer}}-vault-remote-rbac
   namespace: {{ .Values.argoNamespace | default "argocd" }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
     repoURL: {{ .Values.repoUrl }}
-    path: clusters/{{ .Values.clusterName }}/addons/vault-operator
+    path: clusters/{{ .Values.clusterName }}/addons/vault-remote-rbac
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: vault
@@ -19,7 +19,7 @@ spec:
     namespace: {{ index .Values "vault-operator" "namespace" }}
   syncPolicy:
     syncOptions:
-      - CreateNamespace={{ (index .Values "vault-operator" "createNamespace") }}
+      - CreateNamespace={{ (index .Values "vault-remote-rbac" "createNamespace") }}
     retry:
       limit: 1
       backoff:

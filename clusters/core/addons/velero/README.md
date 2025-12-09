@@ -42,3 +42,4 @@ A Helm chart for Velero Install
 | velero.serviceAccount.server.annotations."eks.amazonaws.com/role-arn" | string | `"arn:aws:iam::01234567890:role/AWSIRSA_Core_Velero"` |  |
 | velero.serviceAccount.server.create | bool | `true` |  |
 | velero.serviceAccount.server.name | string | `"velero-server"` |  |
+

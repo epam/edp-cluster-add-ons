@@ -1,0 +1,17 @@
+{{ if index .Values.vault.oidc.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: vault
+spec:
+  advancedProtocolMappers: true
+  clientId: vault
+  defaultClientScopes:
+    - groups
+    - vault
+  secret: '$keycloak-client-vault-secret:clientSecret'
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: main
+  webUrl: "https://{{ .Values.vault.ingress.host }}"
+{{ end }}
