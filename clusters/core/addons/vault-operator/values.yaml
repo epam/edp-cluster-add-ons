@@ -1,9 +1,103 @@
+vault:
+  vaultContainer:
+    image: hashicorp/vault
+    tag: 1.15.2
+  bankVaultsContainer:
+    image: ghcr.io/bank-vaults/bank-vaults
+    tag: v1.32.0
+
+  ingress:
+    host: "vault.core.kuberocketci.io"
+  # In-cluster congif:
+  replicaCount: 1
+  roles:
+    - name: "krci-reader"
+      serviceAccount: "externalsecrets-vault"
+      namespace: "krci"
+      extraPolicies: []
+      path: "secret/data/krci"
+
+    - name: "nexus"
+      serviceAccount: "nexus"
+      namespace: "nexus"
+      extraPolicies: []
+      path: "secret/data/addons/nexus"
+
+    - name: "sonar"
+      serviceAccount: "sonar"
+      namespace: "sonar"
+      extraPolicies: []
+      path: "secret/data/addons/sonar"
+
+
+  # Remote clusters config:
+  remoteCluster: []
+    # - name: "dev-cluster"
+    #   host: "https://example.com"
+    #   # Name for secret with Token and
+    #   secretName: "dev-secret"
+    #   cert: |
+    #     -----BEGIN CERTIFICATE-----
+    #     <cluster_ca_cert>
+    #     -----END CERTIFICATE-----
+    #   roles:
+    #     - name: "vault-reader"
+    #       serviceAccount: "externalsecrets-vault"
+    #       namespace: "vault"
+    #       extraPolicies: []
+    #       path: "secret/data/addons/vault"
+
+  # Block for custom policies
+  extraPolicies: []
+    # - name: "custom-policy"
+    #   rules: |
+    #     path "my/app/path*" {
+    #       capabilities = ["read", "list"]
+    #     }
+    #     path "another/app/path*" {
+    #       capabilities = ["read", "list"]
+    #     }
+
+  extraSecrets:
+    - path: secret
+      type: kv
+      description: "General secrets for krci-project and addons-project"
+      options:
+        version: 2
+
+  oidc:
+    enabled: false
+    issuer_url: "https://keycloak.example.com/realms/<realm_name>"
+    discovery_url: "https://keycloak.example.com/realms/<realm_name>"
+    client_id: "vault"
+    clientSecret: "keycloak-client-vault-secret"  # Secret name
+    groups:
+      - name: "administrator"
+        policies: ["vault-admin"]
+      - name: "developer"
+        policies: ["vault-ro"]
+
+  # Vault database connection configuration
+  database:
+    # Name of the secret with configuration
+    secretName: vault-pguser-vault
+    # Block for configuring secret's key
+    hostKey: host
+    portKey: port
+    userKey: user
+    passwordKey: password
+    dbNameKey: dbname
+
+  # Enable PGO for creating postgres database
+  pgo:
+    enabled: true
+
 vault-operator:
   # This is a YAML-formatted file.
   # Declare variables to be passed into your templates.
 
   # -- Number of replicas (pods) to launch.
-  replicaCount: 2
+  replicaCount: 1
 
   pdb:
     # -- Create pod disruption budget if replicaCount > 1.
@@ -41,7 +135,7 @@ vault-operator:
       repository: ghcr.io/bank-vaults/bank-vaults
 
       # -- Bank-Vaults image tag (pinned to supported Bank-Vaults version).
-      tag: "v1.31.3"
+      tag: "v1.32.0"
 
   # -- A name in place of the chart name for `app:` labels.
   nameOverride: ""
@@ -53,104 +147,3 @@ vault-operator:
   # If not defined all namespaces are watched.
   watchNamespace: "vault"
   syncPeriod: "5m"
-
-  # -- Annotations to be added to CRDs.
-  crdAnnotations: {}
-
-  # -- Labels to be added to deployments.
-  labels: {}    # team: banzai
-
-  # -- Labels to be added to pods.
-  podLabels: {}     # team: banzai
-
-  # -- Annotations to be added to pods.
-  podAnnotations: {}    # team: banzai
-
-  serviceAccount:
-    # -- Enable service account creation.
-    create: true
-
-    # -- Annotations to be added to the service account.
-    annotations: {}
-
-    # -- The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template.
-    name: ""
-
-  service:
-    # -- Annotations to be added to the service.
-    annotations: {}
-
-    # -- Kubernetes [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
-    type: ClusterIP
-
-    # -- The name of the service to use.
-    # If not set, a name is generated using the fullname template.
-    name: ""
-
-    externalPort: 80
-    internalPort: 8080
-
-  # -- Container resource [requests and limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
-  # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#resources) for details.
-  resources:
-    limits:
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-
-  # -- [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) configuration.
-  nodeSelector: {}
-
-  # -- [Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) for node taints.
-  # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#scheduling) for details.
-  tolerations: []
-
-  # -- [Affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) configuration.
-  # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#scheduling) for details.
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/instance: vault-operator
-              app.kubernetes.io/name: vault-operator
-          topologyKey: kubernetes.io/hostname
-
-  # -- Specify a priority class name to set [pod priority](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority).
-  priorityClassName: ""
-
-  # -- Pod [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod).
-  # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context) for details.
-  podSecurityContext: {}
-
-  # -- Container [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container).
-  # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-1) for details.
-  securityContext: {}
-
-  terminationGracePeriodSeconds: 10
-
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 1
-  readinessProbe:
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 1
-
-  psp:
-    enabled: false
-    vaultSA: "vault"
-
-  monitoring:
-    serviceMonitor:
-      # -- Enable Prometheus ServiceMonitor.
-      # See the [documentation](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/design.md#servicemonitor) and the [API reference](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor) for details.
-      enabled: false
-
-      additionalLabels: {}
-      metricRelabelings: []
-      relabelings: []
