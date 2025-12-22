@@ -68,5 +68,6 @@ A Helm chart for Sonarqube
 | sonarqube.resources.requests.cpu | string | `"100m"` |  |
 | sonarqube.resources.requests.memory | string | `"1.5Gi"` |  |
 | sonarqube.sonarProperties."sonar.ce.javaAdditionalOpts" | string | `"-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-25.5.0.jar=ce"` |  |
+| sonarqube.sonarProperties."sonar.multi-quality-mode.enabled" | string | `"false"` |  |
 | sonarqube.sonarProperties."sonar.web.javaAdditionalOpts" | string | `"-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-25.5.0.jar=web"` |  |
 
