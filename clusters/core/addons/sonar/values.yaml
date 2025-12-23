@@ -51,6 +51,9 @@ sonarqube:
       -javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-25.5.0.jar=ce
     sonar.web.javaAdditionalOpts: >-
       -javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-25.5.0.jar=web
+    # Enables Multi-Quality Rule (MQR) mode in Sonar.
+    # Standard Experience and Multi-Quality Rule (MQR) mode.
+    sonar.multi-quality-mode.enabled: "false"
 
   extraInitContainers:
     - name: download-webapp
