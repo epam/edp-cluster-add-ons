@@ -23,7 +23,8 @@ nexusAdminPassword:
 docker:
   enabled: true
   registries:
-    - host: nexus-ce-ci-container.example.com
+    - name: example
+      host: nexus-ce-ci-container.example.com
       port: 5000
 
 # -- This block configure database connections for Nexus CE.
