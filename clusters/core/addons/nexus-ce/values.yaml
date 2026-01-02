@@ -20,10 +20,19 @@ nexusAdminPassword:
     name: "nexus-admin-password"
     key: "password"
 
+# -- This block configures Docker registries for Nexus CE.
 docker:
+  # -- Enable Docker registries support.
   enabled: true
   registries:
-    - host: nexus-ce-ci-container.example.com
+      # -- Unique name for the Docker registry.
+      #    Used to generate service and ingress resources.
+      #    If multiple registries are defined, each name must be unique
+      #    and reflect the registry's purpose (e.g., environment or artifact type).
+    - name: example
+      # -- Hostname for the Docker registry ingress.
+      host: nexus-ce-ci-container.example.com
+      # -- Port for the Docker registry service.
       port: 5000
 
 # -- This block configure database connections for Nexus CE.

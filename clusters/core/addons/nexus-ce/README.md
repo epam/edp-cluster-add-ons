@@ -25,6 +25,7 @@ Nexus Community Edition chart for Kubernetes
 | database.pgo | object | `{"enable":true}` | Use PostgreSQL operator to create and manage database. |
 | docker.enabled | bool | `true` |  |
 | docker.registries[0].host | string | `"nexus-ce-ci-container.example.com"` |  |
+| docker.registries[0].name | string | `"example"` |  |
 | docker.registries[0].port | int | `5000` |  |
 | eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
 | eso.aws.region | string | `"eu-central-1"` | AWS region. |
