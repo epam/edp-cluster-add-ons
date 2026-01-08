@@ -57,9 +57,34 @@
 
 ---
 
-## Chart Testing
+## Chart Testing and Validation
 
+### Testing Requirements
 - **Lint Charts**: Use `make lint-chart CHART=<chart-name>` for basic validation
 - **Full Testing**: Run `make test-charts-full` for comprehensive testing including installation
 - **Version Check**: Ensure version increments with `check-version-increment: true` in ct.yaml
 - **Test in Isolation**: Test charts individually before integration with other add-ons
+
+### Security Compliance Checklist
+- Verify RBAC permissions follow least privilege principle
+- Validate network policies and ingress configurations
+- Check for properly configured security contexts
+- Ensure secrets are managed via external secret management
+- Validate container image security requirements
+- Check for proper resource isolation
+
+### CI/CD Integration Guidelines
+- Automated chart version validation
+- Dependency version checking
+- Security scanning integration
+- Automated testing pipeline
+- Documentation generation
+- Release automation
+
+### Version Management
+- Follow semantic versioning (MAJOR.MINOR.PATCH)
+- Update CHANGELOG.md with each version
+- Document breaking changes
+- Maintain upgrade/rollback procedures
+- Version dependencies explicitly
+- Test version compatibility
