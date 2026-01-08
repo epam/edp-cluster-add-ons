@@ -85,7 +85,11 @@ edp-install:
 
   codebase-operator:
     enabled: true
+    # -- Labels to be added to the pod
+    # podLabels: {}
     # image:
+    #   # -- KubeRocketCI codebase-operator Docker image registry.
+    #   registry: ""
     #   repository: epamedp/codebase-operator
     #   tag:
     # -- Optional array of imagePullSecrets containing private registry credentials
