@@ -583,8 +583,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -1419,8 +1419,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -1749,7 +1749,7 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: |-
-                          Time after which the TaskRun times out. Defaults to 1 hour.
+                          Duration after which the TaskRun times out. Defaults to 1 hour.
                           Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
                         type: string
                       when:
@@ -2194,7 +2194,7 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: |-
-                          Time after which the TaskRun times out. Defaults to 1 hour.
+                          Duration after which the TaskRun times out. Defaults to 1 hour.
                           Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
                         type: string
                       when:
@@ -2526,7 +2526,7 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: |-
-                          Time after which the TaskRun times out. Defaults to 1 hour.
+                          Duration after which the TaskRun times out. Defaults to 1 hour.
                           Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
                         type: string
                       when:
@@ -2865,7 +2865,7 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: |-
-                          Time after which the TaskRun times out. Defaults to 1 hour.
+                          Duration after which the TaskRun times out. Defaults to 1 hour.
                           Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
                         type: string
                       when:
@@ -2994,8 +2994,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -3036,6 +3036,13 @@ spec:
               description: PipelineRunSpec defines the desired state of PipelineRun
               type: object
               properties:
+                managedBy:
+                  description: |-
+                    ManagedBy indicates which controller is responsible for reconciling
+                    this resource. If unset or set to "tekton.dev/pipeline", the default
+                    Tekton controller will manage this resource.
+                    This field is immutable.
+                  type: string
                 params:
                   description: Params is a list of parameter names and values.
                   type: array
@@ -4394,6 +4401,11 @@ spec:
                             x-kubernetes-preserve-unknown-fields: true
                       taskServiceAccountName:
                         type: string
+                      timeout:
+                        description: |-
+                          Duration after which the TaskRun times out.
+                          Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
+                        type: string
                   x-kubernetes-list-type: atomic
                 timeout:
                   description: |-
@@ -5137,7 +5149,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -5174,6 +5186,8 @@ spec:
                           type: boolean
                         enableStepActions:
                           description: EnableStepActions is a no-op flag since StepActions are stable
+                          type: boolean
+                        enableWaitExponentialBackoff:
                           type: boolean
                         enforceNonfalsifiability:
                           type: string
@@ -5214,7 +5228,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -5550,7 +5564,7 @@ spec:
                                     description: |-
                                       EntryPoint identifies the entry point into the build. This is often a path to a
                                       build definition file and/or a target label within that file.
-                                      Example: "task/git-clone/0.8/git-clone.yaml"
+                                      Example: "task/git-clone/0.10/git-clone.yaml"
                                     type: string
                                   uri:
                                     description: |-
@@ -5587,6 +5601,8 @@ spec:
                                     type: boolean
                                   enableStepActions:
                                     description: EnableStepActions is a no-op flag since StepActions are stable
+                                    type: boolean
+                                  enableWaitExponentialBackoff:
                                     type: boolean
                                   enforceNonfalsifiability:
                                     type: string
@@ -5627,7 +5643,7 @@ spec:
                                     description: |-
                                       EntryPoint identifies the entry point into the build. This is often a path to a
                                       build definition file and/or a target label within that file.
-                                      Example: "task/git-clone/0.8/git-clone.yaml"
+                                      Example: "task/git-clone/0.10/git-clone.yaml"
                                     type: string
                                   uri:
                                     description: |-
@@ -5837,7 +5853,7 @@ spec:
                                           description: |-
                                             EntryPoint identifies the entry point into the build. This is often a path to a
                                             build definition file and/or a target label within that file.
-                                            Example: "task/git-clone/0.8/git-clone.yaml"
+                                            Example: "task/git-clone/0.10/git-clone.yaml"
                                           type: string
                                         uri:
                                           description: |-
@@ -5874,6 +5890,8 @@ spec:
                                           type: boolean
                                         enableStepActions:
                                           description: EnableStepActions is a no-op flag since StepActions are stable
+                                          type: boolean
+                                        enableWaitExponentialBackoff:
                                           type: boolean
                                         enforceNonfalsifiability:
                                           type: string
@@ -5914,7 +5932,7 @@ spec:
                                           description: |-
                                             EntryPoint identifies the entry point into the build. This is often a path to a
                                             build definition file and/or a target label within that file.
-                                            Example: "task/git-clone/0.8/git-clone.yaml"
+                                            Example: "task/git-clone/0.10/git-clone.yaml"
                                           type: string
                                         uri:
                                           description: |-
@@ -6099,6 +6117,13 @@ spec:
               description: PipelineRunSpec defines the desired state of PipelineRun
               type: object
               properties:
+                managedBy:
+                  description: |-
+                    ManagedBy indicates which controller is responsible for reconciling
+                    this resource. If unset or set to "tekton.dev/pipeline", the default
+                    Tekton controller will manage this resource.
+                    This field is immutable.
+                  type: string
                 params:
                   description: Params is a list of parameter names and values.
                   type: array
@@ -6870,6 +6895,13 @@ spec:
                               description: The name of the Step to override.
                               type: string
                         x-kubernetes-list-type: atomic
+                      timeout:
+                        description: |-
+                          Duration after which the TaskRun times out. Overrides the timeout specified
+                          on the Task's spec if specified. Takes lower precedence to PipelineRun's
+                          `spec.timeouts.tasks`
+                          Refer Go's ParseDuration documentation for expected format: https://golang.org/pkg/time/#ParseDuration
+                        type: string
                   x-kubernetes-list-type: atomic
                 taskRunTemplate:
                   description: TaskRunTemplate represent template of taskrun
@@ -8095,6 +8127,8 @@ spec:
                         enableStepActions:
                           description: EnableStepActions is a no-op flag since StepActions are stable
                           type: boolean
+                        enableWaitExponentialBackoff:
+                          type: boolean
                         enforceNonfalsifiability:
                           type: string
                         maxResultSize:
@@ -8134,7 +8168,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -8593,8 +8627,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -9712,8 +9746,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -12678,6 +12712,11 @@ spec:
                         items:
                           type: string
                         x-kubernetes-list-type: atomic
+                      displayName:
+                        description: |-
+                          DisplayName is a user-facing name of the step that may be
+                          used to populate a UI.
+                        type: string
                       env:
                         description: |-
                           List of environment variables to set in the container.
@@ -16317,6 +16356,11 @@ spec:
                                 - type: integer
                                 - type: string
                               x-kubernetes-int-or-string: true
+                      displayName:
+                        description: |-
+                          DisplayName is a user-facing name of the step that may be
+                          used to populate a UI.
+                        type: string
                       env:
                         description: |-
                           List of environment variables to set in the Step.
@@ -17024,8 +17068,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   preserveUnknownFields: false
@@ -17141,6 +17185,13 @@ spec:
                             if enabled, pause TaskRun on failure of a step
                             failed step will not exit
                           type: string
+                managedBy:
+                  description: |-
+                    ManagedBy indicates which controller is responsible for reconciling
+                    this resource. If unset or set to "tekton.dev/pipeline", the default
+                    Tekton controller will manage this resource.
+                    This field is immutable.
+                  type: string
                 params:
                   description: Params is a list of Param
                   type: array
@@ -18743,7 +18794,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -18780,6 +18831,8 @@ spec:
                           type: boolean
                         enableStepActions:
                           description: EnableStepActions is a no-op flag since StepActions are stable
+                          type: boolean
+                        enableWaitExponentialBackoff:
                           type: boolean
                         enforceNonfalsifiability:
                           type: string
@@ -18820,7 +18873,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -19030,7 +19083,7 @@ spec:
                                 description: |-
                                   EntryPoint identifies the entry point into the build. This is often a path to a
                                   build definition file and/or a target label within that file.
-                                  Example: "task/git-clone/0.8/git-clone.yaml"
+                                  Example: "task/git-clone/0.10/git-clone.yaml"
                                 type: string
                               uri:
                                 description: |-
@@ -19067,6 +19120,8 @@ spec:
                                 type: boolean
                               enableStepActions:
                                 description: EnableStepActions is a no-op flag since StepActions are stable
+                                type: boolean
+                              enableWaitExponentialBackoff:
                                 type: boolean
                               enforceNonfalsifiability:
                                 type: string
@@ -19107,7 +19162,7 @@ spec:
                                 description: |-
                                   EntryPoint identifies the entry point into the build. This is often a path to a
                                   build definition file and/or a target label within that file.
-                                  Example: "task/git-clone/0.8/git-clone.yaml"
+                                  Example: "task/git-clone/0.10/git-clone.yaml"
                                 type: string
                               uri:
                                 description: |-
@@ -19337,6 +19392,13 @@ spec:
                             if enabled, pause TaskRun on failure of a step
                             failed step will not exit
                           type: string
+                managedBy:
+                  description: |-
+                    ManagedBy indicates which controller is responsible for reconciling
+                    this resource. If unset or set to "tekton.dev/pipeline", the default
+                    Tekton controller will manage this resource.
+                    This field is immutable.
+                  type: string
                 params:
                   description: Params is a list of Param
                   type: array
@@ -20772,6 +20834,8 @@ spec:
                         enableStepActions:
                           description: EnableStepActions is a no-op flag since StepActions are stable
                           type: boolean
+                        enableWaitExponentialBackoff:
+                          type: boolean
                         enforceNonfalsifiability:
                           type: string
                         maxResultSize:
@@ -20811,7 +20875,7 @@ spec:
                           description: |-
                             EntryPoint identifies the entry point into the build. This is often a path to a
                             build definition file and/or a target label within that file.
-                            Example: "task/git-clone/0.8/git-clone.yaml"
+                            Example: "task/git-clone/0.10/git-clone.yaml"
                           type: string
                         uri:
                           description: |-
@@ -21025,6 +21089,8 @@ spec:
                               enableStepActions:
                                 description: EnableStepActions is a no-op flag since StepActions are stable
                                 type: boolean
+                              enableWaitExponentialBackoff:
+                                type: boolean
                               enforceNonfalsifiability:
                                 type: string
                               maxResultSize:
@@ -21064,7 +21130,7 @@ spec:
                                 description: |-
                                   EntryPoint identifies the entry point into the build. This is often a path to a
                                   build definition file and/or a target label within that file.
-                                  Example: "task/git-clone/0.8/git-clone.yaml"
+                                  Example: "task/git-clone/0.10/git-clone.yaml"
                                 type: string
                               uri:
                                 description: |-
@@ -23260,6 +23326,11 @@ spec:
                                     - type: integer
                                     - type: string
                                   x-kubernetes-int-or-string: true
+                          displayName:
+                            description: |-
+                              DisplayName is a user-facing name of the step that may be
+                              used to populate a UI.
+                            type: string
                           env:
                             description: |-
                               List of environment variables to set in the Step.
@@ -23983,8 +24054,8 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
-    version: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
+    version: "v1.6.0"
 spec:
   group: tekton.dev
   versions:
@@ -24127,7 +24198,7 @@ metadata:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
 # The data is populated at install time.
 ---
 apiVersion: admissionregistration.k8s.io/v1
@@ -24138,7 +24209,7 @@ metadata:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
@@ -24157,7 +24228,7 @@ metadata:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
@@ -24176,7 +24247,7 @@ metadata:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
@@ -24298,6 +24369,25 @@ metadata:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
 data:
+  default-pod-template: |
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: workload-type
+              operator: In
+              values:
+              - tekton
+            - key: node-pool
+              operator: In
+              values:
+              - tekton-builds
+    tolerations:
+    - key: workload-type
+      operator: Equal
+      value: tekton
+      effect: NoSchedule
   _example: |
     ################################
     #                              #
@@ -24426,6 +24516,22 @@ data:
     #     limits:
     #       memory: "256Mi"
     #       cpu: "500m"
+
+    # default-sidecar-log-polling-interval specifies the polling interval for the Tekton sidecar log results container.
+    # This controls how frequently the sidecar checks for step completion files written by steps in a TaskRun.
+    # Lower values (e.g., "10ms") make the sidecar more responsive but may increase CPU usage; higher values (e.g., "1s")
+    # reduce resource usage but may delay result collection.
+    # This value is used by the sidecar-tekton-log-results container and can be tuned for performance or test scenarios.
+    # Example values: "100ms", "500ms", "1s"
+    default-sidecar-log-polling-interval: "100ms"
+
+    # default-step-ref-concurrency-limit specifies the concurrency limit for resolving step references.
+    # This setting controls the maximum number of concurrent goroutines used to resolve
+    # step references (`step.ref` fields) simultaneously. This limit acts as a throttle
+    # to prevent overwhelming remote servers (e.g., git providers, OCI registries) or
+    # the Kubernetes API server, especially when a TaskRun contains many steps that
+    # reference StepActions.
+    default-step-ref-concurrency-limit: "5"
 
 ---
 # Copyright 2023 The Tekton Authors
@@ -24611,6 +24717,12 @@ data:
   enable-kubernetes-sidecar: "false"
   # Setting this flag to "false" will have no effect since StepActions are a stable feature
   enable-step-actions: "true"
+  # Controls whether exponential backoff is enabled when creating TaskRuns or CustomRuns.
+  # If set to "true", the controller will use exponential backoff when retrying failed create operations,
+  # which can help mitigate issues caused by temporary API server or webhook unavailability.
+  # If set to "false", exponential backoff will be disabled.
+  # For advanced tuning of backoff parameters, update the 'wait-exponential-backoff' ConfigMap.
+  enable-wait-exponential-backoff: "false"
 
 ---
 # Copyright 2021 The Tekton Authors
@@ -24641,7 +24753,7 @@ data:
   # this ConfigMap such that even if we don't have access to
   # other resources in the namespace we still can have access to
   # this ConfigMap.
-  version: "v1.0.0"
+  version: "v1.6.0"
 
 ---
 # Copyright 2020 Tekton Authors LLC
@@ -25049,6 +25161,40 @@ data:
     credentialsSecret: "jaeger-creds"
 
 ---
+# Copyright 2025 The Tekton Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This ConfigMap allows cluster operators to configure the exponential backoff
+# parameters used by Tekton Pipelines when retrying Kubernetes API operations,
+# such as creating TaskRuns or CustomRuns. Adjusting these values can help
+# tune retry behavior in response to webhook timeouts or transient errors.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-wait-exponential-backoff
+  namespace: tekton-pipelines
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-pipelines
+data:
+  duration: "10s" # The initial duration before the first retry (Go duration string, e.g. "1s").
+  factor: "2.0" # The factor by which the duration increases after each retry (should not be negative).
+  jitter: "0.0" # Jitter factor (0.0 = no jitter, 0.2 = up to 20% random additional wait).
+  steps: "5" # The number of times the duration may change (number of backoff steps).
+  cap: "60s" # The maximum duration between retries (Go duration string, e.g. "30s").
+
+---
 # Copyright 2019 The Tekton Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25072,12 +25218,12 @@ metadata:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
-    version: "v1.0.0"
+    version: "v1.6.0"
 spec:
   replicas: 1
   selector:
@@ -25092,13 +25238,13 @@ spec:
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v1.0.0"
+        app.kubernetes.io/version: "v1.6.0"
         app.kubernetes.io/part-of: tekton-pipelines
         # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v1.0.0"
+        pipeline.tekton.dev/release: "v1.6.0"
         # labels below are related to istio and should not be used for resource lookup
         app: tekton-pipelines-controller
-        version: "v1.0.0"
+        version: "v1.6.0"
     spec:
       affinity:
         nodeAffinity:
@@ -25112,11 +25258,11 @@ spec:
       serviceAccountName: tekton-pipelines-controller
       containers:
         - name: tekton-pipelines-controller
-          image: ghcr.io/tektoncd/pipeline/controller-10a3e32792f33651396d02b6855a6e36:v1.0.0@sha256:3ea85d91808ffa72cf56958c219ab515ef6bd319f6b8501b288a3a54b69806d7
+          image: ghcr.io/tektoncd/pipeline/controller-10a3e32792f33651396d02b6855a6e36:v1.6.0@sha256:84efabe03a5e5441379171d5c071bc28612aa7656ec4f508b01d89ee431e4141
           args: [
             # These images are built on-demand by `ko resolve` and are replaced
             # by image references by digest.
-            "-entrypoint-image", "ghcr.io/tektoncd/pipeline/entrypoint-bff0a22da108bc2f16c818c97641a296:v1.0.0@sha256:06eadb09e7648748eb1ae65dfbb9b82b40d6c2e14ec5a5cb7e920576e676180d", "-nop-image", "ghcr.io/tektoncd/pipeline/nop-8eac7c133edad5df719dc37b36b62482:v1.0.0@sha256:036f50b3ae9bdf9ef63525ebd7cad5cd22477f97e0215b9de4a70859f4912fe1", "-sidecarlogresults-image", "ghcr.io/tektoncd/pipeline/sidecarlogresults-7501c6a20d741631510a448b48ab098f:v1.0.0@sha256:b1b2d63988cdc05598450605da3317d3229f3c005c6b788327ad42c292d34d28", "-workingdirinit-image", "ghcr.io/tektoncd/pipeline/workingdirinit-0c558922ec6a1b739e550e349f2d5fc1:v1.0.0@sha256:f15e51dce7f373c1814dbbb97fc35b478ae570853ad1c4f6fe27385cb8e792a4",
+            "-entrypoint-image", "ghcr.io/tektoncd/pipeline/entrypoint-bff0a22da108bc2f16c818c97641a296:v1.6.0@sha256:255ea8fadab1481fbd1e562d9ac7d4008cd9515de5f952647c8959028c8990a0", "-nop-image", "ghcr.io/tektoncd/pipeline/nop-8eac7c133edad5df719dc37b36b62482:v1.6.0@sha256:b83fbfa4e59808477d83ad2022f58e1aeff2605c438d37b83fef3b7b3706cb7d", "-sidecarlogresults-image", "ghcr.io/tektoncd/pipeline/sidecarlogresults-7501c6a20d741631510a448b48ab098f:v1.6.0@sha256:934e82f377c37aa98d42a7f37692a631f1b29a1dd1cc01e1b29b8f402b56b552", "-workingdirinit-image", "ghcr.io/tektoncd/pipeline/workingdirinit-0c558922ec6a1b739e550e349f2d5fc1:v1.6.0@sha256:2cbe018a0158ca18dfd2edd330ef2d94ab066a994415a835c20a5eac2e0588c5",
             # The shell image must allow root in order to create directories and copy files to PVCs.
             # cgr.dev/chainguard/busybox as of April 14 2022
             # image shall not contains tag, so it will be supported on a runtime like cri-o
@@ -25207,13 +25353,13 @@ metadata:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
     app: tekton-pipelines-controller
-    version: "v1.0.0"
+    version: "v1.6.0"
   name: tekton-pipelines-controller
   namespace: tekton-pipelines
 spec:
@@ -25257,12 +25403,12 @@ metadata:
     app.kubernetes.io/name: events
     app.kubernetes.io/component: events
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
-    version: "v1.0.0"
+    version: "v1.6.0"
 spec:
   replicas: 1
   selector:
@@ -25277,13 +25423,13 @@ spec:
         app.kubernetes.io/name: events
         app.kubernetes.io/component: events
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v1.0.0"
+        app.kubernetes.io/version: "v1.6.0"
         app.kubernetes.io/part-of: tekton-pipelines
         # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v1.0.0"
+        pipeline.tekton.dev/release: "v1.6.0"
         # labels below are related to istio and should not be used for resource lookup
         app: tekton-events-controller
-        version: "v1.0.0"
+        version: "v1.6.0"
     spec:
       affinity:
         nodeAffinity:
@@ -25297,7 +25443,7 @@ spec:
       serviceAccountName: tekton-events-controller
       containers:
         - name: tekton-events-controller
-          image: ghcr.io/tektoncd/pipeline/events-a9042f7efb0cbade2a868a1ee5ddd52c:v1.0.0@sha256:592ecbb109e317cd2b9bf3aa914429c6043402f579ee4ecc242d5fde29dffaab
+          image: ghcr.io/tektoncd/pipeline/events-a9042f7efb0cbade2a868a1ee5ddd52c:v1.6.0@sha256:a601df6f1ef7f031b004b108eb2d7c215577b3b5231a43fa6b0ae6bf5af31025
           args: []
           volumeMounts:
             - name: config-logging
@@ -25376,13 +25522,13 @@ metadata:
     app.kubernetes.io/name: events
     app.kubernetes.io/component: events
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
     app: tekton-events-controller
-    version: "v1.0.0"
+    version: "v1.6.0"
   name: tekton-events-controller
   namespace: tekton-pipelines
 spec:
@@ -25616,6 +25762,11 @@ data:
   default-service-account: "default"
   # The default layer kind in the bundle image.
   default-kind: "task"
+  # Optional: Default cache mode for this resolver. Valid values: "always", "never", "auto" (default: "auto")
+  # "always" - Always cache resolved resources
+  # "never"  - Never cache resolved resources
+  # "auto"   - Only cache bundles with digest references (@sha256:...)
+  # default-cache-mode: "auto"
 
 ---
 # Copyright 2022 The Tekton Authors
@@ -25650,6 +25801,11 @@ data:
   allowed-namespaces: ""
   # An optional comma-separated list of namespaces which the resolver is blocked from accessing. Defaults to empty, meaning all namespaces are allowed.
   blocked-namespaces: ""
+  # Optional: Default cache mode for this resolver. Valid values: "always", "never", "auto" (default: "auto")
+  # "always" - Always cache resolved resources
+  # "never"  - Never cache resolved resources (recommended for cluster resolver since resources are mutable)
+  # "auto"   - Never cache for cluster resolver (same as "never")
+  # default-cache-mode: "auto"
 
 ---
 # Copyright 2019 The Tekton Authors
@@ -25901,6 +26057,11 @@ data:
   # The default organization to look for repositories under when using the authenticated API,
   # if not specified in the resolver parameters. Optional.
   default-org: ""
+  # Optional: Default cache mode for this resolver. Valid values: "always", "never", "auto" (default: "auto")
+  # "always" - Always cache resolved resources
+  # "never"  - Never cache resolved resources
+  # "auto"   - Only cache when revision is a commit hash
+  # default-cache-mode: "auto"
 
 ---
 # Copyright 2023 The Tekton Authors
@@ -25967,6 +26128,36 @@ data:
   default-type: "artifact"
 
 ---
+# Copyright 2025 The Tekton Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: resolver-cache-config
+  namespace: tekton-pipelines-resolvers
+  labels:
+    app.kubernetes.io/component: resolvers
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-pipelines
+data:
+  # Maximum number of entries in the resolver cache
+  max-size: "1000"
+  # Time-to-live for cache entries (examples: 5m, 10m, 1h)
+  ttl: "5m"
+
+---
 # Copyright 2022 The Tekton Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25989,12 +26180,12 @@ metadata:
     app.kubernetes.io/name: resolvers
     app.kubernetes.io/component: resolvers
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
-    version: "v1.0.0"
+    version: "v1.6.0"
 spec:
   replicas: 1
   selector:
@@ -26009,13 +26200,13 @@ spec:
         app.kubernetes.io/name: resolvers
         app.kubernetes.io/component: resolvers
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v1.0.0"
+        app.kubernetes.io/version: "v1.6.0"
         app.kubernetes.io/part-of: tekton-pipelines
         # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v1.0.0"
+        pipeline.tekton.dev/release: "v1.6.0"
         # labels below are related to istio and should not be used for resource lookup
         app: tekton-pipelines-resolvers
-        version: "v1.0.0"
+        version: "v1.6.0"
     spec:
       affinity:
         podAntiAffinity:
@@ -26032,7 +26223,12 @@ spec:
       serviceAccountName: tekton-pipelines-resolvers
       containers:
         - name: controller
-          image: ghcr.io/tektoncd/pipeline/resolvers-ff86b24f130c42b88983d3c13993056d:v1.0.0@sha256:26598b51b993dcdb4d1576b95d52fe9bfd497ecc8f9296654bc444013b033626
+          image: ghcr.io/tektoncd/pipeline/resolvers-ff86b24f130c42b88983d3c13993056d:v1.6.0@sha256:e77cc55c6e507c393be029335c765c6c34238ee48b49379428da3d01713e9293
+          command:
+            - /sbin/tini
+            - --
+            - /ko-app/resolvers
+          args: []
           resources:
             requests:
               cpu: 100m
@@ -26070,11 +26266,10 @@ spec:
               value: tekton.dev/resolution
             - name: PROBES_PORT
               value: "8080"
-              # Override this env var to set a private hub api endpoint
+            - name: TEKTON_HUB_API
+              value: "" # Override this env var to set a private hub api endpoint
             - name: ARTIFACT_HUB_API
               value: "https://artifacthub.io/"
-            - name: TEKTON_HUB_API
-              value: "https://api.hub.tekton.dev/"
           volumeMounts:
             - name: tmp-clone-volume
               mountPath: "/tmp"
@@ -26082,6 +26277,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            runAsUser: 65532
             capabilities:
               drop:
                 - "ALL"
@@ -26113,13 +26309,13 @@ metadata:
     app.kubernetes.io/name: resolvers
     app.kubernetes.io/component: resolvers
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
     app: tekton-pipelines-remote-resolvers
-    version: "v1.0.0"
+    version: "v1.6.0"
   name: tekton-pipelines-remote-resolvers
   namespace: tekton-pipelines-resolvers
 spec:
@@ -26163,12 +26359,12 @@ metadata:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
-    version: "v1.0.0"
+    version: "v1.6.0"
 spec:
   minReplicas: 1
   maxReplicas: 5
@@ -26211,12 +26407,12 @@ metadata:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
-    version: "v1.0.0"
+    version: "v1.6.0"
 spec:
   selector:
     matchLabels:
@@ -26230,13 +26426,13 @@ spec:
         app.kubernetes.io/name: webhook
         app.kubernetes.io/component: webhook
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v1.0.0"
+        app.kubernetes.io/version: "v1.6.0"
         app.kubernetes.io/part-of: tekton-pipelines
         # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v1.0.0"
+        pipeline.tekton.dev/release: "v1.6.0"
         # labels below are related to istio and should not be used for resource lookup
         app: tekton-pipelines-webhook
-        version: "v1.0.0"
+        version: "v1.6.0"
     spec:
       affinity:
         nodeAffinity:
@@ -26263,7 +26459,7 @@ spec:
         - name: webhook
           # This is the Go import path for the binary that is containerized
           # and substituted here.
-          image: ghcr.io/tektoncd/pipeline/webhook-d4749e605405422fd87700164e31b2d1:v1.0.0@sha256:460ce6c48202ab21cf5d83253a74fa22f87ea511aa66606b4be8168ef3ecfe7d
+          image: ghcr.io/tektoncd/pipeline/webhook-d4749e605405422fd87700164e31b2d1:v1.6.0@sha256:c326a2f5c4988abcfd67b5a8edd5525da2110f2b8d3f6c50c27f8d25a721e566
           # Resource request required for autoscaler to take any action for a metric
           resources:
             requests:
@@ -26360,13 +26556,13 @@ metadata:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/version: "v1.6.0"
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v1.0.0"
+    pipeline.tekton.dev/release: "v1.6.0"
     # labels below are related to istio and should not be used for resource lookup
     app: tekton-pipelines-webhook
-    version: "v1.0.0"
+    version: "v1.6.0"
   name: tekton-pipelines-webhook
   namespace: tekton-pipelines
 spec:

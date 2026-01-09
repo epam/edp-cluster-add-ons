@@ -1,0 +1,66 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: results
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.8-0
+  postgresVersion: 14
+
+  users:
+    - name: results
+      databases:
+        - results
+      options: "SUPERUSER"
+
+  instances:
+    - name: instance
+      replicas: 1
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 2Gi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: results
+                  postgres-operator.crunchydata.com/instance-set: instance1
+              topologyKey: kubernetes.io/hostname
+
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.45-0
+      global:
+        repo1-retention-full: "2"
+        repo1-retention-full-type: time
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 2Gi
+
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        parameters:
+          jit: false
+          maintenance_work_mem: 256MB
+          max_connections: '100'
+          random_page_cost: 1.1
+          shared_buffers: 256MB
+          shared_preload_libraries: pgaudit,pg_stat_statements,pgnodemx
+          temp_buffers: 8MB
+          work_mem: 32MB
+        pg_hba:
+          - "host all all 0.0.0.0/0 trust"
+        use_pg_rewind: true
+    leaderLeaseDurationSeconds: 30
+    port: 8008
+    syncPeriodSeconds: 10
