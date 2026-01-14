@@ -23,10 +23,11 @@ Nexus Community Edition chart for Kubernetes
 | database.existigSecret | string | `"nexus-ce-pguser-nexus-ce"` | Name of the secret that contains the database credentials. |
 | database.keys | object | `{"dbname":"dbname","password":"password","port":"5432","url":"host","username":"user"}` | This block configures the database connection secret fields name for Nexus CE. |
 | database.pgo | object | `{"enable":true}` | Use PostgreSQL operator to create and manage database. |
-| docker.enabled | bool | `true` |  |
-| docker.registries[0].host | string | `"nexus-ce-ci-container.example.com"` |  |
-| docker.registries[0].name | string | `"example"` |  |
-| docker.registries[0].port | int | `5000` |  |
+| docker | object | `{"enabled":true,"registries":[{"host":"nexus-ce-ci-container.example.com","name":"example","port":5000}]}` | This block configures Docker registries for Nexus CE. |
+| docker.enabled | bool | `true` | Enable Docker registries support. |
+| docker.registries[0] | object | `{"host":"nexus-ce-ci-container.example.com","name":"example","port":5000}` | Unique name for the Docker registry.    Used to generate service and ingress resources.    If multiple registries are defined, each name must be unique    and reflect the registry's purpose (e.g., environment or artifact type). |
+| docker.registries[0].host | string | `"nexus-ce-ci-container.example.com"` | Hostname for the Docker registry ingress. |
+| docker.registries[0].port | int | `5000` | Port for the Docker registry service. |
 | eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
 | eso.aws.region | string | `"eu-central-1"` | AWS region. |
 | eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
