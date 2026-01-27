@@ -317,11 +317,11 @@ apiVersion: v2
 name: ingress-nginx
 description: A Helm chart for Nginx Ingress Controller
 type: application
-version: 4.12.1
-appVersion: "1.12.1"
+version: 4.14.21
+appVersion: "1.14.2"
 dependencies:
 - name: ingress-nginx
-  version: 4.12.1
+  version: 4.14.2
   repository: https://kubernetes.github.io/ingress-nginx
 ```
 
