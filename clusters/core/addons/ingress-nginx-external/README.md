@@ -1,12 +1,8 @@
 # ingress-nginx
 
-
-
 ![Version: 4.14.2](https://img.shields.io/badge/Version-4.14.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
 A Helm chart for Nginx Ingress Controller
-
-
 
 # Internal and External Ingress Controllers
 
