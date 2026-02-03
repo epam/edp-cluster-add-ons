@@ -562,7 +562,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           name: api
@@ -570,7 +570,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           securityContext:
@@ -587,7 +587,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           volumeMounts:
@@ -607,6 +607,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
         - name: pipeline-logs
           persistentVolumeClaim:
             claimName: logs
@@ -685,6 +686,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -734,8 +736,8 @@ spec:
             - $(TEKTON_RESULTS_API_SERVICE)
             - -auth_mode
             - $(AUTH_MODE)
-            - '-logs_api'
-            - '-summary_labels=tekton.dev/pipeline,app.edp.epam.com/codebase,app.edp.epam.com/codebasebranch,app.edp.epam.com/pipelinetype'
+            - "-logs_api"
+            - "-summary_labels=tekton.dev/pipeline,app.edp.epam.com/codebase,app.edp.epam.com/codebasebranch,app.edp.epam.com/pipelinetype"
           env:
             - name: SYSTEM_NAMESPACE
               valueFrom:
@@ -780,6 +782,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
