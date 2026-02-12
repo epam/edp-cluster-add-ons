@@ -1,0 +1,29 @@
+{{- if and (index .Values "gitlab-runner") (index .Values "gitlab-runner" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-gitlab-runner
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/gitlab-runner
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: gitlab-runner
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "gitlab-runner" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ index .Values "gitlab-runner" "createNamespace" }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

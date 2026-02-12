@@ -89,6 +89,13 @@ gitfusion:
   enable: false
   namespace: krci
 
+# -- GitLab Runner
+gitlab-runner:
+  createNamespace: false
+  enable: false
+  namespace: gitlab-runner
+
+# -- Harbor
 harbor:
   createNamespace: false
   enable: false

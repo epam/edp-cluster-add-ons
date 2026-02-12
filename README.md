@@ -184,6 +184,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
 | fluent-bit                   | 0.53.0    | 4.0.7        | logging                | False             | False    |
 | gitfusion                    | 0.1.1     | 0.1.1        | krci                   | False             | False    |
+| gitlab-runner                | 0.85.0    | 18.8.0       | gitlab-runner          | False             | False    |
 | harbor                       | 0.1.0     | 1.17.2       | harbor                 | False             | False    |
 | harbor-ha                    | 1.17.2    | 2.9.0        | harbor                 | False             | False    |
 | harbor-ha-okd                | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
