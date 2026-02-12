@@ -52,6 +52,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | gitfusion.createNamespace | bool | `false` |  |
 | gitfusion.enable | bool | `false` |  |
 | gitfusion.namespace | string | `"krci"` |  |
+| gitlab-runner.createNamespace | bool | `false` |  |
+| gitlab-runner.enable | bool | `false` |  |
+| gitlab-runner.namespace | string | `"gitlab-runner"` |  |
 | harbor-ha-okd.createNamespace | bool | `false` |  |
 | harbor-ha-okd.enable | bool | `false` |  |
 | harbor-ha-okd.namespace | string | `"harbor"` |  |
