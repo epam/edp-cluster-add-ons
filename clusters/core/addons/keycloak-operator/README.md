@@ -1,6 +1,6 @@
 # keycloak-operator
 
-![Version: 1.29.0](https://img.shields.io/badge/Version-1.29.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.29.0](https://img.shields.io/badge/AppVersion-1.29.0-informational?style=flat-square)
+![Version: 1.32.0](https://img.shields.io/badge/Version-1.32.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.32.0](https://img.shields.io/badge/AppVersion-1.32.0-informational?style=flat-square)
 
 A Helm chart for keycloak-operator
 
@@ -8,7 +8,7 @@ A Helm chart for keycloak-operator
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | keycloak-operator | 1.29.0 |
+| https://epam.github.io/edp-helm-charts/stable | keycloak-operator | 1.32.0 |
 
 ## Values
 
