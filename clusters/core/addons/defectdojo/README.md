@@ -1,6 +1,6 @@
 # defectdojo
 
-![Version: 1.6.205](https://img.shields.io/badge/Version-1.6.205-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.50.0](https://img.shields.io/badge/AppVersion-2.50.0-informational?style=flat-square)
+![Version: 1.9.12](https://img.shields.io/badge/Version-1.9.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.55.2](https://img.shields.io/badge/AppVersion-2.55.2-informational?style=flat-square)
 
 ## Secret management
 
@@ -69,7 +69,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.6.205 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.9.12 |
 
 ## Values
 
@@ -92,13 +92,17 @@ AWS Parameter Store structure:
 | defectdojo.fullnameOverride | string | `"defectdojo"` |  |
 | defectdojo.host | string | `"defectdojo.example.com"` |  |
 | defectdojo.initializer.run | bool | `true` |  |
+| defectdojo.postgresServer | string | `"defectdojo-primary.defectdojo.svc"` |  |
 | defectdojo.postgresql.auth.existingSecret | string | `"defectdojo-pguser-defectdojo"` |  |
 | defectdojo.postgresql.auth.secretKeys.adminPasswordKey | string | `"password"` |  |
 | defectdojo.postgresql.auth.secretKeys.userPasswordKey | string | `"password"` |  |
 | defectdojo.postgresql.enabled | bool | `false` |  |
-| defectdojo.postgresql.postgresServer | string | `"defectdojo-primary.defectdojo.svc"` |  |
-| defectdojo.redis.master.persistence.size | string | `"2Gi"` |  |
 | defectdojo.site_url | string | `"https://defectdojo.example.com"` |  |
+| defectdojo.valkey.auth.existingSecret | string | `"defectdojo-valkey-specific"` |  |
+| defectdojo.valkey.auth.existingSecretPasswordKey | string | `"valkey-password"` |  |
+| defectdojo.valkey.enabled | bool | `true` |  |
+| defectdojo.valkey.persistence.size | string | `"2Gi"` |  |
+| defectdojo.valkey.service.port | int | `6379` |  |
 | eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
 | eso.aws.region | string | `"eu-central-1"` | AWS region. |
 | eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
