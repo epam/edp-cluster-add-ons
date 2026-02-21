@@ -20,20 +20,26 @@ defectdojo:
       persistentVolumeClaim:
         size: 2Gi
 
+  # External PostgreSQL (Crunchy PostgresCluster)
+  postgresServer: "defectdojo-primary.defectdojo.svc"
   postgresql:
-    # Crunch PostgresCluster is used as the External Postgresql database
     enabled: false
-    postgresServer: "defectdojo-primary.defectdojo.svc"
     auth:
       existingSecret: defectdojo-pguser-defectdojo
       secretKeys:
         adminPasswordKey: password
         userPasswordKey: password
 
-  redis:
-    master:
-      persistence:
-        size: 2Gi
+  # Valkey replaces Redis since chart 1.9.0
+  valkey:
+    enabled: true
+    auth:
+      existingSecret: defectdojo-valkey-specific
+      existingSecretPasswordKey: valkey-password
+    service:
+      port: 6379
+    persistence:
+      size: 2Gi
 
   # SSO Enablement. for additional options, please consult https://defectdojo.github.io/django-DefectDojo/integrations/social-authentication/#keycloak
   # Keycloak integration also requires DD_SOCIAL_AUTH_KEYCLOAK_SECRET to be defined, we recommend to create secret with name `defectdojo-extrasecrets`

@@ -2,14 +2,14 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: defectdojo-redis-specific
+  name: defectdojo-valkey-specific
 spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
     name: {{ .Release.Name }}
   data:
-    - secretKey: redis-password
+    - secretKey: valkey-password
       remoteRef:
         key: {{ .Values.eso.secretPath }}
         property: defectdojo.redis-password
