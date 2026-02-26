@@ -92,6 +92,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krakend.createNamespace | bool | `false` |  |
 | krakend.enable | bool | `false` |  |
 | krakend.namespace | string | `"krci-krakend"` |  |
+| kube-audit-rest | object | `{"createNamespace":false,"enable":false,"namespace":"kube-audit-rest"}` | Kube Audit REST - audit logger for k8s API mutations |
 | kuberocketci-pipelines.createNamespace | bool | `false` |  |
 | kuberocketci-pipelines.enable | bool | `false` |  |
 | kuberocketci-pipelines.namespace | string | `"krci"` |  |

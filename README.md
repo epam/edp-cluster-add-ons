@@ -200,6 +200,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |
 | keycloak-operator            | 1.29.0    | 1.29.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
+| kube-audit-rest              | 1.0.28    | 1.0.28       | kube-audit-rest        | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
 | kuberocketci                 | 3.12.4    | 3.12.4       | krci                   | False             | False    |

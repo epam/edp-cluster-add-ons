@@ -1,0 +1,10 @@
+{{- if .Values.tls.certManager.enabled }}
+{{- if eq .Values.tls.certManager.issuerRef.kind "Issuer" }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.tls.certManager.issuerRef.name }}
+spec:
+  selfSigned: {}
+{{- end }}
+{{- end }}
