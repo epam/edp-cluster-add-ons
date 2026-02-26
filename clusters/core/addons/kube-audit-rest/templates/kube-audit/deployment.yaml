@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-audit-rest
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - "/kube-audit-rest"
+          args:
+            {{- toYaml .Values.args | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.serverPort }}
+              protocol: TCP
+              name: https
+            - containerPort: {{ .Values.metricsPort }}
+              protocol: TCP
+              name: metrics
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: certs
+              mountPath: "/etc/tls"
+              readOnly: true
+            - name: tmp
+              mountPath: "/tmp"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: certs
+          secret:
+            secretName: {{ .Release.Name }}-tls
+        - name: tmp
+          emptyDir:
+            sizeLimit: {{ .Values.tmpSizeLimit }}

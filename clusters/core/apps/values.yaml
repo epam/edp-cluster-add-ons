@@ -176,6 +176,12 @@ krakend:
   enable: false
   namespace: krci-krakend
 
+# -- Kube Audit REST - audit logger for k8s API mutations
+kube-audit-rest:
+  createNamespace: false
+  enable: false
+  namespace: kube-audit-rest
+
 kuberocketci-pipelines:
   createNamespace: false
   enable: false
