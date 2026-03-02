@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tekton-results-clean-old-logs
+  namespace: tekton-pipelines
+  labels:
+    app.kubernetes.io/part-of: tekton-results
+spec:
+  schedule: "0 18 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/part-of: tekton-results
+        spec:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: tekton-results-api
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: cleanup
+              image: alpine:3.23
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  find /tekton-results/logs/ -name lost+found -prune -o -type f -mtime +30 -exec rm -f {} +
+                  find /tekton-results/logs/ -name lost+found -prune -o -mindepth 1 -empty -exec rmdir {} +
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                seccompProfile:
+                  type: RuntimeDefault
+              volumeMounts:
+                - name: pipeline-logs
+                  mountPath: /tekton-results/logs
+          volumes:
+            - name: pipeline-logs
+              persistentVolumeClaim:
+                claimName: logs
