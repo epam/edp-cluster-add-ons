@@ -435,7 +435,7 @@ metadata:
 apiVersion: v1
 data:
   defaultRetention: "30"
-  runAt: 5 5 * * 0
+  runAt: 0 18 * * *
 kind: ConfigMap
 metadata:
   labels:
