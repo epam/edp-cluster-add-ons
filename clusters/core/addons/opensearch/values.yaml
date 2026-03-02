@@ -431,10 +431,12 @@ fluent-bit:
       [INPUT]
           Name tail
           Path /var/log/containers/*.log
+          Exclude_Path /var/log/containers/*fluent*.log,/var/log/containers/*kube-audit-rest*.log
           multiline.parser docker, cri
           Tag kube.*
-          Mem_Buf_Limit 5MB
+          Mem_Buf_Limit 64MB
           Skip_Long_Lines On
+          Skip_Empty_Lines On
 
       [INPUT]
           Name systemd
@@ -443,13 +445,24 @@ fluent-bit:
           Read_From_Tail On
 
       [INPUT]
-          # Grab EDP namespace logs to separate index for development team
+          # Grab EDP-* namespace logs to seprate index for development team
           Name tail
           Tag kube.edp.*
           Path /var/log/containers/*edp*.log
           multiline.parser docker, cri
-          Mem_Buf_Limit 5MB
+          Mem_Buf_Limit 64MB
           Skip_Long_Lines On
+          Skip_Empty_Lines On
+
+      [INPUT]
+          # Grab kube-audit-rest logs to separate index for audit events
+          Name tail
+          Tag kube.audit.*
+          Path /var/log/containers/*kube-audit-rest*.log
+          multiline.parser docker, cri
+          Mem_Buf_Limit 64MB
+          Skip_Long_Lines On
+          Skip_Empty_Lines On
 
     filters: |
       [FILTER]
@@ -467,6 +480,17 @@ fluent-bit:
           Merge_Log On
           Keep_Log Off
           Kube_Tag_Prefix  kube.edp.var.log.containers.
+          K8S-Logging.Parser On
+          K8S-Logging.Exclude On
+
+      # START of kube-audit-rest logs chain
+      [FILTER]
+          Name kubernetes
+          Buffer_Size 512k
+          Match kube.audit.*
+          Merge_Log On
+          Keep_Log Off
+          Kube_Tag_Prefix kube.audit.var.log.containers.
           K8S-Logging.Parser On
           K8S-Logging.Exclude On
 
@@ -514,6 +538,23 @@ fluent-bit:
           HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}
           Logstash_Format On
           Logstash_Prefix logstash-edp
+          Time_Key        @timestamp
+          Replace_Dots    On
+          Retry_Limit     False
+          Trace_Error     Off
+          Suppress_Type_Name On
+          tls             On
+          tls.verify      Off
+
+      [OUTPUT]
+          Name            es
+          Match           kube.audit.*
+          Host            opensearch-cluster-master
+          Port            9200
+          HTTP_User       ${ES_SUPERUSER_USER}
+          HTTP_Passwd     ${ES_SUPERUSER_PASSWORD}
+          Logstash_Format On
+          Logstash_Prefix logstash-kube-audit
           Time_Key        @timestamp
           Replace_Dots    On
           Retry_Limit     False
