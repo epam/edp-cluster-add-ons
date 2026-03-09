@@ -4,7 +4,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: portal-scaler
+  name: krci-portal-scaler
   namespace: {{ $namespace }}
 spec:
   pollingInterval: {{ $.Values.pollingInterval }}
@@ -14,7 +14,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: portal
+    name: krci-portal
   triggers:
     - type: prometheus
       metadata:
@@ -37,7 +37,7 @@ spec:
             rate(
               nginx_ingress_controller_requests{
                 exported_namespace="{{ $namespace }}",
-                ingress="portal",
+                ingress="krci-portal",
                 status="503"
               }[{{ $timeInterval }}s]
             )
@@ -45,7 +45,7 @@ spec:
             rate(
               nginx_ingress_controller_requests{
                 exported_namespace="{{ $namespace }}",
-                ingress="portal",
+                ingress="krci-portal",
                 status="201"
               }[{{ $timeInterval }}s]
             )

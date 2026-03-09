@@ -194,7 +194,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | karma-dashboard              | 2.11.0    | v0.121       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
 | karpenter                    | 1.8.4     | 1.8.4        | karpenter              | False             | False    |
-| keda-tenants                 | 0.1.0     | 0.1.0        | keda                   | False             | False    |
+| keda-tenants                 | 0.1.2     | 0.1.0        | keda                   | False             | False    |
 | keda                         | 2.17.2    | 2.17.2       | keda                   | False             | False    |
 | keycloak                     | 2.3.0     | 24.0.4       | security               | False             | False    |
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |
@@ -216,7 +216,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | prometheus-operator          | 77.6.0    | v0.85.0      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 11.3.1    | v0.27.0      | monitoring             | False             | False    |
 | redis-operator               | 3.3.0     | 1.3.0        | redis-operator         | False             | False    |
-| report-portal                | 25.8.29   | 25.1.8       | report-portal          | False             | False    |
+| report-portal                | 25.8.30   | 25.1.8       | report-portal          | False             | False    |
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
 | sonar-operator               | 3.3.0     | 3.3.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |

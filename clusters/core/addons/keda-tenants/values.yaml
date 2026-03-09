@@ -1,9 +1,22 @@
 kedaTenants:
   # -- This value specifies the namespaces where KubeRocketCI deployed.
   namespaces:
-  - krci
-# -- Interval in seconds to scale resources.
-timeInterval: '7200'
+    - krci
+
+# -- Lookback window for activity metrics, in seconds.
+timeInterval: "3600"
+# -- Minimum number of replicas for the scaled workload.
+minReplicaCount: 0
+# -- Maximum number of replicas for the scaled workload.
+maxReplicaCount: 1
+# -- Number of newly created pods within the lookback window required to trigger scaling.
+thresholdPods: 1
+# -- Number of matching HTTP requests within the lookback window required to trigger scaling.
+thresholdRequests: 1
+# -- Interval in seconds for KEDA to poll Prometheus metrics.
+pollingInterval: 30
+# -- Idle period in seconds before KEDA scales the workload down to the minimum replica count.
+cooldownPeriod: 300
 
 # -- This parameter specifies which Git servers are installed in KubeRocketCI.
 # -- https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L2
