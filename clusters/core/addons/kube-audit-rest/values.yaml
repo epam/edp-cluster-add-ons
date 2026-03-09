@@ -1,0 +1,76 @@
+# kube-audit-rest configuration
+# https://github.com/RichardoC/kube-audit-rest
+
+image:
+  repository: ghcr.io/richardoc/kube-audit-rest
+  tag: "1.0.26-distroless"
+  pullPolicy: IfNotPresent
+
+replicas: 1
+
+# -- kube-audit-rest binary args
+args:
+  - "--logger-filename=/dev/stdout"
+
+# -- HTTPS server port
+serverPort: 9090
+
+# -- Prometheus metrics port
+metricsPort: 55555
+
+resources:
+  requests:
+    cpu: "2m"
+    memory: "10Mi"
+  limits:
+    cpu: "1"
+    memory: "32Mi"
+
+# -- Volume size limit for audit log tmp storage
+tmpSizeLimit: 2Gi
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+podSecurityContext:
+  runAsUser: 255999
+  runAsGroup: 255999
+  fsGroup: 255999
+
+automountServiceAccountToken: false
+
+# -- TLS certificate configuration
+# kube-audit-rest requires TLS for the webhook
+tls:
+  # -- Use cert-manager to generate certificates
+  certManager:
+    enabled: true
+    issuerRef:
+      name: selfsigned-issuer
+      kind: Issuer
+  # -- Certificate duration (e.g. 8760h = 1 year)
+  duration: 8760h
+  # -- Certificate renew before expiry
+  renewBefore: 720h
+
+service:
+  type: ClusterIP
+  port: 443
+
+# -- ValidatingWebhookConfiguration settings
+webhook:
+  # -- Fail open so audit failures don't block API calls
+  failurePolicy: Ignore
+  # -- Timeout in seconds for webhook calls
+  timeoutSeconds: 1
+  # -- Rules for which API calls to audit
+  rules:
+    - operations: ["CREATE", "UPDATE", "DELETE"]
+      apiGroups: ["*"]
+      apiVersions: ["*"]
+      resources: ["*/*"]
+      scope: "*"
