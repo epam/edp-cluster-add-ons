@@ -10,27 +10,58 @@ metadata:
   name: el-edp-{{ $gitProvider }}-scaler
   namespace: {{ $namespace }}
 spec:
+  pollingInterval: {{ $globalValues.pollingInterval }}
+  cooldownPeriod: {{ $globalValues.cooldownPeriod }}
+  minReplicaCount: {{ $globalValues.minReplicaCount }}
+  maxReplicaCount: {{ $globalValues.maxReplicaCount }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: el-edp-{{ $gitProvider }}
-  minReplicaCount: 0
-  maxReplicaCount: 1
   triggers:
     - type: prometheus
       metadata:
         serverAddress: http://prom-prometheus.monitoring.svc:9090
         metricName: pods_created_last_{{ $timeInterval }}_sec
         query: |
-          count(kube_pod_created{namespace="{{ $namespace }}", pod!~"tekton-resource-pruner.*"} > time() - {{ $timeInterval }}) or vector(0)
-        threshold: "1"
+          count(
+            kube_pod_created{
+              namespace="{{ $namespace }}",
+              pod!~"tekton-resource-pruner.*"
+            } > time() - {{ $timeInterval }}
+          ) or vector(0)
+        threshold: "{{ $globalValues.thresholdPods }}"
     - type: prometheus
       metadata:
         serverAddress: http://prom-prometheus.monitoring.svc:9090
         metricName: http_requests_to_portal_last_{{ $timeInterval }}_sec
         query: |
-          sum(rate(nginx_ingress_controller_requests{exported_namespace="{{ $namespace }}",ingress="portal",status="503"}[{{ $timeInterval }}s]) or rate(nginx_ingress_controller_requests{exported_namespace="{{ $namespace }}",ingress="portal",status="201"}[{{ $timeInterval }}s]))
-        threshold: "1"
+          sum(
+            rate(
+              nginx_ingress_controller_requests{
+                exported_namespace="{{ $namespace }}",
+                ingress=~"^(portal|krci-portal)$",
+                status="503"
+              }[{{ $timeInterval }}s]
+            )
+            or
+            rate(
+              nginx_ingress_controller_requests{
+                exported_namespace="{{ $namespace }}",
+                ingress="portal",
+                status="201"
+              }[{{ $timeInterval }}s]
+            )
+            or
+            rate(
+              nginx_ingress_controller_requests{
+                exported_namespace="{{ $namespace }}",
+                ingress="krci-portal",
+                status="200"
+              }[{{ $timeInterval }}s]
+            )
+          )
+        threshold: "{{ $globalValues.thresholdRequests }}"
 ---
 {{- end }}
 {{- end }}

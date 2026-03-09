@@ -12,6 +12,24 @@
 This application enables scaling of KubeRocketCI resources based on activity in the environment. It leverages Prometheus metrics to monitor the state of resources.
 Therefore, a configured Prometheus instance collecting cluster metrics is required for its operation, along with enabled metric export from the NGINX Ingress Controller.
 
+For krci-portal, the chart configures a dedicated KEDA `ScaledObject` that scales the `portal` deployment to zero after the configured idle period and scales it back up when new ingress requests arrive. The scaler uses two Prometheus triggers: recent pod creation in the tenant namespace and recent HTTP requests recorded by the NGINX Ingress Controller.
+Both portal triggers use the chart-wide `timeInterval`, so the portal scaler follows the same activity lookback window as the other ScaledObjects in this chart.
+The scale boundaries and reaction timing for the portal scaler are controlled by the same top-level values used elsewhere in the chart: `minReplicaCount`, `maxReplicaCount`, `pollingInterval`, `cooldownPeriod`, `thresholdPods`, and `thresholdRequests`.
+
+## Portal Scaling Tuning
+
+The `timeInterval` and `thresholdRequests` parameters should always be tuned together because the HTTP trigger compares the number of ingress requests received during the configured time window against the threshold.
+
+- `timeInterval=3600` and `thresholdRequests=1` means that a single matching request during the last hour is enough to keep `krci-portal` active or scale it up.
+- `timeInterval` also controls how long recently created pods in the tenant namespace keep the pod activity trigger active.
+- Increasing `timeInterval` while keeping the same `thresholdRequests` makes the scaler less aggressive for scale-down, because old traffic is considered active for longer.
+- Increasing `thresholdRequests` while keeping the same `timeInterval` makes scale-up stricter, because more requests are required within the same lookback window.
+- `thresholdPods` controls how many newly created pods must appear within the same lookback window before the pod activity trigger becomes active.
+- `cooldownPeriod` controls how long KEDA waits before scaling the deployment back to zero after activity disappears.
+- `pollingInterval` controls how often KEDA evaluates Prometheus metrics; smaller values react faster but query Prometheus more often.
+
+Current default configuration for `krci-portal` scale-to-zero is `timeInterval=3600`, `thresholdPods=1`, `thresholdRequests=1`, `minReplicaCount=0`, `maxReplicaCount=1`, `pollingInterval=30`, and `cooldownPeriod=300`. Adjust these values together based on whether you want faster wake-up, more stable replicas, or more aggressive resource savings.
+
 {{ template "chart.sourcesSection" . }}
 
 {{ template "chart.requirementsSection" . }}

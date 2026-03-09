@@ -41,7 +41,7 @@ chart-repos:
   - opensearch=https://opensearch-project.github.io/helm-charts
   - opentelemetry=https://open-telemetry.github.io/opentelemetry-helm-charts
   - prometheus-community=https://prometheus-community.github.io/helm-charts
-  - reportportal=https://reportportal.io/kubernetes
+  - reportportal=https://k8s.reportportal.io
   - sonatype=https://sonatype.github.io/helm3-charts
   - sonarsource=https://SonarSource.github.io/helm-chart-sonarqube
   - spotahome=https://spotahome.github.io/redis-operator
