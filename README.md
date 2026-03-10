@@ -194,7 +194,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | karma-dashboard              | 2.11.0    | v0.121       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
 | karpenter                    | 1.8.4     | 1.8.4        | karpenter              | False             | False    |
-| keda-tenants                 | 0.1.0     | 0.1.0        | keda                   | False             | False    |
+| keda-tenants                 | 0.1.1     | 0.1.0        | keda                   | False             | False    |
 | keda                         | 2.17.2    | 2.17.2       | keda                   | False             | False    |
 | keycloak                     | 2.3.0     | 24.0.4       | security               | False             | False    |
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |

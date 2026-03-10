@@ -5,6 +5,22 @@ kedaTenants:
 # -- Interval in seconds to scale resources.
 timeInterval: '7200'
 
+portalScaler:
+  # -- Interval in seconds for KEDA to poll Prometheus for krci-portal activity.
+  pollingInterval: 30
+  # -- Idle period in seconds before KEDA scales krci-portal down to zero.
+  cooldownPeriod: 300
+  # -- Time window in seconds for the portal-specific pod activity trigger.
+  activityTimeInterval: 300
+  # -- Minimum number of replicas for krci-portal.
+  minReplicaCount: 0
+  # -- Maximum number of replicas for krci-portal.
+  maxReplicaCount: 1
+  # -- Prometheus time window in seconds used to detect recent ingress requests to krci-portal.
+  requestWindow: 60
+  # -- Number of requests within the requestWindow required to keep or scale krci-portal up.
+  requestThreshold: '1'
+
 # -- This parameter specifies which Git servers are installed in KubeRocketCI.
 # -- https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L2
 gitProviders:

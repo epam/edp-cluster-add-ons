@@ -1,11 +1,29 @@
 # keda-tenants
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## General Concepts
 
 This application enables scaling of KubeRocketCI resources based on activity in the environment. It leverages Prometheus metrics to monitor the state of resources.
 Therefore, a configured Prometheus instance collecting cluster metrics is required for its operation, along with enabled metric export from the NGINX Ingress Controller.
+
+For krci-portal, the chart configures a dedicated KEDA `ScaledObject` that scales the `portal` deployment to zero after the configured idle period and scales it back up when new ingress requests arrive. The scaler uses two Prometheus triggers: recent pod creation in the tenant namespace and recent HTTP requests recorded by the NGINX Ingress Controller.
+For the HTTP trigger, the chart ignores `HEAD` and `OPTIONS` requests to reduce noise from technical traffic while still allowing real user requests to wake the portal up.
+The pod activity trigger uses `portalScaler.activityTimeInterval`, so krci-portal can use a shorter activity window without changing the global `timeInterval` used by other ScaledObjects in this chart.
+
+## Portal Scaling Tuning
+
+The `portalScaler.requestWindow` and `portalScaler.requestThreshold` parameters should always be tuned together because the HTTP trigger compares the number of ingress requests received during the configured time window against the threshold.
+
+- `requestWindow=60` and `requestThreshold=1` means that a single request during the last 60 seconds is enough to keep `krci-portal` active or scale it up.
+- `activityTimeInterval` controls how long recently created pods in the tenant namespace keep the pod activity trigger active.
+- The HTTP trigger counts ingress traffic except `HEAD` and `OPTIONS`, so routine technical checks are less likely to keep the portal unnecessarily active.
+- Increasing `requestWindow` while keeping the same `requestThreshold` makes the scaler less aggressive for scale-down, because old traffic is considered active for longer.
+- Increasing `requestThreshold` while keeping a short `requestWindow` makes scale-up stricter, because more requests are required in a shorter period.
+- `cooldownPeriod` controls how long KEDA waits before scaling the deployment back to zero after activity disappears.
+- `pollingInterval` controls how often KEDA evaluates Prometheus metrics; smaller values react faster but query Prometheus more often.
+
+Recommended baseline for `krci-portal` scale-to-zero is `activityTimeInterval=300`, `requestWindow=60`, `requestThreshold=1`, `pollingInterval=30`, and `cooldownPeriod=300`. Adjust these values together based on whether you want faster wake-up, more stable replicas, or more aggressive resource savings.
 
 ## Values
 
@@ -13,4 +31,11 @@ Therefore, a configured Prometheus instance collecting cluster metrics is requir
 |-----|------|---------|-------------|
 | gitProviders | list | `["github"]` | https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L2 |
 | kedaTenants.namespaces | list | `["krci"]` | This value specifies the namespaces where KubeRocketCI deployed. |
+| portalScaler.activityTimeInterval | int | `300` | Time window in seconds for the portal-specific pod activity trigger. |
+| portalScaler.cooldownPeriod | int | `300` | Idle period in seconds before KEDA scales krci-portal down to zero. |
+| portalScaler.maxReplicaCount | int | `1` | Maximum number of replicas for krci-portal. |
+| portalScaler.minReplicaCount | int | `0` | Minimum number of replicas for krci-portal. |
+| portalScaler.pollingInterval | int | `30` | Interval in seconds for KEDA to poll Prometheus for krci-portal activity. |
+| portalScaler.requestThreshold | string | `"1"` | Number of requests within the requestWindow required to keep or scale krci-portal up. |
+| portalScaler.requestWindow | int | `60` | Prometheus time window in seconds used to detect recent ingress requests to krci-portal. |
 | timeInterval | string | `"7200"` | Interval in seconds to scale resources. |
