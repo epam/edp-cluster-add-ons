@@ -188,8 +188,8 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | harbor                       | 0.1.0     | 1.17.2       | harbor                 | False             | False    |
 | harbor-ha                    | 1.17.2    | 2.9.0        | harbor                 | False             | False    |
 | harbor-ha-okd                | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
-| ingress-nginx                | 4.14.2    | 1.14.2       | ingress-nginx          | False             | False    |
-| ingress-nginx-external       | 4.14.2    | 1.14.2       | ingress-nginx-external | False             | False    |
+| ingress-nginx                | 4.15.0    | 1.15.0       | ingress-nginx          | False             | False    |
+| ingress-nginx-external       | 4.15.0    | 1.15.0       | ingress-nginx-external | False             | False    |
 | jaeger-operator              | 2.57.0    | 1.61.0       | jaeger-operator        | False             | False    |
 | karma-dashboard              | 2.11.0    | v0.121       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
