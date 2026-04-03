@@ -269,7 +269,7 @@ data:
     SERVER_PORT=8080
     PROMETHEUS_PORT=9090
     PROMETHEUS_HISTOGRAM=false
-    TLS_PATH=/etc/tls
+    TLS_PATH=
     AUTH_DISABLE=true
     AUTH_IMPERSONATE=true
     LOG_LEVEL=info
@@ -562,7 +562,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           name: api
@@ -570,7 +570,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           securityContext:
@@ -587,7 +587,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTPS
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 10
           volumeMounts:
@@ -607,6 +607,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
         - name: pipeline-logs
           persistentVolumeClaim:
             claimName: logs
@@ -685,6 +686,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -754,7 +756,7 @@ spec:
             - name: TEKTON_RESULTS_API_SERVICE
               value: tekton-results-api-service.tekton-pipelines.svc.cluster.local:8080
             - name: AUTH_MODE
-              value: token
+              value: insecure
             - name: KUBERNETES_MIN_VERSION
               value: v1.28.0
           image: ghcr.io/tektoncd/results/watcher-83f971ea227fb24157c0c699b824a628:v0.17.2@sha256:f3da24ed5f4fdbcaf2ea2ea051be98c727959bdc0f77647df44f25ca8c8026e2
@@ -782,6 +784,7 @@ spec:
         - name: tls
           secret:
             secretName: tekton-results-tls
+            optional: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
