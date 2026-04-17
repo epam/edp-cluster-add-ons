@@ -737,7 +737,7 @@ spec:
             - -auth_mode
             - $(AUTH_MODE)
             - '-logs_api'
-            - '-summary_labels=tekton.dev/pipeline,app.edp.epam.com/codebase,app.edp.epam.com/codebasebranch,app.edp.epam.com/pipelinetype'
+            - '-summary_labels=tekton.dev/pipeline,app.edp.epam.com/codebase,app.edp.epam.com/codebasebranch,app.edp.epam.com/pipelinetype,app.edp.epam.com/cdpipeline,app.edp.epam.com/cdstage'
             - '-disable_storing_incomplete_runs'
             - '-completed_run_grace_period=1h'
           env:
