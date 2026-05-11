@@ -70,8 +70,8 @@ AWS Parameter Store structure:
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | minio | 17.0.16 |
 | https://charts.bitnami.com/bitnami | rabbitmq | 16.0.11 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.35.0 |
 | https://k8s.reportportal.io | reportportal | 25.8.29 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.35.0 |
 
 ## Values
 
