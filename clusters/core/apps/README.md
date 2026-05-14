@@ -165,6 +165,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | tekton.createNamespace | bool | `false` |  |
 | tekton.enable | bool | `false` |  |
 | tekton.namespace | string | `"tekton-pipelines"` |  |
+| trivy-operator.createNamespace | bool | `true` |  |
+| trivy-operator.enable | bool | `false` |  |
+| trivy-operator.namespace | string | `"trivy-system"` |  |
 | vault-kms.createNamespace | bool | `false` |  |
 | vault-kms.enable | bool | `false` |  |
 | vault-kms.namespace | string | `"vault"` |  |
