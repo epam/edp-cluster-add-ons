@@ -1,0 +1,71 @@
+trivy-operator:
+  # Scope: comma-separated namespaces to scan. Empty string = cluster-wide.
+  # Keeping this set to a single namespace is a safe guardrail for initial enablement.
+  # Widen to "" for cluster-wide scanning once you have reviewed excludeNamespaces below.
+  targetNamespaces: "argocd"
+  # Only effective when targetNamespaces is blank (cluster-wide mode).
+  excludeNamespaces: "kube-system,kube-public,kube-node-lease,trivy-system,sentinel,krci"
+
+  operator:
+    # Trivy runs in ClientServer mode: a shared in-cluster Trivy server holds the vulnerability DB
+    # in memory, scan jobs send extracted package lists to it. This avoids downloading the DB per scan job.
+    builtInTrivyServer: true
+
+    # Max parallel scan jobs. Each scan job pulls the container image from the registry,
+    # so this directly controls concurrent registry pulls and NAT traffic burst.
+    scanJobsConcurrentLimit: 3
+
+    # false = scan jobs run in trivy-system namespace (simpler RBAC, single registry secret).
+    # true = scan jobs run in the workload namespace (inherits imagePullSecrets, but needs RBAC per namespace).
+    scanJobsInSameNamespace: false
+
+    accessGlobalSecretsAndServiceAccount: false
+    # Registry credentials for image pulls during scans. Since scanJobsInSameNamespace=false,
+    # all scan jobs run in trivy-system and use this single secret for all registries.
+    privateRegistryScanSecretsNames:
+      trivy-system: docker-pull
+
+    # Reports (VulnerabilityReport, ConfigAuditReport, etc.) are auto-deleted after this TTL
+    # and regenerated on next scan cycle. 7 days = one full week of historical data.
+    scannerReportTTL: "168h"
+
+    # --- SBOM Cache: reduces NAT traffic by avoiding duplicate image pulls ---
+    # How it works: when a container image is scanned for the first time, the operator stores
+    # the package list (SBOM) as a ClusterSbomReport CR (~0.5-1 MB per unique image).
+    # When another workload uses the same image, the operator finds the cached SBOM and
+    # skips the scan job entirely — no image pull, no NAT traffic, no scan pod.
+    #
+    # Trade-off: ClusterSbomReport CRs consume etcd space (~1 MB × number of unique images),
+    # but eliminate duplicate image pulls through NAT gateway.
+    #
+    # SBOM CRs are purely internal to the operator — no external consumer reads them.
+    # The useful output is always VulnerabilityReport.
+    sbomGenerationEnabled: true
+    clusterSbomCacheEnabled: true
+    # Keep cached SBOMs alive for the same duration as reports. If cacheReportTTL < scannerReportTTL,
+    # the SBOM expires early and forces unnecessary rescans before reports themselves expire.
+    cacheReportTTL: "168h"
+
+  trivy:
+    severity: HIGH,CRITICAL
+    # Skip vulnerabilities with no available fix — reduces noise in reports.
+    ignoreUnfixed: true
+    # Kubernetes resource types subject to configuration audit (misconfiguration detection).
+    supportedConfigAuditKinds: "Workload,Service,Role,ClusterRole,Ingress"
+
+  nodeCollector:
+    useNodeSelector: false
+
+  compliance:
+    # Enable compliance scanning with Trivy's built-in policies.
+    specs:
+      - eks-cis-1.4
+      - k8s-nsa-1.0
+      - k8s-pss-baseline-0.1
+      - k8s-pss-restricted-0.1
+
+  # trivyOperator:
+  #   # Skip scanning pods with these labels
+  #   skipResourceByLabels: "tekton.dev/pipeline"
+  #   # Skip init containers for the scanner and node collector pods
+  #   skipInitContainers: true

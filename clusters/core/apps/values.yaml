@@ -298,6 +298,11 @@ tekton-dashboard:
   enable: false
   namespace: krci
 
+trivy-operator:
+  createNamespace: true
+  enable: false
+  namespace: trivy-system
+
 vault-kms:
   createNamespace: false
   enable: false

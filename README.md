@@ -224,6 +224,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | tekton                       | N/A       | N/A          | tekton-pipelines       | False             | False    |
 | tekton-custom-task           | 0.2.0     | 0.2.0        | krci                   | False             | False    |
 | tekton-dashboard             | 0.52.0    | 0.52.0       | krci                   | False             | False    |
+| trivy-operator               | 0.31.0    | 0.29.0       | trivy-system           | True              | False    |
 | vault-kms                    | 0.25.0    | 1.20.1       | vault                  | False             | False    |
 | vault-okd                    | 0.25.0    | 1.20.1       | vault                  | False             | False    |
 | vault                        | 0.30.0    | 1.20.1       | vault                  | False             | False    |
