@@ -1,6 +1,6 @@
 # prometheus-operator
 
-![Version: 77.6.0](https://img.shields.io/badge/Version-77.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.85.0](https://img.shields.io/badge/AppVersion-v0.85.0-informational?style=flat-square)
+![Version: 84.5.0](https://img.shields.io/badge/Version-84.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.90.1](https://img.shields.io/badge/AppVersion-v0.90.1-informational?style=flat-square)
 
 ## Secret management
 
@@ -55,7 +55,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 77.6.0 |
+| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 84.5.0 |
 
 ## Values
 
@@ -97,6 +97,7 @@ AWS Parameter Store structure:
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".allow_sign_up | bool | `true` |  |
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".api_url | string | `"https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/userinfo"` |  |
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".auth_url | string | `"https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth"` |  |
+| kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".auto_login | bool | `true` |  |
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".client_id | string | `"grafana"` |  |
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".role_attribute_path | string | `"contains(roles[*], 'administrator') && 'Admin' || contains(roles[*], 'developer') && 'Editor' || 'Viewer'"` |  |
@@ -104,7 +105,6 @@ AWS Parameter Store structure:
 | kube-prometheus-stack.grafana."grafana.ini"."auth.generic_oauth".token_url | string | `"https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token"` |  |
 | kube-prometheus-stack.grafana."grafana.ini".analytics.check_for_updates | bool | `false` |  |
 | kube-prometheus-stack.grafana."grafana.ini".auth.disable_signout_menu | bool | `true` |  |
-| kube-prometheus-stack.grafana."grafana.ini".auth.oauth_auto_login | bool | `true` |  |
 | kube-prometheus-stack.grafana."grafana.ini".server.root_url | string | `"https://grafana.example.com"` |  |
 | kube-prometheus-stack.grafana.admin.existingSecret | string | `"grafana-admin-creds"` |  |
 | kube-prometheus-stack.grafana.admin.passwordKey | string | `"password"` |  |
@@ -119,9 +119,10 @@ AWS Parameter Store structure:
 | kube-prometheus-stack.grafana.persistence.enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana.persistence.size | string | `"1Gi"` |  |
 | kube-prometheus-stack.grafana.persistence.storageClassName | string | `"gp3-retain"` |  |
-| kube-prometheus-stack.grafana.resources.limits.memory | string | `"128Mi"` |  |
+| kube-prometheus-stack.grafana.resources.limits.memory | string | `"256Mi"` |  |
 | kube-prometheus-stack.grafana.resources.requests.cpu | string | `"25m"` |  |
-| kube-prometheus-stack.grafana.resources.requests.memory | string | `"72Mi"` |  |
+| kube-prometheus-stack.grafana.resources.requests.memory | string | `"128Mi"` |  |
+| kube-prometheus-stack.kube-state-metrics.extraArgs[0] | string | `"--metric-labels-allowlist=pods=[app.kubernetes.io/instance]"` |  |
 | kube-prometheus-stack.kubeControllerManager.enabled | bool | `false` |  |
 | kube-prometheus-stack.kubeEtcd.enabled | bool | `false` |  |
 | kube-prometheus-stack.kubeScheduler.enabled | bool | `false` |  |

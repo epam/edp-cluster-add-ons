@@ -20,6 +20,7 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
+      - ServerSideDiff=true
       - CreateNamespace={{ (index .Values "prometheus-operator" "createNamespace") }}
     retry:
       limit: 1

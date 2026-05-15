@@ -18,7 +18,7 @@ A Helm chart for Trivy Operator - Kubernetes-native security toolkit
 | trivy-operator.compliance.specs[1] | string | `"k8s-nsa-1.0"` |  |
 | trivy-operator.compliance.specs[2] | string | `"k8s-pss-baseline-0.1"` |  |
 | trivy-operator.compliance.specs[3] | string | `"k8s-pss-restricted-0.1"` |  |
-| trivy-operator.excludeNamespaces | string | `"kube-system,kube-public,kube-node-lease,trivy-system,sentinel,edp-delivery"` |  |
+| trivy-operator.excludeNamespaces | string | `"kube-system,kube-public,kube-node-lease,trivy-system,sentinel,krci"` |  |
 | trivy-operator.nodeCollector.useNodeSelector | bool | `false` |  |
 | trivy-operator.operator.accessGlobalSecretsAndServiceAccount | bool | `false` |  |
 | trivy-operator.operator.builtInTrivyServer | bool | `true` |  |
