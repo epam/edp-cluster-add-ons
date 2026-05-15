@@ -213,7 +213,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | opentelemetry-operator       | 0.95.1    | 0.134.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.49.0    | 9.7          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
-| prometheus-operator          | 77.6.0    | v0.85.0      | monitoring             | False             | False    |
+| prometheus-operator          | 84.5.0    | v0.90.1      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 11.3.1    | v0.27.0      | monitoring             | False             | False    |
 | redis-operator               | 3.3.0     | 1.3.0        | redis-operator         | False             | False    |
 | report-portal                | 25.8.30   | 25.1.8       | report-portal          | False             | False    |

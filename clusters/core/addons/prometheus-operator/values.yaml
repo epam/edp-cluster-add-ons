@@ -82,9 +82,9 @@ kube-prometheus-stack:
       analytics:
         check_for_updates: false
       auth:
-        oauth_auto_login: true
         disable_signout_menu: true
       auth.generic_oauth:
+        auto_login: true
         enabled: true
         client_id: grafana
         allow_sign_up: true
@@ -113,14 +113,18 @@ kube-prometheus-stack:
       pathType: ImplementationSpecific
     resources:
       limits:
-        memory: "128Mi"
+        memory: "256Mi"
       requests:
         cpu: "25m"
-        memory: "72Mi"
+        memory: "128Mi"
     persistence:
       enabled: true
       storageClassName: "gp3-retain"
       size: 1Gi
+
+  kube-state-metrics:
+    extraArgs:
+      - --metric-labels-allowlist=pods=[app.kubernetes.io/instance]
 
 # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
 # Prerequisite: Ensure that ESO is installed in the cluster.
