@@ -1,6 +1,6 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/release/3.11/deploy-templates/values.yaml and in each of subchart
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.13.5/deploy-templates/values.yaml and in each of subchart
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
@@ -80,7 +80,6 @@ edp-install:
     manageEDPInstallSecrets: true
     # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
     manageEDPInstallSecretsName: /edp/deploy-secrets
-    manageCodemieSecretsName: /edp/codemie-secrets
     manageGitProviderSecretsName: /edp/git-provider-secrets
 
   codebase-operator:
@@ -117,8 +116,6 @@ edp-install:
   quickLinks:
     # Base URL value for the argocd Quick Link
     argocd: ""
-    # Base URL value for the codemie Quick Link
-    codemie: ""
     # Base URL value for the defectdojo Quick Link
     defectdojo: ""
     # Base URL value for the dependency track Quick Link
@@ -158,7 +155,7 @@ edp-install:
     #     icon: icon_in_base64
 
   edp-headlamp:
-    enabled: true
+    enabled: false
     config:
       # -- base url path at which headlamp should run
       baseURL: ""
@@ -458,4 +455,64 @@ edp-install:
 
   # -- Enable GitFusion integration for repository and branch discovery.
   gitfusion:
-    enabled: false
+    enabled: true
+
+  krci-portal:
+    ingress:
+      # -- Enable ingress
+      enabled: false
+      # -- DNS wildcard for the cluster
+      dnsWildcard: ""
+    configEnv:
+      PORTAL_URL: https://portal.example.com
+      API_PREFIX: /api
+      DEFAULT_CLUSTER_NAME: core
+      DEFAULT_CLUSTER_NAMESPACE: core
+      DEPLOY_CLIENT_DIST_DIR: "/app/static"
+      SONAR_HOST_URL: https://sonar.example.com/
+      SERVER_PORT: 3000
+      OIDC_ISSUER_URL: https://keycloak.example.com/realms/shared
+      OIDC_CLIENT_ID: portal
+      OIDC_SCOPE: openid profile email
+      OIDC_CODE_CHALLENGE_METHOD: S256
+      TEKTON_RESULTS_URL: https://tekton-results.example.com
+      # DEPENDENCY_TRACK_URL is used by the backend API client to communicate with Dependency Track.
+      # DEPENDENCY_TRACK_WEB_URL is an optional override for browser-facing links. When the internal
+      # API endpoint differs from the public URL, set DEPENDENCY_TRACK_WEB_URL to the public URL.
+      # If not set, DEPENDENCY_TRACK_URL is used for both.
+      DEPENDENCY_TRACK_URL: https://deptrack.example.com
+      # DEPENDENCY_TRACK_WEB_URL: https://deptrack-public.example.com
+      GITFUSION_URL: http://gitfusion.krci:8080
+      # PROMETHEUS_URL is the cluster-local Prometheus base URL used by the Monitoring.
+      # When unset, the tab returns PRECONDITION_FAILED.
+      # Example (in-cluster): http://prometheus.monitoring.svc:9090
+      PROMETHEUS_URL: http://prometheus.monitoring.svc:9090
+    eso:
+      # -- Install components of the ESO.
+      enabled: false
+      # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+      provider: "aws"
+      # -- Defines API version for the ExternalSecret resource.
+      apiVersion: "external-secrets.io/v1"
+      # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+      secretPath: "/infra/core/addons/krci-portal"
+      # -- Vault configuration (if provider is `vault`).
+      vault:
+        # -- Vault server URL.
+        server: "http://vault.vault:8200"
+        # -- Mount path for the Kubernetes authentication method.
+        mountPath: "core"
+        # -- Vault role for the Kubernetes authentication method.
+        role: krci-portal
+      # -- AWS configuration (if provider is `aws`).
+      aws:
+        # -- AWS region.
+        region: "eu-central-1"
+        # -- AWS role ARN for the ExternalSecretOperator to assume.
+        roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
+      generic:
+        secretStore:
+          # -- Defines SecretStore provider configuration.
+          providerConfig: {}
+          #  gcpsm:
+          #    projectID: "alphabet-123"
