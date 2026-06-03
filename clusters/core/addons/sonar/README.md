@@ -55,7 +55,7 @@ A Helm chart for Sonarqube
 | sonarqube.nameOverride | string | `"sonar"` |  |
 | sonarqube.plugins.install[0] | string | `"https://github.com/sonar-auth-oidc/sonar-auth-oidc/releases/download/v3.0.0/sonar-auth-oidc-plugin-3.0.0.jar"` |  |
 | sonarqube.plugins.install[1] | string | `"https://github.com/checkstyle/sonar-checkstyle/releases/download/10.20.1/checkstyle-sonar-plugin-10.20.1.jar"` |  |
-| sonarqube.plugins.install[2] | string | `"https://github.com/spotbugs/sonar-findbugs/releases/download/4.2.9/sonar-findbugs-plugin-4.2.9.jar"` |  |
+| sonarqube.plugins.install[2] | string | `"https://github.com/spotbugs/sonar-findbugs/releases/download/v4.6.0/sonar-findbugs-plugin-v4.6.0.jar"` |  |
 | sonarqube.plugins.install[3] | string | `"https://github.com/jborgers/sonar-pmd/releases/download/3.5.1/sonar-pmd-plugin-3.5.1.jar"` |  |
 | sonarqube.plugins.install[4] | string | `"https://github.com/sbaudoin/sonar-ansible/releases/download/v2.5.1/sonar-ansible-plugin-2.5.1.jar"` |  |
 | sonarqube.plugins.install[5] | string | `"https://github.com/sbaudoin/sonar-yaml/releases/download/v1.9.1/sonar-yaml-plugin-1.9.1.jar"` |  |
