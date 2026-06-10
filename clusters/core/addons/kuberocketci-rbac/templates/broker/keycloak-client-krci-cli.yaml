@@ -1,0 +1,35 @@
+{{- if .Values.broker.create -}}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: krci-cli
+spec:
+  realmRef:
+    kind: KeycloakRealm
+    name: {{ .Values.broker.name }}
+  clientId: krci-cli
+  public: true
+  directAccess: false
+  standardFlowEnabled: true
+  advancedProtocolMappers: true
+  webUrl: http://localhost/
+  redirectUris:
+    - http://127.0.0.1/*
+    - http://localhost/*
+  webOrigins:
+    - +
+  defaultClientScopes:
+    - profile
+    - email
+    - roles
+    - groups
+  protocolMappers:
+    - name: k8s-audience
+      protocol: openid-connect
+      protocolMapper: oidc-audience-mapper
+      config:
+        included.custom.audience: kubernetes
+        id.token.claim: 'true'
+        access.token.claim: 'true'
+        lightweight.claim: 'false'
+{{- end -}}
