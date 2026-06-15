@@ -1,6 +1,6 @@
 # atlantis
 
-![Version: 5.18.2](https://img.shields.io/badge/Version-5.18.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.35.1](https://img.shields.io/badge/AppVersion-v0.35.1-informational?style=flat-square)
+![Version: 6.6.0](https://img.shields.io/badge/Version-6.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.44.0](https://img.shields.io/badge/AppVersion-v0.44.0-informational?style=flat-square)
 
 **Homepage:** <https://www.runatlantis.io>
 
@@ -62,14 +62,14 @@ AWS Parameter Store structure:
 | Repository | Name | Version |
 |------------|------|---------|
 | https://oauth2-proxy.github.io/manifests | oauth2-proxy | 8.2.0 |
-| https://runatlantis.github.io/helm-charts | atlantis | 5.18.2 |
+| https://runatlantis.github.io/helm-charts | atlantis | 6.6.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | atlantis.atlantisUrl | string | `"atlantis.example.com"` |  |
-| atlantis.bitbucket | object | `{"user":"auto_example"}` | Uncomment to enable Basic Auth mode ref: https://www.runatlantis.io/docs/security. basicAuthSecretName: atlantis-creds |
+| atlantis.bitbucket | object | `{"apiUser":"auto_example@example.com","user":"auto_example"}` | Uncomment to enable Basic Auth mode ref: https://www.runatlantis.io/docs/security. basicAuthSecretName: atlantis-creds |
 | atlantis.defaultTFVersion | string | `"1.5.7"` |  |
 | atlantis.ingress.enabled | bool | `true` |  |
 | atlantis.ingress.host | string | `"atlantis.example.com"` |  |
