@@ -7,6 +7,9 @@ atlantis:
 
   bitbucket:
     user: auto_example
+    # Bitbucket Cloud API tokens authenticate via email, not username.
+    # Required when migrating from app passwords (deprecated July 2026).
+    apiUser: auto_example@example.com
 
   atlantisUrl: "atlantis.example.com"
 
