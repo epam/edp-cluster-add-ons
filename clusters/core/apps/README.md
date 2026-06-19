@@ -43,6 +43,12 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | dependency-track.enable | bool | `false` |  |
 | dependency-track.namespace | string | `"dependency-track"` |  |
 | destinationServer | string | `"in-cluster"` |  |
+| envoy-gateway-resources.createNamespace | bool | `false` |  |
+| envoy-gateway-resources.enable | bool | `false` |  |
+| envoy-gateway-resources.namespace | string | `"envoy-gateway-system"` |  |
+| envoy-gateway.createNamespace | bool | `false` |  |
+| envoy-gateway.enable | bool | `false` |  |
+| envoy-gateway.namespace | string | `"envoy-gateway-system"` |  |
 | external-secrets.createNamespace | bool | `false` |  |
 | external-secrets.enable | bool | `false` |  |
 | external-secrets.namespace | string | `"external-secrets"` |  |

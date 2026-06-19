@@ -1,0 +1,13 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: http-proxy
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyService:
+        # NodePort so no cloud LoadBalancer is provisioned. NodePort numbers are
+        # auto-assigned; override per cluster via a StrategicMerge patch if a fixed
+        # port is required (e.g. to align with an existing ingress front-end).
+        type: NodePort

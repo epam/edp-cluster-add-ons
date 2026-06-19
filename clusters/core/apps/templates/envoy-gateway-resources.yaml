@@ -1,0 +1,30 @@
+{{- if and (index .Values "envoy-gateway-resources") (index .Values "envoy-gateway-resources" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-envoy-gateway-resources
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/envoy-gateway-resources
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: envoy-gateway-resources
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "envoy-gateway-resources" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "envoy-gateway-resources" "createNamespace") }}
+      - ServerSideApply=true
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

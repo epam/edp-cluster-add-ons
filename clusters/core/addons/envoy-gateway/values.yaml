@@ -1,0 +1,3 @@
+# Envoy Gateway controller (gateway-helm). Controller defaults are sufficient;
+# the Gateway API custom resources are managed by the envoy-gateway-resources add-on.
+gateway-helm: {}
