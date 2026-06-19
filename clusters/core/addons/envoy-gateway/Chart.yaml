@@ -1,0 +1,10 @@
+apiVersion: v2
+name: envoy-gateway
+description: A Helm chart for the Envoy Gateway controller
+type: application
+version: 1.8.1
+appVersion: "1.8.1"
+dependencies:
+  - name: gateway-helm
+    version: "1.8.1"
+    repository: "oci://docker.io/envoyproxy"

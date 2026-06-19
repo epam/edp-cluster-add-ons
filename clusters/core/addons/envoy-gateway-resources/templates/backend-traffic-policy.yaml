@@ -1,0 +1,24 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: main-gateway-defaults
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
+  timeout:
+    tcp:
+      connectTimeout: 10s
+    http:
+      requestTimeout: 30s
+  retry:
+    numRetries: 2
+    retryOn:
+      httpStatusCodes:
+        - 502
+        - 503
+        - 504
+      triggers:
+        - connect-failure
+        - reset

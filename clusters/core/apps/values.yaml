@@ -113,6 +113,16 @@ harbor-ha-okd:
   enable: false
   namespace: harbor
 
+envoy-gateway:
+  createNamespace: false
+  enable: false
+  namespace: envoy-gateway-system
+
+envoy-gateway-resources:
+  createNamespace: false
+  enable: false
+  namespace: envoy-gateway-system
+
 ingress-nginx:
   createNamespace: false
   enable: false

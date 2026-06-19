@@ -1,0 +1,6 @@
+apiVersion: v2
+name: envoy-gateway-resources
+description: Envoy Gateway custom resources (GatewayClass, Gateway, EnvoyProxy, ClientTrafficPolicy, BackendTrafficPolicy)
+type: application
+version: 1.8.1
+appVersion: "1.8.1"

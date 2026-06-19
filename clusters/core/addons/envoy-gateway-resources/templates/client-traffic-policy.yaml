@@ -1,0 +1,21 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: http-policy
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main-gateway
+  clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 1
+  headers:
+    lateResponseHeaders:
+      set:
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: X-Frame-Options
+          value: SAMEORIGIN
+        - name: Strict-Transport-Security
+          value: max-age=63072000; includeSubDomains
