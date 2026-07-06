@@ -1,0 +1,12 @@
+apiVersion: v2
+description: A Helm chart for the KubeRocketCI krci-audit add-on — admission audit capture, store, and read API
+home: https://docs.kuberocketci.io/
+name: krci-audit
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+- name: krci-audit
+  version: 0.1.0
+  repository: https://epam.github.io/edp-helm-charts/stable

@@ -1,0 +1,40 @@
+# Configuration for the krci-audit component chart (subchart, pulled from edp-stable). Capture,
+# store, retention, TLS and the read API are all component-chart features; this add-on only
+# overrides the few values an operator commonly changes. The full surface lives in the
+# component chart's own values.yaml.
+#
+# Credentials: the component chart NEVER generates DB credentials — it only reads a Secret you
+# supply. This holds for every db.mode, including the default `simple` (which provisions the
+# in-cluster Postgres but not its Secret). Before enabling this add-on, pre-create the
+# `krci-audit-db-access` Secret (the add-on README has the exact command) or populate it via the
+# External Secrets Operator (enable the `eso` block below).
+krci-audit:
+  db:
+    # -- Provisioning mode for the component's PostgreSQL (external | pgo | simple). `simple` runs
+    # a self-contained in-cluster Postgres (dev/small installs); use `external` (set db.host +
+    # db.owner.secretName) or `pgo` for production. Credentials are a prerequisite in every mode
+    # (see the header note) — the chart provisions the DB in simple/pgo, never its Secret.
+    mode: simple
+
+  # Scheduled partition retention. The values below are the component-chart DEFAULTS (already
+  # active) — uncomment and change any of them to override.
+  #
+  # Retention is MONTH-GRANULAR: `months` is a whole number and expired data is dropped one whole
+  # monthly partition at a time (cheap, append-only-safe). The smallest effective window is
+  # therefore ~1 month — `months: 1` keeps the current partial month plus the previous month, so
+  # sub-monthly windows (e.g. "last 3 weeks") are NOT supported.
+  # retention:
+  #   enabled: true            # turn the nightly cleanup on/off
+  #   months: 12               # months of history to keep (whole number; minimum 1)
+  #   schedule: "0 2 * * *"    # cron for the cleanup job (default: nightly at 02:00)
+  #   createAheadMonths: 3     # future monthly partitions to pre-create (ingestion runway)
+
+  # Optional: populate the db-access Secret from an external store via the External Secrets
+  # Operator — the recommended way to satisfy the credential prerequisite for GitOps (no Secret
+  # committed or created by hand). Requires the external-secrets add-on. Uncomment and fill in:
+  # eso:
+  #   enabled: true
+  #   secretPath: /kuberocketci/krci-audit/db-access
+  #   aws:
+  #     region: us-east-1
+  #     roleArn: arn:aws:iam::<account-id>:role/<irsa-role>
