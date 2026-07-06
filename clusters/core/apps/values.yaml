@@ -186,6 +186,12 @@ krakend:
   enable: false
   namespace: krci-krakend
 
+# KubeRocketCI admission audit — capture, store, read API, and scheduled retention. More details at https://docs.kuberocketci.io/
+krci-audit:
+  createNamespace: true
+  enable: false
+  namespace: krci-audit
+
 kuberocketci-pipelines:
   createNamespace: false
   enable: false

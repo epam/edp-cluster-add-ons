@@ -98,6 +98,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krakend.createNamespace | bool | `false` |  |
 | krakend.enable | bool | `false` |  |
 | krakend.namespace | string | `"krci-krakend"` |  |
+| krci-audit.createNamespace | bool | `true` |  |
+| krci-audit.enable | bool | `false` |  |
+| krci-audit.namespace | string | `"krci-audit"` |  |
 | kuberocketci-pipelines.createNamespace | bool | `false` |  |
 | kuberocketci-pipelines.enable | bool | `false` |  |
 | kuberocketci-pipelines.namespace | string | `"krci"` |  |
