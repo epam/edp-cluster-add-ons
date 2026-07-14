@@ -1,11 +1,14 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.13.5/deploy-templates/values.yaml and in each of subchart
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.14.0/deploy-templates/values.yaml and in each of subchart
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
     # -- a cluster DNS wildcard name
     dnsWildCard: example.com
+    # -- Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...).
+    # Must match krci-portal configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of dnsWildCard
+    clusterName: "core"
     # Specifies the URL of the API Gateway used by widgets in the platform.
     # The 'apiGatewayUrl' should be set to the external URL of the KrakenD API Gateway exposed via Ingress.
     # Example: https://api.domain.example.com
@@ -32,6 +35,24 @@ edp-install:
       # - gitlab
       # - gerrit
       # - bitbucket
+
+    # Gateway API parent Gateway that EventListener/webhook HTTPRoutes attach to.
+    # Shared by edp-tekton and codebase-operator; the Gateway itself must already exist
+    # (provisioned by Envoy Gateway, e.g. via edp-cluster-add-ons).
+    #
+    # Switching from nginx Ingress to Envoy Gateway (safe, per-gitServer, reversible):
+    #   1. Keep the default here (main-gateway/envoy-gateway-system) or point at your Gateway.
+    #   2. Per gitServer, set edp-tekton.gitServers.<name>.eventListener.httproute.enabled=true.
+    #      The Ingress stays rendered as a fallback, so the webhook keeps working during cutover.
+    #   3. Set codebase-operator.ingressController=envoy so the operator registers new webhooks
+    #      against the HTTPRoute host instead of the Ingress host.
+    #   4. Once traffic is confirmed on Envoy, set eventListener.ingress.enabled=false to drop nginx.
+    # These values are ignored while ingressController=nginx and no gitServer enables httproute.
+    gatewayApi:
+      # -- Name of the parent Gateway resource
+      gatewayName: "main-gateway"
+      # -- Namespace of the parent Gateway resource
+      gatewayNamespace: "envoy-gateway-system"
 
     # Below is an example of endpoint values for each registry type:
     # type:      | url
@@ -84,6 +105,9 @@ edp-install:
 
   codebase-operator:
     enabled: true
+    # -- Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute).
+    # When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}.
+    ingressController: "nginx"
     # -- Labels to be added to the pod.
     # podLabels: {}
     # image:
@@ -187,6 +211,9 @@ edp-install:
 
   edp-tekton:
     enabled: true
+    # -- Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...).
+    # Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard.
+    clusterName: "core"
 
     pipelines:
       image:

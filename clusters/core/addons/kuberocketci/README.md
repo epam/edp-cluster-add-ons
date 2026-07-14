@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.13.5](https://img.shields.io/badge/Version-3.13.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.13.5](https://img.shields.io/badge/AppVersion-3.13.5-informational?style=flat-square)
+![Version: 3.14.0](https://img.shields.io/badge/Version-3.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.14.0](https://img.shields.io/badge/AppVersion-3.14.0-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -10,7 +10,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.13.5 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.14.0 |
 
 ## Values
 
@@ -22,6 +22,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.cd-pipeline-operator.secretManager | string | `"own"` | Flag indicating whether the operator should manage secrets for stages. This parameter controls the provisioning of the 'regcred' secret within deployed environments, facilitating access to private container registries. Set the parameter to "none" under the following conditions:   - If 'global.dockerRegistry.type=ecr' and IRSA is enabled, or   - If 'global.dockerRegistry.type=openshift'. For private registries, choose the most appropriate method to provide credentials to deployed environments. Refer to the guide for managing container registries (https://docs.kuberocketci.io/docs/user-guide/manage-container-registries). Possible values: own/eso/none.   - own: Copies the secret once from the parent namespace, without subsequent reconciliation. If updated in the parent namespace, manual updating in all created namespaces is required.   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator).   - none: Disables secrets management logic. |
 | edp-install.cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | edp-install.codebase-operator.enabled | bool | `true` |  |
+| edp-install.codebase-operator.ingressController | string | `"nginx"` | Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute). When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}. |
 | edp-install.edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
 | edp-install.edp-headlamp.config.oidc | object | `{"clientID":"shared","clientSecretKey":"clientSecret","clientSecretName":"keycloak-client-headlamp-secret","enabled":false,"issuerUrl":"","scopes":""}` | For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc |
 | edp-install.edp-headlamp.config.oidc.clientID | string | `"shared"` | OIDC client ID |
@@ -30,6 +31,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.edp-headlamp.config.oidc.issuerUrl | string | `""` | Azure Entra: https://sts.windows.net/<tenant-id>/ |
 | edp-install.edp-headlamp.config.oidc.scopes | string | `""` | OIDC scopes to be used |
 | edp-install.edp-headlamp.enabled | bool | `false` |  |
+| edp-install.edp-tekton.clusterName | string | `"core"` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard. |
 | edp-install.edp-tekton.enabled | bool | `true` |  |
 | edp-install.edp-tekton.gitServers | object | `{}` |  |
 | edp-install.edp-tekton.interceptor.enabled | bool | `true` | Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true |
@@ -52,8 +54,11 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.global.apiClusterEndpoint | string | `""` | API Сluster Endpoint configuration for static kubeconfig generation |
 | edp-install.global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |
 | edp-install.global.availableClusters | string | `""` | Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3" |
+| edp-install.global.clusterName | string | `"core"` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of dnsWildCard |
 | edp-install.global.developerGroupName | string | `""` |  |
 | edp-install.global.dnsWildCard | string | `"example.com"` | a cluster DNS wildcard name |
+| edp-install.global.gatewayApi.gatewayName | string | `"main-gateway"` | Name of the parent Gateway resource |
+| edp-install.global.gatewayApi.gatewayNamespace | string | `"envoy-gateway-system"` | Namespace of the parent Gateway resource |
 | edp-install.global.gitProviders | string | `nil` | Can be gerrit, github or gitlab. By default: github |
 | edp-install.global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | edp-install.global.viewerGroupName | string | `""` |  |
