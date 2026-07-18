@@ -1,0 +1,137 @@
+# KubeRocketCI event wiring: EventSources and generated Sensors on top of the argo-events
+# add-on, in the same namespace as its EventBus.
+#
+# Model: `eventTypes` define WHAT to match and how to extract notification fields from the
+# event body; `destinations` define WHERE to deliver (one entry = one Sensor = one pod) and
+# reference eventTypes by name in `routes`. Destinations never see event body shapes — only
+# the canonical notification fields extracted by the route. Templates in `*Template` values
+# are Sprig templates rendered by Argo Events against the event ({{ .Input.header }} /
+# {{ .Input.body }}), NOT by Helm. Integration steps: https://docs.kuberocketci.io
+monitoring:
+  podMonitor:
+    # -- Create PodMonitors scraping EventSource and Sensor pods (requires prometheus-operator)
+    enabled: false
+    # -- Scrape interval
+    interval: 30s
+
+tektonEventSource:
+  # -- Deploy the webhook EventSource receiving Tekton CloudEvents (the target of the Tekton `config-events` sink)
+  enabled: true
+  # -- Service/container port of the webhook endpoint
+  port: 12000
+  # -- HTTP path of the webhook endpoint
+  endpoint: /tekton
+
+# Event type definitions. Each key is a route name referenced by destinations[].routes.
+eventTypes:
+  build-failed:
+    source:
+      # -- EventSource name the route consumes from
+      eventSourceName: tekton-events
+      # -- Event (endpoint) name within the EventSource
+      eventName: tekton
+    # -- CloudEvents type (Ce-Type header) this route matches
+    ceType: dev.tekton.event.pipelinerun.failed.v1
+    # -- Additional gjson data-filter matches on the event payload (path syntax: gjson, dots in keys escaped with \)
+    matchData:
+      - path: body.pipelineRun.metadata.labels.app\.edp\.epam\.com/pipelinetype
+        value: build
+    notification:
+      # -- Notification `type` (portal taxonomy)
+      type: build.failed
+      # -- Severity: info | success | warning | error (drives portal toast variant and card color)
+      severity: error
+      # -- Idempotency key template (portal dedup)
+      idTemplate: "{{ .Input.body.pipelineRun.metadata.uid }}"
+      # -- Namespace template
+      namespaceTemplate: "{{ .Input.body.pipelineRun.metadata.namespace }}"
+      # -- Title template
+      titleTemplate: "Build failed: {{ .Input.body.pipelineRun.metadata.name }}"
+      # -- Body text template (portal notification body)
+      bodyTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}Build pipeline for codebase {{ if $l }}{{ index $l "app.edp.epam.com/codebase" | default "-" }}{{ else }}-{{ end }} (branch {{ if $l }}{{ index $l "app.edp.epam.com/codebasebranch" | default "-" }}{{ else }}-{{ end }}) failed in namespace {{ .Input.body.pipelineRun.metadata.namespace }}'
+      # -- Portal in-app link template (portal-relative path)
+      linkTemplate: "/c/core/cicd/pipelineruns/{{ .Input.body.pipelineRun.metadata.namespace }}/{{ .Input.body.pipelineRun.metadata.name }}"
+      # -- Card button link source: pipelineUrl (resolve the Tekton pipelineUrl param convention) | template (use buttonLinkTemplate)
+      buttonLinkKind: pipelineUrl
+      # -- Card button title
+      buttonTitle: Open PipelineRun
+      # -- Card FactSet rows: title + Sprig value template
+      facts:
+        - title: PipelineRun
+          valueTemplate: "{{ .Input.body.pipelineRun.metadata.name }}"
+        - title: Namespace
+          valueTemplate: "{{ .Input.body.pipelineRun.metadata.namespace }}"
+        - title: Codebase
+          valueTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}{{- if $l }}{{ index $l "app.edp.epam.com/codebase" | default "-" }}{{- else }}-{{ end -}}'
+        - title: Branch
+          valueTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}{{- if $l }}{{ index $l "app.edp.epam.com/codebasebranch" | default "-" }}{{- else }}-{{ end -}}'
+
+  deploy-failed:
+    source:
+      eventSourceName: tekton-events
+      eventName: tekton
+    ceType: dev.tekton.event.pipelinerun.failed.v1
+    matchData:
+      - path: body.pipelineRun.metadata.labels.app\.edp\.epam\.com/pipelinetype
+        value: deploy
+    notification:
+      type: deploy.failed
+      severity: error
+      idTemplate: "{{ .Input.body.pipelineRun.metadata.uid }}"
+      namespaceTemplate: "{{ .Input.body.pipelineRun.metadata.namespace }}"
+      titleTemplate: "Deploy failed: {{ .Input.body.pipelineRun.metadata.name }}"
+      bodyTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}Deployment {{ if $l }}{{ index $l "app.edp.epam.com/cdpipeline" | default "-" }}{{ else }}-{{ end }} (env {{ if $l }}{{ index $l "app.edp.epam.com/cdstage" | default "-" }}{{ else }}-{{ end }}) failed in namespace {{ .Input.body.pipelineRun.metadata.namespace }}'
+      linkTemplate: "/c/core/cicd/pipelineruns/{{ .Input.body.pipelineRun.metadata.namespace }}/{{ .Input.body.pipelineRun.metadata.name }}"
+      buttonLinkKind: pipelineUrl
+      buttonTitle: Open PipelineRun
+      facts:
+        - title: PipelineRun
+          valueTemplate: "{{ .Input.body.pipelineRun.metadata.name }}"
+        - title: Namespace
+          valueTemplate: "{{ .Input.body.pipelineRun.metadata.namespace }}"
+        - title: Deployment
+          valueTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}{{- if $l }}{{ index $l "app.edp.epam.com/cdpipeline" | default "-" }}{{- else }}-{{ end -}}'
+        - title: Env
+          valueTemplate: '{{- $l := .Input.body.pipelineRun.metadata.labels -}}{{- if $l }}{{ index $l "app.edp.epam.com/cdstage" | default "-" }}{{- else }}-{{ end -}}'
+
+# Delivery destinations. Each enabled entry generates one Sensor named notify-<name>.
+destinations:
+  portal:
+    # -- Deploy this destination's Sensor
+    enabled: false
+    # -- Payload kind: portal (KRCI notification contract) | msteams-card (Adaptive Card via Power Automate Workflows webhook)
+    kind: portal
+    # -- In-cluster URL of the portal internal events endpoint
+    url: http://krci-portal.krci.svc:3000/rest/v1/internal/events
+    tokenSecret:
+      # -- Secret (in this add-on's namespace) holding the token shared with the portal
+      name: portal-events-token
+      # -- Key in the Secret holding the token
+      key: token
+    # -- Event types delivered to this destination
+    routes: [build-failed, deploy-failed]
+    retryStrategy:
+      # -- Number of delivery attempts
+      steps: 5
+      # -- Backoff duration between attempts
+      duration: 10s
+
+  msteams:
+    # -- Deploy this destination's Sensor
+    enabled: false
+    # -- Payload kind
+    kind: msteams-card
+    # -- Power Automate Workflows webhook URL. The URL embeds its own credential (`sig` query
+    # parameter) and the Argo Events HTTP trigger cannot reference a Secret for the URL field —
+    # supply it from a private values source (e.g. SOPS-encrypted overlay) or replace it
+    # directly in the deployed Sensor (`spec.triggers[*].template.http.url`)
+    webhookUrl: ""
+    # -- Card button URL when the route yields no link (e.g. no `pipelineUrl` param); set to the portal base URL
+    linkFallbackUrl: https://docs.kuberocketci.io
+    # -- Event types delivered to this destination
+    routes: [build-failed, deploy-failed]
+    retryStrategy:
+      # -- Number of delivery attempts
+      steps: 5
+      # -- Backoff duration between attempts
+      duration: 10s

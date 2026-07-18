@@ -1,0 +1,71 @@
+{{- range $destName, $dest := .Values.destinations }}
+{{- if $dest.enabled }}
+{{- if not (has $dest.kind (list "portal" "msteams-card")) }}
+{{- fail (printf "destination %q: unknown kind %q (supported: portal, msteams-card)" $destName $dest.kind) }}
+{{- end }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: notify-{{ $destName }}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  dependencies:
+    {{- range $dest.routes }}
+    {{- $route := get $.Values.eventTypes . }}
+    {{- if not $route }}
+    {{- fail (printf "destination %q references unknown eventType %q" $destName .) }}
+    {{- end }}
+    - name: {{ . }}
+      eventSourceName: {{ $route.source.eventSourceName }}
+      eventName: {{ $route.source.eventName }}
+      filters:
+        data:
+          - path: header.Ce-Type.0
+            type: string
+            value:
+              - {{ $route.ceType | quote }}
+          {{- range $route.matchData }}
+          - path: {{ .path }}
+            type: string
+            value:
+              - {{ .value | quote }}
+          {{- end }}
+    {{- end }}
+  triggers:
+    {{- range $dest.routes }}
+    {{- $route := get $.Values.eventTypes . }}
+    - template:
+        name: {{ printf "%s-%s" $destName . | trunc 63 | trimSuffix "-" }}
+        conditions: {{ . | quote }}
+        http:
+          {{- if eq $dest.kind "portal" }}
+          url: {{ $dest.url }}
+          {{- else }}
+          url: {{ $dest.webhookUrl | default "https://REPLACE-ME.invalid" | quote }}
+          {{- end }}
+          method: POST
+          headers:
+            Content-Type: application/json
+          {{- if eq $dest.kind "portal" }}
+          secureHeaders:
+            - name: x-internal-events-token
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dest.tokenSecret.name }}
+                  key: {{ $dest.tokenSecret.key }}
+          {{- end }}
+          payload:
+            {{- if eq $dest.kind "portal" }}
+            {{- include "krci-events.payload.portal" (dict "routeName" . "route" $route) | nindent 12 }}
+            {{- else }}
+            {{- include "krci-events.payload.msteams-card" (dict "routeName" . "route" $route "dest" $dest) | nindent 12 }}
+            {{- end }}
+          retryStrategy:
+            steps: {{ $dest.retryStrategy.steps }}
+            duration: {{ $dest.retryStrategy.duration }}
+      atLeastOnce: true
+    {{- end }}
+{{- end }}
+{{- end }}

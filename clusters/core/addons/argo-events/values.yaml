@@ -1,0 +1,39 @@
+# Argo Events engine for the KubeRocketCI notification bus: controller, CRDs, and the
+# JetStream EventBus. KRCI event wiring (EventSources, Sensors) lives in the krci-events
+# add-on. Integration steps are documented at https://docs.kuberocketci.io
+argo-events:
+  crds:
+    # -- Install Argo Events CRDs with the chart
+    install: true
+    # -- Keep CRDs on chart uninstall
+    keep: true
+  controller:
+    # -- Number of controller replicas
+    replicas: 1
+    metrics:
+      # -- Expose controller metrics service
+      enabled: false
+      serviceMonitor:
+        # -- Create a ServiceMonitor for the controller (requires prometheus-operator)
+        enabled: false
+
+eventBus:
+  # -- Deploy the `default` JetStream EventBus
+  enabled: true
+  jetstream:
+    # -- JetStream version supported by the Argo Events controller; `latest` resolves to the newest supported version
+    version: latest
+    # -- JetStream replicas (minimum 3 for a quorum)
+    replicas: 3
+    persistence:
+      # -- StorageClass for the JetStream volumes; empty string uses the cluster default
+      storageClassName: ""
+      # -- Volume size per JetStream replica
+      volumeSize: 1Gi
+
+monitoring:
+  eventBusPodMonitor:
+    # -- Create a PodMonitor scraping the EventBus NATS exporter sidecar (requires prometheus-operator)
+    enabled: false
+    # -- Scrape interval
+    interval: 30s

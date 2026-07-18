@@ -1,0 +1,29 @@
+{{- if .Values.monitoring.podMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: krci-events-eventsources
+spec:
+  selector:
+    matchExpressions:
+      - key: eventsource-name
+        operator: Exists
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: {{ .Values.monitoring.podMonitor.interval }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: krci-events-sensors
+spec:
+  selector:
+    matchExpressions:
+      - key: sensor-name
+        operator: Exists
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: {{ .Values.monitoring.podMonitor.interval }}
+{{- end }}
