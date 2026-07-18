@@ -173,6 +173,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | Component                    | version   | appVersion   | namespace              | createNamespace   | enable   |
 |:-----------------------------|:----------|:-------------|:-----------------------|:------------------|:---------|
 | argo-cd                      | 9.5.13    | v3.4.1       | krci                   | False             | False    |
+| argo-events                  | 2.4.23    | v1.9.11      | argo-events            | True              | False    |
 | atlantis                     | 6.6.0     | v0.44.0      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 3.2.2     | 2.1.11       | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
@@ -203,6 +204,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | keycloak-operator            | 1.34.0    | 1.34.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | krci-audit                   | 0.1.0     | 0.1.0        | krci-audit             | True              | False    |
+| krci-events                  | 0.1.0     | 0.1.0        | argo-events            | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
 | kuberocketci                 | 3.14.0    | 3.14.0       | krci                   | False             | False    |

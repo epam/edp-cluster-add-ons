@@ -1,0 +1,18 @@
+{{- if .Values.eventBus.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: EventBus
+metadata:
+  name: default
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  jetstream:
+    version: {{ .Values.eventBus.jetstream.version }}
+    replicas: {{ .Values.eventBus.jetstream.replicas }}
+    persistence:
+      {{- with .Values.eventBus.jetstream.persistence.storageClassName }}
+      storageClassName: {{ . }}
+      {{- end }}
+      accessMode: ReadWriteOnce
+      volumeSize: {{ .Values.eventBus.jetstream.persistence.volumeSize }}
+{{- end }}

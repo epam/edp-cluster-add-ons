@@ -1,0 +1,7 @@
+apiVersion: v2
+name: krci-events
+description: KubeRocketCI event wiring on top of the argo-events add-on — EventSources ingesting platform CloudEvents (Tekton) and Sensors routing them to consumers (KRCI portal, chat webhooks)
+
+version: 0.1.0
+
+appVersion: "0.1.0"

@@ -1,0 +1,29 @@
+{{- if and (index .Values "krci-events") (index .Values "krci-events" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-krci-events
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/krci-events
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: krci-events
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "krci-events" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "krci-events" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

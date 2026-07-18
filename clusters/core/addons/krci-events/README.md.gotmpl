@@ -1,0 +1,20 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+This add-on carries the KubeRocketCI-specific wiring of the notification bus: the
+`tekton-events` webhook EventSource (the target for Tekton's CloudEvents sink) and the
+`notify-portal` Sensor forwarding failed-PipelineRun events to the KRCI portal. It requires
+the `argo-events` add-on (engine: controller, CRDs, EventBus) deployed into the same
+namespace.
+
+Integration steps are documented at [docs.kuberocketci.io](https://docs.kuberocketci.io).
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

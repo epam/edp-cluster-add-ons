@@ -23,6 +23,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 |-----|------|---------|-------------|
 | argo-cd | object | `{"createNamespace":false,"enable":false,"namespace":"krci"}` | ArgoCD Deployment |
 | argo-cd.createNamespace | bool | `false` | whether to create the namespace or not |
+| argo-events | object | `{"createNamespace":true,"enable":false,"namespace":"argo-events"}` | Argo Events — KubeRocketCI notification bus (Tekton CloudEvents -> EventBus -> Sensors) |
 | argoProject | string | `"core"` |  |
 | atlantis.createNamespace | bool | `false` |  |
 | atlantis.enable | bool | `false` |  |
@@ -101,6 +102,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krci-audit.createNamespace | bool | `true` |  |
 | krci-audit.enable | bool | `false` |  |
 | krci-audit.namespace | string | `"krci-audit"` |  |
+| krci-events | object | `{"createNamespace":false,"enable":false,"namespace":"argo-events"}` | KubeRocketCI event wiring (EventSources, Sensors) — requires the argo-events add-on in the same namespace |
 | kuberocketci-pipelines.createNamespace | bool | `false` |  |
 | kuberocketci-pipelines.enable | bool | `false` |  |
 | kuberocketci-pipelines.namespace | string | `"krci"` |  |

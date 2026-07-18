@@ -1,0 +1,19 @@
+{{- if .Values.tektonEventSource.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: tekton-events
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  service:
+    ports:
+      - name: http
+        port: {{ .Values.tektonEventSource.port }}
+        targetPort: {{ .Values.tektonEventSource.port }}
+  webhook:
+    tekton:
+      endpoint: {{ .Values.tektonEventSource.endpoint }}
+      method: POST
+      port: {{ .Values.tektonEventSource.port | quote }}
+{{- end }}

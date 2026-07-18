@@ -25,6 +25,12 @@ argo-cd:
   enable: false
   namespace: krci
 
+# -- Argo Events — KubeRocketCI notification bus (Tekton CloudEvents -> EventBus -> Sensors)
+argo-events:
+  createNamespace: true
+  enable: false
+  namespace: argo-events
+
 atlantis:
   createNamespace: false
   enable: false
@@ -191,6 +197,12 @@ krci-audit:
   createNamespace: true
   enable: false
   namespace: krci-audit
+
+# -- KubeRocketCI event wiring (EventSources, Sensors) — requires the argo-events add-on in the same namespace
+krci-events:
+  createNamespace: false
+  enable: false
+  namespace: argo-events
 
 kuberocketci-pipelines:
   createNamespace: false

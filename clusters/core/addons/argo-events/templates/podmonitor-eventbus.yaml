@@ -1,0 +1,14 @@
+{{- if .Values.monitoring.eventBusPodMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: argo-events-eventbus
+spec:
+  selector:
+    matchLabels:
+      controller: eventbus-controller
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: {{ .Values.monitoring.eventBusPodMonitor.interval }}
+{{- end }}
