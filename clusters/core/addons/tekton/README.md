@@ -1,6 +1,6 @@
 # Tekton Results — PostgreSQL Performance Indexes
 
-Tekton Results (v0.17.2) stores PipelineRun/TaskRun data in PostgreSQL via GORM auto-migration.
+Tekton Results (v0.19.0) stores PipelineRun/TaskRun data in PostgreSQL via GORM auto-migration.
 The default schema has no indexes beyond primary keys, causing sequential scans on high-traffic query paths.
 
 ## Indexes
