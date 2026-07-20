@@ -40,6 +40,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-chains
+
 data:
   artifacts.taskrun.format: slsa/v1
   artifacts.taskrun.storage: "oci"
@@ -63,8 +64,8 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-chains
-    pipeline.tekton.dev/release: "v0.27.0"
-    version: "v0.27.0"
+    pipeline.tekton.dev/release: "v0.28.1"
+    version: "v0.28.1"
 spec:
   replicas: 1
   selector:
@@ -84,8 +85,8 @@ spec:
         app.kubernetes.io/instance: default
         app.kubernetes.io/part-of: tekton-chains
         # # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v0.27.0"
-        version: "v0.27.0"
+        pipeline.tekton.dev/release: "v0.28.1"
+        version: "v0.28.1"
     spec:
       affinity:
         nodeAffinity:
@@ -110,7 +111,14 @@ spec:
       serviceAccountName: tekton-chains-controller
       containers:
         - name: tekton-chains-controller
-          image: ghcr.io/tektoncd/chains/github.com/tektoncd/chains/cmd/controller:v0.27.0@sha256:a92aa5ba9e05aef7da224a208d79d6fb321fac943836905a894b0c1a25796eb3
+          image: ghcr.io/tektoncd/chains/github.com/tektoncd/chains/cmd/controller:v0.28.1@sha256:193e6cca677f47e800acc790705394739415ca0dd78a6b30818d5c3bb3f0be77
+          resources:
+            requests:
+              cpu: 20m
+              memory: 60Mi
+            limits:
+              cpu: 50m
+              memory: 192Mi
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets
@@ -138,13 +146,6 @@ spec:
             # User 65532 is the distroless nonroot user ID
             runAsUser: 65532
             runAsGroup: 65532
-          resources:
-            requests:
-              cpu: 20m
-              memory: 60Mi
-            limits:
-              cpu: 50m
-              memory: 192Mi
       volumes:
         - name: signing-secrets
           secret:
@@ -210,13 +211,15 @@ rules:
     # Controller needs cluster access to all of the CRDs that it is responsible for
     # managing.
   - apiGroups: ["tekton.dev"]
-    resources: ["tasks", "clustertasks", "taskruns", "pipelines", "pipelineruns", "pipelineresources", "conditions", "runs"]
+    resources: ["tasks", "clustertasks", "taskruns", "pipelines", "pipelineruns",
+      "pipelineresources", "conditions", "runs"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
   - apiGroups: ["tekton.dev"]
     resources: ["taskruns/finalizers", "pipelineruns/finalizers", "runs/finalizers"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
   - apiGroups: ["tekton.dev"]
-    resources: ["tasks/status", "clustertasks/status", "taskruns/status", "pipelines/status", "pipelineruns/status", "pipelineresources/status", "runs/status"]
+    resources: ["tasks/status", "clustertasks/status", "taskruns/status", "pipelines/status",
+      "pipelineruns/status", "pipelineresources/status", "runs/status"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
 ---
 kind: ClusterRole
@@ -371,7 +374,7 @@ data:
   # this ConfigMap such that even if we don't have access to
   # other resources in the namespace, we can still access
   # this ConfigMap.
-  version: "v0.27.0"
+  version: "v0.28.1"
 
 ---
 # Copyright 2023 Tekton Authors LLC
