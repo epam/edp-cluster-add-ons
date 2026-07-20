@@ -114,11 +114,11 @@ spec:
           image: ghcr.io/tektoncd/chains/github.com/tektoncd/chains/cmd/controller:v0.28.1@sha256:193e6cca677f47e800acc790705394739415ca0dd78a6b30818d5c3bb3f0be77
           resources:
             requests:
-              cpu: 20m
-              memory: 60Mi
+              cpu: 48m
+              memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 192Mi
+              cpu: 100m
+              memory: 256Mi
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets
