@@ -1,0 +1,107 @@
+vcluster:
+  # The gitops review pipeline reads this secret to connect; keep the release
+  # name and namespace aligned with the server URL and SAN below.
+  exportKubeConfig:
+    server: https://argocd-diff-preview.argocd-diff-preview.svc:443
+
+  controlPlane:
+    proxy:
+      extraSANs:
+        - argocd-diff-preview.argocd-diff-preview.svc
+
+  # Namespace-scoped RBAC only: the preview environment needs no nodes,
+  # storage classes or CSI objects from the host.
+  rbac:
+    clusterRole:
+      enabled: false
+
+  sync:
+    fromHost:
+      storageClasses:
+        enabled: false
+      csiNodes:
+        enabled: false
+      csiDrivers:
+        enabled: false
+      csiStorageCapacities:
+        enabled: false
+      # Project the platform repo-creds secret into the virtual cluster so the
+      # embedded Argo CD clones the GitOps repository with the same credentials
+      # as the platform - nothing is copied at runtime and rotation propagates
+      # automatically. The addon derives read RBAC for the syncer from these
+      # mapping keys (see templates/fromhost-secrets-rbac.yaml).
+      secrets:
+        enabled: true
+        mappings:
+          byName:
+            # host-namespace/name: vcluster-namespace/name
+            "argocd/gitlab-creds": "argocd/gitlab-creds"
+            #
+            # Argo CD matches credentials per source repoURL: 'repository'
+            # secrets by exact URL, 'repo-creds' secrets by URL prefix - one
+            # prefix template usually covers a whole git server, so the number
+            # of mappings scales with git servers, not repositories. Add one
+            # mapping per credential secret the preview needs:
+            # "argocd/github-org-creds": "argocd/github-org-creds"
+            # "argocd/oci-registry-creds": "argocd/oci-registry-creds"
+            #
+            # If the platform keeps repository credentials in a dedicated
+            # namespace (e.g. materialized there by External Secrets), project
+            # them wholesale - new credentials then flow in with no addon
+            # changes. Read RBAC for that namespace is derived automatically:
+            # "argocd-repo-creds/*": "argocd/*"
+            #
+            # Avoid "argocd/*": it would project admin, cluster and TLS
+            # secrets into the preview environment.
+
+  experimental:
+    deploy:
+      vcluster:
+        # Optional raw manifests applied inside the virtual cluster at boot.
+        # Used on environments whose git host is not resolvable from pods
+        # (e.g. the try-kuberocketci testbed's 127.0.0.1.nip.io domain needs a
+        # CoreDNS forward to the host cluster DNS). Empty by default:
+        # production git hosts must simply be resolvable from cluster
+        # workloads.
+        #
+        # Example - forward a loopback nip.io git host to the host cluster DNS
+        # (10.96.0.10 = host kube-dns ClusterIP):
+        # manifests: |
+        #   apiVersion: v1
+        #   kind: ConfigMap
+        #   metadata:
+        #     name: coredns-custom
+        #     namespace: kube-system
+        #   data:
+        #     gitlab.server: |
+        #       gitlab.127.0.0.1.nip.io:1053 {
+        #           forward . 10.96.0.10
+        #       }
+        manifests: ""
+        helm:
+          - chart:
+              name: argo-cd
+              repo: https://argoproj.github.io/argo-helm
+              version: 9.5.17
+            release:
+              name: argocd
+              namespace: argocd
+            # Minimal Argo CD: it only renders manifests, it never syncs.
+            # configs.ssh.extraHosts must carry the git server host keys when
+            # the server is not covered by the chart's default known_hosts
+            # (one entry per self-hosted SSH git server; obtain via
+            # 'ssh-keyscan -p <port> <host>'). Example:
+            #
+            # configs:
+            #   ssh:
+            #     extraHosts: |
+            #       [gitlab.example.com]:32222 ssh-ed25519 AAAA...
+            #       [gitlab.example.com]:32222 ssh-rsa AAAA...
+            values: |-
+              dex:
+                enabled: false
+              notifications:
+                enabled: false
+              configs:
+                params:
+                  server.insecure: true
