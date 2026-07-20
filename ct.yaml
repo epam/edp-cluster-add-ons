@@ -27,6 +27,7 @@ chart-repos:
   - external-secrets=https://charts.external-secrets.io
   - fluent=https://fluent.github.io/helm-charts
   - gitlab=https://charts.gitlab.io
+  - loft=https://charts.loft.sh
   - goharbor=https://helm.goharbor.io
   - grafana=https://grafana.github.io/helm-charts
   - hashicorp=https://helm.releases.hashicorp.com

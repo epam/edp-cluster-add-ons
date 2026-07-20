@@ -1,0 +1,17 @@
+apiVersion: v2
+description: >-
+  Argo CD Diff Preview environment for GitOps review pipelines: a standing
+  vcluster with a minimal Argo CD inside, used by the argocd-diff-preview
+  step of the gitops review pipelines to render manifest diffs for merge
+  requests. Installing this addon activates the diff preview feature; the
+  pipeline step skips silently when the addon is absent.
+home: https://docs.kuberocketci.io/
+name: argocd-diff-preview
+type: application
+version: 0.1.0
+appVersion: 0.35.1
+
+dependencies:
+- name: vcluster
+  version: 0.35.1
+  repository: https://charts.loft.sh
