@@ -1,6 +1,6 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.14.0/deploy-templates/values.yaml and in each of subchart
+## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.14.1/deploy-templates/values.yaml and in each of subchart
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
@@ -108,6 +108,9 @@ edp-install:
     # -- Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute).
     # When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}.
     ingressController: "nginx"
+    # -- How often the operator re-checks that codebase branches still exist in git, marking
+    # missing ones with the Stale condition and the app.edp.epam.com/stale label (portal shows a stale badge).
+    branchStaleCheckInterval: 24h
     # -- Labels to be added to the pod.
     # podLabels: {}
     # image:
@@ -214,8 +217,16 @@ edp-install:
     # -- Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...).
     # Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard.
     clusterName: "core"
+    # -- Host used to build krci-portal pipeline links in Tekton (and Reporter PR comments), together with clusterName.
+    # If empty, falls back to a value derived from global.dnsWildCard.
+    portalHost: ""
 
     pipelines:
+      # -- Cancel in-progress review PipelineRuns when a new commit is pushed to the same
+      # Pull Request / Merge Request / Gerrit change. Handled by the KRCI interceptor (no extra
+      # components); cancellation is graceful, so finally tasks of the superseded run still execute.
+      cancelInProgress: false
+
       image:
         # -- Registry for tekton pipelines images. Default: docker.io
         registry: "docker.io"
@@ -244,6 +255,18 @@ edp-install:
       ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
       # imagePullSecrets: []
       # - name: regcred
+
+    # The Tekton Reporter publishes a pull request comment with the per-task status table and the
+    # trailing logs of failed steps for finished review PipelineRuns. Links use portalHost + clusterName.
+    # SECURITY: published logs come from steps that execute the PR's own code; secret masking is
+    # best-effort, not a hard boundary - only enable where secret-bearing steps don't run untrusted code.
+    reporter:
+      # -- Deploy the Tekton Reporter as a part of the pipeline library when true. Default: true
+      enabled: true
+      # -- Number of trailing log lines published for every failed step
+      tailLines: 100
+      # -- Report comment strategy: 'update' edits the previous report comment of the same pull request, 'new' always creates a new comment
+      commentStrategy: update
 
     # GitServers configuration section
     # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
