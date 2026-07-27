@@ -44,4 +44,9 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.serviceAccount.name | string | `"nginx-ingress-service-account"` |  |
 | ingress-nginx.updateStrategy.rollingUpdate.maxUnavailable | int | `1` |  |
 | ingress-nginx.updateStrategy.type | string | `"RollingUpdate"` |  |
+| nginxFallback.enabled | bool | `false` | Enable the nginx-fallback catch-all HTTPRoute. |
+| nginxFallback.gateway.name | string | `"main-gateway"` | Name of the parent Gateway the fallback route attaches to. |
+| nginxFallback.gateway.namespace | string | `"envoy-gateway-system"` | Namespace of the parent Gateway. |
+| nginxFallback.service.name | string | `"ingress-nginx-controller"` | nginx-ingress controller Service the fallback route forwards unmatched traffic to. |
+| nginxFallback.service.port | int | `80` | Port on the nginx-ingress controller Service. |
 

@@ -55,3 +55,25 @@ ingress-nginx:
   serviceAccount:
     create: true
     name: nginx-ingress-service-account
+
+# Catch-all HTTPRoute that forwards any request Envoy Gateway can't match to a more
+# specific HTTPRoute back to the nginx-ingress controller. Having no hostnames, it sits
+# at the lowest Gateway API precedence and can never shadow a real HTTPRoute, so it lets
+# Envoy Gateway become the ALB default target group without a per-host allow-list.
+# Disabled by default (opt-in): additive and inert until the cluster runs Envoy Gateway
+# and the ALB default action is flipped to Envoy (platform_default_gateway in
+# terraform-aws-platform). Requires the parent Gateway below to exist — provided by the
+# envoy-gateway-resources add-on.
+nginxFallback:
+  # -- Enable the nginx-fallback catch-all HTTPRoute.
+  enabled: false
+  gateway:
+    # -- Name of the parent Gateway the fallback route attaches to.
+    name: main-gateway
+    # -- Namespace of the parent Gateway.
+    namespace: envoy-gateway-system
+  service:
+    # -- nginx-ingress controller Service the fallback route forwards unmatched traffic to.
+    name: ingress-nginx-controller
+    # -- Port on the nginx-ingress controller Service.
+    port: 80
