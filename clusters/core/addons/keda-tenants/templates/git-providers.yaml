@@ -26,8 +26,7 @@ spec:
         query: |
           count(
             kube_pod_created{
-              namespace="{{ $namespace }}",
-              pod!~"tekton-resource-pruner.*"
+              namespace="{{ $namespace }}"
             } > time() - {{ $timeInterval }}
           ) or vector(0)
         threshold: "{{ $globalValues.thresholdPods }}"

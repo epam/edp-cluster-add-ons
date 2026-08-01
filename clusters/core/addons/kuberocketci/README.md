@@ -44,7 +44,6 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.edp-tekton.reporter.enabled | bool | `true` | Deploy the Tekton Reporter as a part of the pipeline library when true. Default: true |
 | edp-install.edp-tekton.reporter.tailLines | int | `100` | Number of trailing log lines published for every failed step |
 | edp-install.edp-tekton.tekton-cache.enabled | bool | `true` |  |
-| edp-install.edp-tekton.tekton.pruner.create | bool | `true` |  |
 | edp-install.externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |
 | edp-install.externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for KubeRocketCI installation, using External Secret Operator |
 | edp-install.externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
