@@ -242,12 +242,6 @@ edp-install:
       # Tekton cache endpoint for pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-tekton-cache.yaml
       # url: http://tekton-cache:8080
 
-    tekton:
-      pruner:
-        create: true
-        # -- List of ImagePullSecrets to be used by the pruner CronJob
-        # imagePullSecrets: []
-
     interceptor:
       # -- Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true
       enabled: true
