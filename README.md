@@ -200,7 +200,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | karpenter                    | 1.8.4     | 1.8.4        | karpenter              | False             | False    |
 | keda-tenants                 | 0.1.2     | 0.1.0        | keda                   | False             | False    |
 | keda                         | 2.17.2    | 2.17.2       | keda                   | False             | False    |
-| keycloak                     | 2.3.0     | 24.0.4       | security               | False             | False    |
+| keycloak                     | 3.0.0     | 26.6.4       | security               | False             | False    |
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |
 | keycloak-operator            | 1.34.0    | 1.34.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
