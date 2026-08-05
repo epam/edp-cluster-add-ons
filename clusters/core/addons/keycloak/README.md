@@ -1,6 +1,6 @@
 # keycloak
 
-![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 24.0.4](https://img.shields.io/badge/AppVersion-24.0.4-informational?style=flat-square)
+![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.6.4](https://img.shields.io/badge/AppVersion-26.6.4-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
@@ -74,7 +74,7 @@ To expose internal Keycloak endpoint, follow the steps below:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://codecentric.github.io/helm-charts | keycloakx | 2.3.0 |
+| https://codecentric.github.io/helm-charts | keycloakx | 7.2.2 |
 
 ## Values
 
@@ -113,11 +113,11 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.database.username | string | `"admin"` |  |
 | keycloakx.database.vendor | string | `"postgres"` |  |
 | keycloakx.dbchecker.enabled | bool | `true` |  |
-| keycloakx.extraEnv | string | `"- name: KC_HOSTNAME\n  value: \"idp.example.com\"\n- name: KC_SPI_HOSTNAME_DEFAULT_ADMIN\n  value: \"idp.example.com\"\n- name: KC_HTTP_ENABLED\n  value: \"true\"\n- name: KC_HOSTNAME_STRICT\n  value: \"false\"\n- name: KC_HOSTNAME_STRICT_HTTPS\n  value: \"false\"\n- name: KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL\n  value: \"info\"\n- name: KEYCLOAK_ADMIN\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KEYCLOAK_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -XX:+UseContainerSupport\n    -XX:MaxRAMPercentage=50.0\n    -Djava.awt.headless=true\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n    -Dkeycloak.connectionsHttpClient.default.expect-continue-enabled=true\n    -Dkeycloak.connectionsHttpClient.default.reuse-connections=false\n- name: HTTP_ADDRESS_FORWARDING\n  value: \"true\"\n- name: PROXY_ADDRESS_FORWARDING\n  value: \"true\"\n"` |  |
+| keycloakx.extraEnv | string | `"# Both hostnames expect a full URL, not a bare host. Keep the scheme when\n# substituting your own domain.\n- name: KC_HOSTNAME\n  value: \"https://idp.example.com\"\n- name: KC_HOSTNAME_ADMIN\n  value: \"https://idp.example.com\"\n- name: KC_HOSTNAME_STRICT\n  value: \"false\"\n- name: KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL\n  value: \"info\"\n# Keycloak's outbound pool never expires idle connections, so the identity provider callback\n# can reuse one the network path already closed and fail with Connection reset. Expire them\n# after 30s, which still covers the token, userinfo and JWKS calls of a single callback.\n- name: KC_SPI_CONNECTIONS_HTTP_CLIENT_DEFAULT_CONNECTION_TTL_MILLIS\n  value: \"30000\"\n- name: KC_SPI_CONNECTIONS_HTTP_CLIENT_DEFAULT_MAX_CONNECTION_IDLE_TIME_MILLIS\n  value: \"30000\"\n# Credentials of the temporary admin created on first startup only.\n- name: KC_BOOTSTRAP_ADMIN_USERNAME\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: username\n- name: KC_BOOTSTRAP_ADMIN_PASSWORD\n  valueFrom:\n    secretKeyRef:\n      name: keycloak-admin-creds\n      key: password\n"` |  |
 | keycloakx.fullnameOverride | string | `"keycloakx"` |  |
 | keycloakx.health.enabled | bool | `false` |  |
 | keycloakx.http.relativePath | string | `"/"` |  |
-| keycloakx.image.tag | string | `"24.0.4"` |  |
+| keycloakx.image.tag | string | `"26.6.4"` |  |
 | keycloakx.ingress.annotations."nginx.ingress.kubernetes.io/proxy-buffer-size" | string | `"256k"` |  |
 | keycloakx.ingress.console.annotations | string | `nil` |  |
 | keycloakx.ingress.console.enabled | bool | `true` |  |
@@ -139,7 +139,8 @@ To expose internal Keycloak endpoint, follow the steps below:
 | keycloakx.metrics.enabled | bool | `false` |  |
 | keycloakx.nameOverride | string | `"keycloakx"` |  |
 | keycloakx.proxy.enabled | bool | `true` |  |
-| keycloakx.proxy.mode | string | `"edge"` |  |
+| keycloakx.proxy.http.enabled | bool | `true` |  |
+| keycloakx.proxy.mode | string | `"xforwarded"` |  |
 | keycloakx.replicas | int | `1` |  |
 | keycloakx.resources.limits.memory | string | `"2048Mi"` |  |
 | keycloakx.resources.requests.cpu | string | `"50m"` |  |
