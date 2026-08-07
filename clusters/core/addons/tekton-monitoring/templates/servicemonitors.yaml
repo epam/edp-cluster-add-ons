@@ -1,0 +1,144 @@
+{{- if .Values.serviceMonitor.enabled }}
+{{- $ns := .Values.serviceMonitor.namespace }}
+{{- $interval := .Values.serviceMonitor.interval }}
+{{- if .Values.serviceMonitor.pipelinesController }}
+# Pipelines controller — the source of every tekton_pipelines_controller_* metric the
+# Pipeline Overview / Task Analytics / Queue & Scheduling dashboards are built on.
+# Selected on the istio-oriented `app` label because the app.kubernetes.io/* set is shared
+# with the Triggers controller Service.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-pipelines-controller
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: tekton-pipelines-controller
+  namespaceSelector:
+    matchNames: [{{ $ns }}]
+  endpoints:
+    - port: http-metrics
+      interval: {{ $interval }}
+      honorLabels: true
+{{- end }}
+{{- if .Values.serviceMonitor.eventsController }}
+---
+# Events controller — CloudEvents emission health (feeds the krci-events notification bus).
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-events-controller
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: tekton-events-controller
+  namespaceSelector:
+    matchNames: [{{ $ns }}]
+  endpoints:
+    - port: http-metrics
+      interval: {{ $interval }}
+      honorLabels: true
+{{- end }}
+{{- if .Values.serviceMonitor.triggersController }}
+---
+# Triggers controller. Its Service reuses `app.kubernetes.io/name: controller`, so the
+# part-of label is required to tell it apart from the Pipelines controller.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-triggers-controller
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: controller
+      app.kubernetes.io/part-of: tekton-triggers
+  namespaceSelector:
+    matchNames: [{{ $ns }}]
+  endpoints:
+    - port: http-metrics
+      interval: {{ $interval }}
+      honorLabels: true
+{{- end }}
+{{- if .Values.serviceMonitor.resultsApi }}
+---
+# Results API — gRPC server metrics (grpc_server_handled_total) on the `prometheus` port.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-results-api
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tekton-results-api
+  namespaceSelector:
+    matchNames: [{{ $ns }}]
+  endpoints:
+    - port: prometheus
+      interval: {{ $interval }}
+      honorLabels: true
+{{- end }}
+{{- if .Values.serviceMonitor.resultsWatcher }}
+---
+# Results watcher — archival/deletion counters; its metrics port is named `metrics`, not
+# `prometheus` like the API's.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-results-watcher
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tekton-results-watcher
+  namespaceSelector:
+    matchNames: [{{ $ns }}]
+  endpoints:
+    - port: metrics
+      interval: {{ $interval }}
+      honorLabels: true
+{{- end }}
+{{- if .Values.serviceMonitor.eventListeners.enabled }}
+---
+# One monitor covers every KRCI EventListener: the EventListener controller labels each
+# el-* Service with app.kubernetes.io/managed-by: EventListener plus an `eventlistener: <name>`
+# label, which the relabeling below keeps as the per-listener dimension.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tekton-eventlisteners
+  namespace: {{ $ns }}
+  labels:
+    {{- include "tekton-monitoring.smLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: EventListener
+  namespaceSelector:
+    {{- if .Values.serviceMonitor.eventListeners.allNamespaces }}
+    any: true
+    {{- else }}
+    matchNames: [{{ $ns }}]
+    {{- end }}
+  endpoints:
+    - port: http-metrics
+      interval: {{ $interval }}
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_service_label_eventlistener]
+          targetLabel: eventlistener
+{{- end }}
+{{- end }}

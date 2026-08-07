@@ -176,6 +176,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | tekton-dashboard.createNamespace | bool | `false` |  |
 | tekton-dashboard.enable | bool | `false` |  |
 | tekton-dashboard.namespace | string | `"krci"` |  |
+| tekton-monitoring.createNamespace | bool | `false` |  |
+| tekton-monitoring.enable | bool | `false` |  |
+| tekton-monitoring.namespace | string | `"tekton-pipelines"` |  |
 | tekton.createNamespace | bool | `false` |  |
 | tekton.enable | bool | `false` |  |
 | tekton.namespace | string | `"tekton-pipelines"` |  |

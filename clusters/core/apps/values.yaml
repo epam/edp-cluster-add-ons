@@ -334,6 +334,11 @@ tekton-dashboard:
   enable: false
   namespace: krci
 
+tekton-monitoring:
+  createNamespace: false
+  enable: false
+  namespace: tekton-pipelines
+
 trivy-operator:
   createNamespace: true
   enable: false

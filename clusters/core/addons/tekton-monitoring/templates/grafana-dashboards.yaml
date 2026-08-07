@@ -1,0 +1,25 @@
+{{- if .Values.dashboards.enabled }}
+{{- $root := . }}
+{{- range $i, $name := .Values.dashboards.list }}
+{{- if $i }}
+---
+{{- end }}
+# Discovered by the kube-prometheus-stack Grafana sidecar (searchNamespace: ALL), so the
+# ConfigMap does not have to live in the monitoring namespace. The JSON is loaded verbatim
+# with .Files.Get so Helm never parses the Grafana {{`{{legend}}`}} placeholders inside it.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-{{ $name }}
+  labels:
+    {{ $root.Values.dashboards.label }}: {{ $root.Values.dashboards.labelValue | quote }}
+    app.kubernetes.io/name: {{ $root.Chart.Name }}
+    app.kubernetes.io/instance: {{ $root.Release.Name }}
+    app.kubernetes.io/managed-by: {{ $root.Release.Service }}
+  annotations:
+    grafana_folder: {{ $root.Values.dashboards.folder | quote }}
+data:
+  {{ $name }}.json: |-
+{{ $root.Files.Get (printf "files/%s.json" $name) | required (printf "dashboard files/%s.json is missing — run ./generate.py" $name) | indent 4 }}
+{{- end }}
+{{- end }}
