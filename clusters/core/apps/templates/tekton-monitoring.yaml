@@ -1,0 +1,29 @@
+{{- if and (index .Values "tekton-monitoring") (index .Values "tekton-monitoring" "enable") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer}}-tekton-monitoring
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/tekton-monitoring
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: tekton-monitoring
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "tekton-monitoring" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ (index .Values "tekton-monitoring" "createNamespace") }}
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+{{- end -}}

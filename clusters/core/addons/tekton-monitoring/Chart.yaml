@@ -1,0 +1,9 @@
+apiVersion: v2
+name: tekton-monitoring
+description: Observability for the Tekton stack — ServiceMonitors scraping the native Pipelines/Triggers/Results metrics endpoints and the KRCI Tekton analytics Grafana dashboards
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.1.0"

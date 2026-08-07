@@ -25071,6 +25071,10 @@ metadata:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
 data:
+  # KRCI local deviation (re-apply after re-vendoring): metric labels the tekton-monitoring
+  # add-on needs. Must stay in `data` — the `_example` block below is inert documentation.
+  metrics.count.enable-reason: "true"
+  metrics.running-pipelinerun.level: "pipeline"
   _example: |
     ################################
     #                              #

@@ -1,0 +1,790 @@
+{
+  "uid": "tekton-task-analytics",
+  "title": "Tekton / Task Analytics",
+  "tags": [
+    "tekton",
+    "krci"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "editable": true,
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "refresh": "1m",
+  "templating": {
+    "list": [
+      {
+        "name": "namespace",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "query": "label_values(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count, namespace)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "name": "pipeline",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "query": "label_values(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\"}, pipeline)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "name": "task",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "query": "label_values(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\"}, task)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Task runs (range)",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])))",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "noValue": "0",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "graphMode": "none",
+        "colorMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "description": "TaskRuns that completed in the selected range."
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Failed task runs (range)",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\", status!=\"success\"}[$__range])))",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "graphMode": "none",
+        "colorMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "description": "TaskRuns that did not succeed. Always a subset of Task runs."
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Tasks that ran (range)",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "noValue": "0",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "graphMode": "none",
+        "colorMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "description": "Distinct task names that ran in the selected range \u2014 not every task the platform knows about."
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Avg task duration (range)",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_sum{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) / (sum(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 1,
+          "noValue": "n/a",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "graphMode": "none",
+        "colorMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Slowest tasks \u2014 typical vs tail (range)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by (task, le)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_bucket{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range]))) and on(task) (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "B",
+          "expr": "histogram_quantile(0.50, sum by (task, le)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_bucket{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range]))) and on(task) (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "C",
+          "expr": "sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_sum{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) / (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "task",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true
+            },
+            "renameByName": {
+              "Value #A": "p95",
+              "Value #B": "p50 (typical)",
+              "Value #C": "Avg"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p95"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p50 (typical)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "sortBy": [
+          {
+            "displayName": "p95",
+            "desc": true
+          }
+        ]
+      },
+      "description": "p50 is what a healthy run costs, p95 is the tail. A large Avg/p50 gap means the task hangs when it fails rather than being slow."
+    },
+    {
+      "id": 6,
+      "type": "piechart",
+      "title": "Time budget by task (range)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(8, sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_sum{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])))",
+          "legendFormat": "{{task}}",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "description": "Share of total wall-clock consumed per task across ALL runs (frequency x duration) \u2014 where the platform spends its time. Top 8."
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Task runs per interval by status",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum by (status)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__interval])))",
+          "legendFormat": "{{status}}",
+          "interval": "10m"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "min": 0,
+          "custom": {
+            "drawStyle": "bars",
+            "lineWidth": 0,
+            "fillOpacity": 85,
+            "spanNulls": false,
+            "pointSize": 5,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          },
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "success"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "failed"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cancelled"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "description": "Completed TaskRuns per 10m interval by final status."
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Task duration avg per interval",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_sum{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__interval])) / (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__interval])) > 0)",
+          "legendFormat": "{{task}}",
+          "interval": "10m"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0,
+          "custom": {
+            "drawStyle": "points",
+            "lineWidth": 0,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "pointSize": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "description": "Average duration of task runs completed in each 10m interval. Narrow with the task/pipeline filters."
+    },
+    {
+      "id": 9,
+      "type": "table",
+      "title": "Task failures by class (range)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum by (task, reason)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\", status!=\"success\"}[$__range])))",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true
+            },
+            "renameByName": {
+              "Value": "Failures",
+              "reason": "Failure class"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failures"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "sortBy": [
+          {
+            "displayName": "Failures",
+            "desc": true
+          }
+        ]
+      },
+      "description": "Failed tasks grouped by the Tekton failure class (Failed, TaskRunTimeout, Cancelled). Use the TaskRun logs for the root cause."
+    },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "Per-task summary (range)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "round(sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])))",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "B",
+          "expr": "round(sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\", status!=\"success\"}[$__range])))",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "C",
+          "expr": "histogram_quantile(0.50, sum by (task, le)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_bucket{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range]))) and on(task) (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "D",
+          "expr": "histogram_quantile(0.95, sum by (task, le)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_bucket{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range]))) and on(task) (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "E",
+          "expr": "sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_sum{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) / (sum by (task)(increase(tekton_pipelines_controller_pipelinerun_taskrun_duration_seconds_count{namespace=~\"$namespace\", pipeline=~\"$pipeline\", task=~\"$task\"}[$__range])) > 0)",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "task",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true
+            },
+            "renameByName": {
+              "Value #A": "Runs",
+              "Value #B": "Failures",
+              "Value #C": "p50 (typical)",
+              "Value #D": "p95",
+              "Value #E": "Avg duration"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p50 (typical)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p95"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "sortBy": [
+          {
+            "displayName": "Runs",
+            "desc": true
+          }
+        ]
+      }
+    }
+  ]
+}
