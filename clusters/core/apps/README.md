@@ -25,9 +25,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | argo-cd.createNamespace | bool | `false` | whether to create the namespace or not |
 | argo-events | object | `{"createNamespace":true,"enable":false,"namespace":"argo-events"}` | Argo Events — KubeRocketCI notification bus (Tekton CloudEvents -> EventBus -> Sensors) |
 | argoProject | string | `"core"` |  |
-| argocd-diff-preview.createNamespace | bool | `true` |  |
-| argocd-diff-preview.enable | bool | `false` |  |
-| argocd-diff-preview.namespace | string | `"argocd-diff-preview"` |  |
+| argocd-diff-preview | object | `{"createNamespace":false,"enable":false,"namespace":"argocd-diff-preview"}` | Argo CD Diff Preview (ALPHA) — renders a manifest diff on GitOps repository merge requests. Requires `pipelines.argocdDiffPreview.enabled` in edp-tekton, which owns this namespace. |
 | atlantis.createNamespace | bool | `false` |  |
 | atlantis.enable | bool | `false` |  |
 | atlantis.namespace | string | `"atlantis"` |  |
