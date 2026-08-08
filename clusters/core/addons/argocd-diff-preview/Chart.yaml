@@ -8,7 +8,7 @@ description: >-
 home: https://docs.kuberocketci.io/
 name: argocd-diff-preview
 type: application
-version: 0.1.0
+version: 0.2.0
 appVersion: 0.35.1
 
 dependencies:

@@ -25,34 +25,34 @@ vcluster:
         enabled: false
       csiStorageCapacities:
         enabled: false
-      # Project the platform repo-creds secret into the virtual cluster so the
-      # embedded Argo CD clones the GitOps repository with the same credentials
-      # as the platform - nothing is copied at runtime and rotation propagates
-      # automatically. The addon derives read RBAC for the syncer from these
-      # mapping keys (see templates/fromhost-secrets-rbac.yaml).
+      # Project this addon's repo credential into the virtual cluster so the
+      # embedded Argo CD clones the repositories itself - nothing is copied at
+      # runtime and rotation propagates automatically.
+      #
+      # The host side is this addon's own namespace, where the vcluster syncer
+      # already has secret access via the chart's default Role, so the
+      # projection needs no additional RBAC. Keep it that way: mapping another
+      # namespace grants read on every secret in it, since 'list'/'watch'
+      # cannot be restricted by resourceName.
       secrets:
         enabled: true
         mappings:
           byName:
             # host-namespace/name: vcluster-namespace/name
-            "argocd/gitlab-creds": "argocd/gitlab-creds"
+            "argocd-diff-preview/argocd-preview-vcs": "argocd/argocd-preview-vcs"
             #
             # Argo CD matches credentials per source repoURL: 'repository'
-            # secrets by exact URL, 'repo-creds' secrets by URL prefix - one
-            # prefix template usually covers a whole git server, so the number
-            # of mappings scales with git servers, not repositories. Add one
-            # mapping per credential secret the preview needs:
-            # "argocd/github-org-creds": "argocd/github-org-creds"
-            # "argocd/oci-registry-creds": "argocd/oci-registry-creds"
+            # secrets by exact URL, 'repo-creds' secrets by URL prefix. The
+            # preview must clone BOTH the GitOps repository (the $values
+            # source) and each codebase repository (the deploy-templates chart
+            # source), so the credential must be a repo-creds PREFIX secret
+            # covering the git server - a per-repository secret renders an
+            # empty diff. One prefix covers a whole git server, so mappings
+            # scale with git servers, not repositories.
             #
-            # If the platform keeps repository credentials in a dedicated
-            # namespace (e.g. materialized there by External Secrets), project
-            # them wholesale - new credentials then flow in with no addon
-            # changes. Read RBAC for that namespace is derived automatically:
-            # "argocd-repo-creds/*": "argocd/*"
-            #
-            # Avoid "argocd/*": it would project admin, cluster and TLS
-            # secrets into the preview environment.
+            # Add one mapping per extra credential the preview needs, each
+            # materialized into THIS namespace (see templates/external-secrets):
+            # "argocd-diff-preview/oci-registry-creds": "argocd/oci-registry-creds"
 
   experimental:
     deploy:
@@ -105,3 +105,47 @@ vcluster:
               configs:
                 params:
                   server.insecure: true
+
+# Repository credential for the embedded Argo CD, materialized into this
+# addon's own namespace.
+#
+# Use an account of its own rather than the platform's Argo CD credential, so
+# the preview environment stays independent of platform credential changes.
+# Read access is all it needs - on GitLab, Reporter on the group covers every
+# current and future project in one step.
+#
+# Expected properties at <secretPath>:
+#   argocd-preview-vcs.sshPrivateKey  base64-encoded private key
+#   argocd-preview-vcs.url            repo-creds URL prefix, built from the
+#                                     GitServer spec as
+#                                     ssh://<gitUser>@<gitHost>:<sshPort>/
+#
+# Without ESO, create the secret by hand in this addon's namespace with the
+# same name, keys and the argocd.argoproj.io/secret-type: repo-creds label.
+eso:
+  # -- Install components of the ESO.
+  enabled: false
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "aws"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this path must be prefixed with `secret/`.
+  secretPath: "/infra/core/addons/argocd-diff-preview"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "core"
+    # -- Vault role for the Kubernetes authentication method.
+    role: argocd
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

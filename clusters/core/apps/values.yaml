@@ -31,11 +31,10 @@ argo-events:
   enable: false
   namespace: argo-events
 
-# Argo CD Diff Preview environment for the GitOps review pipelines.
-# Installing this addon activates MR diff previews; the pipeline step skips
-# silently when the addon is absent.
+# -- Argo CD Diff Preview (ALPHA) — renders a manifest diff on GitOps repository merge requests.
+# Requires `pipelines.argocdDiffPreview.enabled` in edp-tekton, which owns this namespace.
 argocd-diff-preview:
-  createNamespace: true
+  createNamespace: false
   enable: false
   namespace: argocd-diff-preview
 
