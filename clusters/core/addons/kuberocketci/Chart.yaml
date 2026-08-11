@@ -3,10 +3,10 @@ description: A Helm chart for KubeRocketCI Platform
 home: https://docs.kuberocketci.io/
 name: edp-install
 type: application
-version: 3.14.1
-appVersion: 3.14.1
+version: 3.15.0
+appVersion: 3.15.0
 
 dependencies:
 - name: edp-install
-  version: 3.14.1
+  version: 3.15.0
   repository: https://epam.github.io/edp-helm-charts/stable
