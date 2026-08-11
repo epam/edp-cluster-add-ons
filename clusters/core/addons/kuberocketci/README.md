@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.14.1](https://img.shields.io/badge/Version-3.14.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.14.1](https://img.shields.io/badge/AppVersion-3.14.1-informational?style=flat-square)
+![Version: 3.15.0](https://img.shields.io/badge/Version-3.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.15.0](https://img.shields.io/badge/AppVersion-3.15.0-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -10,7 +10,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.14.1 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.15.0 |
 
 ## Values
 
@@ -24,14 +24,6 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.codebase-operator.branchStaleCheckInterval | string | `"24h"` | How often the operator re-checks that codebase branches still exist in git, marking missing ones with the Stale condition and the app.edp.epam.com/stale label (portal shows a stale badge). |
 | edp-install.codebase-operator.enabled | bool | `true` |  |
 | edp-install.codebase-operator.ingressController | string | `"nginx"` | Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute). When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}. |
-| edp-install.edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
-| edp-install.edp-headlamp.config.oidc | object | `{"clientID":"shared","clientSecretKey":"clientSecret","clientSecretName":"keycloak-client-headlamp-secret","enabled":false,"issuerUrl":"","scopes":""}` | For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc |
-| edp-install.edp-headlamp.config.oidc.clientID | string | `"shared"` | OIDC client ID |
-| edp-install.edp-headlamp.config.oidc.clientSecretKey | string | `"clientSecret"` | OIDC client secret key |
-| edp-install.edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` | OIDC client secret name |
-| edp-install.edp-headlamp.config.oidc.issuerUrl | string | `""` | Azure Entra: https://sts.windows.net/<tenant-id>/ |
-| edp-install.edp-headlamp.config.oidc.scopes | string | `""` | OIDC scopes to be used |
-| edp-install.edp-headlamp.enabled | bool | `false` |  |
 | edp-install.edp-tekton.clusterName | string | `"core"` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard. |
 | edp-install.edp-tekton.enabled | bool | `true` |  |
 | edp-install.edp-tekton.gitServers | object | `{}` |  |
@@ -42,6 +34,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.edp-tekton.portalHost | string | `""` | Host used to build krci-portal pipeline links in Tekton (and Reporter PR comments), together with clusterName. If empty, falls back to a value derived from global.dnsWildCard. |
 | edp-install.edp-tekton.reporter.commentStrategy | string | `"update"` | Report comment strategy: 'update' edits the previous report comment of the same pull request, 'new' always creates a new comment |
 | edp-install.edp-tekton.reporter.enabled | bool | `true` | Deploy the Tekton Reporter as a part of the pipeline library when true. Default: true |
+| edp-install.edp-tekton.reporter.logsReporting | bool | `false` | Publish trailing log lines of failed steps in PR comments. Disabled by default to prevent secrets exposure |
 | edp-install.edp-tekton.reporter.tailLines | int | `100` | Number of trailing log lines published for every failed step |
 | edp-install.edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | edp-install.externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |

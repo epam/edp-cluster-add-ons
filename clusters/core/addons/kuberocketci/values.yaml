@@ -1,6 +1,6 @@
 edp-install:
 ## edp-install configuration
-## Full list of parameters are available in https://github.com/epam/edp-install/blob/v3.14.1/deploy-templates/values.yaml and in each of subchart
+## A complete list of parameters can be found in the values.yaml file at https://github.com/epam/edp-install/blob/v3.15.0/deploy-templates/values.yaml, as well as in each subchart.
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
@@ -181,37 +181,6 @@ edp-install:
     #     visible: true
     #     icon: icon_in_base64
 
-  edp-headlamp:
-    enabled: false
-    config:
-      # -- base url path at which headlamp should run
-      baseURL: ""
-      # -- Ensure that the specified client is associated with cluster OIDC integration.
-      # -- For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc
-      oidc:
-        # Enable OIDC integration. Default: false
-        enabled: false
-        # -- OIDC Issuer URL for authentication.
-        # -- This URL identifies the OpenID Connect provider endpoint. Examples:
-        # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
-        # -- Azure Entra: https://sts.windows.net/<tenant-id>/
-        issuerUrl: ""
-        # -- OIDC client ID
-        clientID: "shared"
-        # -- OIDC client secret name
-        clientSecretName: "keycloak-client-headlamp-secret"
-        # -- OIDC client secret key
-        clientSecretKey: "clientSecret"
-        # -- OIDC scopes to be used
-        scopes: ""
-    # image:
-    #   repository: epamedp/edp-headlamp
-    #   tag:
-    # -- Optional array of imagePullSecrets containing private registry credentials
-    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
-    # imagePullSecrets: []
-    # - name: regcred
-
   edp-tekton:
     enabled: true
     # -- Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...).
@@ -261,6 +230,8 @@ edp-install:
       tailLines: 100
       # -- Report comment strategy: 'update' edits the previous report comment of the same pull request, 'new' always creates a new comment
       commentStrategy: update
+      # -- Publish trailing log lines of failed steps in PR comments. Disabled by default to prevent secrets exposure
+      logsReporting: false
 
     # GitServers configuration section
     # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
