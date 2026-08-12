@@ -212,7 +212,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | minio-operator               | 7.1.1     | v7.1.1       | minio-operator         | False             | False    |
 | moon                         | 2.7.11    | 2.7.11       | moon                   | False             | False    |
 | nexus-ce                     | 0.1.1     | 3.82.0       | nexus                  | False             | False    |
-| nexus-operator               | 3.5.0     | 3.5.0        | nexus                  | False             | False    |
+| nexus-operator               | 3.6.0     | 3.6.0        | nexus                  | False             | False    |
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 8.2.0     | v7.12.0      | oauth2-proxy           | False             | False    |
 | opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
@@ -224,7 +224,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | redis-operator               | 3.3.0     | 1.3.0        | redis-operator         | False             | False    |
 | report-portal                | 25.8.30   | 25.1.8       | report-portal          | False             | False    |
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
-| sonar-operator               | 3.3.0     | 3.3.0        | sonar                  | False             | False    |
+| sonar-operator               | 3.4.0     | 3.4.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
 | tekton-cache                 | 0.4.2     | 0.4.2        | tekton-cache           | False             | False    |
 | tekton                       | N/A       | N/A          | tekton-pipelines       | False             | False    |
