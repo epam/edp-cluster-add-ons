@@ -1,0 +1,25 @@
+kyverno:
+  crds:
+    install: true
+
+  # Admission-only footprint: policies are enforced by the admission controller.
+  # Enable the extra controllers when mutate-existing, cleanup, or policy
+  # reports are needed.
+  admissionController:
+    # Set to 3 for HA on production clusters.
+    replicas: 1
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+  backgroundController:
+    enabled: false
+
+  cleanupController:
+    enabled: false
+
+  reportsController:
+    enabled: false

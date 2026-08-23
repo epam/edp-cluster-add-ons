@@ -227,6 +227,12 @@ kuberocketci:
   enable: false
   namespace: krci
 
+# -- Kyverno policy engine — admission control for the platform (e.g. Tekton PipelineRun guardrails)
+kyverno:
+  createNamespace: true
+  enable: false
+  namespace: kyverno
+
 minio-operator:
   createNamespace: false
   enable: false

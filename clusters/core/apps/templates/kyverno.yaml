@@ -1,0 +1,37 @@
+{{- if and (.Values.kyverno) (.Values.kyverno.enable) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.destinationServer }}-kyverno
+  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argoProject | default "default" }}
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: clusters/{{ .Values.clusterName }}/addons/kyverno
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: kyverno
+  destination:
+    name: {{ .Values.destinationServer | default "in-cluster" }}
+    namespace: {{ index .Values "kyverno" "namespace" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace={{ .Values.kyverno.createNamespace }}
+      # Kyverno CRDs exceed the client-side apply annotation size limit.
+      - ServerSideApply=true
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+  ignoreDifferences:
+    # Aggregated ClusterRoles are filled in by the API server at runtime.
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+      jqPathExpressions:
+      - .rules
+{{- end -}}
