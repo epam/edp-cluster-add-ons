@@ -36,6 +36,7 @@ chart-repos:
   - jetstack=https://charts.jetstack.io
   - keda=https://kedacore.github.io/charts
   - krakend=https://helm.equinixmetal.com
+  - kyverno=https://kyverno.github.io/kyverno
   - minio-operator=https://operator.min.io
   - moon2=https://charts.aerokube.com
   - oauth2-proxy=https://oauth2-proxy.github.io/manifests

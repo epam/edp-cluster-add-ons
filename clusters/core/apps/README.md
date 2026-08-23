@@ -114,6 +114,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | kuberocketci.createNamespace | bool | `false` |  |
 | kuberocketci.enable | bool | `false` |  |
 | kuberocketci.namespace | string | `"krci"` |  |
+| kyverno | object | `{"createNamespace":true,"enable":false,"namespace":"kyverno"}` | Kyverno policy engine — admission control for the platform (e.g. Tekton PipelineRun guardrails) |
 | minio-operator.createNamespace | bool | `false` |  |
 | minio-operator.enable | bool | `false` |  |
 | minio-operator.namespace | string | `"minio-operator"` |  |
