@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 9.5.13](https://img.shields.io/badge/Version-9.5.13-informational?style=flat-square) ![AppVersion: v3.4.1](https://img.shields.io/badge/AppVersion-v3.4.1-informational?style=flat-square)
+![Version: 10.6.0](https://img.shields.io/badge/Version-10.6.0-informational?style=flat-square) ![AppVersion: v3.5.2](https://img.shields.io/badge/AppVersion-v3.5.2-informational?style=flat-square)
 
 ## Secret Management for VCS Integration
 
@@ -71,7 +71,7 @@ Make sure the path to your SSH private key (~/.ssh/id_rsa) is correct. This key 
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 9.5.13 |
+| https://argoproj.github.io/argo-helm | argo-cd | 10.6.0 |
 
 ## Values
 
