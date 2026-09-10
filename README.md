@@ -178,7 +178,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | atlantis                     | 6.6.0     | v0.44.0      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 3.2.2     | 2.1.11       | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
-| capsule                      | 0.10.9    | 0.10.9       | capsule-system         | False             | False    |
+| capsule                      | 0.14.3    | 0.14.3       | capsule-system         | False             | False    |
 | capsule-tenant               | N/A       | N/A          | capsule-system         | N/A               | False    |
 | cert-manager                 | v1.18.2   | v1.18.2      | cert-manager           | False             | False    |
 | defectdojo                   | 1.9.12    | 2.55.2       | defectdojo             | False             | False    |
