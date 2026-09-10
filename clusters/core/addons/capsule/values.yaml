@@ -13,14 +13,21 @@ capsule:
     options:
       # enable capsule for KRCI tenant and cd-pipeline-operator
       # NOTE: Capsule cannot manage cluster system namespaces
-      capsuleUserGroups:
-        - capsule.clastix.io
+      users:
+        # Capsule 0.14 default group, kept because this list replaces the chart default
+        - kind: Group
+          name: projectcapsule.dev
+        - kind: Group
+          name: capsule.clastix.io
         # uncomment if Argo CD manage main KRCI tenant
-        # - system:serviceaccounts:argocd
+        # - kind: Group
+        #   name: system:serviceaccounts:argocd
         # enable for cd-pipeline-operator https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.17/deploy-templates/values.yaml#L10
-        - system:serviceaccounts:krci
+        - kind: Group
+          name: system:serviceaccounts:krci
         # uncomment if krci-oidc-admins group manage main KRCI tenant https://docs.kuberocketci.io/docs/operator-guide/auth/platform-auth-model
-        # - krci-oidc-admins
+        # - kind: Group
+        #   name: krci-oidc-admins
 
     resources:
       limits:
@@ -29,6 +36,19 @@ capsule:
       requests:
         cpu: 200m
         memory: 128Mi
+
+  webhooks:
+    hooks:
+      metadata:
+        # Keeps the garbage collector's finalizer patch label-free, so RBAC deleted by
+        # Argo CD does not hang in Terminating. First two are chart defaults, repeated.
+        matchConditions:
+          - name: ignore-subresources
+            expression: '!has(request.subResource) || request.subResource == ""'
+          - name: ignore-events
+            expression: 'request.resource.resource != "events"'
+          - name: skip-objects-being-deleted
+            expression: 'request.operation != "UPDATE" || !has(object.metadata.deletionTimestamp)'
 
 # This parameter is responsible for ensuring that the pod can cope with
 # any existing taint on a node, without taking into account the taint's
