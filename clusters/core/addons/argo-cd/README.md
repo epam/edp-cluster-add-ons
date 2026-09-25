@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 10.6.0](https://img.shields.io/badge/Version-10.6.0-informational?style=flat-square) ![AppVersion: v3.5.2](https://img.shields.io/badge/AppVersion-v3.5.2-informational?style=flat-square)
+![Version: 10.9.2](https://img.shields.io/badge/Version-10.9.2-informational?style=flat-square) ![AppVersion: v3.5.3](https://img.shields.io/badge/AppVersion-v3.5.3-informational?style=flat-square)
 
 ## Secret management
 
@@ -54,7 +54,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 10.6.0 |
+| https://argoproj.github.io/argo-helm | argo-cd | 10.9.2 |
 
 ## Values
 
@@ -74,6 +74,7 @@ AWS Parameter Store structure:
 | argo-cd.controller.serviceAccount.annotations | object | `{}` | Annotations applied to created service account |
 | argo-cd.dex.enabled | bool | `false` |  |
 | argo-cd.global.domain | string | `"argocd-dev.example.com"` | Default domain used by all components # Used for ingresses, certificates, SSO, notifications, etc. |
+| argo-cd.global.networkPolicy.create | bool | `false` | Chart >= 10 defaults to true. Kept false: NetworkPolicy for the argocd namespace is managed outside this add-on. |
 | argo-cd.redis.enabled | bool | `true` |  |
 | argo-cd.server.env[0].name | string | `"ARGOCD_API_SERVER_REPLICAS"` |  |
 | argo-cd.server.env[0].value | string | `"1"` |  |

@@ -1,3 +1,7 @@
 cert-manager:
   fullnameOverride: cert-manager
-  installCRDs: true
+  # installCRDs is deprecated since chart 1.15 (NOTES warn on 1.21); crds.enabled +
+  # crds.keep is its exact equivalent.
+  crds:
+    enabled: true
+    keep: true

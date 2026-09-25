@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 10.6.0](https://img.shields.io/badge/Version-10.6.0-informational?style=flat-square) ![AppVersion: v3.5.2](https://img.shields.io/badge/AppVersion-v3.5.2-informational?style=flat-square)
+![Version: 10.9.2](https://img.shields.io/badge/Version-10.9.2-informational?style=flat-square) ![AppVersion: v3.5.3](https://img.shields.io/badge/AppVersion-v3.5.3-informational?style=flat-square)
 
 ## Secret Management for VCS Integration
 
@@ -71,7 +71,7 @@ Make sure the path to your SSH private key (~/.ssh/id_rsa) is correct. This key 
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 10.6.0 |
+| https://argoproj.github.io/argo-helm | argo-cd | 10.9.2 |
 
 ## Values
 
@@ -90,6 +90,7 @@ Make sure the path to your SSH private key (~/.ssh/id_rsa) is correct. This key 
 | argo-cd.configs.ssh.knownHosts | string | `"# -- list of known host in format:\n# [host]:port key-type key\n# Example\n# [ssh.github.com]:443 ssh-rsa qgSdfOuiYhew/+afhQnvjfjhnhnqgSdfOuiYhew/+afhQnvjfjhnhn\n"` |  |
 | argo-cd.dex.enabled | bool | `false` |  |
 | argo-cd.global.domain | string | `"argocd.example.com"` | Default domain used by all components # Used for ingresses, certificates, SSO, notifications, etc. |
+| argo-cd.global.networkPolicy.create | bool | `false` | Chart >= 10 defaults to true. Kept false: NetworkPolicy for the argocd namespace is managed outside this add-on. |
 | argo-cd.redis.enabled | bool | `true` |  |
 | argo-cd.server.env[0].name | string | `"ARGOCD_API_SERVER_REPLICAS"` |  |
 | argo-cd.server.env[0].value | string | `"1"` |  |

@@ -3,6 +3,10 @@ argo-cd:
     # -- Default domain used by all components
     ## Used for ingresses, certificates, SSO, notifications, etc.
     domain: argocd.example.com
+    networkPolicy:
+      # -- Chart >= 10 defaults to true. Kept false: NetworkPolicy for the argocd
+      # namespace is managed outside this add-on.
+      create: false
 
   configs:
     secret:
