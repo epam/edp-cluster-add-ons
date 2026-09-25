@@ -64,8 +64,8 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-chains
-    pipeline.tekton.dev/release: "v0.28.1"
-    version: "v0.28.1"
+    pipeline.tekton.dev/release: "v0.28.7"
+    version: "v0.28.7"
 spec:
   replicas: 1
   selector:
@@ -85,8 +85,8 @@ spec:
         app.kubernetes.io/instance: default
         app.kubernetes.io/part-of: tekton-chains
         # # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v0.28.1"
-        version: "v0.28.1"
+        pipeline.tekton.dev/release: "v0.28.7"
+        version: "v0.28.7"
     spec:
       affinity:
         nodeAffinity:
@@ -111,7 +111,7 @@ spec:
       serviceAccountName: tekton-chains-controller
       containers:
         - name: tekton-chains-controller
-          image: ghcr.io/tektoncd/chains/github.com/tektoncd/chains/cmd/controller:v0.28.1@sha256:193e6cca677f47e800acc790705394739415ca0dd78a6b30818d5c3bb3f0be77
+          image: ghcr.io/tektoncd/chains/github.com/tektoncd/chains/cmd/controller:v0.28.7@sha256:019f3d68dde753d5546af9b5f7e2a296aaa1fcee07bd359a863eae2c9507cfb1
           resources:
             requests:
               cpu: 48m
@@ -374,7 +374,7 @@ data:
   # this ConfigMap such that even if we don't have access to
   # other resources in the namespace, we can still access
   # this ConfigMap.
-  version: "v0.28.1"
+  version: "v0.28.7"
 
 ---
 # Copyright 2023 Tekton Authors LLC

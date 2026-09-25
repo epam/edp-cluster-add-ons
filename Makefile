@@ -93,12 +93,12 @@ lint-chart: ## Lint a specific chart (usage: make lint-chart CHART=chart-name)
 	ct lint --config ct.yaml --lint-conf lint-conf.yaml --charts clusters/core/addons/$(CHART)
 
 .PHONY: kind-create
-kind-create: ## Create a kind cluster with Kubernetes 1.32 for testing
+kind-create: ## Create a kind cluster with Kubernetes 1.36 for testing
 	@if ! command -v kind > /dev/null; then \
 		echo "kind is not installed. Please install it following instructions at https://kind.sigs.k8s.io/docs/user/quick-start/#installation"; \
 		exit 1; \
 	fi
-	@echo "Creating kind cluster with Kubernetes v1.32.0 using kind-config.yaml..."
+	@echo "Creating kind cluster with Kubernetes v1.36.4 using kind-config.yaml..."
 	@if kind get clusters | grep -q chart-testing; then \
 		echo "Using existing chart-testing cluster"; \
 	else \

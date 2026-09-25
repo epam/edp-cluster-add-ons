@@ -1,6 +1,6 @@
 # prometheus-operator
 
-![Version: 84.5.0](https://img.shields.io/badge/Version-84.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.90.1](https://img.shields.io/badge/AppVersion-v0.90.1-informational?style=flat-square)
+![Version: 91.5.2](https://img.shields.io/badge/Version-91.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.94.1](https://img.shields.io/badge/AppVersion-v0.94.1-informational?style=flat-square)
 
 ## Secret management
 
@@ -55,7 +55,7 @@ AWS Parameter Store structure:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 84.5.0 |
+| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 91.5.2 |
 
 ## Values
 

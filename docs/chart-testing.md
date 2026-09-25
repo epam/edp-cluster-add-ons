@@ -8,7 +8,7 @@ The chart-testing pipeline is configured to run automatically on pull requests t
 
 1. Lints all charts to ensure they follow best practices
 2. Validates chart structure and schema
-3. Installs charts in a kind cluster (Kubernetes v1.32) to ensure they deploy successfully
+3. Installs charts in a kind cluster (Kubernetes v1.36) to ensure they deploy successfully
 4. Runs Helm tests to validate chart functionality
 
 ## Configuration
@@ -20,7 +20,7 @@ The main workflow is defined in `.github/workflows/chart-testing.yml`. It:
 - Runs on pull requests that modify chart-related files in the `clusters` directory
 - Uses a two-job approach:
   1. **Lint Job**: Validates chart syntax and best practices
-  2. **Install and Test Job**: Sets up a kind cluster with Kubernetes v1.32, installs charts, and runs Helm tests
+  2. **Install and Test Job**: Sets up a kind cluster with Kubernetes v1.36, installs charts, and runs Helm tests
 - Only creates the kind cluster if there are actually changed charts (optimization)
 - Uses chart-testing to detect, lint, install, and test charts
 
@@ -108,7 +108,7 @@ The Makefile includes several testing targets with different purposes:
 - **`test-charts`**: Basic linting of all charts with chart-testing, no installation
 - **`lint-all-charts`**: Advanced linting using the rules in lint-conf.yaml for all charts
 - **`lint-chart`**: Advanced linting for a specific chart
-- **`kind-create`**: Creates a kind cluster with Kubernetes v1.32 for testing
+- **`kind-create`**: Creates a kind cluster with Kubernetes v1.36 for testing
 - **`kind-delete`**: Removes the kind cluster used for testing
 - **`test-charts-full`**: Comprehensive workflow combining advanced linting, installation and Helm tests
 
