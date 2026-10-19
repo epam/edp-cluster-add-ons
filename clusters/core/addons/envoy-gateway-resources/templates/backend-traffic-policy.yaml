@@ -22,3 +22,6 @@ spec:
       triggers:
         - connect-failure
         - reset
+  # 0 turns off panic mode: with no Ready pod Envoy answers 503 instead of sending traffic to the pods that are not Ready.
+  healthCheck:
+    panicThreshold: 0
