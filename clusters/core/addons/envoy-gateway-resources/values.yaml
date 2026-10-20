@@ -1,3 +1,12 @@
-# This add-on ships static Gateway API custom resources; there are no configurable
-# Helm values. NodePort numbers are auto-assigned — override the EnvoyProxy
-# envoyService via a StrategicMerge patch per cluster if a fixed port is required.
+# This add-on ships the Gateway API custom resources of the platform gateway. NodePort numbers are
+# auto-assigned — override the EnvoyProxy envoyService via a StrategicMerge patch per cluster if a fixed
+# port is required.
+
+krciEnvDaemon:
+  # -- Send the gateway access log to the krci-env-daemon add-on over OpenTelemetry, so that it can wake
+  # KEDA-scaled environments on their first request. The stdout access log stays.
+  enabled: false
+  # -- Host of the daemon's OTLP receiver: Service krci-env-daemon in the namespace krci-env-daemon.
+  host: krci-env-daemon.krci-env-daemon.svc.cluster.local
+  # -- Port of the daemon's OTLP receiver.
+  port: 4317

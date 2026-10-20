@@ -30,6 +30,12 @@ The `timeInterval` and `thresholdRequests` parameters should always be tuned tog
 
 Current default configuration for `krci-portal` scale-to-zero is `timeInterval=3600`, `thresholdPods=1`, `thresholdRequests=1`, `minReplicaCount=0`, `maxReplicaCount=1`, `pollingInterval=30`, and `cooldownPeriod=300`. Adjust these values together based on whether you want faster wake-up, more stable replicas, or more aggressive resource savings.
 
+## Wake on Access with krci-env-daemon
+
+With `trigger: krci-env-daemon` the chart replaces the Prometheus triggers with the `external-push` scaler of the krci-env-daemon add-on. Every Deployment in `krciEnvDaemon.workloads`, and the event listener of every Git provider in `gitProviders`, gets a ScaledObject labelled `krci.epam.com/env-daemon: enabled`. The event listeners start after `tekton-interceptor` is Ready.
+
+The daemon wakes an environment on its first request through Envoy Gateway, and KEDA scales it to zero `cooldownPeriod` seconds after the daemon's idle window ends. This mode needs neither Prometheus nor the NGINX Ingress Controller. The krci-env-daemon add-on README describes the order in which to turn it on.
+
 {{ template "chart.sourcesSection" . }}
 
 {{ template "chart.requirementsSection" . }}

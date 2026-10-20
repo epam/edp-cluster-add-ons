@@ -1,3 +1,4 @@
+{{- if eq .Values.trigger "prometheus" }}
 {{- $timeInterval := .Values.timeInterval }}
 {{- range $namespace := .Values.kedaTenants.namespaces }}
 ---
@@ -50,4 +51,5 @@ spec:
             )
           )
         threshold: "{{ $.Values.thresholdRequests }}"
+{{- end }}
 {{- end }}

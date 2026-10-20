@@ -11,3 +11,28 @@ spec:
         # auto-assigned; override per cluster via a StrategicMerge patch if a fixed
         # port is required (e.g. to align with an existing ingress front-end).
         type: NodePort
+{{- if .Values.krciEnvDaemon.enabled }}
+  telemetry:
+    accessLog:
+      settings:
+        # A settings list replaces Envoy Gateway's default stdout access log; this entry keeps it.
+        - sinks:
+            - type: File
+              file:
+                path: /dev/stdout
+        # krci-env-daemon reads only the host and the response code of each request. The sink
+        # names the Service by host and port, not by backendRefs: with backendRefs, Envoy Gateway
+        # marks the Gateway not accepted and drops every access log, stdout included, while the
+        # daemon has no ready endpoint. host and port are deprecated in the v1alpha1 API but
+        # Envoy Gateway 1.9 still translates them; re-check at the next upgrade.
+        - format:
+            type: JSON
+            json:
+              authority: "%REQ(:AUTHORITY)%"
+              response_code: "%RESPONSE_CODE%"
+          sinks:
+            - type: OpenTelemetry
+              openTelemetry:
+                host: {{ .Values.krciEnvDaemon.host }}
+                port: {{ .Values.krciEnvDaemon.port }}
+{{- end }}

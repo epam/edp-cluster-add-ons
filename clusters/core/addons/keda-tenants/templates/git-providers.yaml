@@ -1,3 +1,4 @@
+{{- if eq .Values.trigger "prometheus" }}
 {{- $globalValues := .Values }}
 {{- $timeInterval := $globalValues.timeInterval }}
 {{- range $globalValues.gitProviders }}
@@ -62,5 +63,6 @@ spec:
           )
         threshold: "{{ $globalValues.thresholdRequests }}"
 ---
+{{- end }}
 {{- end }}
 {{- end }}
