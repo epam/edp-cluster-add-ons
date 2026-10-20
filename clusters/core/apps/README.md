@@ -103,6 +103,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krci-audit.createNamespace | bool | `true` |  |
 | krci-audit.enable | bool | `false` |  |
 | krci-audit.namespace | string | `"krci-audit"` |  |
+| krci-env-daemon.createNamespace | bool | `true` |  |
+| krci-env-daemon.enable | bool | `false` |  |
+| krci-env-daemon.namespace | string | `"krci-env-daemon"` |  |
 | krci-events | object | `{"createNamespace":false,"enable":false,"namespace":"argo-events"}` | KubeRocketCI event wiring (EventSources, Sensors) — requires the argo-events add-on in the same namespace |
 | kuberocketci-pipelines.createNamespace | bool | `false` |  |
 | kuberocketci-pipelines.enable | bool | `false` |  |

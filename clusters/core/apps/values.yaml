@@ -205,6 +205,12 @@ krci-audit:
   enable: false
   namespace: krci-audit
 
+# KubeRocketCI environments woken on their first request through Envoy Gateway. Needs envoy-gateway-resources `krciEnvDaemon.enabled` and keda-tenants `trigger: krci-env-daemon`, which address the daemon in the namespace krci-env-daemon. More details at https://github.com/KubeRocketCI/krci-env-daemon
+krci-env-daemon:
+  createNamespace: true
+  enable: false
+  namespace: krci-env-daemon
+
 # -- KubeRocketCI event wiring (EventSources, Sensors) — requires the argo-events add-on in the same namespace
 krci-events:
   createNamespace: false

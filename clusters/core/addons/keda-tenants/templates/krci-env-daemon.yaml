@@ -1,0 +1,41 @@
+{{- if not (has .Values.trigger (list "prometheus" "krci-env-daemon")) }}
+{{- fail (printf "keda-tenants: trigger must be prometheus or krci-env-daemon, got %q" .Values.trigger) }}
+{{- end }}
+{{- if eq .Values.trigger "krci-env-daemon" }}
+{{- $workloads := list }}
+{{- range .Values.krciEnvDaemon.workloads }}
+{{- $workloads = append $workloads (dict "name" .) }}
+{{- end }}
+{{- range .Values.gitProviders }}
+{{- $workloads = append $workloads (dict "name" (printf "el-edp-%s" .) "after" "tekton-interceptor") }}
+{{- end }}
+{{- range $namespace := .Values.kedaTenants.namespaces }}
+{{- range $workload := $workloads }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $workload.name }}-scaler
+  namespace: {{ $namespace }}
+  labels:
+    krci.epam.com/env-daemon: enabled
+  {{- with $workload.after }}
+  annotations:
+    krci.epam.com/wake-after: {{ . }}
+  {{- end }}
+spec:
+  pollingInterval: {{ $.Values.pollingInterval }}
+  cooldownPeriod: {{ $.Values.cooldownPeriod }}
+  minReplicaCount: {{ $.Values.minReplicaCount }}
+  maxReplicaCount: {{ $.Values.maxReplicaCount }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $workload.name }}
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: {{ $.Values.krciEnvDaemon.scalerAddress }}
+{{- end }}
+{{- end }}
+{{- end }}

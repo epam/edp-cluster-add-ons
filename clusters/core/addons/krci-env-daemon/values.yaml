@@ -1,0 +1,20 @@
+# Configuration for the krci-env-daemon component chart (subchart, pulled from edp-stable). This add-on
+# overrides only the values an operator commonly changes; the full surface lives in the component chart's
+# own values.yaml.
+#
+# The daemon works together with two other add-ons, which address it as Service krci-env-daemon in the
+# namespace krci-env-daemon: envoy-gateway-resources sends it the gateway access log
+# (`krciEnvDaemon.enabled`), and keda-tenants points the tenant ScaledObjects at its scaler
+# (`trigger: krci-env-daemon`).
+krci-env-daemon:
+  # -- How long an environment stays awake after its last request through the gateway or its last running
+  # pipeline. KEDA scales its workloads to zero a keda-tenants `cooldownPeriod` later.
+  idle: 15m
+  # -- The environments the daemon serves, one per namespace of keda-tenants `kedaTenants.namespaces`.
+  # `namespace` gives the daemon read access. `route` (the environment's krci-portal HTTPRoute) and
+  # `hostnames` (the hosts of that route) add the waiting page shown while the environment starts.
+  environments:
+    - namespace: krci
+      # route: krci-portal
+      # hostnames:
+      #   - krci-portal-krci.example.com

@@ -1,6 +1,6 @@
 # keda-tenants
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## General Concepts
 
@@ -25,6 +25,12 @@ The `timeInterval` and `thresholdRequests` parameters should always be tuned tog
 
 Current default configuration for `krci-portal` scale-to-zero is `timeInterval=3600`, `thresholdPods=1`, `thresholdRequests=1`, `minReplicaCount=0`, `maxReplicaCount=1`, `pollingInterval=30`, and `cooldownPeriod=300`. Adjust these values together based on whether you want faster wake-up, more stable replicas, or more aggressive resource savings.
 
+## Wake on Access with krci-env-daemon
+
+With `trigger: krci-env-daemon` the chart replaces the Prometheus triggers with the `external-push` scaler of the krci-env-daemon add-on. Every Deployment in `krciEnvDaemon.workloads`, and the event listener of every Git provider in `gitProviders`, gets a ScaledObject labelled `krci.epam.com/env-daemon: enabled`. The event listeners start after `tekton-interceptor` is Ready.
+
+The daemon wakes an environment on its first request through Envoy Gateway, and KEDA scales it to zero `cooldownPeriod` seconds after the daemon's idle window ends. This mode needs neither Prometheus nor the NGINX Ingress Controller. The krci-env-daemon add-on README describes the order in which to turn it on.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -32,9 +38,12 @@ Current default configuration for `krci-portal` scale-to-zero is `timeInterval=3
 | cooldownPeriod | int | `300` | Idle period in seconds before KEDA scales the workload down to the minimum replica count. |
 | gitProviders | list | `["github"]` | https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L2 |
 | kedaTenants.namespaces | list | `["krci"]` | This value specifies the namespaces where KubeRocketCI deployed. |
+| krciEnvDaemon.scalerAddress | string | `"krci-env-daemon.krci-env-daemon.svc:9090"` | Address of the krci-env-daemon scaler: Service krci-env-daemon in the namespace krci-env-daemon, port 9090. |
+| krciEnvDaemon.workloads | list | `["cd-pipeline-operator","codebase-operator","krci-portal","tekton-interceptor"]` | Deployments KEDA scales in every tenant namespace when `trigger` is `krci-env-daemon`. The event listener `el-edp-<provider>` of each of `gitProviders` is added and starts after `tekton-interceptor` is Ready. |
 | maxReplicaCount | int | `1` | Maximum number of replicas for the scaled workload. |
 | minReplicaCount | int | `0` | Minimum number of replicas for the scaled workload. |
-| pollingInterval | int | `30` | Interval in seconds for KEDA to poll Prometheus metrics. |
+| pollingInterval | int | `30` | Interval in seconds for KEDA to poll the triggers: Prometheus, or the krci-env-daemon scaler. |
 | thresholdPods | int | `1` | Number of newly created pods within the lookback window required to trigger scaling. |
 | thresholdRequests | int | `1` | Number of matching HTTP requests within the lookback window required to trigger scaling. |
 | timeInterval | string | `"3600"` | Lookback window for activity metrics, in seconds. |
+| trigger | string | `"prometheus"` | What wakes the tenant workloads. `prometheus`: the triggers above, on recently created pods and on NGINX Ingress requests. `krci-env-daemon`: the external-push scaler of the krci-env-daemon add-on, which wakes an environment on its first request through Envoy Gateway; every namespace in `kedaTenants.namespaces` then needs an entry in that add-on's `environments`. |

@@ -13,7 +13,7 @@ maxReplicaCount: 1
 thresholdPods: 1
 # -- Number of matching HTTP requests within the lookback window required to trigger scaling.
 thresholdRequests: 1
-# -- Interval in seconds for KEDA to poll Prometheus metrics.
+# -- Interval in seconds for KEDA to poll the triggers: Prometheus, or the krci-env-daemon scaler.
 pollingInterval: 30
 # -- Idle period in seconds before KEDA scales the workload down to the minimum replica count.
 cooldownPeriod: 300
@@ -25,3 +25,22 @@ gitProviders:
   # - gitlab
   # - bitbucket
   # - gerrit
+
+# -- What wakes the tenant workloads. `prometheus`: the triggers above, on recently created pods and on
+# NGINX Ingress requests. `krci-env-daemon`: the external-push scaler of the krci-env-daemon add-on, which
+# wakes an environment on its first request through Envoy Gateway; every namespace in
+# `kedaTenants.namespaces` then needs an entry in that add-on's `environments`.
+trigger: prometheus
+
+krciEnvDaemon:
+  # -- Address of the krci-env-daemon scaler: Service krci-env-daemon in the namespace krci-env-daemon,
+  # port 9090.
+  scalerAddress: krci-env-daemon.krci-env-daemon.svc:9090
+  # -- Deployments KEDA scales in every tenant namespace when `trigger` is `krci-env-daemon`. The event
+  # listener `el-edp-<provider>` of each of `gitProviders` is added and starts after `tekton-interceptor`
+  # is Ready.
+  workloads:
+    - cd-pipeline-operator
+    - codebase-operator
+    - krci-portal
+    - tekton-interceptor

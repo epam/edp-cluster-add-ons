@@ -1,0 +1,12 @@
+apiVersion: v2
+description: A Helm chart for the KubeRocketCI krci-env-daemon add-on, which wakes KEDA-scaled environments on their first request through Envoy Gateway
+home: https://docs.kuberocketci.io/
+name: krci-env-daemon
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+- name: krci-env-daemon
+  version: 0.1.0
+  repository: https://epam.github.io/edp-helm-charts/stable

@@ -198,13 +198,14 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | karma-dashboard              | 2.11.0    | v0.121       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
 | karpenter                    | 1.14.1    | 1.14.1       | karpenter              | False             | False    |
-| keda-tenants                 | 0.1.2     | 0.1.0        | keda                   | False             | False    |
+| keda-tenants                 | 0.2.0     | 0.1.0        | keda                   | False             | False    |
 | keda                         | 2.17.2    | 2.17.2       | keda                   | False             | False    |
 | keycloak                     | 3.0.0     | 26.6.4       | security               | False             | False    |
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |
 | keycloak-operator            | 1.34.0    | 1.34.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | krci-audit                   | 0.2.0     | 0.2.0        | krci-audit             | True              | False    |
+| krci-env-daemon              | 0.1.0     | 0.1.0        | krci-env-daemon        | True              | False    |
 | krci-events                  | 0.1.0     | 0.1.0        | argo-events            | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
