@@ -1,6 +1,6 @@
 edp-install:
 ## edp-install configuration
-## A complete list of parameters can be found in the values.yaml file at https://github.com/epam/edp-install/blob/v3.15.0/deploy-templates/values.yaml, as well as in each subchart.
+## A complete list of parameters can be found in the values.yaml file at https://github.com/epam/edp-install/blob/v3.16.0/deploy-templates/values.yaml, as well as in each subchart.
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
@@ -397,6 +397,15 @@ edp-install:
     # -- should the operator manage(create/delete) namespaces for stages
     # Refer to the guide for managing namespace (https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management)
     manageNamespace: true
+    tenantScopePolicy:
+      # -- Restrict the operator to the namespaces it provisioned when tenancyEngine is none.
+      # A ValidatingAdmissionPolicy lets the operator ServiceAccount delete namespaces and create
+      # RoleBindings, Secrets, ServiceAccounts, SecretStores and ExternalSecrets only in its own
+      # namespace and in namespaces labelled app.edp.epam.com/tenant. An Environment whose
+      # namespace was created outside the operator needs that label, or set this to false.
+      # Applies with manageNamespace true; ignored when tenancyEngine is capsule.
+      # Requires Kubernetes 1.30 or later.
+      enabled: true
     # -- Flag indicating whether the operator should manage secrets for stages.
     # This parameter controls the provisioning of the 'regcred' secret within deployed environments, facilitating access to private container registries.
     # Set the parameter to "none" under the following conditions:
@@ -502,6 +511,9 @@ edp-install:
       # When unset, the tab returns PRECONDITION_FAILED.
       # Example (in-cluster): http://prometheus.monitoring.svc:9090
       PROMETHEUS_URL: http://prometheus.monitoring.svc:9090
+    # The portal reads its environment through extraEnvFrom: the `portal-config` ConfigMap rendered
+    # from configEnv and the `portal-secret` Secret, which must hold SERVER_SECRET and is created
+    # manually or by `eso` below. Until the Secret exists, the pod stays in CreateContainerConfigError.
     eso:
       # -- Install components of the ESO.
       enabled: false
