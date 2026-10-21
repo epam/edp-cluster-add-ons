@@ -209,7 +209,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | krci-events                  | 0.1.0     | 0.1.0        | argo-events            | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
-| kuberocketci                 | 3.15.0    | 3.15.0       | krci                   | False             | False    |
+| kuberocketci                 | 3.16.0    | 3.16.0       | krci                   | False             | False    |
 | kyverno                      | 3.9.0     | 1.19.0       | kyverno                | True              | False    |
 | minio-operator               | 7.1.1     | v7.1.1       | minio-operator         | False             | False    |
 | moon                         | 2.7.11    | 2.7.11       | moon                   | False             | False    |

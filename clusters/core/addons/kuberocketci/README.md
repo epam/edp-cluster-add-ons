@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.15.0](https://img.shields.io/badge/Version-3.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.15.0](https://img.shields.io/badge/AppVersion-3.15.0-informational?style=flat-square)
+![Version: 3.16.0](https://img.shields.io/badge/Version-3.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.16.0](https://img.shields.io/badge/AppVersion-3.16.0-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -10,7 +10,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.15.0 |
+| https://epam.github.io/edp-helm-charts/stable | edp-install | 3.16.0 |
 
 ## Values
 
@@ -21,6 +21,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-install.cd-pipeline-operator.manageNamespace | bool | `true` | should the operator manage(create/delete) namespaces for stages Refer to the guide for managing namespace (https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management) |
 | edp-install.cd-pipeline-operator.secretManager | string | `"own"` | Flag indicating whether the operator should manage secrets for stages. This parameter controls the provisioning of the 'regcred' secret within deployed environments, facilitating access to private container registries. Set the parameter to "none" under the following conditions:   - If 'global.dockerRegistry.type=ecr' and IRSA is enabled, or   - If 'global.dockerRegistry.type=openshift'. For private registries, choose the most appropriate method to provide credentials to deployed environments. Refer to the guide for managing container registries (https://docs.kuberocketci.io/docs/user-guide/manage-container-registries). Possible values: own/eso/none.   - own: Copies the secret once from the parent namespace, without subsequent reconciliation. If updated in the parent namespace, manual updating in all created namespaces is required.   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator).   - none: Disables secrets management logic. |
 | edp-install.cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
+| edp-install.cd-pipeline-operator.tenantScopePolicy.enabled | bool | `true` | Restrict the operator to the namespaces it provisioned when tenancyEngine is none. A ValidatingAdmissionPolicy lets the operator ServiceAccount delete namespaces and create RoleBindings, Secrets, ServiceAccounts, SecretStores and ExternalSecrets only in its own namespace and in namespaces labelled app.edp.epam.com/tenant. An Environment whose namespace was created outside the operator needs that label, or set this to false. Applies with manageNamespace true; ignored when tenancyEngine is capsule. Requires Kubernetes 1.30 or later. |
 | edp-install.codebase-operator.branchStaleCheckInterval | string | `"24h"` | How often the operator re-checks that codebase branches still exist in git, marking missing ones with the Stale condition and the app.edp.epam.com/stale label (portal shows a stale badge). |
 | edp-install.codebase-operator.enabled | bool | `true` |  |
 | edp-install.codebase-operator.ingressController | string | `"nginx"` | Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute). When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}. |
