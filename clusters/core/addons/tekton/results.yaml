@@ -270,12 +270,14 @@ data:
     SERVER_PORT=8080
     PROMETHEUS_PORT=9090
     PROMETHEUS_HISTOGRAM=false
-    TLS_PATH=
+    TLS_PATH=/etc/tls
     TLS_MIN_VERSION=
     TLS_CIPHER_SUITES=
     TLS_CURVE_PREFERENCES=
-    AUTH_DISABLE=true
-    AUTH_IMPERSONATE=true
+    # Every client authenticates with its own ServiceAccount token (the watcher writes, the
+    # portal reads) and none sends an impersonation header, so AUTH_IMPERSONATE is off.
+    AUTH_DISABLE=false
+    AUTH_IMPERSONATE=false
     LOG_LEVEL=info
     SQL_LOG_LEVEL=warn
     LOGS_API=true
@@ -559,7 +561,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTP
+              scheme: HTTPS
             initialDelaySeconds: 5
             periodSeconds: 10
           name: api
@@ -567,7 +569,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTP
+              scheme: HTTPS
             initialDelaySeconds: 5
             periodSeconds: 10
           securityContext:
@@ -584,7 +586,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-              scheme: HTTP
+              scheme: HTTPS
             initialDelaySeconds: 5
             periodSeconds: 10
           volumeMounts:
@@ -753,7 +755,7 @@ spec:
             - name: TEKTON_RESULTS_API_SERVICE
               value: tekton-results-api-service.tekton-pipelines.svc.cluster.local:8080
             - name: AUTH_MODE
-              value: insecure
+              value: token
             - name: KUBERNETES_MIN_VERSION
               value: v1.28.0
           image: ghcr.io/tektoncd/results/watcher-83f971ea227fb24157c0c699b824a628:v0.20.0@sha256:a5fb2d24d5c455c62fda7ce80c36b39af1e50d482a4bfdd289f436287f3c21c9
@@ -794,3 +796,76 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
+---
+# In-cluster TLS for the Results API. The API verifies bearer tokens (AUTH_DISABLE=false), and
+# the watcher sends its ServiceAccount token only over TLS (AUTH_MODE=token), so the API serves
+# TLS: TLS_PATH=/etc/tls, HTTPS probes, and the certificate below. cert-manager, same shape as
+# the opensearch add-on: a self-signed bootstrap Issuer signs a long-lived CA, and a CA Issuer
+# signs the serving certificate. The watcher trusts /etc/tls/tls.crt; in-cluster readers (the
+# portal) trust the CA (`ca.crt` of the Secret), which stays the same when the leaf renews.
+# The API and watcher read the certificate at start only: restart them after a renewal.
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: tekton-results-selfsigned-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+  labels:
+    app.kubernetes.io/part-of: tekton-results
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tekton-results-ca
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+  labels:
+    app.kubernetes.io/part-of: tekton-results
+spec:
+  isCA: true
+  commonName: tekton-results-ca
+  duration: 43800h0m0s # 5 years
+  secretName: tekton-results-ca-key-pair
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  issuerRef:
+    name: tekton-results-selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: tekton-results-ca-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+  labels:
+    app.kubernetes.io/part-of: tekton-results
+spec:
+  ca:
+    secretName: tekton-results-ca-key-pair
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tekton-results-serving-cert
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  labels:
+    app.kubernetes.io/part-of: tekton-results
+spec:
+  secretName: tekton-results-tls
+  duration: 8760h0m0s # 1 year
+  renewBefore: 720h0m0s
+  issuerRef:
+    name: tekton-results-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+  dnsNames:
+    - tekton-results-api-service
+    - tekton-results-api-service.tekton-pipelines
+    - tekton-results-api-service.tekton-pipelines.svc
+    - tekton-results-api-service.tekton-pipelines.svc.cluster.local
