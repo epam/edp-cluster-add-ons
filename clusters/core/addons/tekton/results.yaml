@@ -262,8 +262,10 @@ data:
     DB_MAX_IDLE_CONNECTIONS=10
     DB_MAX_OPEN_CONNECTIONS=10
     GRPC_WORKER_POOL=2
-    K8S_QPS=5
-    K8S_BURST=10
+    # With AUTH_DISABLE=false every request makes two Kubernetes calls (TokenReview and
+    # SubjectAccessReview) through this client, so the API serves about K8S_QPS / 2 requests/s.
+    K8S_QPS=50
+    K8S_BURST=100
     PROFILING=false
     PROFILING_PORT=6060
     FEATURE_GATES='PartialResponse=true'
