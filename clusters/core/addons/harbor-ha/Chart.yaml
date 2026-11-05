@@ -8,15 +8,15 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 1.17.2
+version: 1.19.4
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "2.9.0"
+appVersion: "2.15.4"
 
 dependencies:
   - name: harbor
-    version: 1.17.2
+    version: 1.19.4
     repository: https://helm.goharbor.io
   - name: redis
     version: 17.11.6

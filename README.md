@@ -187,8 +187,8 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | fluent-bit                   | 0.53.0    | 4.0.7        | logging                | False             | False    |
 | gitfusion                    | 0.1.1     | 0.1.1        | krci                   | False             | False    |
 | gitlab-runner                | 0.85.0    | 18.8.0       | gitlab-runner          | False             | False    |
-| harbor                       | 0.1.0     | 1.17.2       | harbor                 | False             | False    |
-| harbor-ha                    | 1.17.2    | 2.9.0        | harbor                 | False             | False    |
+| harbor                       | 0.1.0     | 1.19.4       | harbor                 | False             | False    |
+| harbor-ha                    | 1.19.4    | 2.15.4       | harbor                 | False             | False    |
 | harbor-ha-okd                | 1.13.0    | 2.9.0        | harbor                 | False             | False    |
 | envoy-gateway                | 1.9.1     | 1.9.1        | envoy-gateway-system   | False             | False    |
 | envoy-gateway-resources      | 1.9.1     | 1.9.1        | envoy-gateway-system   | False             | False    |
