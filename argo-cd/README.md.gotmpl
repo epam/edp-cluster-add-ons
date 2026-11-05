@@ -14,18 +14,11 @@
 To create a secret for connecting to GitHub:
 
 ```bash
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: github-credentials
-  labels:
-    argocd.argoproj.io/secret-type: repo-creds
-type: Opaque
-data:
-  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
-  url: "ssh://git@github.com:22/organization-name"
-EOF
+kubectl create secret generic github-credentials -n argocd \
+  --from-literal=type=git \
+  --from-literal=url="ssh://git@github.com:22/organization-name" \
+  --from-file=sshPrivateKey="$HOME/.ssh/id_rsa"
+kubectl label secret github-credentials -n argocd argocd.argoproj.io/secret-type=repo-creds
 ```
 
 2. <b>GitLab</b>
@@ -33,18 +26,11 @@ EOF
 To create a secret for connecting to GitLab:
 
 ```bash
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: gitlab-credentials
-  labels:
-    argocd.argoproj.io/secret-type: repo-creds
-type: Opaque
-data:
-  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
-  url: "ssh://git@gitlab.com:22/organization-name"
-EOF
+kubectl create secret generic gitlab-credentials -n argocd \
+  --from-literal=type=git \
+  --from-literal=url="ssh://git@gitlab.com:22/organization-name" \
+  --from-file=sshPrivateKey="$HOME/.ssh/id_rsa"
+kubectl label secret gitlab-credentials -n argocd argocd.argoproj.io/secret-type=repo-creds
 ```
 
 3. <b>Bitbucket</b>
@@ -52,25 +38,24 @@ EOF
 To create a secret for connecting to Bitbucket:
 
 ```bash
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: bitbucket-ssh-credentials
-  labels:
-    argocd.argoproj.io/secret-type: repo-creds
-type: Opaque
-data:
-  ssh-private-key: $(cat ~/.ssh/id_rsa | base64)
-  url: "ssh://git@bitbucket.org:22/organization-name"
-EOF
+kubectl create secret generic bitbucket-ssh-credentials -n argocd \
+  --from-literal=type=git \
+  --from-literal=url="ssh://git@ssh.bitbucket.org:22/organization-name" \
+  --from-file=sshPrivateKey="$HOME/.ssh/id_rsa"
+kubectl label secret bitbucket-ssh-credentials -n argocd argocd.argoproj.io/secret-type=repo-creds
 ```
+
+Bitbucket Cloud SSH host: `ssh.bitbucket.org`. SSH to `bitbucket.org` is refused after 2026-12-10.
+
+- Add the [Bitbucket host keys](https://bitbucket.org/site/ssh) for `ssh.bitbucket.org` to `argo-cd.configs.ssh.knownHosts`.
+- Use `ssh://git@ssh.bitbucket.org:22/...` in `repoURL` of Applications created outside the platform.
 
 Important:
 
-The label `argocd.argoproj.io/secret-type: repo-creds` is mandatory for proper integration with ArgoCD. Without this label, ArgoCD may not recognize the secret as valid for VCS integration.
-
-Make sure the path to your SSH private key (~/.ssh/id_rsa) is correct. This key should be used to authenticate access to your GitHub, GitLab, or Bitbucket repository.
+- The label `argocd.argoproj.io/secret-type: repo-creds` is mandatory. Without it, Argo CD ignores the secret.
+- Argo CD reads the SSH key only from the `sshPrivateKey` key. See [Repository Credentials](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repository-credentials).
+- `url` is a prefix: the credentials apply to every repository URL that starts with it.
+- Use the SSH private key that has access to your GitHub, GitLab, or Bitbucket repositories.
 
 {{ template "chart.sourcesSection" . }}
 
