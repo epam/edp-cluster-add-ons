@@ -175,7 +175,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | argo-cd                      | 10.9.2    | v3.5.3       | krci                   | False             | False    |
 | argo-events                  | 2.4.23    | v1.9.11      | argo-events            | True              | False    |
 | argocd-diff-preview          | 0.2.0     | 0.35.1       | argocd-diff-preview    | False             | False    |
-| atlantis                     | 6.6.0     | v0.44.0      | atlantis               | False             | False    |
+| atlantis                     | 6.16.1    | v0.48.1      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 3.2.2     | 2.1.11       | kube-system            | N/A               | False    |
 | awx-operator                 | 2.19.1    | 2.19.1       | awx-operator           | False             | False    |
 | capsule                      | 0.14.3    | 0.14.3       | capsule-system         | False             | False    |
@@ -202,7 +202,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | keda                         | 2.21.0    | 2.21.0       | keda                   | False             | False    |
 | keycloak                     | 3.0.0     | 26.6.4       | security               | False             | False    |
 | keycloak-postgresql          | 0.1.1     | 1.0          | security               | False             | False    |
-| keycloak-operator            | 1.34.0    | 1.34.0       | keycloak-operator      | False             | False    |
+| keycloak-operator            | 1.36.0    | 1.36.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | krci-audit                   | 0.2.0     | 0.2.0        | krci-audit             | True              | False    |
 | krci-env-daemon              | 0.1.0     | 0.1.0        | krci-env-daemon        | True              | False    |
@@ -212,14 +212,14 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | kuberocketci                 | 3.16.0    | 3.16.0       | krci                   | False             | False    |
 | kyverno                      | 3.9.2     | 1.19.2       | kyverno                | True              | False    |
 | minio-operator               | 7.1.1     | v7.1.1       | minio-operator         | False             | False    |
-| moon                         | 2.7.11    | 2.7.11       | moon                   | False             | False    |
+| moon                         | 2.8.2     | 2.8.2        | moon                   | False             | False    |
 | nexus-ce                     | 0.1.1     | 3.82.0       | nexus                  | False             | False    |
 | nexus-operator               | 3.7.0     | 3.7.0        | nexus                  | False             | False    |
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 8.2.0     | v7.12.0      | oauth2-proxy           | False             | False    |
 | opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
 | opentelemetry-operator       | 0.95.1    | 0.134.0      | opentelemetry-operator | False             | False    |
-| pgadmin                      | 1.49.0    | 9.7          | pgadmin                | False             | False    |
+| pgadmin                      | 1.70.4    | 9.18         | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 91.5.2    | v0.94.1      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 11.20.2   | v0.29.1      | monitoring             | False             | False    |
@@ -228,7 +228,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
 | sonar-operator               | 3.4.0     | 3.4.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
-| tekton-cache                 | 0.4.2     | 0.4.2        | tekton-cache           | False             | False    |
+| tekton-cache                 | 0.4.5     | 0.4.5        | tekton-cache           | False             | False    |
 | tekton                       | N/A       | N/A          | tekton-pipelines       | False             | False    |
 | tekton-custom-task           | 0.2.0     | 0.2.0        | krci                   | False             | False    |
 | tekton-dashboard             | 0.52.0    | 0.52.0       | krci                   | False             | False    |

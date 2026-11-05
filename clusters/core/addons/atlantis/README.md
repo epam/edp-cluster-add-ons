@@ -1,6 +1,6 @@
 # atlantis
 
-![Version: 6.6.0](https://img.shields.io/badge/Version-6.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.44.0](https://img.shields.io/badge/AppVersion-v0.44.0-informational?style=flat-square)
+![Version: 6.16.1](https://img.shields.io/badge/Version-6.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.48.1](https://img.shields.io/badge/AppVersion-v0.48.1-informational?style=flat-square)
 
 **Homepage:** <https://www.runatlantis.io>
 
@@ -62,7 +62,7 @@ AWS Parameter Store structure:
 | Repository | Name | Version |
 |------------|------|---------|
 | https://oauth2-proxy.github.io/manifests | oauth2-proxy | 8.2.0 |
-| https://runatlantis.github.io/helm-charts | atlantis | 6.6.0 |
+| https://runatlantis.github.io/helm-charts | atlantis | 6.16.1 |
 
 ## Values
 
