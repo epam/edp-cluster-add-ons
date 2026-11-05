@@ -52,7 +52,7 @@ Your task is to initialize a new cluster directory in the repository, following 
       project: {{cluster-name}}
       source:
         path: clusters/{{cluster-name}}/apps
-        repoURL: ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons.git
+        repoURL: ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons.git
         targetRevision: HEAD
     ```
 
@@ -69,7 +69,7 @@ Your task is to initialize a new cluster directory in the repository, following 
 
         destinationServer: "in-cluster"
 
-        repoUrl: "ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"
+        repoUrl: "ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons"
 
         targetRevision: "main"
 

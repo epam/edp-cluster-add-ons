@@ -24,7 +24,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | argoProject | string | `"core"` |  |
 | clusterName | string | `"prod"` |  |
 | destinationServer | string | `"prod"` |  |
-| repoUrl | string | `"ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"` |  |
+| repoUrl | string | `"ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons"` |  |
 | targetRevision | string | `"main"` |  |
 | vault-remote-rbac.createNamespace | bool | `false` |  |
 | vault-remote-rbac.enable | bool | `false` |  |

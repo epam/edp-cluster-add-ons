@@ -157,7 +157,7 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | redis-operator.createNamespace | bool | `false` |  |
 | redis-operator.enable | bool | `false` |  |
 | redis-operator.namespace | string | `"redis-operator"` |  |
-| repoUrl | string | `"ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"` |  |
+| repoUrl | string | `"ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons"` |  |
 | report-portal.createNamespace | bool | `false` |  |
 | report-portal.enable | bool | `false` |  |
 | report-portal.namespace | string | `"report-portal"` |  |

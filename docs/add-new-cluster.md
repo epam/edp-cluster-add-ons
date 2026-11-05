@@ -101,7 +101,7 @@ spec:
   project: <cluster-name>
   source:
     path: clusters/<cluster-name>/apps
-    repoURL: ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons.git
+    repoURL: ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons.git
     targetRevision: HEAD
 ```
 
@@ -219,7 +219,7 @@ destinationServer: "in-cluster"
 # Specifies the URL of the Git repository from which the code will be pulled for deployment.
 # It is provided in the SSH format, indicating the username (`ci`), hostname (`git.example.com`),
 # and port (`22`) of the Git server, along with the repository path (`cluster-add-ons`).
-repoUrl: "ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"
+repoUrl: "ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons"
 
 # Specifies the target revision or branch of the Git repository that will be deployed.
 # In this case, "main" indicates that the main branch of the repository will be used for deployment.
@@ -284,7 +284,7 @@ helm-docs -c clusters/<cluster-name>/apps
       project: prod
       source:
         path: clusters/prod/apps
-        repoURL: ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons.git
+        repoURL: ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons.git
         targetRevision: HEAD
     ```
 
@@ -356,7 +356,7 @@ helm-docs -c clusters/<cluster-name>/apps
 
     destinationServer: "in-cluster"
 
-    repoUrl: "ssh://git@github.com:22/kuberocketci/edp-cluster-add-ons"
+    repoUrl: "ssh://git@github.com:22/AleksandrParamonoff/edp-cluster-add-ons"
 
     targetRevision: "main"
 
