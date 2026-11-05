@@ -1,6 +1,6 @@
 # kyverno
 
-![Version: 3.9.0](https://img.shields.io/badge/Version-3.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.19.0](https://img.shields.io/badge/AppVersion-1.19.0-informational?style=flat-square)
+![Version: 3.9.2](https://img.shields.io/badge/Version-3.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.19.2](https://img.shields.io/badge/AppVersion-1.19.2-informational?style=flat-square)
 
 A Helm chart for Kyverno policy engine
 
@@ -8,7 +8,7 @@ A Helm chart for Kyverno policy engine
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kyverno.github.io/kyverno | kyverno | 3.9.0 |
+| https://kyverno.github.io/kyverno | kyverno | 3.9.2 |
 
 ## Values
 
