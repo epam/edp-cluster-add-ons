@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 3.9.0
+version: 3.9.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "1.19.0"
+appVersion: "1.19.2"
 
 dependencies:
 - name: kyverno
-  version: 3.9.0
+  version: 3.9.2
   repository: https://kyverno.github.io/kyverno

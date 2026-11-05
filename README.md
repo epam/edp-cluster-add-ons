@@ -210,7 +210,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
 | kuberocketci                 | 3.16.0    | 3.16.0       | krci                   | False             | False    |
-| kyverno                      | 3.9.0     | 1.19.0       | kyverno                | True              | False    |
+| kyverno                      | 3.9.2     | 1.19.2       | kyverno                | True              | False    |
 | minio-operator               | 7.1.1     | v7.1.1       | minio-operator         | False             | False    |
 | moon                         | 2.7.11    | 2.7.11       | moon                   | False             | False    |
 | nexus-ce                     | 0.1.1     | 3.82.0       | nexus                  | False             | False    |
@@ -222,7 +222,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | pgadmin                      | 1.49.0    | 9.7          | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 91.5.2    | v0.94.1      | monitoring             | False             | False    |
-| prometheus-blackbox-exporter | 11.3.1    | v0.27.0      | monitoring             | False             | False    |
+| prometheus-blackbox-exporter | 11.20.2   | v0.29.1      | monitoring             | False             | False    |
 | redis-operator               | 3.3.0     | 1.3.0        | redis-operator         | False             | False    |
 | report-portal                | 25.8.30   | 25.1.8       | report-portal          | False             | False    |
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
