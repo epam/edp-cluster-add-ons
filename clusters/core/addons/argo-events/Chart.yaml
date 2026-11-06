@@ -2,11 +2,11 @@ apiVersion: v2
 name: argo-events
 description: A Helm chart for Argo Events — the event-driven automation framework used as the KubeRocketCI notification bus (Tekton CloudEvents ingestion, JetStream EventBus, and notification Sensors)
 
-version: 2.4.23
+version: 2.4.27
 
 appVersion: "v1.9.11"
 
 dependencies:
 - name: argo-events
-  version: 2.4.23
+  version: 2.4.27
   repository: https://argoproj.github.io/argo-helm

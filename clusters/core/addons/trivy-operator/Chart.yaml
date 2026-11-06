@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.31.0
+version: 0.37.0
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "0.29.0"
+appVersion: "0.35.0"
 
 dependencies:
 - name: trivy-operator
-  version: 0.31.0
+  version: 0.37.0
   repository: https://aquasecurity.github.io/helm-charts/

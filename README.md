@@ -173,7 +173,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | Component                    | version   | appVersion   | namespace              | createNamespace   | enable   |
 |:-----------------------------|:----------|:-------------|:-----------------------|:------------------|:---------|
 | argo-cd                      | 10.9.2    | v3.5.3       | krci                   | False             | False    |
-| argo-events                  | 2.4.23    | v1.9.11      | argo-events            | True              | False    |
+| argo-events                  | 2.4.27    | v1.9.11      | argo-events            | True              | False    |
 | argocd-diff-preview          | 0.2.0     | 0.35.1       | argocd-diff-preview    | False             | False    |
 | atlantis                     | 6.16.1    | v0.48.1      | atlantis               | False             | False    |
 | aws-efs-csi-driver           | 3.2.2     | 2.1.11       | kube-system            | N/A               | False    |
@@ -195,7 +195,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | ingress-nginx                | 4.15.1    | 1.15.1       | ingress-nginx          | False             | False    |
 | ingress-nginx-external       | 4.15.1    | 1.15.1       | ingress-nginx-external | False             | False    |
 | jaeger-operator              | 2.57.0    | 1.61.0       | jaeger-operator        | False             | False    |
-| karma-dashboard              | 2.11.0    | v0.121       | monitoring             | False             | False    |
+| karma-dashboard              | 2.13.1    | v0.131       | monitoring             | False             | False    |
 | karpenter-np                 | 0.1.0     | 0.1.0        | karpenter              | False             | False    |
 | karpenter                    | 1.14.1    | 1.14.1       | karpenter              | False             | False    |
 | keda-tenants                 | 0.2.0     | 0.1.0        | keda                   | False             | False    |
@@ -233,7 +233,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | tekton-custom-task           | 0.2.0     | 0.2.0        | krci                   | False             | False    |
 | tekton-dashboard             | 0.52.0    | 0.52.0       | krci                   | False             | False    |
 | tekton-monitoring            | 0.1.0     | 0.1.0        | tekton-pipelines       | False             | False    |
-| trivy-operator               | 0.31.0    | 0.29.0       | trivy-system           | True              | False    |
+| trivy-operator               | 0.37.0    | 0.35.0       | trivy-system           | True              | False    |
 | vault-kms                    | 0.25.0    | 1.20.1       | vault                  | False             | False    |
 | vault-okd                    | 0.25.0    | 1.20.1       | vault                  | False             | False    |
 | vault                        | 0.30.0    | 1.20.1       | vault                  | False             | False    |
