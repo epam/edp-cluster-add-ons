@@ -231,6 +231,8 @@ spec:
   serviceAccount: vault
 
   vaultEnvsConfig:
+    - name: VAULT_API_ADDR
+      value: "https://{{ .Values.vault.ingress.host }}"
     - name: VAULT_PG_CONNECTION_URL
       valueFrom:
         secretKeyRef:

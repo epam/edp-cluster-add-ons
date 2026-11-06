@@ -1,6 +1,6 @@
 # vault-operator
 
-![Version: 1.23.0](https://img.shields.io/badge/Version-1.23.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
+![Version: 1.24.1](https://img.shields.io/badge/Version-1.24.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.24.1](https://img.shields.io/badge/AppVersion-1.24.1-informational?style=flat-square)
 
 A Helm chart for Vault Operator
 
@@ -234,14 +234,14 @@ After configuration, applications in the remote cluster will be able to authenti
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/bank-vaults/helm-charts | vault-operator | 1.23.0 |
+| oci://ghcr.io/bank-vaults/helm-charts | vault-operator | 1.24.1 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | vault-operator.bankVaults.image.repository | string | `"ghcr.io/bank-vaults/bank-vaults"` | Bank-Vaults image repository. |
-| vault-operator.bankVaults.image.tag | string | `"v1.32.0"` | Bank-Vaults image tag (pinned to supported Bank-Vaults version). |
+| vault-operator.bankVaults.image.tag | string | `"v1.33.2"` | Bank-Vaults image tag (pinned to supported Bank-Vaults version). |
 | vault-operator.fullnameOverride | string | `""` | A name to substitute for the full names of resources. |
 | vault-operator.image.bankVaultsRepository | string | `""` | Bank-Vaults image repository **Deprecated:** use `bankVaults.image.repository` instead. |
 | vault-operator.image.bankVaultsTag | string | `""` | Bank-Vaults image tag **Deprecated:** use `bankVaults.image.tag` instead. |
@@ -256,7 +256,7 @@ After configuration, applications in the remote cluster will be able to authenti
 | vault-operator.syncPeriod | string | `"5m"` |  |
 | vault-operator.watchNamespace | string | `"vault"` | The namespace where the operator watches for vault CR objects. If not defined all namespaces are watched. |
 | vault.bankVaultsContainer.image | string | `"ghcr.io/bank-vaults/bank-vaults"` |  |
-| vault.bankVaultsContainer.tag | string | `"v1.32.0"` |  |
+| vault.bankVaultsContainer.tag | string | `"v1.33.2"` |  |
 | vault.database.dbNameKey | string | `"dbname"` |  |
 | vault.database.hostKey | string | `"host"` |  |
 | vault.database.passwordKey | string | `"password"` |  |
