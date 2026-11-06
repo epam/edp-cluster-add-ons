@@ -1,6 +1,6 @@
 # argo-events
 
-![Version: 2.4.23](https://img.shields.io/badge/Version-2.4.23-informational?style=flat-square) ![AppVersion: v1.9.11](https://img.shields.io/badge/AppVersion-v1.9.11-informational?style=flat-square)
+![Version: 2.4.27](https://img.shields.io/badge/Version-2.4.27-informational?style=flat-square) ![AppVersion: v1.9.11](https://img.shields.io/badge/AppVersion-v1.9.11-informational?style=flat-square) 
 
 A Helm chart for Argo Events — the event-driven automation framework used as the KubeRocketCI notification bus (Tekton CloudEvents ingestion, JetStream EventBus, and notification Sensors)
 
@@ -15,7 +15,7 @@ Integration steps are documented at [docs.kuberocketci.io](https://docs.kuberock
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-events | 2.4.23 |
+| https://argoproj.github.io/argo-helm | argo-events | 2.4.27 |
 
 ## Values
 
