@@ -57,6 +57,11 @@ argo-cd:
     enabled: false
   redis:
     enabled: true
+    image:
+      # Overrides the chart default, which lags the Redis 8.6.x security patches. Keep on the newest
+      # 8.6.x patch; remove once the chart default reaches it.
+      # -- Redis image tag; overrides the chart default
+      tag: 8.6.8-alpine
 
   server:
     replicas: 1

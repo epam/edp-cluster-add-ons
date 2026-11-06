@@ -1,6 +1,6 @@
 # argo-cd
 
-![Version: 10.9.2](https://img.shields.io/badge/Version-10.9.2-informational?style=flat-square) ![AppVersion: v3.5.3](https://img.shields.io/badge/AppVersion-v3.5.3-informational?style=flat-square)
+![Version: 10.11.7](https://img.shields.io/badge/Version-10.11.7-informational?style=flat-square) ![AppVersion: v3.5.7](https://img.shields.io/badge/AppVersion-v3.5.7-informational?style=flat-square)
 
 ## Secret Management for VCS Integration
 
@@ -56,7 +56,7 @@ Important:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 10.9.2 |
+| https://argoproj.github.io/argo-helm | argo-cd | 10.11.7 |
 
 ## Values
 
@@ -77,6 +77,7 @@ Important:
 | argo-cd.global.domain | string | `"argocd.example.com"` | Default domain used by all components # Used for ingresses, certificates, SSO, notifications, etc. |
 | argo-cd.global.networkPolicy.create | bool | `false` | Chart >= 10 defaults to true. Kept false: NetworkPolicy for the argocd namespace is managed outside this add-on. |
 | argo-cd.redis.enabled | bool | `true` |  |
+| argo-cd.redis.image.tag | string | `"8.6.8-alpine"` | Redis image tag; overrides the chart default |
 | argo-cd.server.env[0].name | string | `"ARGOCD_API_SERVER_REPLICAS"` |  |
 | argo-cd.server.env[0].value | string | `"1"` |  |
 | argo-cd.server.ingress | object | `{"enabled":false,"hostname":"argocd.example.com"}` | Enable after nginx-ingress is installed |
