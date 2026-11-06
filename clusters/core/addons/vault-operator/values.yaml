@@ -4,7 +4,7 @@ vault:
     tag: 1.15.2
   bankVaultsContainer:
     image: ghcr.io/bank-vaults/bank-vaults
-    tag: v1.32.0
+    tag: v1.33.2
 
   ingress:
     host: "vault.core.kuberocketci.io"
@@ -135,7 +135,7 @@ vault-operator:
       repository: ghcr.io/bank-vaults/bank-vaults
 
       # -- Bank-Vaults image tag (pinned to supported Bank-Vaults version).
-      tag: "v1.32.0"
+      tag: "v1.33.2"
 
   # -- A name in place of the chart name for `app:` labels.
   nameOverride: ""
