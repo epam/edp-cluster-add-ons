@@ -1,6 +1,6 @@
 edp-install:
 ## edp-install configuration
-## A complete list of parameters can be found in the values.yaml file at https://github.com/epam/edp-install/blob/v3.16.0/deploy-templates/values.yaml, as well as in each subchart.
+## A complete list of parameters can be found in the values.yaml file at https://github.com/epam/edp-install/blob/v3.16.1/deploy-templates/values.yaml, as well as in each subchart.
   global:
      # -- platform type that can be "kubernetes" or "openshift"
     platform: "kubernetes"
