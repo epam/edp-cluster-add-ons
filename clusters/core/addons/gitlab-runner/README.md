@@ -1,6 +1,6 @@
 # gitlab-runner
 
-![Version: 0.85.0](https://img.shields.io/badge/Version-0.85.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 18.8.0](https://img.shields.io/badge/AppVersion-18.8.0-informational?style=flat-square)
+![Version: 0.94.1](https://img.shields.io/badge/Version-0.94.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 19.5.1](https://img.shields.io/badge/AppVersion-19.5.1-informational?style=flat-square)
 
 A Helm chart for Gitlab Runner Controller
 
@@ -8,7 +8,7 @@ A Helm chart for Gitlab Runner Controller
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.gitlab.io | gitlab-runner | 0.85.0 |
+| https://charts.gitlab.io | gitlab-runner | 0.94.1 |
 
 ## Values
 
