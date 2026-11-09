@@ -8,13 +8,13 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.95.1
+version: 0.126.2
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "0.134.0"
+appVersion: "0.161.0"
 
 dependencies:
 - name: opentelemetry-operator
-  version: 0.95.1
+  version: 0.126.2
   repository: https://open-telemetry.github.io/opentelemetry-helm-charts
