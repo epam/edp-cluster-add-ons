@@ -217,7 +217,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 8.2.0     | v7.12.0      | oauth2-proxy           | False             | False    |
 | opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
-| opentelemetry-operator       | 0.95.1    | 0.134.0      | opentelemetry-operator | False             | False    |
+| opentelemetry-operator       | 0.126.2   | 0.161.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.70.4    | 9.18         | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
 | prometheus-operator          | 91.5.2    | v0.94.1      | monitoring             | False             | False    |
