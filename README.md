@@ -184,7 +184,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | defectdojo                   | 1.9.12    | 2.55.2       | defectdojo             | False             | False    |
 | dependency-track             | 0.41.0    | v4.13.6      | dependency-track       | False             | False    |
 | external-secrets             | 0.18.2    | 0.18.2       | external-secrets       | False             | False    |
-| fluent-bit                   | 0.53.0    | 4.0.7        | logging                | False             | False    |
+| fluent-bit                   | 0.58.3    | 5.1.3        | logging                | False             | False    |
 | gitlab-runner                | 0.94.1    | 19.5.1       | gitlab-runner          | False             | False    |
 | harbor                       | 0.1.0     | 1.19.4       | harbor                 | False             | False    |
 | harbor-ha                    | 1.19.4    | 2.15.4       | harbor                 | False             | False    |
@@ -216,7 +216,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | nexus-operator               | 3.7.0     | 3.7.0        | nexus                  | False             | False    |
 | nexus                        | 61.0.3    | 3.70.3       | nexus                  | False             | False    |
 | oauth2-proxy                 | 8.2.0     | v7.12.0      | oauth2-proxy           | False             | False    |
-| opensearch                   | 3.2.1     | 3.2.0        | logging                | False             | False    |
+| opensearch                   | 3.9.0     | 3.9.0        | logging                | False             | False    |
 | opentelemetry-operator       | 0.126.2   | 0.161.0      | opentelemetry-operator | False             | False    |
 | pgadmin                      | 1.70.4    | 9.18         | pgadmin                | False             | False    |
 | postgres-operator            | 0.1.0     | 5.8.2        | postgres-operator      | False             | False    |
