@@ -1,8 +1,8 @@
 trivy-operator:
   # Scope: comma-separated namespaces to scan. Empty string = cluster-wide.
-  # Keeping this set to a single namespace is a safe guardrail for initial enablement.
-  # Widen to "" for cluster-wide scanning once you have reviewed excludeNamespaces below.
-  targetNamespaces: "argocd"
+  # Stage namespaces of KubeRocketCI environments have arbitrary names, so the cluster is
+  # scanned as a whole and only the namespaces below are left out.
+  targetNamespaces: ""
   # Only effective when targetNamespaces is blank (cluster-wide mode).
   excludeNamespaces: "kube-system,kube-public,kube-node-lease,trivy-system,sentinel,krci"
 
@@ -11,47 +11,66 @@ trivy-operator:
     # in memory, scan jobs send extracted package lists to it. This avoids downloading the DB per scan job.
     builtInTrivyServer: true
 
-    # Max parallel scan jobs. Each scan job pulls the container image from the registry,
-    # so this directly controls concurrent registry pulls and NAT traffic burst.
+    # Max parallel scan jobs. Each job scans one workload from the node's image cache
+    # (see trivy.command); the limit bounds scan CPU and memory.
     scanJobsConcurrentLimit: 3
 
-    # false = scan jobs run in trivy-system namespace (simpler RBAC, single registry secret).
-    # true = scan jobs run in the workload namespace (inherits imagePullSecrets, but needs RBAC per namespace).
-    scanJobsInSameNamespace: false
-
     accessGlobalSecretsAndServiceAccount: false
-    # Registry credentials for image pulls during scans. Since scanJobsInSameNamespace=false,
-    # all scan jobs run in trivy-system and use this single secret for all registries.
-    privateRegistryScanSecretsNames:
-      trivy-system: docker-pull
 
     # Reports (VulnerabilityReport, ConfigAuditReport, etc.) are auto-deleted after this TTL
     # and regenerated on next scan cycle. 7 days = one full week of historical data.
     scannerReportTTL: "168h"
 
-    # --- SBOM Cache: reduces NAT traffic by avoiding duplicate image pulls ---
-    # How it works: when a container image is scanned for the first time, the operator stores
-    # the package list (SBOM) as a ClusterSbomReport CR (~0.5-1 MB per unique image).
-    # When another workload uses the same image, the operator finds the cached SBOM and
-    # skips the scan job entirely — no image pull, no NAT traffic, no scan pod.
-    #
-    # Trade-off: ClusterSbomReport CRs consume etcd space (~1 MB × number of unique images),
-    # but eliminate duplicate image pulls through NAT gateway.
-    #
-    # SBOM CRs are purely internal to the operator — no external consumer reads them.
-    # The useful output is always VulnerabilityReport.
-    sbomGenerationEnabled: true
-    clusterSbomCacheEnabled: true
-    # Keep cached SBOMs alive for the same duration as reports. If cacheReportTTL < scannerReportTTL,
-    # the SBOM expires early and forces unnecessary rescans before reports themselves expire.
-    cacheReportTTL: "168h"
+    # Keep SBOM reports and the SBOM cache off. rootfs scans pull nothing, so the cache has
+    # nothing to save. With the cache on, jobs that reuse a cached SBOM rescan some workloads
+    # in a loop and hold all scan slots. SBOM reports of big images are the largest Trivy
+    # objects in etcd, and nothing reads them.
+    sbomGenerationEnabled: false
+    clusterSbomCacheEnabled: false
 
   trivy:
+    # rootfs: the scan job runs the workload's own image, which the kubelet already pulled to
+    # the node, and scans the installed packages of its root file system (the same findings as
+    # image mode). Nothing is pulled from the registry, so scanning every namespace adds no
+    # registry or NAT traffic and needs no registry credentials.
+    command: rootfs
     severity: HIGH,CRITICAL
     # Skip vulnerabilities with no available fix — reduces noise in reports.
+    # Vulnerabilities without a severity yet (UNKNOWN) are still reported.
     ignoreUnfixed: true
     # Kubernetes resource types subject to configuration audit (misconfiguration detection).
     supportedConfigAuditKinds: "Workload,Service,Role,ClusterRole,Ingress"
+
+  trivyOperator:
+    # Scan jobs run in trivy-system. With true, trivy-operator starts them in the workload
+    # namespace without the trivy settings above (they are read from a ConfigMap in trivy-system),
+    # so severity and ignoreUnfixed are silently lost.
+    # Limit: since Kubernetes 1.35 the kubelet starts a pod from a cached image pulled with
+    # imagePullSecrets only when the pod carries the same secret, so workloads whose images are
+    # pulled that way end in ErrImageNeverPull and get no report. Public images and images pulled
+    # with node credentials (ECR on EKS) are scanned.
+    scanJobsInSameNamespace: false
+    # Non-root scan jobs. Vulnerability results are the same as with root; files readable only
+    # by root are not covered by the secret scan.
+    scanJobPodTemplatePodSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+      runAsGroup: 65534
+      seccompProfile:
+        type: RuntimeDefault
+    scanJobPodTemplateContainerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
+    # # Skip scanning pods with these labels
+    # skipResourceByLabels: "tekton.dev/pipeline"
+    # # Skip init containers for the scanner and node collector pods
+    # skipInitContainers: true
 
   nodeCollector:
     useNodeSelector: false
@@ -63,9 +82,3 @@ trivy-operator:
       - k8s-nsa-1.0
       - k8s-pss-baseline-0.1
       - k8s-pss-restricted-0.1
-
-  # trivyOperator:
-  #   # Skip scanning pods with these labels
-  #   skipResourceByLabels: "tekton.dev/pipeline"
-  #   # Skip init containers for the scanner and node collector pods
-  #   skipInitContainers: true
