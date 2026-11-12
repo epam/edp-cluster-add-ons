@@ -2,6 +2,30 @@ dependency-track:
   fullnameOverride: deptrack
   nameOverride: deptrack
 
+  # Credentials come from the secret that the Crunchy PostgresCluster `deptrack` creates (PGO).
+  database:
+    jdbcUrl: "jdbc:postgresql://deptrack-primary.dependency-track.svc:5432/deptrack?reWriteBatchedInserts=true"
+    existingSecret:
+      name: deptrack-pguser-deptrack
+      usernameKey: user
+      passwordKey: password
+
+  fileStorage:
+    provider: local
+    local:
+      size: 20Gi
+
+  # Secrets stored by Dependency-Track are encrypted in PostgreSQL with this key.
+  # Create the secret `dependency-track-kek` before the first sync, see the README of this add-on.
+  secretManagement:
+    provider: database
+    database:
+      kek:
+        mode: config
+        existingSecret:
+          name: dependency-track-kek
+          key: kek
+
   frontend:
     replicaCount: 1
     apiBaseUrl: "https://deptrack.example.com"
@@ -25,45 +49,32 @@ dependency-track:
         memory: 128Mi
 
   apiServer:
-    # disabled because we use an external PostgreSQL database (PGO)
-    persistentVolume:
-      enabled: false
+    topology: monolith
     extraEnv:
-      - name: ALPINE_DATABASE_MODE
-        value: "external"
-      - name: ALPINE_DATABASE_URL
-        value: "jdbc:postgresql://deptrack-primary.dependency-track.svc:5432/deptrack"
-      - name: ALPINE_DATABASE_DRIVER
-        value: "org.postgresql.Driver"
-      - name: ALPINE_DATABASE_USERNAME
-        value: "deptrack"
-      - name: ALPINE_DATABASE_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            key: password
-            name: deptrack-pguser-deptrack
-      - name: ALPINE_OIDC_ENABLED
+      - name: DT_OIDC_ENABLED
         value: "true"
-      - name: ALPINE_OIDC_CLIENT_ID
+      - name: DT_OIDC_CLIENT_ID
         value: "deptrack"
-      - name: ALPINE_OIDC_ISSUER
+      - name: DT_OIDC_ISSUER
         value: "https://keycloak.example.com/auth/realms/shared"
-      - name: ALPINE_OIDC_USERNAME_CLAIM
+      - name: DT_OIDC_USERNAME_CLAIM
         value: "preferred_username"
-      - name: ALPINE_OIDC_USER_PROVISIONING
+      - name: DT_OIDC_USER_PROVISIONING
         value: "true"
-      - name: ALPINE_OIDC_TEAMS_CLAIM
+      - name: DT_OIDC_TEAMS_CLAIM
         value: "roles"
-      - name: ALPINE_OIDC_TEAM_SYNCHRONIZATION
+      - name: DT_OIDC_TEAM_SYNCHRONIZATION
         value: "true"
-    resources:
-    # https://docs.dependencytrack.org/getting-started/deploy-docker/
-      requests:
-        cpu: "1"
-        memory: 768Mi
-      limits:
-        cpu: "2"
-        memory: 4608Mi
+    web:
+      replicaCount: 1
+      # https://docs.dependencytrack.org/getting-started/deploy-docker/
+      resources:
+        requests:
+          cpu: "1"
+          memory: 768Mi
+        limits:
+          cpu: "2"
+          memory: 4608Mi
 
   ingress:
     enabled: true

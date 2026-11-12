@@ -1,0 +1,34 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+## Upgrading from Dependency-Track 4
+
+Dependency-Track 5 has no in-place upgrade from version 4, and chart 2.x is not compatible with chart 0.x/1.x. Use this add-on for a new installation. To move an existing 4.x instance, delete the old application together with its PostgreSQL cluster (`deptrack`) and its volumes, then deploy this version. All previous data is lost: projects, components, teams, API keys, OIDC group mappings and analyzer credentials. Back up the database first if you need the old data.
+
+After the first start:
+
+1. Create an OIDC group (for example `administrator`) in **Administration > Access Management > OpenID Connect Groups** and map it to the team `Administrators`, otherwise users logging in with Keycloak have no permissions.
+2. Create an API key for CI and give its team the permissions `BOM_UPLOAD`, `PROJECT_CREATION_UPLOAD`, `VIEW_PORTFOLIO`, `VIEW_VULNERABILITY`, `VIEW_POLICY_VIOLATION` and `VIEW_BADGES`.
+3. Re-enter analyzer credentials (for example the Sonatype OSS Index token) in **Administration > Analyzers**.
+
+## Secret management
+
+Dependency-Track encrypts the secrets it stores (for example analyzer tokens) with a key encryption key (KEK). The chart does not generate it and the API server does not start without it. Create the secret before the first sync:
+
+```bash
+kubectl create namespace dependency-track
+kubectl -n dependency-track create secret generic dependency-track-kek \
+  --from-literal=kek="$(openssl rand -base64 32)"
+```
+
+> **Note:** Keep the KEK in a safe place. If it is lost or changed, the secrets stored in the database cannot be decrypted.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
