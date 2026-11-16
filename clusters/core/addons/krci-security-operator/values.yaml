@@ -1,0 +1,60 @@
+# Configuration for the krci-security-operator component chart (subchart, pulled from edp-stable). This add-on
+# overrides only the values an operator commonly changes; the full surface lives in the component chart's
+# own values.yaml.
+#
+# The operator imports the reports of the trivy-operator add-on into the cluster's DefectDojo, for example the
+# one of the defectdojo add-on. It reads the DefectDojo URL and API token from the Secret
+# `defectdojo.secretName` in its namespace: the `eso` block below creates it, or set `eso.enabled: false` and
+# create it by hand (the add-on README has the command).
+krci-security-operator:
+  # -- Cluster name. Every imported test carries the tag `krci-cluster:<clusterName>`, and the operator closes
+  # only the tests that carry it, so every cluster that writes into one DefectDojo needs its own name.
+  clusterName: in-cluster
+  defectdojo:
+    # -- Secret in the add-on namespace with the keys `url` and `token` of the cluster's DefectDojo
+    secretName: defectdojo-credentials
+  scopes:
+    # -- Import the reports of namespaces that belong to a KubeRocketCI Stage
+    stage: true
+    # -- Import the reports of tenant namespaces (label `app.edp.epam.com/tenant`) that belong to no Stage
+    tenant: true
+    # -- Import the reports of the remaining (platform) namespaces
+    platform: true
+  # -- Glob patterns of namespaces that are skipped
+  excludeNamespaces: []
+
+# This section enables configuration for using External Secrets Operator (ESO) as the secret manager.
+# Prerequisite: Ensure that ESO is installed in the cluster.
+# Refer to the EDP cluster add-on for ESO installation and setup:
+# https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/external-secrets
+#
+# Ensure that you have created the necessary roles for ESO integration.
+# Follow the detailed instructions here:
+# https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration#aws-parameter-store-scenario-in-kuberocketci
+eso:
+  # -- Install components of the ESO.
+  enabled: true
+  # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+  provider: "aws"
+  # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. The secret holds the properties `defectdojo.url` and `defectdojo.token`.
+  secretPath: "/infra/core/addons/krci-security-operator"
+  # -- Vault configuration (if provider is `vault`).
+  vault:
+    # -- Vault server URL.
+    server: "http://vault.vault:8200"
+    # -- Mount path for the Kubernetes authentication method.
+    mountPath: "core"
+    # -- Vault role for the Kubernetes authentication method.
+    role: krci-security-operator
+  # -- AWS configuration (if provider is `aws`).
+  aws:
+    # -- AWS region.
+    region: "eu-central-1"
+    # -- AWS role ARN for the ExternalSecretOperator to assume.
+    roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"
+  generic:
+    secretStore:
+      # -- Defines SecretStore provider configuration.
+      providerConfig: {}
+      #  gcpsm:
+      #    projectID: "alphabet-123"

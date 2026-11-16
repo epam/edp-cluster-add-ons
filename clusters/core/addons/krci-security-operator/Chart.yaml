@@ -1,0 +1,12 @@
+apiVersion: v2
+description: A Helm chart for the KubeRocketCI krci-security-operator add-on, which imports the Trivy Operator reports of every namespace into DefectDojo
+home: https://docs.kuberocketci.io/
+name: krci-security-operator
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+- name: krci-security-operator
+  version: 0.1.0
+  repository: https://epam.github.io/edp-helm-charts/stable

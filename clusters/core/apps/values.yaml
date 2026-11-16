@@ -217,6 +217,12 @@ krci-events:
   enable: false
   namespace: argo-events
 
+# KubeRocketCI security operator: imports the Trivy Operator reports of every namespace into DefectDojo. Needs the trivy-operator add-on and a DefectDojo. More details at https://github.com/KubeRocketCI/krci-security-operator
+krci-security-operator:
+  createNamespace: true
+  enable: false
+  namespace: krci-security
+
 kuberocketci-pipelines:
   createNamespace: false
   enable: false

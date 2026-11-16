@@ -1,0 +1,43 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+This add-on is a thin wrapper around the [krci-security-operator](https://github.com/KubeRocketCI/krci-security-operator)
+component chart. The operator imports the Trivy Operator reports of every namespace into DefectDojo, one test per
+workload container and report kind under the product of the namespace's scope (stage, tenant or platform), and
+closes the findings of workloads and namespaces that are gone. In the cluster it only reads, apart from its
+leader-election Lease and events.
+
+## Prerequisites
+
+- The `trivy-operator` add-on, or another Trivy Operator that writes `VulnerabilityReport` and `ExposedSecretReport`
+  objects.
+- A DefectDojo, for example the `defectdojo` add-on, and an API v2 token for it.
+- With `eso.enabled` (the default): the `external-secrets` add-on, and the DefectDojo URL and token at
+  `eso.secretPath` as the properties `defectdojo.url` and `defectdojo.token`.
+
+## Turning it on
+
+1. Provide the credentials through ESO, or set `eso.enabled: false` and create the Secret by hand:
+
+   ```bash
+   kubectl create secret generic defectdojo-credentials -n krci-security \
+     --from-literal=url=https://defectdojo.example.com \
+     --from-literal=token=<api-token>
+   ```
+
+2. Set `krci-security-operator.clusterName` to the name of the cluster: the operator closes only the tests that carry
+   this name.
+3. Enable the add-on in `clusters/core/apps/values.yaml`.
+
+The component [docs](https://github.com/KubeRocketCI/krci-security-operator/blob/main/docs/trivy.md) describe the
+naming in DefectDojo, the closing rules and the limitations.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
