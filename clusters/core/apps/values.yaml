@@ -199,6 +199,12 @@ krci-audit:
   enable: false
   namespace: krci-audit
 
+# Shared krci-cache for several KubeRocketCI instances. Set kuberocketci `edp-tekton.krci-cache.enabled: false` and `edp-tekton.krci-cache.url: http://krci-cache.krci-cache:8080` in each instance.
+krci-cache:
+  createNamespace: false
+  enable: false
+  namespace: krci-cache
+
 # KubeRocketCI environments woken on their first request through Envoy Gateway. Needs envoy-gateway-resources `krciEnvDaemon.enabled` and keda-tenants `trigger: krci-env-daemon`, which address the daemon in the namespace krci-env-daemon. More details at https://github.com/KubeRocketCI/krci-env-daemon
 krci-env-daemon:
   createNamespace: true
@@ -318,11 +324,6 @@ sonar-operator:
 
 storage-class:
   enable: false
-
-tekton-cache:
-  createNamespace: false
-  enable: false
-  namespace: tekton-cache
 
 tekton:
   createNamespace: false

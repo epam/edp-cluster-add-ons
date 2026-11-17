@@ -1,0 +1,12 @@
+apiVersion: v2
+name: krci-cache
+description: A Helm chart for the KubeRocketCI krci-cache add-on, an HTTP cache for Tekton pipeline artifacts
+home: https://docs.kuberocketci.io/
+type: application
+version: 0.5.0
+appVersion: 0.5.0
+
+dependencies:
+- name: krci-cache
+  version: 0.5.0
+  repository: https://epam.github.io/edp-helm-charts/stable

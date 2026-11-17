@@ -100,6 +100,9 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | krci-audit.createNamespace | bool | `true` |  |
 | krci-audit.enable | bool | `false` |  |
 | krci-audit.namespace | string | `"krci-audit"` |  |
+| krci-cache.createNamespace | bool | `false` |  |
+| krci-cache.enable | bool | `false` |  |
+| krci-cache.namespace | string | `"krci-cache"` |  |
 | krci-env-daemon.createNamespace | bool | `true` |  |
 | krci-env-daemon.enable | bool | `false` |  |
 | krci-env-daemon.namespace | string | `"krci-env-daemon"` |  |
@@ -166,9 +169,6 @@ EDP Cluster Addons that extend the Kubernetes Cluster Functionality
 | sonar.namespace | string | `"sonar"` |  |
 | storage-class.enable | bool | `false` |  |
 | targetRevision | string | `"main"` |  |
-| tekton-cache.createNamespace | bool | `false` |  |
-| tekton-cache.enable | bool | `false` |  |
-| tekton-cache.namespace | string | `"tekton-cache"` |  |
 | tekton-custom-task.createNamespace | bool | `false` |  |
 | tekton-custom-task.enable | bool | `false` |  |
 | tekton-custom-task.namespace | string | `"krci"` |  |

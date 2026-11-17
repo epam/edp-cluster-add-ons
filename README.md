@@ -204,6 +204,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | keycloak-operator            | 1.36.0    | 1.36.0       | keycloak-operator      | False             | False    |
 | krakend                      | 0.1.36    | 2.7.2        | krci-krakend           | False             | False    |
 | krci-audit                   | 0.2.0     | 0.2.0        | krci-audit             | True              | False    |
+| krci-cache                   | 0.5.0     | 0.5.0        | krci-cache             | False             | False    |
 | krci-env-daemon              | 0.1.0     | 0.1.0        | krci-env-daemon        | True              | False    |
 | krci-events                  | 0.1.0     | 0.1.0        | argo-events            | False             | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
@@ -227,7 +228,6 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
 | sonar-operator               | 3.4.0     | 3.4.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
-| tekton-cache                 | 0.4.5     | 0.4.5        | tekton-cache           | False             | False    |
 | tekton                       | N/A       | N/A          | tekton-pipelines       | False             | False    |
 | tekton-custom-task           | 0.2.0     | 0.2.0        | krci                   | False             | False    |
 | tekton-dashboard             | 0.52.0    | 0.52.0       | krci                   | False             | False    |
