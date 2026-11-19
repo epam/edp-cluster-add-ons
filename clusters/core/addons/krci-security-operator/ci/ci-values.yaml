@@ -1,0 +1,3 @@
+# chart-testing values: clusterName has no default in the add-on.
+krci-security-operator:
+  clusterName: ci
