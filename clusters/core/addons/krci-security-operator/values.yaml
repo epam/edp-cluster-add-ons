@@ -7,20 +7,17 @@
 # `defectdojo.secretName` in its namespace: the `eso` block below creates it, or set `eso.enabled: false` and
 # create it by hand (the add-on README has the command).
 krci-security-operator:
-  # -- Cluster name. Every imported test carries the tag `krci-cluster:<clusterName>`, and the operator closes
-  # only the tests that carry it, so every cluster that writes into one DefectDojo needs its own name.
-  clusterName: in-cluster
+  # -- Required, no default: set it per cluster. Unique name of this cluster in the DefectDojo, a lowercase
+  # RFC 1123 DNS label. Every namespace product is named `<clusterName>/<namespace>`, and the operator closes
+  # only the tests of its own cluster. The add-on does not render while it is empty.
+  clusterName: ""
   defectdojo:
     # -- Secret in the add-on namespace with the keys `url` and `token` of the cluster's DefectDojo
     secretName: defectdojo-credentials
-  scopes:
-    # -- Import the reports of namespaces that belong to a KubeRocketCI Stage
-    stage: true
-    # -- Import the reports of tenant namespaces (label `app.edp.epam.com/tenant`) that belong to no Stage
-    tenant: true
-    # -- Import the reports of the remaining (platform) namespaces
-    platform: true
-  # -- Glob patterns of namespaces that are skipped
+    # -- DefectDojo Product Type of the namespace products. Use one value for every cluster that writes into the
+    # same DefectDojo; a product that exists under another Product Type fails its reimports
+    productType: KubeRocketCI
+  # -- Glob patterns of namespaces that are skipped. The tests of an excluded namespace are closed
   excludeNamespaces: []
 
 # This section enables configuration for using External Secrets Operator (ESO) as the secret manager.

@@ -207,7 +207,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | krci-cache                   | 0.5.0     | 0.5.0        | krci-cache             | False             | False    |
 | krci-env-daemon              | 0.1.0     | 0.1.0        | krci-env-daemon        | True              | False    |
 | krci-events                  | 0.1.0     | 0.1.0        | argo-events            | False             | False    |
-| krci-security-operator       | 0.1.0     | 0.1.0        | krci-security          | True              | False    |
+| krci-security-operator       | 0.2.0     | 0.2.0        | krci-security          | True              | False    |
 | kuberocketci-pipelines       | N/A       | N/A          | krci                   | False             | False    |
 | kuberocketci-rbac            | 0.1.0     | 0.1.0        | krci-security          | False             | False    |
 | kuberocketci                 | 3.16.1    | 3.16.1       | krci                   | False             | False    |
