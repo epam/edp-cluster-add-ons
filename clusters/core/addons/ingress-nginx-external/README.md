@@ -4,6 +4,9 @@
 
 A Helm chart for Nginx Ingress Controller
 
+> **NOTE:** The community [ingress-nginx](https://github.com/kubernetes/ingress-nginx) project is retired and receives no further releases.<br>
+Migrate to the `envoy-gateway` and `envoy-gateway-resources` add-ons.
+
 # Internal and External Ingress Controllers
 
 The **Internal Ingress Controller** is used for internal traffic, while the **External Ingress Controller** is used for external traffic.
@@ -68,8 +71,6 @@ To use the External Ingress Controller, you need to set the `ingressClassName` p
 | ingress-nginx.controller.addHeaders.X-Content-Type-Options | string | `"nosniff"` |  |
 | ingress-nginx.controller.addHeaders.X-Frame-Options | string | `"SAMEORIGIN"` |  |
 | ingress-nginx.controller.config.client-header-buffer-size | string | `"64k"` |  |
-| ingress-nginx.controller.config.http2-max-field-size | string | `"64k"` |  |
-| ingress-nginx.controller.config.http2-max-header-size | string | `"64k"` |  |
 | ingress-nginx.controller.config.keep-alive | string | `"10"` |  |
 | ingress-nginx.controller.config.large-client-header-buffers | string | `"4 64k"` |  |
 | ingress-nginx.controller.config.proxy-buffer-size | string | `"8k"` |  |
@@ -77,6 +78,7 @@ To use the External Ingress Controller, you need to set the `ingressClassName` p
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` |  |
 | ingress-nginx.controller.config.upstream-keepalive-timeout | string | `"120"` |  |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` |  |
+| ingress-nginx.controller.config.use-http2 | string | `"false"` |  |
 | ingress-nginx.controller.ingressClassResource.controllerValue | string | `"k8s.io/external-ingress-nginx"` |  |
 | ingress-nginx.controller.ingressClassResource.name | string | `"external-nginx"` |  |
 | ingress-nginx.controller.podAnnotations."fluentbit.io/parser" | string | `"k8s-nginx-ingress"` |  |
