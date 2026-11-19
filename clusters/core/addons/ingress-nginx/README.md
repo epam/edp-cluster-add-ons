@@ -4,6 +4,10 @@
 
 A Helm chart for Nginx Ingress Controller
 
+> **NOTE:** The community [ingress-nginx](https://github.com/kubernetes/ingress-nginx) project is retired and receives no further releases.<br>
+Migrate to the `envoy-gateway` and `envoy-gateway-resources` add-ons.<br>
+During migration, set `nginxFallback.enabled: true` to route hosts without an HTTPRoute from Envoy Gateway back to this controller.
+
 ## Requirements
 
 | Repository | Name | Version |
@@ -17,10 +21,7 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.controller.addHeaders.Strict-Transport-Security | string | `"max-age=63072000; includeSubDomains"` |  |
 | ingress-nginx.controller.addHeaders.X-Content-Type-Options | string | `"nosniff"` |  |
 | ingress-nginx.controller.addHeaders.X-Frame-Options | string | `"SAMEORIGIN"` |  |
-| ingress-nginx.controller.allowSnippetAnnotations | bool | `true` |  |
 | ingress-nginx.controller.config.client-header-buffer-size | string | `"64k"` |  |
-| ingress-nginx.controller.config.http2-max-field-size | string | `"64k"` |  |
-| ingress-nginx.controller.config.http2-max-header-size | string | `"64k"` |  |
 | ingress-nginx.controller.config.keep-alive | string | `"10"` |  |
 | ingress-nginx.controller.config.large-client-header-buffers | string | `"4 64k"` |  |
 | ingress-nginx.controller.config.proxy-buffer-size | string | `"8k"` |  |
@@ -28,6 +29,7 @@ A Helm chart for Nginx Ingress Controller
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` |  |
 | ingress-nginx.controller.config.upstream-keepalive-timeout | string | `"120"` |  |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` |  |
+| ingress-nginx.controller.config.use-http2 | string | `"false"` |  |
 | ingress-nginx.controller.metrics.enabled | bool | `true` |  |
 | ingress-nginx.controller.metrics.serviceMonitor.additionalLabels.release | string | `"prometheus"` |  |
 | ingress-nginx.controller.metrics.serviceMonitor.enabled | bool | `true` |  |
@@ -49,4 +51,3 @@ A Helm chart for Nginx Ingress Controller
 | nginxFallback.gateway.namespace | string | `"envoy-gateway-system"` | Namespace of the parent Gateway. |
 | nginxFallback.service.name | string | `"ingress-nginx-controller"` | nginx-ingress controller Service the fallback route forwards unmatched traffic to. |
 | nginxFallback.service.port | int | `80` | Port on the nginx-ingress controller Service. |
-

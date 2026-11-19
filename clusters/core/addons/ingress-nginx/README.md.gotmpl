@@ -1,0 +1,20 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+> **NOTE:** The community [ingress-nginx](https://github.com/kubernetes/ingress-nginx) project is retired and receives no further releases.<br>
+Migrate to the `envoy-gateway` and `envoy-gateway-resources` add-ons.<br>
+During migration, set `nginxFallback.enabled: true` to route hosts without an HTTPRoute from Envoy Gateway back to this controller.
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

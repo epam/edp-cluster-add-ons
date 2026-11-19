@@ -13,10 +13,9 @@ ingress-nginx:
         cpu: "50m"
         memory: "128M"
     config:
+      use-http2: 'false'
       ssl-redirect: 'true'
       client-header-buffer-size: '64k'
-      http2-max-field-size: '64k'
-      http2-max-header-size: '64k'
       large-client-header-buffers: '4 64k'
       upstream-keepalive-timeout: '120'
       keep-alive: '10'
