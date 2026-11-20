@@ -20,6 +20,7 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace={{ .Values.keda.createNamespace }}
+      - ServerSideApply=true
     retry:
       limit: 1
       backoff:
