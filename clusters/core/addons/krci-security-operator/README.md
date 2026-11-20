@@ -1,6 +1,6 @@
 # krci-security-operator
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.0](https://img.shields.io/badge/AppVersion-0.3.0-informational?style=flat-square)
 
 A Helm chart for the KubeRocketCI krci-security-operator add-on, which imports the Trivy Operator reports of every namespace into DefectDojo
 
@@ -44,7 +44,7 @@ naming in DefectDojo, the closing rules and the limitations.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://epam.github.io/edp-helm-charts/stable | krci-security-operator | 0.2.0 |
+| https://epam.github.io/edp-helm-charts/stable | krci-security-operator | 0.3.0 |
 
 ## Values
 
