@@ -3,10 +3,10 @@ description: A Helm chart for the KubeRocketCI krci-security-operator add-on, wh
 home: https://docs.kuberocketci.io/
 name: krci-security-operator
 type: application
-version: 0.2.0
-appVersion: 0.2.0
+version: 0.3.0
+appVersion: 0.3.0
 
 dependencies:
 - name: krci-security-operator
-  version: 0.2.0
+  version: 0.3.0
   repository: https://epam.github.io/edp-helm-charts/stable
