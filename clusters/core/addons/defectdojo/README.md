@@ -1,6 +1,12 @@
 # defectdojo
 
-![Version: 1.9.12](https://img.shields.io/badge/Version-1.9.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.55.2](https://img.shields.io/badge/AppVersion-2.55.2-informational?style=flat-square)
+
+
+![Version: 1.9.65](https://img.shields.io/badge/Version-1.9.65-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square) 
+
+
+
+
 
 ## Secret management
 
@@ -65,17 +71,23 @@ AWS Parameter Store structure:
 
 </details>
 
+
+
+
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.9.12 |
+| https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts | defectdojo | 1.9.65 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | defectdojo.alternativeHosts[0] | string | `"defectdojo-django.defectdojo"` |  |
+| defectdojo.celery.beat.extraEnv | list | `[{"name":"DD_CREDENTIAL_AES_256_KEY","valueFrom":{"secretKeyRef":{"key":"DD_CREDENTIAL_AES_256_KEY","name":"defectdojo"}}}]` | The chart passes `DD_CREDENTIAL_AES_256_KEY` only to uwsgi and the initializer. |
+| defectdojo.celery.worker.extraEnv | list | `[{"name":"DD_CREDENTIAL_AES_256_KEY","valueFrom":{"secretKeyRef":{"key":"DD_CREDENTIAL_AES_256_KEY","name":"defectdojo"}}}]` | The chart passes `DD_CREDENTIAL_AES_256_KEY` only to uwsgi and the initializer. Without it async tasks (e.g. Jira push) decrypt stored tool credentials with the shipped default key. |
+| defectdojo.dbMigrationChecker.extraEnv | list | `[{"name":"DD_CREDENTIAL_AES_256_KEY","valueFrom":{"secretKeyRef":{"key":"DD_CREDENTIAL_AES_256_KEY","name":"defectdojo"}}}]` | The chart passes `DD_CREDENTIAL_AES_256_KEY` only to uwsgi and the initializer. Without it `manage.py migrate --check` reports the shipped default key (`dojo.W003`). |
 | defectdojo.django.ingress.activateTLS | bool | `false` |  |
 | defectdojo.django.ingress.enabled | bool | `true` |  |
 | defectdojo.django.mediaPersistentVolume.persistentVolumeClaim.size | string | `"2Gi"` |  |
@@ -83,12 +95,6 @@ AWS Parameter Store structure:
 | defectdojo.extraConfigs.DD_CSRF_COOKIE_SECURE | string | `"True"` |  |
 | defectdojo.extraConfigs.DD_SECURE_SSL_REDIRECT | string | `"False"` |  |
 | defectdojo.extraConfigs.DD_SESSION_COOKIE_SECURE | string | `"True"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL | string | `"https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/token"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL | string | `"https://keycloak.example.com/auth/realms/shared/protocol/openid-connect/auth"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_KEY | string | `"defectdojo"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_OAUTH2_ENABLED | string | `"True"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_PUBLIC_KEY | string | `"<RS256_KEY>"` |  |
-| defectdojo.extraConfigs.DD_SOCIAL_AUTH_KEYCLOAK_SECRET | string | `"defectdojo-extrasecrets"` |  |
 | defectdojo.fullnameOverride | string | `"defectdojo"` |  |
 | defectdojo.host | string | `"defectdojo.example.com"` |  |
 | defectdojo.initializer.run | bool | `true` |  |
