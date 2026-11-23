@@ -8,7 +8,7 @@ Nexus Community Edition chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
+| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 10.7.2 |
 
 ## Values
 

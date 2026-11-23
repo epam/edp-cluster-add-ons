@@ -1,6 +1,12 @@
 # nexus
 
-![Version: 61.0.3](https://img.shields.io/badge/Version-61.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.70.3](https://img.shields.io/badge/AppVersion-3.70.3-informational?style=flat-square)
+
+
+![Version: 61.0.3](https://img.shields.io/badge/Version-61.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.70.3](https://img.shields.io/badge/AppVersion-3.70.3-informational?style=flat-square) 
+
+
+
+
 
 ## Secret management
 
@@ -52,11 +58,14 @@ AWS Parameter Store structure:
 
 </details>
 
+
+
+
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 6.16.1 |
+| https://oauth2-proxy.github.io/manifests/ | oauth2-proxy | 10.7.2 |
 | https://sonatype.github.io/helm3-charts/ | nexus-repository-manager | 61.0.2 |
 
 ## Values
