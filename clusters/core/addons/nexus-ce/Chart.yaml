@@ -26,6 +26,6 @@ appVersion: "3.82.0"
 
 dependencies:
   - name: oauth2-proxy
-    version: 6.16.1
+    version: 10.7.2
     repository: https://oauth2-proxy.github.io/manifests/
     condition: oauth2-proxy.enabled

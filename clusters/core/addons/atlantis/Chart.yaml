@@ -25,5 +25,5 @@ dependencies:
   repository: https://runatlantis.github.io/helm-charts
 
 - name: oauth2-proxy
-  version: 8.2.0
+  version: 10.7.2
   repository: https://oauth2-proxy.github.io/manifests
