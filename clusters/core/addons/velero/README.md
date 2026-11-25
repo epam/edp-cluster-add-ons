@@ -1,6 +1,6 @@
 # velero
 
-![Version: 11.1.1](https://img.shields.io/badge/Version-11.1.1-informational?style=flat-square) ![AppVersion: 1.17.0](https://img.shields.io/badge/AppVersion-1.17.0-informational?style=flat-square)
+![Version: 12.2.0](https://img.shields.io/badge/Version-12.2.0-informational?style=flat-square) ![AppVersion: 1.18.2](https://img.shields.io/badge/AppVersion-1.18.2-informational?style=flat-square)
 
 A Helm chart for Velero Install
 
@@ -8,7 +8,7 @@ A Helm chart for Velero Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://vmware-tanzu.github.io/helm-charts | velero | 11.1.1 |
+| https://vmware-tanzu.github.io/helm-charts | velero | 12.2.0 |
 
 ## Values
 
@@ -23,7 +23,7 @@ A Helm chart for Velero Install
 | velero.configuration.volumeSnapshotLocation[0].name | string | `"default"` |  |
 | velero.configuration.volumeSnapshotLocation[0].provider | string | `"aws"` |  |
 | velero.credentials.useSecret | bool | `false` |  |
-| velero.initContainers[0].image | string | `"velero/velero-plugin-for-aws:v1.13.1"` |  |
+| velero.initContainers[0].image | string | `"velero/velero-plugin-for-aws:v1.14.0"` |  |
 | velero.initContainers[0].name | string | `"velero-plugin-for-aws"` |  |
 | velero.initContainers[0].volumeMounts[0].mountPath | string | `"/target"` |  |
 | velero.initContainers[0].volumeMounts[0].name | string | `"plugins"` |  |
