@@ -1,6 +1,12 @@
 # report-portal
 
-![Version: 25.8.30](https://img.shields.io/badge/Version-25.8.30-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.1.8](https://img.shields.io/badge/AppVersion-25.1.8-informational?style=flat-square)
+
+
+![Version: 26.10.26](https://img.shields.io/badge/Version-26.10.26-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.0.7](https://img.shields.io/badge/AppVersion-26.0.7-informational?style=flat-square) 
+
+
+
+
 
 ## Secret management
 
@@ -64,14 +70,17 @@ AWS Parameter Store structure:
 
 </details>
 
+
+
+
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | minio | 17.0.16 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 16.0.11 |
-| https://k8s.reportportal.io | reportportal | 25.8.29 |
-| https://opensearch-project.github.io/helm-charts/ | opensearch | 2.35.0 |
+| https://charts.bitnami.com/bitnami | minio | 17.0.21 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 16.0.14 |
+| https://k8s.reportportal.io | reportportal | 26.10.26 |
+| https://opensearch-project.github.io/helm-charts/ | opensearch | 3.9.0 |
 
 ## Values
 
