@@ -7,6 +7,40 @@ reportportal:
     superadminInitPasswd:
       secretName: "reportportal-superadmin-password"
       passwordKeyName: "superadmin-password"
+    # SAML login with Keycloak (ReportPortal 26.0.x): Keycloak asks for signed AuthnRequests, and without a
+    # signing credential UAT fails with "Failed to resolve any signing credential".
+    # Uncomment when `saml.enabled: true`. The `reportportal-saml-keystore` Secret (keys: keystore.jks,
+    # keystore-password, key-password) is created by the ExternalSecret when `eso.enabled: true`;
+    # otherwise create it manually. Left commented so the UAT pod does not wait for a missing Secret.
+    # See https://docs.kuberocketci.io/docs/operator-guide/project-management-and-reporting/reportportal-keycloak
+    # extraEnvs:
+    #   - name: RP_AUTH_SAML_SIGNED-REQUESTS
+    #     value: "true"
+    #   - name: RP_AUTH_SAML_KEY-STORE
+    #     value: "file:///etc/saml/keystore.jks"
+    #   - name: RP_AUTH_SAML_KEY-ALIAS
+    #     value: "report-portal-sp"
+    #   - name: RP_AUTH_SAML_KEY-STORE-PASSWORD
+    #     valueFrom:
+    #       secretKeyRef:
+    #         name: reportportal-saml-keystore
+    #         key: keystore-password
+    #   - name: RP_AUTH_SAML_KEY-PASSWORD
+    #     valueFrom:
+    #       secretKeyRef:
+    #         name: reportportal-saml-keystore
+    #         key: key-password
+    # extraVolumes:
+    #   - name: saml-keystore
+    #     secret:
+    #       secretName: reportportal-saml-keystore
+    #       items:
+    #         - key: keystore.jks
+    #           path: keystore.jks
+    # extraVolumeMounts:
+    #   - name: saml-keystore
+    #     mountPath: /etc/saml
+    #     readOnly: true
     resources:
       requests:
         cpu: 50m

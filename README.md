@@ -225,7 +225,7 @@ The repository provides a wide range of pre-configured add-ons for Kubernetes cl
 | prometheus-operator          | 91.5.2    | v0.94.1      | monitoring             | False             | False    |
 | prometheus-blackbox-exporter | 11.20.2   | v0.29.1      | monitoring             | False             | False    |
 | redis-operator               | 3.3.0     | 1.3.0        | redis-operator         | False             | False    |
-| report-portal                | 25.8.30   | 25.1.8       | report-portal          | False             | False    |
+| report-portal                | 26.10.26  | 26.0.7       | report-portal          | False             | False    |
 | sonar                        | 2025.3.1  | 2025.3.1     | sonar                  | False             | False    |
 | sonar-operator               | 3.4.0     | 3.4.0        | sonar                  | False             | False    |
 | storage-class                | N/A       | N/A          | N/A                    | N/A               | False    |
