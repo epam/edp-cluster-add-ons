@@ -8,22 +8,22 @@ type: application
 
 # The chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 25.8.30
+version: 26.10.26
 
 # Version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: "25.1.8"
+appVersion: "26.0.7"
 
 dependencies:
   - name: reportportal
-    version: 25.8.29
+    version: 26.10.26
     repository: https://k8s.reportportal.io
   - name: rabbitmq
-    version: 16.0.11
+    version: 16.0.14
     repository: https://charts.bitnami.com/bitnami
   - name: minio
-    version: 17.0.16
+    version: 17.0.21
     repository: https://charts.bitnami.com/bitnami
   - name: opensearch
-    version: 2.35.0
+    version: 3.9.0
     repository: https://opensearch-project.github.io/helm-charts/
